@@ -1,5 +1,5 @@
 {
-    "IGT_MAIN_NODE": {
+    "UVA_SOLAR_CAR": {
         "inherits": [
             "MCU_STM32"
         ],
