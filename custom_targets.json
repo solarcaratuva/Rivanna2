@@ -1,0 +1,58 @@
+{
+    "IGT_MAIN_NODE": {
+        "inherits": [
+            "MCU_STM32"
+        ],
+        "supported_form_factors": [
+            "ARDUINO",
+            "MORPHO"
+        ],
+        "core": "Cortex-M4F",
+        "config": {
+            "clock_source": {
+                "help": "Mask value : USE_PLL_HSE_EXTC | USE_PLL_HSE_XTAL (need HW patch) | USE_PLL_HSI",
+                "value": "USE_PLL_HSE_EXTC | USE_PLL_HSI",
+                "macro_name": "CLOCK_SOURCE"
+            },
+            "lpticker_lptim": {
+                "help": "This target supports LPTIM. Set value 1 to use LPTIM for LPTICKER, or 0 to use RTC wakeup timer",
+                "value": 1
+            },
+            "hse_value": {
+                "help": "HSE default value is 25MHz in HAL",
+                "value": "8000000",
+                "macro_name": "HSE_VALUE"
+            }
+        },
+        "extra_labels_add": [
+            "STM32G4",
+            "STM32G473CE"
+        ],
+        "components_add": [
+            "FLASHIAP"
+        ],
+        "macros_add": [
+            "STM32G473xx",
+            "STM32G473CE",
+            "EXTRA_IDLE_STACK_REQUIRED",
+            "MBED_TICKLESS"
+        ],
+        "overrides": {
+            "lpticker_delay_ticks": 0,
+            "lse_available": 0
+        },
+        "device_has_add": [
+            "ANALOGOUT",
+            "FLASH",
+            "MPU",
+            "CAN"
+        ],
+        "detect_code": [
+            "0841"
+        ],
+        "release_versions": [
+            "5"
+        ],
+        "device_name": "STM32G473CETx"
+    }
+}
