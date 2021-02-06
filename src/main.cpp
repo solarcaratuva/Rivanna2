@@ -10,9 +10,9 @@
 
 BufferedSerial device(USBTX, USBRX);
 
-CAN can(INT_CAN_RX, INT_CAN_TX);
+CAN can(CAN_RX, CAN_TX);
 
-DigitalOut canStby(INT_CAN_STBY);
+DigitalOut canStby(CAN_STBY);
 
 Ticker canTxTicker;
 
