@@ -15,6 +15,3 @@ mbed_os_dir = path.join(env['PROJECT_PACKAGES_DIR'], 'framework-mbed')
 
 # Does the job related to ignoring the paths. 
 mbedignore.apply(mbedignore_path, mbed_os_dir)
-
-mbed_os_dir = path.join(env['PROJECT_PACKAGES_DIR'], 'framework-mbed-latest')
-mbedignore.apply(mbedignore_path, mbed_os_dir)
