@@ -3,7 +3,7 @@ UVA Solar Car Template code repository. This repository contains the embedded sy
 
 
 ## Hardware
-* The PCB layouts and associated schematics for the Main Node and Cell Node boards can be found on the [associated repositories on CADLAB.io](https://cadlab.io/solar-car-uva).
+* The PCB layouts and associated schematics for all boards can be found on the [associated repositories on CADLAB.io](https://cadlab.io/solar-car-uva).
 * All boards use the [STM32G473CE MCU](https://www.mouser.com/datasheet/2/389/stm32f042c4-1851049.pdf).
 
 
