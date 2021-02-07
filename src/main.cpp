@@ -3,7 +3,7 @@
 #include "Printing.h"
 #include "CANStructs.h"
 
-// #define TESTING     // only defined if using test functions
+#define TESTING     // only defined if using test functions
 // #define DEBUGGING   // only define if debugging
 
 #define MAIN_LOOP_PERIOD_MS 1000  // units of 1 ms
