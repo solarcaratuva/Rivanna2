@@ -11,14 +11,16 @@ jobs:
       # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
           key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
       - run:
-        command: |
-          pip install -U platformio
-          pio update
+          name: Set up
+          command: |
+            pip install -U platformio
+            pio update
       - save_cache: # cache Python dependencies using checksum of Pipfile as the cache-key
           key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
           paths:
             - "venv"
       - run:
-        command: |
-          pio run -e uva_solar_car
+          name: Test
+          command: |
+            pio run -e uva_solar_car
         
