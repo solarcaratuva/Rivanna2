@@ -1,6 +1,9 @@
 #include <unity.h>
 #include <unistd.h>
+#include <cstring>
 #include "Printing.h"
+
+using namespace std;
 
 #define STDOUT_BUFFER_SIZE 1024
 
