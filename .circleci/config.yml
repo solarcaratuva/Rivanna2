@@ -12,10 +12,10 @@ jobs:
       - restore_cache:
           keys:
             # when lock file changes, use increasingly general patterns to restore cache
-            - platformio-v4-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
-            - platformio-v4-{{ .Branch }}-{{ checksum "Pipfile" }}-
-            - platformio-v4-{{ .Branch }}-
-            - platformio-v4-
+            - platformio-v5-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
+            - platformio-v5-{{ .Branch }}-{{ checksum "Pipfile" }}-
+            - platformio-v5-{{ .Branch }}-
+            - platformio-v5-
       - run:
           name: Set up
           command: |
@@ -26,40 +26,13 @@ jobs:
           name: Build
           command: |
             pipenv run pio run -e uva_solar_car
-      - save_cache:
-          paths:
-            - ~/.local/share/virtualenvs  # this path depends on where pipenv creates a virtualenv
-            - ~/.platformio/cache
-          key: platformio-v4-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
-      # Persist the specified paths (workspace/echo-output) into the workspace for use in downstream job. 
-      - persist_to_workspace:
-          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is 
-          # taken to be the root directory of the workspace.
-          root: ~/
-          # Must be relative path from root
-          paths:
-            - .local/share/virtualenvs  # this path depends on where pipenv creates a virtualenv
-            - .platformio/cache
-  test:
-    docker:
-      - image: cimg/python:3.9
-        # environment:
-          # PIPENV_VENV_IN_PROJECT: true
-    steps:
-      - attach_workspace:
-          # Must be absolute path or relative path from working_directory
-          at: ~/
-      - checkout
       - run:
           name: Test
           command: |
             pipenv run pio test -e native
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - save_cache:
+          paths:
+            - ~/.local/share/virtualenvs  # this path depends on where pipenv creates a virtualenv
+            - ~/.platformio/cache
+          key: platformio-v5-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
         
