@@ -20,8 +20,9 @@ jobs:
           name: Set up
           command: |
             pip install pipenv
-            pipenv install platformio
+            pipenv install
             pipenv run pio update
+            pipenv run pio install native
       - run:
           name: Build
           command: |
