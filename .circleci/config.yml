@@ -22,15 +22,15 @@ jobs:
             pip install pipenv
             pipenv install platformio
             pipenv run pio update
+      - run:
+          name: Build
+          command: |
+            pipenv run pio run -e uva_solar_car
       - save_cache:
           paths:
             - ~/.local/share/virtualenvs  # this path depends on where pipenv creates a virtualenv
             - ~/.platformio/cache
           key: platformio-v4-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
-      - run:
-          name: Build
-          command: |
-            pipenv run pio run -e uva_solar_car
       # Persist the specified paths (workspace/echo-output) into the workspace for use in downstream job. 
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is 
@@ -43,8 +43,8 @@ jobs:
   test:
     docker:
       - image: cimg/python:3.9
-        environment:
-          PIPENV_VENV_IN_PROJECT: true
+        # environment:
+          # PIPENV_VENV_IN_PROJECT: true
     steps:
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
