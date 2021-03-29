@@ -3,8 +3,8 @@ jobs:
   build:
     docker:
       - image: cimg/python:3.9
-        environment:
-          PIPENV_VENV_IN_PROJECT: true
+        # environment:
+          # PIPENV_VENV_IN_PROJECT: true
     steps:
       - checkout
       # - run: sudo chown -R circleci:circleci /usr/local/bin
