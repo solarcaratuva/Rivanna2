@@ -23,7 +23,22 @@ jobs:
             - ~/.local/share/virtualenvs/venv  # this path depends on where pipenv creates a virtualenv
           key: platformio-v1-{{ .Branch }}-{{ checksum "platformio.ini" }}
       - run:
-          name: Test
+          name: Build
           command: |
             pio run -e uva_solar_car
+  test:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - checkout
+      - run:
+          name: Test
+          command: |
+            pio test -e native
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test
         
