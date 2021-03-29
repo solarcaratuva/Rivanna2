@@ -22,7 +22,7 @@ jobs:
             pip install pipenv
             pipenv install
             pipenv run pio update
-            pipenv run pio install native
+            pipenv run pio platform install native
       - run:
           name: Build
           command: |
