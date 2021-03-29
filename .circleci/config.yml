@@ -19,9 +19,9 @@ jobs:
       - run:
           name: Set up
           command: |
-            sudo pip install pipenv
+            pip install pipenv
             pipenv install platformio
-            pio update
+            pipenv run pio update
       - save_cache:
           paths:
             - ~/.local/share/virtualenvs/venv  # this path depends on where pipenv creates a virtualenv
@@ -30,7 +30,7 @@ jobs:
       - run:
           name: Build
           command: |
-            pio run -e uva_solar_car
+            pipenv run pio run -e uva_solar_car
       # Persist the specified paths (workspace/echo-output) into the workspace for use in downstream job. 
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is 
@@ -53,7 +53,7 @@ jobs:
       - run:
           name: Test
           command: |
-            pio test -e native
+            pipenv run pio test -e native
 workflows:
   version: 2
   build_and_test:
