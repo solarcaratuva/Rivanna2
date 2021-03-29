@@ -12,8 +12,8 @@ jobs:
       - restore_cache:
           keys:
             # when lock file changes, use increasingly general patterns to restore cache
-            - platformio-v3-{{ .Branch }}-{{ checksum "Pipfile.lock" }}-{{ checksum "platformio.ini" }}
-            - platformio-v3-{{ .Branch }}-{{ checksum "Pipfile.lock" }}-
+            - platformio-v3-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
+            - platformio-v3-{{ .Branch }}-{{ checksum "Pipfile" }}-
             - platformio-v3-{{ .Branch }}-
             - platformio-v3-
       - run:
@@ -26,7 +26,7 @@ jobs:
           paths:
             - ~/.local/share/virtualenvs/venv  # this path depends on where pipenv creates a virtualenv
             - ~/.platformio/cache
-          key: platformio-v3-{{ .Branch }}-{{ checksum "Pipfile.lock" }}-{{ checksum "platformio.ini" }}
+          key: platformio-v3-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
       - run:
           name: Build
           command: |
