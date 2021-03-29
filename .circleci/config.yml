@@ -38,8 +38,8 @@ jobs:
           root: ~
           # Must be relative path from root
           paths:
-            - ~/.local/share/virtualenvs/venv  # this path depends on where pipenv creates a virtualenv
-            - ~/.platformio/cache
+            - .local/share/virtualenvs/venv  # this path depends on where pipenv creates a virtualenv
+            - .platformio/cache
   test:
     docker:
       - image: cimg/python:3.9
