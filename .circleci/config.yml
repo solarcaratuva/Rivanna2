@@ -26,7 +26,7 @@ jobs:
           paths:
             - ~/.local/share/virtualenvs  # this path depends on where pipenv creates a virtualenv
             - ~/.platformio/cache
-          key: platformio-v3-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
+          key: platformio-v4-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
       - run:
           name: Build
           command: |
