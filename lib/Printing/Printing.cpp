@@ -1,5 +1,5 @@
 #include "Printing.h"
-#include <mbed.h>
+#include <stdlib.h>
 
 // Input: an integer representing a float with decimals digits past decimal multiplied by 10^decimals
 // Output: print num as a float
@@ -41,7 +41,7 @@ void printFloat(float num, int decimals) {
     int mult = 1;
     for(int i = 0; i < d; ++i)
         mult *= 10;
-    
+
     printIntegerAsFloat((int)(n*mult), d);
 #endif //PRINTING
 }

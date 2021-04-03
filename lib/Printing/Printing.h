@@ -3,6 +3,12 @@
 
 #define PRINTING    // only defined if using printf functions
 
+#ifdef NATIVE
+#include <stdio.h>
+#else
+#include <mbed.h>
+#endif
+
 #ifdef PRINTING
 #define PRINT(formatstring, ...) printf(formatstring, ##__VA_ARGS__)
 #else  //PRINTING

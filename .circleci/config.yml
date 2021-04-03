@@ -1,0 +1,39 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: cimg/python:3.9
+        # environment:
+          # PIPENV_VENV_IN_PROJECT: true
+    steps:
+      - checkout
+      # - run: sudo chown -R circleci:circleci /usr/local/bin
+      # - run: sudo chown -R circleci:circleci /usr/local/lib/python3.9/site-packages
+      - restore_cache:
+          keys:
+            # when lock file changes, use increasingly general patterns to restore cache
+            - platformio-v5-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
+            - platformio-v5-{{ .Branch }}-{{ checksum "Pipfile" }}-
+            - platformio-v5-{{ .Branch }}-
+            - platformio-v5-
+      - run:
+          name: Set up
+          command: |
+            pip install pipenv
+            pipenv install
+            pipenv run pio update
+            pipenv run pio platform install native
+      - run:
+          name: Build
+          command: |
+            pipenv run pio run -e uva_solar_car
+      - run:
+          name: Test
+          command: |
+            pipenv run pio test -e native
+      - save_cache:
+          paths:
+            - ~/.local/share/virtualenvs  # this path depends on where pipenv creates a virtualenv
+            - ~/.platformio/cache
+          key: platformio-v5-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
+        
