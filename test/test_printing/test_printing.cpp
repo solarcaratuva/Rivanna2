@@ -1,6 +1,7 @@
 #include <unity.h>
 #include <unistd.h>
 #include <cstring>
+#include <stdexcept>
 #include "Printing.h"
 
 using namespace std;
@@ -44,40 +45,234 @@ void tearDown()
 }
 
 // Write all tests here
+
+// Equivalence Test
 void test_print()
 {
-    const char* testMessage = "Hello World!";
-    PRINT(testMessage);
+    const char* test_message = "Hello World!";
+    PRINT(test_message);
     restore_stdout();
-    TEST_ASSERT_EQUAL_STRING(testMessage, stdout_buffer);
+    TEST_ASSERT_EQUAL_STRING(test_message, stdout_buffer);
 }
 
+// Boundary Test
+void test_print_empty()
+{
+    const char* test_message = "";
+    PRINT(test_message);
+    restore_stdout();
+    TEST_ASSERT_EQUAL_STRING(test_message, stdout_buffer);
+}
+
+// Boundary Test
+void test_print_newline()
+{
+    const char* test_message = "Hello World!\r\n";
+    PRINT(test_message);
+    restore_stdout();
+    TEST_ASSERT_EQUAL_STRING(test_message, stdout_buffer);
+}
+
+// Equivalence Test
+void test_print_positive_integer()
+{
+    const char* test_message = "Test number is: %d";
+    int test_num = 123;
+    const char* expected_result = "Test number is: 123";
+    PRINT(test_message, test_num);
+    restore_stdout();
+    TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+}
+
+// Boundary Test
+void test_print_negative_integer()
+{
+    const char* test_message = "Test number is: %d";
+    int test_num = -123;
+    const char* expected_result = "Test number is: -123";
+    PRINT(test_message, test_num);
+    restore_stdout();
+    TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+}
+
+// Boundary Test
+void test_print_zero_integer()
+{
+    const char* test_message = "Test number is: %d";
+    int test_num = 0;
+    const char* expected_result = "Test number is: 0";
+    PRINT(test_message, test_num);
+    restore_stdout();
+    TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+}
+
+// Equivalence Test
 void test_print_integer_as_float()
 {
-    int testNum = 123;
-    int testDecimals = 2;
-    const char* expectedResult = "1.23";
-    printIntegerAsFloat(testNum, testDecimals);
+    int test_num = 123;
+    int test_decimals = 2;
+    const char* expected_result = "1.23";
+    printIntegerAsFloat(test_num, test_decimals);
     restore_stdout();
-    TEST_ASSERT_EQUAL_STRING(expectedResult, stdout_buffer);
+    TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
 }
 
+// Boundary Test
+void test_print_integer_as_float_negative()
+{
+    int test_num = -123;
+    int test_decimals = 2;
+    const char* expected_result = "-1.23";
+    printIntegerAsFloat(test_num, test_decimals);
+    restore_stdout();
+    TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+}
+
+// Boundary Test
+void test_print_integer_as_float_middle_zeros()
+{
+    int test_num = 1003;
+    int test_decimals = 2;
+    const char* expected_result = "10.03";
+    printIntegerAsFloat(test_num, test_decimals);
+    restore_stdout();
+    TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+}
+
+// Boundary Test
+void test_print_integer_as_float_trailing_zero()
+{
+    int test_num = 120;
+    int test_decimals = 2;
+    const char* expected_result = "1.20";
+    printIntegerAsFloat(test_num, test_decimals);
+    restore_stdout();
+    TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+}
+
+// Boundary Test
+void test_print_integer_as_float_leading_zero()
+{
+    int test_num = 123;
+    int test_decimals = 3;
+    const char* expected_result = "0.123";
+    printIntegerAsFloat(test_num, test_decimals);
+    restore_stdout();
+    TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+}
+
+// Exception Test
+void test_print_integer_as_float_negative_decimals()
+{
+    int test_num = 123;
+    int test_decimals = -1;
+    try
+    {
+        printIntegerAsFloat(test_num, test_decimals);
+        restore_stdout();
+        TEST_FAIL();
+    }
+    catch(invalid_argument& e)
+    {
+        restore_stdout();
+        TEST_PASS();
+    }
+}
+
+// Equivalence Test
 void test_print_float()
 {
-    float testNum = 1.23f;
-    int testDecimals = 2;
-    const char* expectedResult = "1.23";
-    printFloat(testNum, testDecimals);
+    float test_num = 1.23f;
+    int test_decimals = 2;
+    const char* expected_result = "1.23";
+    printFloat(test_num, test_decimals);
     restore_stdout();
-    TEST_ASSERT_EQUAL_STRING(expectedResult, stdout_buffer);
+    TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+}
+
+// Boundary Test
+void test_print_float_negative()
+{
+    float test_num = -1.23f;
+    int test_decimals = 2;
+    const char* expected_result = "-1.23";
+    printFloat(test_num, test_decimals);
+    restore_stdout();
+    TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+}
+
+// Boundary Test
+void test_print_float_middle_zeros()
+{
+    float test_num = 10.03f;
+    int test_decimals = 2;
+    const char* expected_result = "10.03";
+    printFloat(test_num, test_decimals);
+    restore_stdout();
+    TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+}
+
+// Boundary Test
+void test_print_float_trailing_zero()
+{
+    float test_num = 1.20f;
+    int test_decimals = 2;
+    const char* expected_result = "1.20";
+    printFloat(test_num, test_decimals);
+    restore_stdout();
+    TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+}
+
+// Boundary Test
+void test_print_float_leading_zero()
+{
+    float test_num = 0.123f;
+    int test_decimals = 3;
+    const char* expected_result = "0.123";
+    printFloat(test_num, test_decimals);
+    restore_stdout();
+    TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+}
+
+// Exception Test
+void test_print_float_negative_decimals()
+{
+    float test_num = 1.23f;
+    int test_decimals = -1;
+    try
+    {
+        printFloat(test_num, test_decimals);
+        restore_stdout();
+        TEST_FAIL();
+    }
+    catch(invalid_argument& e)
+    {
+        restore_stdout();
+        TEST_PASS();
+    }
 }
 
 int main()
 {
     UNITY_BEGIN();
     RUN_TEST(test_print);
+    RUN_TEST(test_print_empty);
+    RUN_TEST(test_print_newline);
+    RUN_TEST(test_print_positive_integer);
+    RUN_TEST(test_print_negative_integer);
+    RUN_TEST(test_print_zero_integer);
     RUN_TEST(test_print_integer_as_float);
+    RUN_TEST(test_print_integer_as_float_negative);
+    RUN_TEST(test_print_integer_as_float_middle_zeros);
+    RUN_TEST(test_print_integer_as_float_trailing_zero);
+    RUN_TEST(test_print_integer_as_float_leading_zero);
+    RUN_TEST(test_print_integer_as_float_negative_decimals);
     RUN_TEST(test_print_float);
+    RUN_TEST(test_print_float_negative);
+    RUN_TEST(test_print_float_middle_zeros);
+    RUN_TEST(test_print_float_trailing_zero);
+    RUN_TEST(test_print_float_leading_zero);
+    RUN_TEST(test_print_float_negative_decimals);
     UNITY_END();
 
 #ifndef NATIVE
