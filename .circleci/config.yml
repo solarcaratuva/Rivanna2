@@ -19,18 +19,19 @@ jobs:
       - run:
           name: Set up
           command: |
-            pip install pipenv
+            pip install --upgrade pipenv
             pipenv install
-            pipenv run pio update
-            pipenv run pio platform install native
+            pipenv shell
+            pio update
+            pio platform install native
       - run:
           name: Build
           command: |
-            pipenv run pio run -e ecu -e motor -e power_aux -e solar -e nucleo_f413zh_ecu
+            pio run -e ecu -e motor -e power_aux -e solar -e nucleo_f413zh_ecu
       - run:
           name: Test
           command: |
-            pipenv run pio test -e native
+            pio test -e native
       - save_cache:
           paths:
             - ~/.local/share/virtualenvs  # this path depends on where pipenv creates a virtualenv
