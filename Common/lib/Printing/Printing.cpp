@@ -1,5 +1,8 @@
 #include "Printing.h"
 #include <stdlib.h>
+#include <stdexcept>
+
+using namespace std;
 
 // Input: an integer representing a float with decimals digits past decimal multiplied by 10^decimals
 // Output: print num as a float
@@ -8,6 +11,9 @@ void printIntegerAsFloat(int num, int decimals) {
     int left = num;
     int right = num;
     int d = decimals;
+
+    if(d < 0)
+        throw invalid_argument("printIntegerAsFloat() argument decimals was negative.");
 
     if(left < 0)
         PRINT("-");
@@ -37,6 +43,9 @@ void printFloat(float num, int decimals) {
 #ifdef PRINTING
     float n = num;
     int d = decimals;
+    
+    if(d < 0)
+        throw invalid_argument("printFloat() argument decimals was negative.");
 
     int mult = 1;
     for(int i = 0; i < d; ++i)
