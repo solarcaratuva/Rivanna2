@@ -46,30 +46,30 @@ void tearDown()
 // Write all tests here
 void test_print()
 {
-    const char* testMessage = "Hello World!";
-    PRINT(testMessage);
+    const char* test_message = "Hello World!";
+    PRINT(test_message);
     restore_stdout();
-    TEST_ASSERT_EQUAL_STRING(testMessage, stdout_buffer);
+    TEST_ASSERT_EQUAL_STRING(test_message, stdout_buffer);
 }
 
 void test_print_integer_as_float()
 {
-    int testNum = 123;
-    int testDecimals = 2;
-    const char* expectedResult = "1.23";
-    printIntegerAsFloat(testNum, testDecimals);
+    int test_num = 123;
+    int test_decimals = 2;
+    const char* expected_result = "1.23";
+    printIntegerAsFloat(test_num, test_decimals);
     restore_stdout();
-    TEST_ASSERT_EQUAL_STRING(expectedResult, stdout_buffer);
+    TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
 }
 
 void test_print_float()
 {
-    float testNum = 1.23f;
-    int testDecimals = 2;
-    const char* expectedResult = "1.23";
-    printFloat(testNum, testDecimals);
+    float test_num = 1.23f;
+    int test_decimals = 2;
+    const char* expected_result = "1.23";
+    printFloat(test_num, test_decimals);
     restore_stdout();
-    TEST_ASSERT_EQUAL_STRING(expectedResult, stdout_buffer);
+    TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
 }
 
 int main()
