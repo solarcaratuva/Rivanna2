@@ -1,6 +1,5 @@
 #include "Printing.h"
 #include <stdlib.h>
-#include <stdexcept>
 
 using namespace std;
 
@@ -13,7 +12,10 @@ void printIntegerAsFloat(int num, int decimals) {
     int d = decimals;
 
     if(d < 0)
-        throw invalid_argument("printIntegerAsFloat() argument decimals was negative.");
+    {
+        PRINT("ERROR: printIntegerAsFloat() argument decimals was negative.");
+        return;
+    }
 
     if(left < 0)
         PRINT("-");
@@ -45,7 +47,10 @@ void printFloat(float num, int decimals) {
     int d = decimals;
     
     if(d < 0)
-        throw invalid_argument("printFloat() argument decimals was negative.");
+    {
+        PRINT("ERROR: printFloat() argument decimals was negative.");
+        return;
+    }
 
     int mult = 1;
     for(int i = 0; i < d; ++i)

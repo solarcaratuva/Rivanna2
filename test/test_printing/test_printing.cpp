@@ -1,7 +1,6 @@
 #include <unity.h>
 #include <unistd.h>
 #include <cstring>
-#include <stdexcept>
 #include "Printing.h"
 
 using namespace std;
@@ -166,17 +165,10 @@ void test_print_integer_as_float_negative_decimals()
 {
     int test_num = 123;
     int test_decimals = -1;
-    try
-    {
-        printIntegerAsFloat(test_num, test_decimals);
-        restore_stdout();
-        TEST_FAIL();
-    }
-    catch(invalid_argument& e)
-    {
-        restore_stdout();
-        TEST_PASS();
-    }
+    const char* expected_result = "ERROR: printIntegerAsFloat() argument decimals was negative.";
+    printIntegerAsFloat(test_num, test_decimals);
+    restore_stdout();
+    TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
 }
 
 // Equivalence Test
@@ -239,17 +231,11 @@ void test_print_float_negative_decimals()
 {
     float test_num = 1.23f;
     int test_decimals = -1;
-    try
-    {
-        printFloat(test_num, test_decimals);
-        restore_stdout();
-        TEST_FAIL();
-    }
-    catch(invalid_argument& e)
-    {
-        restore_stdout();
-        TEST_PASS();
-    }
+    const char* expected_result = "ERROR: printFloat() argument decimals was negative.";
+    printFloat(test_num, test_decimals);
+    restore_stdout();
+    TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+
 }
 
 int main()
