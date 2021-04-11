@@ -12,29 +12,28 @@ jobs:
       - restore_cache:
           keys:
             # when lock file changes, use increasingly general patterns to restore cache
-            - platformio-v5-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
-            - platformio-v5-{{ .Branch }}-{{ checksum "Pipfile" }}-
-            - platformio-v5-{{ .Branch }}-
-            - platformio-v5-
+            - platformio-v6-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
+            - platformio-v6-{{ .Branch }}-{{ checksum "Pipfile" }}-
+            - platformio-v6-{{ .Branch }}-
+            - platformio-v6-
       - run:
           name: Set up
           command: |
             pip install --upgrade pipenv
             pipenv install
-            pipenv shell
-            pio update
-            pio platform install native
+            pipenv run pio update
+            pipenv run pio platform install native
       - run:
           name: Build
           command: |
-            pio run -e ecu -e motor -e power_aux -e solar -e nucleo_f413zh_ecu
+            pipenv run pio run -e ecu -e motor -e power_aux -e solar -e nucleo_f413zh_ecu
       - run:
           name: Test
           command: |
-            pio test -e native
+            pipenv run pio test -e native
       - save_cache:
           paths:
             - ~/.local/share/virtualenvs  # this path depends on where pipenv creates a virtualenv
             - ~/.platformio/cache
-          key: platformio-v5-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
+          key: platformio-v6-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
         
