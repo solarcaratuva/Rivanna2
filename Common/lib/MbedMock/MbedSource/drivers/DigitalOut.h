@@ -40,30 +40,21 @@ public:
      *
      *  @param pin DigitalOut pin to connect to
      */
-    DigitalOut(PinName pin)
-    {
-        gpio = 0;
-    }
+    DigitalOut(PinName pin);
 
     /** Create a DigitalOut connected to the specified pin
      *
      *  @param pin DigitalOut pin to connect to
      *  @param value the initial pin value
      */
-    DigitalOut(PinName pin, int value)
-    {
-        gpio = value;
-    }
+    DigitalOut(PinName pin, int value);
 
     /** Set the output, specified as 0 or 1 (int)
      *
      *  @param value An integer specifying the pin output value,
      *      0 for logical 0, 1 (or any other non-zero value) for logical 1
      */
-    void write(int value)
-    {
-        gpio = value;
-    }
+    virtual void write(int value) = 0;
 
     /** Return the output setting, represented as 0 or 1 (int)
      *
@@ -71,10 +62,7 @@ public:
      *    an integer representing the output setting of the pin,
      *    0 for logical 0, 1 for logical 1
      */
-    int read()
-    {
-        return gpio;
-    }
+    virtual int read() = 0;
 
     /** Return the output setting, represented as 0 or 1 (int)
      *
@@ -82,11 +70,7 @@ public:
      *    Non zero value if pin is connected to uc GPIO
      *    0 if gpio object was initialized with NC
      */
-    int is_connected()
-    {
-        // Thread safe / atomic HAL call
-        return 1;
-    }
+    virtual int is_connected() = 0;
 
     /** A shorthand for write()
      * \sa DigitalOut::write()
@@ -96,18 +80,13 @@ public:
      *      led = button;   // Equivalent to led.write(button.read())
      * @endcode
      */
-    DigitalOut &operator= (int value)
-    {
-        // Underlying write is thread safe
-        write(value);
-        return *this;
-    }
+    virtual DigitalOut &operator= (int value) = 0;
 
     /** A shorthand for write() using the assignment operator which copies the
      * state from the DigitalOut argument.
      * \sa DigitalOut::write()
      */
-    DigitalOut &operator= (DigitalOut &rhs);
+    virtual DigitalOut &operator= (DigitalOut &rhs) = 0;
 
     /** A shorthand for read()
      * \sa DigitalOut::read()
@@ -117,17 +96,7 @@ public:
      *      led = button;   // Equivalent to led.write(button.read())
      * @endcode
      */
-    operator int()
-    {
-        // Underlying call is thread safe
-        return read();
-    }
-
-protected:
-#if !defined(DOXYGEN_ONLY)
-    // gpio_t gpio;
-    int gpio;
-#endif //!defined(DOXYGEN_ONLY)
+    virtual operator int() = 0;
 };
 
 /** @}*/

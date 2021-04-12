@@ -1,30 +1,16 @@
-/* mbed Microcontroller Library
- * Copyright (c) 2006-2019 ARM Limited
- * SPDX-License-Identifier: Apache-2.0
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Adapted from Mbed source
+
 #ifndef MBED_CAN_H
 #define MBED_CAN_H
 
-#include "platform/platform.h"
+// #include "platform/platform.h"
 
 #if DEVICE_CAN || defined(DOXYGEN_ONLY)
 
-#include "hal/can_api.h"
-#include "platform/Callback.h"
-#include "platform/PlatformMutex.h"
-#include "platform/NonCopyable.h"
+#include "../hal/can_api.h"
+// #include "platform/Callback.h"
+// #include "platform/PlatformMutex.h"
+// #include "platform/NonCopyable.h"
 
 namespace mbed {
 /** \defgroup drivers-public-api-can CAN

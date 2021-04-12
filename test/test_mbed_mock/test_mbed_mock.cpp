@@ -1,5 +1,9 @@
 #include <unity.h>
 #include <mbed.h>
+#include <fakeit.hpp>
+#include "MbedTester.h"
+
+using namespace fakeit;
 
 // Called before every test
 void setUp()
@@ -16,62 +20,81 @@ void tearDown()
 // Write all tests here
 
 // Equivalence Test
-void test_digital_out_read_0()
+void test_digital_out_read()
 {
-    DigitalOut testPin(PA_0);
-    int expectedValue = 0;
+    // initialization
+    Mock<DigitalOut> mock;
+    Fake(Method(mock, read));
+    DigitalOut &testPin = mock.get();
+
+    // the test
     int testValue = testPin.read();
-    TEST_ASSERT_EQUAL(expectedValue, testValue);
+    
+    // verification
+    Verify(Method(mock, read)).Exactly(Once);
+    VerifyNoOtherInvocations(mock);
 }
 
 // Equivalence Test
-void test_digital_out_write_1()
+void test_digital_out_write()
 {
-    DigitalOut testPin(PA_0);
-    testPin.write(1);
-    int expectedValue = 1;
-    int testValue = testPin.read();
-    TEST_ASSERT_EQUAL(expectedValue, testValue);
+    // initialization
+    Mock<DigitalOut> mock;
+    Fake(Method(mock, write));
+    DigitalOut &testPin = mock.get();
+    int testValue = 1;
+
+    //the test
+    testPin.write(testValue);
+    
+    // verification
+    Verify(Method(mock, write).Using(testValue)).Exactly(Once);
+    VerifyNoOtherInvocations(mock);
 }
 
 // Equivalence Test
-void test_digital_out_equals_1()
+void test_mbed_tester_digital_out_write()
 {
-    DigitalOut testPin(PA_0);
-    testPin = 1;
-    int expectedValue = 1;
-    int testValue = testPin.read();
-    TEST_ASSERT_EQUAL(expectedValue, testValue);
+    // initialization
+    Mock<DigitalOut> mock;
+    Fake(Method(mock, write));
+    DigitalOut &testPin = mock.get();
+    MbedTester mbedTester(testPin);
+    int testValue = 1;
+
+    // the test
+    mbedTester.testDigitalOutWrite(testPin, testValue);
+    
+    // verification
+    Verify(Method(mock, write).Using(testValue)).Exactly(Once);
+    VerifyNoOtherInvocations(mock);
 }
 
 // Equivalence Test
-void test_digital_out_int_0()
+void test_mbed_tester_digital_out_write_private_test_pin()
 {
-    DigitalOut testPin(PA_0);
-    int expectedValue = 0;
-    int testValue = testPin;
-    TEST_ASSERT_EQUAL(expectedValue, testValue);
-}
+    // initialization
+    Mock<DigitalOut> mock;
+    Fake(Method(mock, write));
+    DigitalOut &testPin = mock.get();
+    MbedTester mbedTester(testPin);
+    int testValue = 1;
 
-// // Boundary Test
-// void test_digital_out_same_pin()
-// {
-//     DigitalOut testPin1(PA_0);
-//     DigitalOut testPin2(PA_0);
-//     testPin1 = 1;
-//     int expectedValue = 1;
-//     int testValue = testPin2;
-//     TEST_ASSERT_EQUAL(expectedValue, testValue);
-// }
+    // the test
+    mbedTester.testDigitalOutWrite(testValue);
+    
+    // verification
+    Verify(Method(mock, write).Using(testValue)).Exactly(Once);
+    VerifyNoOtherInvocations(mock);
+}
 
 int main()
 {
     UNITY_BEGIN();
-    RUN_TEST(test_digital_out_read_0);
-    RUN_TEST(test_digital_out_write_1);
-    RUN_TEST(test_digital_out_equals_1);
-    RUN_TEST(test_digital_out_int_0);
-    // RUN_TEST(test_digital_out_same_pin);
+    RUN_TEST(test_digital_out_read);
+    RUN_TEST(test_digital_out_write);
+    RUN_TEST(test_mbed_tester_digital_out_write);
+    RUN_TEST(test_mbed_tester_digital_out_write_private_test_pin);
     UNITY_END();
 
 #ifndef NATIVE
