@@ -11,6 +11,7 @@
 // #include "platform/Callback.h"
 // #include "platform/PlatformMutex.h"
 // #include "platform/NonCopyable.h"
+#include <cstring>
 
 namespace mbed {
 /** \defgroup drivers-public-api-can CAN
@@ -89,6 +90,12 @@ public:
         id     = _id;
         memset(data, 0, 8);
     }
+    
+    // Added to be able to compare CANMessages for unit testing
+    bool operator==(const CANMessage& other) const
+    {
+        return memcmp(this, &other, sizeof(CAN_Message)) == 0;
+    }
 };
 
 /** @}*/
@@ -101,7 +108,7 @@ public:
 
 /** A can bus client, used for communicating with can devices
  */
-class CAN : private NonCopyable<CAN> {
+class CAN {
 
 public:
     /** Creates a CAN interface connected to specific pins.
@@ -184,7 +191,7 @@ public:
      *    1 if successful,
      *    0 otherwise
      */
-    int frequency(int hz);
+    virtual int frequency(int hz) = 0;
 
     /** Write a CANMessage to the bus.
      *
@@ -194,7 +201,7 @@ public:
      *    0 if write failed,
      *    1 if write was successful
      */
-    int write(CANMessage msg);
+    virtual int write(CANMessage msg) = 0;
 
     /** Read a CANMessage from the bus.
      *
@@ -205,19 +212,19 @@ public:
      *    0 if no message arrived,
      *    1 if message arrived
      */
-    int read(CANMessage &msg, int handle = 0);
+    virtual int read(CANMessage &msg, int handle = 0) = 0;
 
     /** Reset CAN interface.
      *
      * To use after error overflow.
      */
-    void reset();
+    virtual void reset() = 0;
 
     /** Puts or removes the CAN interface into silent monitoring mode
      *
      *  @param silent boolean indicating whether to go into silent mode or not
      */
-    void monitor(bool silent);
+    virtual void monitor(bool silent) = 0;
 
     enum Mode {
         Reset = 0,
@@ -236,7 +243,7 @@ public:
      *    0 if mode change failed or unsupported,
      *    1 if mode change was successful
      */
-    int mode(Mode mode);
+    virtual int mode(Mode mode) = 0;
 
     /** Filter out incoming messages
      *
@@ -249,19 +256,19 @@ public:
      *    0 if filter change failed or unsupported,
      *    new filter handle if successful
      */
-    int filter(unsigned int id, unsigned int mask, CANFormat format = CANAny, int handle = 0);
+    virtual int filter(unsigned int id, unsigned int mask, CANFormat format = CANAny, int handle = 0) = 0;
 
     /**  Detects read errors - Used to detect read overflow errors.
      *
      *  @returns number of read errors
      */
-    unsigned char rderror();
+    virtual unsigned char rderror() = 0;
 
     /** Detects write errors - Used to detect write overflow errors.
      *
      *  @returns number of write errors
      */
-    unsigned char tderror();
+    virtual unsigned char tderror() = 0;
 
     enum IrqType {
         RxIrq = 0,
@@ -285,19 +292,9 @@ public:
      *  @param func A pointer to a void function, or 0 to set as none
      *  @param type Which CAN interrupt to attach the member function to (CAN::RxIrq for message received, CAN::TxIrq for transmitted or aborted, CAN::EwIrq for error warning, CAN::DoIrq for data overrun, CAN::WuIrq for wake-up, CAN::EpIrq for error passive, CAN::AlIrq for arbitration lost, CAN::BeIrq for bus error)
      */
-    void attach(Callback<void()> func, IrqType type = RxIrq);
+    virtual void attach(void (*func)(void), IrqType type = RxIrq) = 0;
 
     static void _irq_handler(uint32_t id, CanIrqType type);
-
-#if !defined(DOXYGEN_ONLY)
-protected:
-    virtual void lock();
-    virtual void unlock();
-
-    can_t               _can;
-    Callback<void()>    _irq[IrqCnt];
-    PlatformMutex       _mutex;
-#endif
 };
 
 /** @}*/

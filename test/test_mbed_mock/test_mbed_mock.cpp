@@ -88,6 +88,40 @@ void test_mbed_tester_digital_out_write_private_test_pin()
     VerifyNoOtherInvocations(mock);
 }
 
+// Equivalence Test
+void test_can_read()
+{
+    // initialization
+    Mock<CAN> mockCAN;
+    Fake(Method(mockCAN, read));
+    CANMessage testCANMessage;
+    CAN &testCAN = mockCAN.get();
+    
+    // the test
+    testCAN.read(testCANMessage);
+    
+    // verification
+    Verify(Method(mockCAN, read).Using(_, 0)).Exactly(Once);    // FakeIt has a known limitation for spying the usage of reference arguments, so we use _ to indicate any value
+    VerifyNoOtherInvocations(mockCAN);
+}
+
+// Equivalence Test
+void test_can_write()
+{
+    // initialization
+    Mock<CAN> mockCAN;
+    Fake(Method(mockCAN, write));
+    CANMessage testCANMessage;
+    CAN &testCAN = mockCAN.get();
+    
+    // the test
+    testCAN.write(testCANMessage);
+
+    // verification
+    Verify(Method(mockCAN, write).Using(testCANMessage)).Exactly(Once);
+    VerifyNoOtherInvocations(mockCAN);
+}
+
 int main()
 {
     UNITY_BEGIN();
@@ -95,6 +129,8 @@ int main()
     RUN_TEST(test_digital_out_write);
     RUN_TEST(test_mbed_tester_digital_out_write);
     RUN_TEST(test_mbed_tester_digital_out_write_private_test_pin);
+    RUN_TEST(test_can_read);
+    RUN_TEST(test_can_write);
     UNITY_END();
 
 #ifndef NATIVE

@@ -11,6 +11,7 @@
 #include "../PinNames.h"
 // #include "PeripheralNames.h"
 #include "can_helper.h"
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -77,7 +78,7 @@ void          can_monitor(can_t *obj, int silent);
  *
  * @return PinMap array
  */
-const PinMap *can_rd_pinmap(void);
+// const PinMap *can_rd_pinmap(void);
 
 /** Get the pins that support CAN TD
  *
@@ -86,7 +87,7 @@ const PinMap *can_rd_pinmap(void);
  *
  * @return PinMap array
  */
-const PinMap *can_td_pinmap(void);
+// const PinMap *can_td_pinmap(void);
 
 #ifdef __cplusplus
 }
