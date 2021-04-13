@@ -181,7 +181,7 @@ public:
     CAN(const can_pinmap_t &pinmap, int hz);
     CAN(const can_pinmap_t &&, int) = delete; // prevent passing of temporary objects
 
-    virtual ~CAN();
+    virtual ~CAN() {}
 
     /** Set the frequency of the CAN interface
      *
