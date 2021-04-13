@@ -5,16 +5,35 @@
 
 using namespace fakeit;
 
+Mock<DigitalOut> mockDigitalOut;
+Mock<CAN> mockCAN;
+
+DigitalOut *testPin;
+CAN *testCAN;
+CANMessage *testCANMessage;
+
+MbedTester *mbedTester;
+
 // Called before every test
 void setUp()
 {
-    
+    testPin = &mockDigitalOut.get();
+    testCAN = &mockCAN.get();
+    testCANMessage = new CANMessage();
+    mbedTester = new MbedTester(*testPin);
 }
 
 // Called after every test
 void tearDown()
 {
+    // final verifications
+    VerifyNoOtherInvocations(mockDigitalOut);
+    VerifyNoOtherInvocations(mockCAN);
     
+    // clean up
+    delete testCANMessage;
+    delete mbedTester;
+    mockDigitalOut.Reset();
 }
 
 // Write all tests here
@@ -23,103 +42,81 @@ void tearDown()
 void test_digital_out_read()
 {
     // initialization
-    Mock<DigitalOut> mock;
-    Fake(Method(mock, read));
-    DigitalOut &testPin = mock.get();
+    Fake(Method(mockDigitalOut, read));
 
     // the test
-    int testValue = testPin.read();
+    int testValue = testPin->read();
     
     // verification
-    Verify(Method(mock, read)).Exactly(Once);
-    VerifyNoOtherInvocations(mock);
+    Verify(Method(mockDigitalOut, read)).Exactly(Once);
 }
 
 // Equivalence Test
 void test_digital_out_write()
 {
     // initialization
-    Mock<DigitalOut> mock;
-    Fake(Method(mock, write));
-    DigitalOut &testPin = mock.get();
+    Fake(Method(mockDigitalOut, write));
     int testValue = 1;
 
     //the test
-    testPin.write(testValue);
+    testPin->write(testValue);
     
     // verification
-    Verify(Method(mock, write).Using(testValue)).Exactly(Once);
-    VerifyNoOtherInvocations(mock);
+    Verify(Method(mockDigitalOut, write).Using(testValue)).Exactly(Once);
 }
 
 // Equivalence Test
 void test_mbed_tester_digital_out_write()
 {
     // initialization
-    Mock<DigitalOut> mock;
-    Fake(Method(mock, write));
-    DigitalOut &testPin = mock.get();
-    MbedTester mbedTester(testPin);
+    Fake(Method(mockDigitalOut, write));
     int testValue = 1;
 
     // the test
-    mbedTester.testDigitalOutWrite(testPin, testValue);
+    mbedTester->testDigitalOutWrite(*testPin, testValue);
     
     // verification
-    Verify(Method(mock, write).Using(testValue)).Exactly(Once);
-    VerifyNoOtherInvocations(mock);
+    Verify(Method(mockDigitalOut, write).Using(testValue)).Exactly(Once);
 }
 
 // Equivalence Test
 void test_mbed_tester_digital_out_write_private_test_pin()
 {
     // initialization
-    Mock<DigitalOut> mock;
-    Fake(Method(mock, write));
-    DigitalOut &testPin = mock.get();
-    MbedTester mbedTester(testPin);
+    Fake(Method(mockDigitalOut, write));
     int testValue = 1;
 
     // the test
-    mbedTester.testDigitalOutWrite(testValue);
+    mbedTester->testDigitalOutWrite(testValue);
     
     // verification
-    Verify(Method(mock, write).Using(testValue)).Exactly(Once);
-    VerifyNoOtherInvocations(mock);
+    Verify(Method(mockDigitalOut, write).Using(testValue)).Exactly(Once);
 }
 
 // Equivalence Test
 void test_can_read()
 {
     // initialization
-    Mock<CAN> mockCAN;
     Fake(Method(mockCAN, read));
-    CANMessage testCANMessage;
-    CAN &testCAN = mockCAN.get();
     
     // the test
-    testCAN.read(testCANMessage);
+    testCAN->read(*testCANMessage);
     
     // verification
     Verify(Method(mockCAN, read).Using(_, 0)).Exactly(Once);    // FakeIt has a known limitation for spying the usage of reference arguments, so we use _ to indicate any value
-    VerifyNoOtherInvocations(mockCAN);
 }
 
 // Equivalence Test
 void test_can_write()
 {
     // initialization
-    Mock<CAN> mockCAN;
     Fake(Method(mockCAN, write));
-    CANMessage testCANMessage;
-    CAN &testCAN = mockCAN.get();
     
     // the test
-    testCAN.write(testCANMessage);
+    testCAN->write(*testCANMessage);
 
     // verification
-    Verify(Method(mockCAN, write).Using(testCANMessage)).Exactly(Once);
-    VerifyNoOtherInvocations(mockCAN);
+    Verify(Method(mockCAN, write).Using(*testCANMessage)).Exactly(Once);
 }
 
 int main()
