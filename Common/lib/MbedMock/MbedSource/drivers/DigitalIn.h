@@ -84,7 +84,11 @@ public:
      *      led = button;   // Equivalent to led.write(button.read())
      * @endcode
      */
-    virtual operator int() = 0;
+    virtual operator int()
+    {
+        // Underlying read is thread safe
+        return read();
+    }
 };
 
 /** @}*/

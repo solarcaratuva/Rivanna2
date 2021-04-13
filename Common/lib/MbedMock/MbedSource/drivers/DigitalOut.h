@@ -80,13 +80,24 @@ public:
      *      led = button;   // Equivalent to led.write(button.read())
      * @endcode
      */
-    virtual DigitalOut &operator= (int value) = 0;
+    virtual DigitalOut &operator= (int value)
+    {
+        // Underlying write is thread safe
+        write(value);
+        return *this;
+    }
 
     /** A shorthand for write() using the assignment operator which copies the
      * state from the DigitalOut argument.
      * \sa DigitalOut::write()
      */
-    virtual DigitalOut &operator= (DigitalOut &rhs) = 0;
+    virtual DigitalOut &operator= (DigitalOut &rhs)
+    {
+        // core_util_critical_section_enter();
+        write(rhs.read());
+        // core_util_critical_section_exit();
+        return *this;
+    }
 
     /** A shorthand for read()
      * \sa DigitalOut::read()
@@ -96,7 +107,11 @@ public:
      *      led = button;   // Equivalent to led.write(button.read())
      * @endcode
      */
-    virtual operator int() = 0;
+    virtual operator int()
+    {
+        // Underlying call is thread safe
+        return read();
+    }
 };
 
 /** @}*/
