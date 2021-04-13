@@ -7,6 +7,7 @@
 #define DEVICE_CAN TRUE  // enable CAN
 
 // mbed Peripheral components
+#include "MbedSource/drivers/DigitalIn.h"
 #include "MbedSource/drivers/DigitalOut.h"
 #include "MbedSource/drivers/CAN.h"
 
