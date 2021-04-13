@@ -1,19 +1,35 @@
 #include "MbedTester.h"
 
-MbedTester::MbedTester(DigitalOut& testPin, CAN& testCAN) : privateTestPin(testPin), privateTestCAN(testCAN)
+MbedTester::MbedTester(DigitalIn& testDigitalIn, DigitalOut& testDigitalOut, CAN& testCAN) : privateTestDigitalIn(testDigitalIn), privateTestDigitalOut(testDigitalOut), privateTestCAN(testCAN)
 {
 
 }
 
-void MbedTester::testDigitalOutWrite(DigitalOut& testPin, int testValue)
+/****************************** DigitalIn tests ******************************/
+
+int MbedTester::testDigitalInRead(DigitalIn& testDigitalIn)
 {
-    testPin.write(testValue);
+    return testDigitalIn.read();
+}
+
+int MbedTester::testDigitalInRead()
+{
+    return privateTestDigitalIn.read();
+}
+
+/****************************** DigitalOut tests ******************************/
+
+void MbedTester::testDigitalOutWrite(DigitalOut& testDigitalOut, int testValue)
+{
+    testDigitalOut.write(testValue);
 }
 
 void MbedTester::testDigitalOutWrite(int testValue)
 {
-    privateTestPin.write(testValue);
+    privateTestDigitalOut.write(testValue);
 }
+
+/****************************** CAN tests ******************************/
 
 CANMessage MbedTester::testCANMessage()
 {

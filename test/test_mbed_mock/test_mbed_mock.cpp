@@ -5,10 +5,12 @@
 
 using namespace fakeit;
 
+Mock<DigitalIn> mockDigitalIn;
 Mock<DigitalOut> mockDigitalOut;
 Mock<CAN> mockCAN;
 
-DigitalOut *testPin;
+DigitalIn *testDigitalIn;
+DigitalOut *testDigitalOut;
 CAN *testCAN;
 CANMessage *testCANMessage;
 
@@ -17,27 +19,73 @@ MbedTester *mbedTester;
 // Called before every test
 void setUp()
 {
-    testPin = &mockDigitalOut.get();
+    testDigitalIn = &mockDigitalIn.get();
+    testDigitalOut = &mockDigitalOut.get();
     testCAN = &mockCAN.get();
     testCANMessage = new CANMessage();
-    mbedTester = new MbedTester(*testPin, *testCAN);
+    mbedTester = new MbedTester(*testDigitalIn, *testDigitalOut, *testCAN);
 }
 
 // Called after every test
 void tearDown()
 {
     // final verifications
+    VerifyNoOtherInvocations(mockDigitalIn);
     VerifyNoOtherInvocations(mockDigitalOut);
     VerifyNoOtherInvocations(mockCAN);
     
     // clean up
     delete testCANMessage;
     delete mbedTester;
+    mockDigitalIn.Reset();
     mockDigitalOut.Reset();
     mockCAN.Reset();
 }
 
 // Write all tests here
+
+/****************************** DigitalIn tests ******************************/
+
+// Equivalence Test
+void test_digital_in_read()
+{
+    // initialization
+    Fake(Method(mockDigitalIn, read));
+
+    // the test
+    int result = testDigitalIn->read();
+    
+    // verification
+    Verify(Method(mockDigitalIn, read)).Exactly(Once);
+}
+
+// Equivalence Test
+void test_mbed_tester_digital_in_read()
+{
+    // initialization
+    Fake(Method(mockDigitalIn, read));
+
+    // the test
+    int result = mbedTester->testDigitalInRead(*testDigitalIn);
+    
+    // verification
+    Verify(Method(mockDigitalIn, read)).Exactly(Once);
+}
+
+// Equivalence Test
+void test_mbed_tester_digital_in_read_private()
+{
+    // initialization
+    Fake(Method(mockDigitalIn, read));
+
+    // the test
+    int result = mbedTester->testDigitalInRead();
+    
+    // verification
+    Verify(Method(mockDigitalIn, read)).Exactly(Once);
+}
+
+/****************************** DigitalOut tests ******************************/
 
 // Equivalence Test
 void test_digital_out_read()
@@ -46,7 +94,7 @@ void test_digital_out_read()
     Fake(Method(mockDigitalOut, read));
 
     // the test
-    int testValue = testPin->read();
+    int result = testDigitalOut->read();
     
     // verification
     Verify(Method(mockDigitalOut, read)).Exactly(Once);
@@ -60,7 +108,7 @@ void test_digital_out_write()
     int testValue = 1;
 
     //the test
-    testPin->write(testValue);
+    testDigitalOut->write(testValue);
     
     // verification
     Verify(Method(mockDigitalOut, write).Using(testValue)).Exactly(Once);
@@ -74,14 +122,14 @@ void test_mbed_tester_digital_out_write()
     int testValue = 1;
 
     // the test
-    mbedTester->testDigitalOutWrite(*testPin, testValue);
+    mbedTester->testDigitalOutWrite(*testDigitalOut, testValue);
     
     // verification
     Verify(Method(mockDigitalOut, write).Using(testValue)).Exactly(Once);
 }
 
 // Equivalence Test
-void test_mbed_tester_digital_out_write_private_test_pin()
+void test_mbed_tester_digital_out_write_private()
 {
     // initialization
     Fake(Method(mockDigitalOut, write));
@@ -93,6 +141,8 @@ void test_mbed_tester_digital_out_write_private_test_pin()
     // verification
     Verify(Method(mockDigitalOut, write).Using(testValue)).Exactly(Once);
 }
+
+/****************************** CAN tests ******************************/
 
 // Equivalence Test
 void test_can_read()
@@ -159,7 +209,7 @@ void test_mbed_tester_can_write()
 }
 
 // Equivalence Test
-void test_mbed_tester_can_read_private_test_can()
+void test_mbed_tester_can_read_private()
 {
     // initialization
     Fake(Method(mockCAN, read));
@@ -172,7 +222,7 @@ void test_mbed_tester_can_read_private_test_can()
 }
 
 // Equivalence Test
-void test_mbed_tester_can_write_private_test_can()
+void test_mbed_tester_can_write_private()
 {
     // initialization
     Fake(Method(mockCAN, write));
@@ -187,17 +237,27 @@ void test_mbed_tester_can_write_private_test_can()
 int main()
 {
     UNITY_BEGIN();
+
+    /****************************** DigitalIn tests ******************************/
+    RUN_TEST(test_digital_in_read);
+    RUN_TEST(test_mbed_tester_digital_in_read);
+    RUN_TEST(test_mbed_tester_digital_in_read_private);
+    
+    /****************************** DigitalOut tests ******************************/
     RUN_TEST(test_digital_out_read);
     RUN_TEST(test_digital_out_write);
     RUN_TEST(test_mbed_tester_digital_out_write);
-    RUN_TEST(test_mbed_tester_digital_out_write_private_test_pin);
+    RUN_TEST(test_mbed_tester_digital_out_write_private);
+
+    /****************************** CAN tests ******************************/
     RUN_TEST(test_can_read);
     RUN_TEST(test_can_write);
     RUN_TEST(test_mbed_tester_can_message);
     RUN_TEST(test_mbed_tester_can_read);
     RUN_TEST(test_mbed_tester_can_write);
-    RUN_TEST(test_mbed_tester_can_read_private_test_can);
-    RUN_TEST(test_mbed_tester_can_write_private_test_can);
+    RUN_TEST(test_mbed_tester_can_read_private);
+    RUN_TEST(test_mbed_tester_can_write_private);
+    
     UNITY_END();
 
 #ifndef NATIVE

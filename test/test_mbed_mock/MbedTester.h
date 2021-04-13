@@ -6,17 +6,25 @@
 class MbedTester
 {
 public:
-    MbedTester(DigitalOut& testPin, CAN& testCAN);
+    MbedTester(DigitalIn& testDigitalIn, DigitalOut& testDigitalOut, CAN& testCAN);
 
-    void testDigitalOutWrite(DigitalOut& testPin, int testValue);
+    /****************************** DigitalIn tests ******************************/
+    int testDigitalInRead(DigitalIn& testDigitalIn);
+    int testDigitalInRead();
+
+    /****************************** DigitalOut tests ******************************/
+    void testDigitalOutWrite(DigitalOut& testDigitalOut, int testValue);
     void testDigitalOutWrite(int testValue);
+    
+    /****************************** CAN tests ******************************/
     CANMessage testCANMessage();
     void testCANRead(CAN& testCAN, CANMessage& testCANMessage);
     void testCANWrite(CAN& testCAN, const CANMessage& testCANMessage);
     void testCANRead(CANMessage& testCANMessage);
     void testCANWrite(const CANMessage& testCANMessage);
 private:
-    DigitalOut& privateTestPin;
+    DigitalIn& privateTestDigitalIn;
+    DigitalOut& privateTestDigitalOut;
     CAN& privateTestCAN;
 };
 
