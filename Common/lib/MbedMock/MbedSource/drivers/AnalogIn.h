@@ -1,31 +1,18 @@
-/* mbed Microcontroller Library
- * Copyright (c) 2006-2019 ARM Limited
- * SPDX-License-Identifier: Apache-2.0
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Adapted from Mbed source
+
 #ifndef MBED_ANALOGIN_H
 #define MBED_ANALOGIN_H
 
-#include "platform/platform.h"
+// #include "platform/platform.h"
 
 #if DEVICE_ANALOGIN || defined(DOXYGEN_ONLY)
 
-#include "hal/analogin_api.h"
-#include "platform/SingletonPtr.h"
-#include "platform/PlatformMutex.h"
+// #include "hal/analogin_api.h"
+// #include "platform/SingletonPtr.h"
+// #include "platform/PlatformMutex.h"
+#include "../hal/pinmap.h"
 
-#include <cmath>
+// #include <cmath>
 
 namespace mbed {
 /** \defgroup mbed-os-public Public API */
@@ -76,8 +63,8 @@ public:
      *
      * @note An input voltage at or above the given vref value will produce a 1.0 result when `read` is called
      */
-    AnalogIn(const PinMap &pinmap, float vref = MBED_CONF_TARGET_DEFAULT_ADC_VREF);
-    AnalogIn(const PinMap &&, float vref = MBED_CONF_TARGET_DEFAULT_ADC_VREF) = delete; // prevent passing of temporary objects
+    // AnalogIn(const PinMap &pinmap, float vref = 0.0f);
+    // AnalogIn(const PinMap &&, float vref = 0.0f) = delete; // prevent passing of temporary objects
 
     /** Create an AnalogIn, connected to the specified pin
      *
@@ -86,20 +73,20 @@ public:
      *
      * @note An input voltage at or above the given vref value will produce a 1.0 result when `read` is called
      */
-    AnalogIn(PinName pin, float vref = MBED_CONF_TARGET_DEFAULT_ADC_VREF);
+    AnalogIn(PinName pin, float vref = 0.0f);
 
     /** Read the input voltage, represented as a float in the range [0.0, 1.0]
      *
      * @returns A floating-point value representing the current input voltage, measured as a percentage
      */
-    float read();
+    virtual float read() = 0;
 
     /** Read the input voltage, represented as an unsigned short in the range [0x0, 0xFFFF]
      *
      * @returns
      *   16-bit unsigned short representing the current input voltage, normalized to a 16-bit value
      */
-    unsigned short read_u16();
+    virtual unsigned short read_u16() = 0;
 
     /**
      * Read the input voltage in volts. The output depends on the target board's
@@ -112,7 +99,7 @@ public:
      *
      * @returns A floating-point value representing the current input voltage, measured in volts.
      */
-    float read_voltage();
+    virtual float read_voltage() = 0;
 
     /**
      * Sets this AnalogIn instance's reference voltage.
@@ -121,14 +108,14 @@ public:
      *
      * @param[in] vref New ADC reference voltage for this AnalogIn instance.
      */
-    void set_reference_voltage(float vref);
+    virtual void set_reference_voltage(float vref) = 0;
 
     /**
      * Gets this AnalogIn instance's reference voltage.
      *
      * @returns A floating-point value representing this AnalogIn's reference voltage, measured in volts.
      */
-    float get_reference_voltage() const;
+    virtual float get_reference_voltage() const = 0;
 
     /** An operator shorthand for read()
      *
@@ -149,32 +136,7 @@ public:
         return read();
     }
 
-    virtual ~AnalogIn()
-    {
-        lock();
-        analogin_free(&_adc);
-        unlock();
-    }
-
-protected:
-#if !defined(DOXYGEN_ONLY)
-    virtual void lock()
-    {
-        _mutex->lock();
-    }
-
-    virtual void unlock()
-    {
-        _mutex->unlock();
-    }
-
-    analogin_t _adc;
-    static SingletonPtr<PlatformMutex> _mutex;
-
-    float _vref;
-
-#endif //!defined(DOXYGEN_ONLY)
-
+    virtual ~AnalogIn() = 0;
 };
 
 /** @}*/

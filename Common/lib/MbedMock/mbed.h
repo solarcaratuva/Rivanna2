@@ -4,9 +4,11 @@
 #define TRUE (1==1)
 #define FALSE (!TRUE)
 
-#define DEVICE_CAN TRUE  // enable CAN
+#define DEVICE_ANALOGIN TRUE  // enable AnalogIn
+#define DEVICE_CAN      TRUE  // enable CAN
 
 // mbed Peripheral components
+#include "MbedSource/drivers/AnalogIn.h"
 #include "MbedSource/drivers/DigitalIn.h"
 #include "MbedSource/drivers/DigitalOut.h"
 #include "MbedSource/drivers/CAN.h"
