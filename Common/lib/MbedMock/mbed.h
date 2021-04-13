@@ -12,6 +12,7 @@
 #include "MbedSource/drivers/DigitalIn.h"
 #include "MbedSource/drivers/DigitalOut.h"
 #include "MbedSource/drivers/CAN.h"
+#include "MbedSource/drivers/Ticker.h"
 
 #ifndef MBED_NO_GLOBAL_USING_DIRECTIVE
 using namespace mbed;
