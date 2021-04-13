@@ -4,6 +4,7 @@
 #define MBED_PINMAP_H
 
 #include "../PinNames.h"
+#include "../PinNamesTypes.h"
 #include <stdbool.h>
 #include <stdint.h>
 
