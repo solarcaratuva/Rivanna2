@@ -20,7 +20,7 @@ void setUp()
     testPin = &mockDigitalOut.get();
     testCAN = &mockCAN.get();
     testCANMessage = new CANMessage();
-    mbedTester = new MbedTester(*testPin);
+    mbedTester = new MbedTester(*testPin, *testCAN);
 }
 
 // Called after every test
@@ -34,6 +34,7 @@ void tearDown()
     delete testCANMessage;
     delete mbedTester;
     mockDigitalOut.Reset();
+    mockCAN.Reset();
 }
 
 // Write all tests here
@@ -119,6 +120,70 @@ void test_can_write()
     Verify(Method(mockCAN, write).Using(*testCANMessage)).Exactly(Once);
 }
 
+// Equivalence Test
+void test_mbed_tester_can_message()
+{
+    // initialization
+    
+    // the test
+    CANMessage result = mbedTester->testCANMessage();
+    
+    // verification
+    TEST_ASSERT_EQUAL_MEMORY(testCANMessage, &result, sizeof(CANMessage));
+}
+
+// Equivalence Test
+void test_mbed_tester_can_read()
+{
+    // initialization
+    Fake(Method(mockCAN, read));
+    
+    // the test
+    mbedTester->testCANRead(*testCAN, *testCANMessage);
+    
+    // verification
+    Verify(Method(mockCAN, read).Using(_, 0)).Exactly(Once);    // FakeIt has a known limitation for spying the usage of reference arguments, so we use _ to indicate any value
+}
+
+// Equivalence Test
+void test_mbed_tester_can_write()
+{
+    // initialization
+    Fake(Method(mockCAN, write));
+    
+    // the test
+    mbedTester->testCANWrite(*testCAN, *testCANMessage);
+
+    // verification
+    Verify(Method(mockCAN, write).Using(*testCANMessage)).Exactly(Once);
+}
+
+// Equivalence Test
+void test_mbed_tester_can_read_private_test_can()
+{
+    // initialization
+    Fake(Method(mockCAN, read));
+    
+    // the test
+    mbedTester->testCANRead(*testCANMessage);
+    
+    // verification
+    Verify(Method(mockCAN, read).Using(_, 0)).Exactly(Once);    // FakeIt has a known limitation for spying the usage of reference arguments, so we use _ to indicate any value
+}
+
+// Equivalence Test
+void test_mbed_tester_can_write_private_test_can()
+{
+    // initialization
+    Fake(Method(mockCAN, write));
+    
+    // the test
+    mbedTester->testCANWrite(*testCANMessage);
+
+    // verification
+    Verify(Method(mockCAN, write).Using(*testCANMessage)).Exactly(Once);
+}
+
 int main()
 {
     UNITY_BEGIN();
@@ -128,6 +193,11 @@ int main()
     RUN_TEST(test_mbed_tester_digital_out_write_private_test_pin);
     RUN_TEST(test_can_read);
     RUN_TEST(test_can_write);
+    RUN_TEST(test_mbed_tester_can_message);
+    RUN_TEST(test_mbed_tester_can_read);
+    RUN_TEST(test_mbed_tester_can_write);
+    RUN_TEST(test_mbed_tester_can_read_private_test_can);
+    RUN_TEST(test_mbed_tester_can_write_private_test_can);
     UNITY_END();
 
 #ifndef NATIVE
