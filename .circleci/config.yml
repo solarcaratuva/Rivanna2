@@ -12,10 +12,10 @@ jobs:
       - restore_cache:
           keys:
             # when lock file changes, use increasingly general patterns to restore cache
-            - platformio-v6-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
-            - platformio-v6-{{ .Branch }}-{{ checksum "Pipfile" }}-
-            - platformio-v6-{{ .Branch }}-
-            - platformio-v6-
+            - platformio-v7-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
+            - platformio-v7-{{ .Branch }}-{{ checksum "Pipfile" }}-
+            - platformio-v7-{{ .Branch }}-
+            - platformio-v7-
       - run:
           name: Set up
           command: |
@@ -31,9 +31,15 @@ jobs:
           name: Test
           command: |
             pipenv run pio test -e native
+      - run:
+          name: Coverage
+          command: |
+            pipenv run gcovr -e Common/lib/FakeIt/ -e Common/lib/MbedMock/ -e test/ --html-details -o .coverage/coverage.html
       - save_cache:
           paths:
             - ~/.local/share/virtualenvs  # this path depends on where pipenv creates a virtualenv
             - ~/.platformio/cache
-          key: platformio-v6-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
-        
+            - .pio
+          key: platformio-v7-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
+      - store_artifacts:
+          path: .coverage
