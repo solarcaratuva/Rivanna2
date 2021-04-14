@@ -34,6 +34,7 @@ jobs:
       - run:
           name: Coverage
           command: |
+            mkdir .coverage
             pipenv run gcovr -e Common/lib/FakeIt/ -e Common/lib/MbedMock/ -e test/ --html-details -o .coverage/coverage.html
       - save_cache:
           paths:
