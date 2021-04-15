@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: cimg/python:3.9
-        # environment:
+        environment:
           # PIPENV_VENV_IN_PROJECT: true
     steps:
       - checkout
@@ -36,7 +36,7 @@ jobs:
           command: |
             mkdir .coverage
             pipenv run gcovr -e Common/lib/FakeIt/ -e Common/lib/MbedMock/ -e test/ --html-details -o .coverage/coverage.html
-            pipenv run coveralls -e Common/lib/FakeIt/ -e Common/lib/MbedMock/ -e test/
+            TRAVIS_JOB_ID="#${CIRCLE_BUILD_NUM}" pipenv run coveralls -e Common/lib/FakeIt/ -e Common/lib/MbedMock/ -e test/
       - save_cache:
           paths:
             - ~/.local/share/virtualenvs  # this path depends on where pipenv creates a virtualenv
