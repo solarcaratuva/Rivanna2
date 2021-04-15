@@ -36,6 +36,7 @@ jobs:
           command: |
             mkdir .coverage
             pipenv run gcovr -e Common/lib/FakeIt/ -e Common/lib/MbedMock/ -e test/ --html-details -o .coverage/coverage.html
+            pipenv run coveralls -e Common/lib/FakeIt/ -e Common/lib/MbedMock/ -e test/
       - save_cache:
           paths:
             - ~/.local/share/virtualenvs  # this path depends on where pipenv creates a virtualenv
