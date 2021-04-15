@@ -1,9 +1,11 @@
-version: 2
+version: 2.1
+orbs:
+  coveralls: coveralls/coveralls@1.0.6
 jobs:
   build:
     docker:
-      - image: cimg/python:3.9
-        environment:
+      - image: cimg/python:3.9-node
+        # environment:
           # PIPENV_VENV_IN_PROJECT: true
     steps:
       - checkout
@@ -36,7 +38,8 @@ jobs:
           command: |
             mkdir .coverage
             pipenv run gcovr -e Common/lib/FakeIt/ -e Common/lib/MbedMock/ -e test/ --html-details -o .coverage/coverage.html
-            pipenv run coveralls -e Common/lib/FakeIt/ -e Common/lib/MbedMock/ -e test/
+            sudo apt install lcov
+            lcov --capture --directory . --output-file .coverage/coverage.info
       - save_cache:
           paths:
             - ~/.local/share/virtualenvs  # this path depends on where pipenv creates a virtualenv
@@ -45,3 +48,5 @@ jobs:
           key: platformio-v7-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
       - store_artifacts:
           path: .coverage
+      - coveralls/upload
+          path_to_lcov: .coverage/coverage.info
