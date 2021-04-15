@@ -21,6 +21,7 @@ jobs:
       - run:
           name: Set up
           command: |
+            sudo apt update
             pip install --upgrade pipenv
             pipenv install
             pipenv run pio update
