@@ -40,7 +40,8 @@ jobs:
             mkdir .coverage
             pipenv run gcovr -e Common/lib/FakeIt/ -e Common/lib/MbedMock/ -e test/ --html-details -o .coverage/coverage.html
             sudo apt install lcov
-            lcov --capture --directory . --output-file .coverage/coverage.info
+            lcov --capture --base-directory . --directory . --output-file .coverage/coverage.info
+            lcov --remove .coverage/coverage.info Common/lib/FakeIt/ Common/lib/MbedMock/ test/ --output-file .coverage/coverage.info
       - save_cache:
           paths:
             - ~/.local/share/virtualenvs  # this path depends on where pipenv creates a virtualenv
