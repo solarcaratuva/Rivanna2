@@ -48,5 +48,5 @@ jobs:
           key: platformio-v7-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
       - store_artifacts:
           path: .coverage
-      - coveralls/upload
-          path_to_lcov: ".coverage/coverage.info"
+      - coveralls/upload:
+          path_to_lcov: .coverage/coverage.info
