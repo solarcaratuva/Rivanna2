@@ -49,4 +49,4 @@ jobs:
       - store_artifacts:
           path: .coverage
       - coveralls/upload
-          path_to_lcov: .coverage/coverage.info
+          path_to_lcov: ".coverage/coverage.info"
