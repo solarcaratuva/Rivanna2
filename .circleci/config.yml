@@ -48,7 +48,6 @@ jobs:
           paths:
             - ~/.local/share/virtualenvs  # this path depends on where pipenv creates a virtualenv
             - ~/.platformio/cache
-            - .pio
             - .coverage
           key: platformio-v9-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
       - store_artifacts:
