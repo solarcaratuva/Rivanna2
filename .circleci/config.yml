@@ -14,7 +14,7 @@ jobs:
       - restore_cache:
           keys:
             # when lock file changes, use increasingly general patterns to restore cache
-            - platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}-{{ checksum ".circleci" }}
+            - platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}-{{ checksum ".circleci/config.yml" }}
             - platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
             - platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-
             - platformio-v10-{{ .Branch }}-
@@ -50,7 +50,7 @@ jobs:
             - ~/.local/share/virtualenvs  # this path depends on where pipenv creates a virtualenv
             - ~/.platformio/cache
             - .coverage
-          key: platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}-{{ checksum ".circleci" }}
+          key: platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}-{{ checksum ".circleci/config.yml" }}
       - store_artifacts:
           path: .coverage/output
       - coveralls/upload:
