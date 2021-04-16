@@ -14,10 +14,10 @@ jobs:
       - restore_cache:
           keys:
             # when lock file changes, use increasingly general patterns to restore cache
-            - platformio-v8-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
-            - platformio-v8-{{ .Branch }}-{{ checksum "Pipfile" }}-
-            - platformio-v8-{{ .Branch }}-
-            - platformio-v8-
+            - platformio-v9-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
+            - platformio-v9-{{ .Branch }}-{{ checksum "Pipfile" }}-
+            - platformio-v9-{{ .Branch }}-
+            - platformio-v9-
       - run:
           name: Set up
           command: |
@@ -50,7 +50,7 @@ jobs:
             - ~/.platformio/cache
             - .pio
             - .coverage
-          key: platformio-v8-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
+          key: platformio-v9-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
       - store_artifacts:
           path: .coverage/output
       - coveralls/upload:
