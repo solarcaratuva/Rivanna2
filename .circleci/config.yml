@@ -40,8 +40,8 @@ jobs:
           command: |
             mkdir -p .coverage/input .coverage/output
             shopt -s globstar
-            cp .pio/**/*.gcno .coverage/input
-            cp .pio/**/*.gcda .coverage/input
+            cp .pio/**/*.gcno .coverage/input || :
+            cp .pio/**/*.gcda .coverage/input || :
             pipenv run gcovr -e Common/lib/FakeIt/ -e Common/lib/MbedMock/ -e test/ --html-details -o .coverage/output/coverage.html
             sudo apt install lcov
             lcov --capture --base-directory . --directory . --no-external --exclude "*/Common/lib/FakeIt/*" --exclude "*/Common/lib/MbedMock/*" --exclude "*/test/*" --output-file .coverage/input/coverage.info
