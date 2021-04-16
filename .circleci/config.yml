@@ -14,10 +14,11 @@ jobs:
       - restore_cache:
           keys:
             # when lock file changes, use increasingly general patterns to restore cache
-            - platformio-v8-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
-            - platformio-v8-{{ .Branch }}-{{ checksum "Pipfile" }}-
-            - platformio-v8-{{ .Branch }}-
-            - platformio-v8-
+            - platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}-{{ checksum ".circleci/config.yml" }}
+            - platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
+            - platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-
+            - platformio-v10-{{ .Branch }}-
+            - platformio-v10-
       - run:
           name: Set up
           command: |
@@ -37,17 +38,20 @@ jobs:
       - run:
           name: Coverage
           command: |
-            mkdir .coverage
-            pipenv run gcovr -e Common/lib/FakeIt/ -e Common/lib/MbedMock/ -e test/ --html-details -o .coverage/coverage.html
+            mkdir -p .coverage/input .coverage/output
+            shopt -s globstar
+            cp .pio/**/*.gcno .coverage/input || :
+            cp .pio/**/*.gcda .coverage/input || :
+            pipenv run gcovr -e Common/lib/FakeIt/ -e Common/lib/MbedMock/ -e test/ --html-details -o .coverage/output/coverage.html
             sudo apt install lcov
-            lcov --capture --base-directory . --directory . --no-external --exclude "*/Common/lib/FakeIt/*" --exclude "*/Common/lib/MbedMock/*" --exclude "*/test/*" --output-file .coverage/coverage.info
+            lcov --capture --base-directory . --directory . --no-external --exclude "*/Common/lib/FakeIt/*" --exclude "*/Common/lib/MbedMock/*" --exclude "*/test/*" --output-file .coverage/input/coverage.info
       - save_cache:
           paths:
             - ~/.local/share/virtualenvs  # this path depends on where pipenv creates a virtualenv
-            # - ~/.platformio/cache
-            - .pio
-          key: platformio-v8-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
+            - ~/.platformio/cache
+            - .coverage
+          key: platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}-{{ checksum ".circleci/config.yml" }}
       - store_artifacts:
-          path: .coverage
+          path: .coverage/output
       - coveralls/upload:
-          path_to_lcov: .coverage/coverage.info
+          path_to_lcov: .coverage/input/coverage.info
