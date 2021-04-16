@@ -1,6 +1,6 @@
 # Template Code
-[![CircleCI](https://circleci.com/gh/solarcaratuva/TemplateCode.svg?style=shield)](https://circleci.com/gh/solarcaratuva/TemplateCode)
-[![Coverage Status](https://coveralls.io/repos/github/solarcaratuva/TemplateCode/badge.svg)](https://coveralls.io/github/solarcaratuva/TemplateCode)
+[![CircleCI](https://img.shields.io/circleci/build/gh/solarcaratuva/TemplateCode.svg?logo=circleci)](https://circleci.com/gh/solarcaratuva/TemplateCode)
+[![Coveralls](https://img.shields.io/coveralls/github/solarcaratuva/TemplateCode.svg?logo=coveralls)](https://coveralls.io/github/solarcaratuva/TemplateCode)
 
 UVA Solar Car Template code repository. This repository contains the embedded systems template dev environment setup to be used by all boards.
 
