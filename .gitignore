@@ -34,3 +34,6 @@ __pycache__
 *.exe
 *.out
 *.app
+
+# Coverage reports
+.coverage

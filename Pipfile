@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 platformio = "*"
+gcovr = "*"
 
 [requires]
 python_version = "3.9"
