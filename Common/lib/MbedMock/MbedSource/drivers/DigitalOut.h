@@ -80,7 +80,7 @@ public:
      *      led = button;   // Equivalent to led.write(button.read())
      * @endcode
      */
-    virtual DigitalOut &operator= (int value)
+    DigitalOut &operator= (int value)
     {
         // Underlying write is thread safe
         write(value);
@@ -91,7 +91,7 @@ public:
      * state from the DigitalOut argument.
      * \sa DigitalOut::write()
      */
-    virtual DigitalOut &operator= (DigitalOut &rhs)
+    DigitalOut &operator= (DigitalOut &rhs)
     {
         // core_util_critical_section_enter();
         write(rhs.read());
@@ -107,7 +107,7 @@ public:
      *      led = button;   // Equivalent to led.write(button.read())
      * @endcode
      */
-    virtual operator int()
+    operator int()
     {
         // Underlying call is thread safe
         return read();

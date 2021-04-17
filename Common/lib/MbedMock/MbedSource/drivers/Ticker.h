@@ -7,7 +7,7 @@
 // #include <mstd_utility>
 // #include "drivers/TickerDataClock.h"
 // #include "drivers/TimerEvent.h"
-// #include "platform/Callback.h"
+#include "../platform/Callback.h"
 // #include "platform/mbed_toolchain.h"
 // #include "platform/NonCopyable.h"
 // #include "hal/lp_ticker_api.h"
@@ -82,7 +82,7 @@ public:
      *  @deprecated Pass a chrono duration, not an integer microsecond count. For example use `10ms` rather than `10000`.
      *
      */
-    virtual void attach_us(void (*func)(void), us_timestamp_t t) = 0;
+    virtual void attach_us(Callback<void()> func, us_timestamp_t t) = 0;
 
     /** Attach a function to be called by the Ticker, specifying the interval in microseconds
      *
@@ -94,7 +94,7 @@ public:
      *  for threads scheduling.
      *
      */
-    virtual void attach(void (*func)(void), std::chrono::microseconds t) = 0;
+    virtual void attach(Callback<void()> func, std::chrono::microseconds t) = 0;
 
     /** Detach the function
      */
