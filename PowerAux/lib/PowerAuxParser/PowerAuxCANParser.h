@@ -4,11 +4,15 @@
 #include <mbed.h>
 
 #include "CANParser.h"
+#include "PowerAuxCANStructs.h"
 
 class PowerAuxCANParser : public CANParser
 {
 public:
-    void parse(const CANMessage& msg) override;
+    void parse(const CANMessage &msg) override;
+    queue<CANMessage> getMessages() override;
+    
+    PowerAuxExampleStruct powerAuxExampleStruct;
 };
 
 #endif

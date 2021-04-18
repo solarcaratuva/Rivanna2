@@ -20,8 +20,9 @@ DigitalOut can2Stby(CAN2_STBY);
 Ticker can2TxTicker;
 
 PowerAuxCANParser canParser;
+PowerAuxCANParser can2Parser;
 CANInterface canInterface(can, canParser, canTxTicker, &canStby, 1s);
-CANInterface can2Interface(can2, canParser, can2TxTicker, &can2Stby, 1s);
+CANInterface can2Interface(can2, can2Parser, can2TxTicker, &can2Stby, 1s);
 
 int main() {
     // device.set_baud(38400);
@@ -34,6 +35,11 @@ int main() {
         #ifdef TESTING
             PRINT("main thread loop \r\n");
         #endif //TESTING
+
+        canParser.powerAuxExampleStruct.a++;
+        canParser.powerAuxExampleStruct.b += 2;
+        canParser.powerAuxExampleStruct.c += 3;
+        canParser.powerAuxExampleStruct.d += 4;
 
         thread_sleep_for(MAIN_LOOP_PERIOD_MS);
     }

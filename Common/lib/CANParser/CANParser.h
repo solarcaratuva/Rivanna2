@@ -2,6 +2,7 @@
 #define CAN_PARSER_H
 
 #include <mbed.h>
+#include <queue>
 
 // TODO: determine & change the message ID format (# of bits for node ID vs priority) 
 // CAN message ID (11 bits): Node ID stored in bottom 7 bits (bits 0-6),
@@ -19,6 +20,8 @@ public:
     virtual ~CANParser() {}
 
     virtual void parse(const CANMessage &msg) = 0;
+
+    virtual queue<CANMessage> getMessages() = 0;
 };
 
 #endif

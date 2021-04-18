@@ -20,9 +20,6 @@ void CANInterface::rxHandler()
     CANMessage receivedCANMessage;
     while (can.read(receivedCANMessage))
     {
-// #ifdef TESTING
-        PRINT("Message received!\r\n");
-// #endif //TESTING
         canParser.parse(receivedCANMessage);
     }
 }
@@ -30,15 +27,10 @@ void CANInterface::rxHandler()
 // WARNING: This method will be called in an ISR context
 void CANInterface::txHandler()
 {
-    static int id = 0;
-    string toSend = "Hello!";
-    if (can.write(CANMessage(id, toSend.c_str(), toSend.length())))
+    queue<CANMessage> fifo = canParser.getMessages();
+    while(!fifo.empty())
     {
-// #ifdef TESTING
-        PRINT("[ID: %d] Message sent!\r\n", id);
-// #endif //TESTING
+        can.write(fifo.front());
+        fifo.pop();
     }
-    id++;
-    if(id == 10)
-        id = 0;
 }
