@@ -14,6 +14,10 @@
 #include "MbedSource/drivers/CAN.h"
 #include "MbedSource/drivers/Ticker.h"
 
+// standard library includes
+#include <string>   // for string class
+#include <stdio.h>  // for printf()
+
 #ifndef MBED_NO_GLOBAL_USING_DIRECTIVE
 using namespace mbed;
 using namespace std;

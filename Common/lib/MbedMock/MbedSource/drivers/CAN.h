@@ -8,7 +8,7 @@
 #if DEVICE_CAN || defined(DOXYGEN_ONLY)
 
 #include "../hal/can_api.h"
-// #include "platform/Callback.h"
+#include "../platform/Callback.h"
 // #include "platform/PlatformMutex.h"
 // #include "platform/NonCopyable.h"
 #include <cstring>
@@ -292,7 +292,7 @@ public:
      *  @param func A pointer to a void function, or 0 to set as none
      *  @param type Which CAN interrupt to attach the member function to (CAN::RxIrq for message received, CAN::TxIrq for transmitted or aborted, CAN::EwIrq for error warning, CAN::DoIrq for data overrun, CAN::WuIrq for wake-up, CAN::EpIrq for error passive, CAN::AlIrq for arbitration lost, CAN::BeIrq for bus error)
      */
-    virtual void attach(void (*func)(void), IrqType type = RxIrq) = 0;
+    virtual void attach(Callback<void()> func, IrqType type = RxIrq) = 0;
 
     static void _irq_handler(uint32_t id, CanIrqType type);
 };

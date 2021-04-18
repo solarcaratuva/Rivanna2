@@ -4,9 +4,12 @@
 /***************************/
 /* pin definitions for CAN */
 /***************************/
-#define CAN_RX      PD_0   // Rx for MCU
+#define CAN_RX      PD_0    // Rx for MCU
 #define CAN_TX      PD_1
-#define CAN_STBY    PA_10   // Digital Output
+#define CAN_STBY    PG_1    // Digital Output
+#define CAN2_RX     PB_5    // Rx for MCU
+#define CAN2_TX     PB_6
+#define CAN2_STBY   PD_7    // Digital Output
 
 /*************************************/
 /* pin definitions for Analog Inputs */
