@@ -1,4 +1,5 @@
 #include <mbed.h>
+#include <rtos.h>
 #include "pindef.h"
 #include "Printing.h"
 #include "PowerAuxCANParser.h"
@@ -7,22 +8,26 @@
 #define TESTING     // only defined if using test functions
 // #define DEBUGGING   // only define if debugging
 
-#define MAIN_LOOP_PERIOD_MS 1000  // units of 1 ms
+#define MAIN_LOOP_PERIOD 1s  // units of 1 ms
+#define CAN_PERIOD_MS 1000 // ms
+#define CAN_PERIOD_S 1s
 
 BufferedSerial device(USBTX, USBRX);
 
-CAN can(CAN_RX, CAN_TX);
-DigitalOut canStby(CAN_STBY);
-Ticker canTxTicker;
+CAN bms_can(CAN_RX, CAN_TX);
+DigitalOut bms_can_stby(CAN_STBY);
+Thread bms_can_tx_thread;
+Thread bms_can_rx_thread;
 
-CAN can2(CAN2_RX, CAN2_TX);
-DigitalOut can2Stby(CAN2_STBY);
-Ticker can2TxTicker;
+CAN vehicle_can(CAN2_RX, CAN2_TX);
+DigitalOut vehicle_can_stby(CAN2_STBY);
+Thread vehicle_can_tx_thread;
+Thread vehicle_can_rx_thread;
 
-PowerAuxCANParser canParser;
-PowerAuxCANParser can2Parser;
-CANInterface canInterface(can, canParser, canTxTicker, &canStby, 1s);
-CANInterface can2Interface(can2, can2Parser, can2TxTicker, &can2Stby, 1s);
+PowerAuxCANParser bms_can_parser;
+PowerAuxCANParser vehicle_can_parser;
+CANInterface bms_can_interface(bms_can, bms_can_parser, bms_can_tx_thread, bms_can_rx_thread, &bms_can_stby, CAN_PERIOD_S);
+CANInterface vehicle_can_interface(vehicle_can, vehicle_can_parser, vehicle_can_tx_thread, vehicle_can_rx_thread, &vehicle_can_stby, CAN_PERIOD_S);
 
 int main() {
     // device.set_baud(38400);
@@ -31,16 +36,19 @@ int main() {
     PRINT("start main() \r\n");
 #endif //TESTING
     
+    bms_can_interface.startCANTransmission();
+    vehicle_can_interface.startCANTransmission();
+
     while(1){
         #ifdef TESTING
             PRINT("main thread loop \r\n");
         #endif //TESTING
 
-        canParser.powerAuxExampleStruct.a++;
-        canParser.powerAuxExampleStruct.b += 2;
-        canParser.powerAuxExampleStruct.c += 3;
-        canParser.powerAuxExampleStruct.d += 4;
+        bms_can_parser.powerAuxExampleStruct.a++;
+        bms_can_parser.powerAuxExampleStruct.b += 2;
+        bms_can_parser.powerAuxExampleStruct.c += 3;
+        bms_can_parser.powerAuxExampleStruct.d += 4;
 
-        thread_sleep_for(MAIN_LOOP_PERIOD_MS);
+        ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }
 }

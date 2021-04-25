@@ -2,22 +2,27 @@
 #define CAN_INTERFACE_H
 
 #include <mbed.h>
-
 #include "CANParser.h"
 
 class CANInterface
 {
 public:
-    CANInterface(CAN &c, CANParser &cp, Ticker &tx, DigitalOut *stby=nullptr, std::chrono::microseconds txPeriod=0s);
+    CANInterface(CAN &c, CANParser &cp, Thread &tx_thread, Thread &rx_thread, DigitalOut *stby=nullptr, std::chrono::milliseconds can_period = 1s);
+    void startCANTransmission(void);
 
 private:
-    void rxHandler();
-    void txHandler();
+    void rx_handler(void);
+    void tx_handler(void);
 
     CAN &can;
-    CANParser &canParser;
-    Ticker &txTicker;
+    CANParser &can_parser;
     DigitalOut *standby;
+
+    Thread &tx_thread;
+    Thread &rx_thread;
+
+    std::chrono::milliseconds tx_period;
+
 };
 
 #endif
