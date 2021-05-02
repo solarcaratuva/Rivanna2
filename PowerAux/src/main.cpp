@@ -8,9 +8,8 @@
 #define TESTING     // only defined if using test functions
 // #define DEBUGGING   // only define if debugging
 
-#define MAIN_LOOP_PERIOD 1s  // units of 1 ms
-#define CAN_PERIOD_MS 1000 // ms
-#define CAN_PERIOD_S 1s
+#define MAIN_LOOP_PERIOD 1s
+#define CAN_PERIOD 1s
 
 BufferedSerial device(USBTX, USBRX);
 
@@ -26,8 +25,8 @@ Thread vehicle_can_rx_thread;
 
 PowerAuxCANParser bms_can_parser;
 PowerAuxCANParser vehicle_can_parser;
-CANInterface bms_can_interface(bms_can, bms_can_parser, bms_can_tx_thread, bms_can_rx_thread, &bms_can_stby, CAN_PERIOD_S);
-CANInterface vehicle_can_interface(vehicle_can, vehicle_can_parser, vehicle_can_tx_thread, vehicle_can_rx_thread, &vehicle_can_stby, CAN_PERIOD_S);
+CANInterface bms_can_interface(bms_can, bms_can_parser, bms_can_tx_thread, bms_can_rx_thread, &bms_can_stby, CAN_PERIOD);
+CANInterface vehicle_can_interface(vehicle_can, vehicle_can_parser, vehicle_can_tx_thread, vehicle_can_rx_thread, &vehicle_can_stby, CAN_PERIOD);
 
 int main() {
     // device.set_baud(38400);

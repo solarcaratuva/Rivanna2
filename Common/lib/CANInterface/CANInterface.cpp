@@ -42,6 +42,6 @@ void CANInterface::tx_handler(void)
             can.write(fifo.front());
             fifo.pop();
         }
-        ThisThread::sleep_for(CAN_PERIOD);
+        ThisThread::sleep_for(tx_period);
     }
 }
