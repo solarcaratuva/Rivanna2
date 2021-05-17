@@ -146,7 +146,7 @@ public:
     SPI(const spi_pinmap_t &static_pinmap, PinName ssel);
     SPI(const spi_pinmap_t &&, PinName) = delete; // prevent passing of temporary objects
 
-    virtual ~SPI();
+    virtual ~SPI() {}
 
     /** Configure the data transmission format.
      *
@@ -162,13 +162,13 @@ public:
      *   3  |  1   1
      * @endcode
      */
-    void format(int bits, int mode = 0);
+    virtual void format(int bits, int mode = 0) = 0;
 
     /** Set the SPI bus clock frequency.
      *
      *  @param hz Clock frequency in Hz (default = 1MHz).
      */
-    void frequency(int hz = 1000000);
+    virtual void frequency(int hz = 1000000) = 0;
 
     /** Write to the SPI Slave and return the response.
      *
@@ -176,7 +176,7 @@ public:
      *
      *  @return Response from the SPI slave.
      */
-    virtual int write(int value);
+    virtual int write(int value) = 0;
 
     /** Write to the SPI Slave and obtain the response.
      *
@@ -192,26 +192,26 @@ public:
      *      The number of bytes written and read from the device. This is
      *      maximum of tx_length and rx_length.
      */
-    virtual int write(const char *tx_buffer, int tx_length, char *rx_buffer, int rx_length);
+    virtual int write(const char *tx_buffer, int tx_length, char *rx_buffer, int rx_length) = 0;
 
     /** Acquire exclusive access to this SPI bus.
      */
-    virtual void lock(void);
+    virtual void lock(void) = 0;
 
     /** Release exclusive access to this SPI bus.
      */
-    virtual void unlock(void);
+    virtual void unlock(void) = 0;
 
     /** Assert the Slave Select line, acquiring exclusive access to this SPI bus.
      *
      * If use_gpio_ssel was not passed to the constructor, this only acquires
      * exclusive access; it cannot assert the Slave Select line.
      */
-    void select(void);
+    virtual void select(void) = 0;
 
     /** Deassert the Slave Select line, releasing exclusive access to this SPI bus.
      */
-    void deselect(void);
+    virtual void deselect(void) = 0;
 
     /** Set default write data.
       * SPI requires the master to send some data during a read operation.
@@ -220,7 +220,7 @@ public:
       *
       * @param data Default character to be transmitted during a read operation.
       */
-    void set_default_write_value(char data);
+    virtual void set_default_write_value(char data) = 0;
 
 #if DEVICE_SPI_ASYNCH
 
@@ -273,184 +273,185 @@ public:
      */
     int set_dma_usage(DMAUsage usage);
 
-#if !defined(DOXYGEN_ONLY)
-protected:
 
-    /** SPI interrupt handler.
-     */
-    void irq_handler_asynch(void);
+// #if !defined(DOXYGEN_ONLY)
+// protected:
 
-    /** Start the transfer or put it on the queue.
-     *
-     * @param tx_buffer The TX buffer with data to be transferred. If NULL is passed,
-     *                  the default SPI value is sent
-     * @param tx_length The length of TX buffer in bytes.
-     * @param rx_buffer The RX buffer which is used for received data. If NULL is passed,
-     *                  received data are ignored.
-     * @param rx_length The length of RX buffer in bytes.
-     * @param bit_width The buffers element width in bits.
-     * @param callback  The event callback function.
-     * @param event     The event mask of events to modify.
-     *
-     * @return Operation success.
-     * @retval 0 A transfer was started or added to the queue.
-     * @retval -1 Transfer can't be added because queue is full.
-     */
-    int transfer(const void *tx_buffer, int tx_length, void *rx_buffer, int rx_length, unsigned char bit_width, const event_callback_t &callback, int event);
+    // /** SPI interrupt handler.
+    //  */
+    // void irq_handler_asynch(void);
 
-    /** Put a transfer on the transfer queue.
-     *
-     * @param tx_buffer The TX buffer with data to be transferred. If NULL is passed,
-     *                  the default SPI value is sent.
-     * @param tx_length The length of TX buffer in bytes.
-     * @param rx_buffer The RX buffer which is used for received data. If NULL is passed,
-     *                  received data are ignored.
-     * @param rx_length The length of RX buffer in bytes.
-     * @param bit_width The buffers element width in bits.
-     * @param callback  The event callback function.
-     * @param event     The event mask of events to modify.
-     *
-     * @return Operation success.
-     * @retval 0 A transfer was added to the queue.
-     * @retval -1 Transfer can't be added because queue is full.
-     */
-    int queue_transfer(const void *tx_buffer, int tx_length, void *rx_buffer, int rx_length, unsigned char bit_width, const event_callback_t &callback, int event);
+    // /** Start the transfer or put it on the queue.
+    //  *
+    //  * @param tx_buffer The TX buffer with data to be transferred. If NULL is passed,
+    //  *                  the default SPI value is sent
+    //  * @param tx_length The length of TX buffer in bytes.
+    //  * @param rx_buffer The RX buffer which is used for received data. If NULL is passed,
+    //  *                  received data are ignored.
+    //  * @param rx_length The length of RX buffer in bytes.
+    //  * @param bit_width The buffers element width in bits.
+    //  * @param callback  The event callback function.
+    //  * @param event     The event mask of events to modify.
+    //  *
+    //  * @return Operation success.
+    //  * @retval 0 A transfer was started or added to the queue.
+    //  * @retval -1 Transfer can't be added because queue is full.
+    //  */
+    // int transfer(const void *tx_buffer, int tx_length, void *rx_buffer, int rx_length, unsigned char bit_width, const event_callback_t &callback, int event);
 
-    /** Configure a callback, SPI peripheral, and initiate a new transfer.
-     *
-     * @param tx_buffer The TX buffer with data to be transferred. If NULL is passed,
-     *                  the default SPI value is sent.
-     * @param tx_length The length of TX buffer in bytes.
-     * @param rx_buffer The RX buffer which is used for received data. If NULL is passed,
-     *                  received data are ignored.
-     * @param rx_length The length of RX buffer in bytes.
-     * @param bit_width The buffers element width.
-     * @param callback  The event callback function.
-     * @param event     The event mask of events to modify.
-     */
-    void start_transfer(const void *tx_buffer, int tx_length, void *rx_buffer, int rx_length, unsigned char bit_width, const event_callback_t &callback, int event);
+    // /** Put a transfer on the transfer queue.
+    //  *
+    //  * @param tx_buffer The TX buffer with data to be transferred. If NULL is passed,
+    //  *                  the default SPI value is sent.
+    //  * @param tx_length The length of TX buffer in bytes.
+    //  * @param rx_buffer The RX buffer which is used for received data. If NULL is passed,
+    //  *                  received data are ignored.
+    //  * @param rx_length The length of RX buffer in bytes.
+    //  * @param bit_width The buffers element width in bits.
+    //  * @param callback  The event callback function.
+    //  * @param event     The event mask of events to modify.
+    //  *
+    //  * @return Operation success.
+    //  * @retval 0 A transfer was added to the queue.
+    //  * @retval -1 Transfer can't be added because queue is full.
+    //  */
+    // int queue_transfer(const void *tx_buffer, int tx_length, void *rx_buffer, int rx_length, unsigned char bit_width, const event_callback_t &callback, int event);
 
-private:
-    /** Lock deep sleep only if it is not yet locked */
-    void lock_deep_sleep();
+    // /** Configure a callback, SPI peripheral, and initiate a new transfer.
+    //  *
+    //  * @param tx_buffer The TX buffer with data to be transferred. If NULL is passed,
+    //  *                  the default SPI value is sent.
+    //  * @param tx_length The length of TX buffer in bytes.
+    //  * @param rx_buffer The RX buffer which is used for received data. If NULL is passed,
+    //  *                  received data are ignored.
+    //  * @param rx_length The length of RX buffer in bytes.
+    //  * @param bit_width The buffers element width.
+    //  * @param callback  The event callback function.
+    //  * @param event     The event mask of events to modify.
+    //  */
+    // void start_transfer(const void *tx_buffer, int tx_length, void *rx_buffer, int rx_length, unsigned char bit_width, const event_callback_t &callback, int event);
 
-    /** Unlock deep sleep in case it is locked */
-    void unlock_deep_sleep();
+// private:
+//     /** Lock deep sleep only if it is not yet locked */
+//     void lock_deep_sleep();
+
+//     /** Unlock deep sleep in case it is locked */
+//     void unlock_deep_sleep();
 
 
-#if TRANSACTION_QUEUE_SIZE_SPI
-    /** Start a new transaction.
-     *
-     *  @param data Transaction data.
-     */
-    void start_transaction(transaction_t *data);
+// #if TRANSACTION_QUEUE_SIZE_SPI
+//     /** Start a new transaction.
+//      *
+//      *  @param data Transaction data.
+//      */
+//     void start_transaction(transaction_t *data);
 
-    /** Dequeue a transaction and start the transfer if there was one pending.
-     */
-    void dequeue_transaction();
+//     /** Dequeue a transaction and start the transfer if there was one pending.
+//      */
+//     void dequeue_transaction();
 
-#endif // TRANSACTION_QUEUE_SIZE_SPI
-#endif // !defined(DOXYGEN_ONLY)
+// #endif // TRANSACTION_QUEUE_SIZE_SPI
+// #endif // !defined(DOXYGEN_ONLY)
 #endif // DEVICE_SPI_ASYNCH
 
-#if !defined(DOXYGEN_ONLY)
-protected:
-#ifdef DEVICE_SPI_COUNT
-    // HAL must have defined this as a global enum
-    typedef ::SPIName SPIName;
-#else
-    // HAL may or may not have defined it - use a local definition
-    enum SPIName { GlobalSPI };
-#endif
+// #if !defined(DOXYGEN_ONLY)
+// protected:
+// #ifdef DEVICE_SPI_COUNT
+//     // HAL must have defined this as a global enum
+//     typedef ::SPIName SPIName;
+// #else
+//     // HAL may or may not have defined it - use a local definition
+//     enum SPIName { GlobalSPI };
+// #endif
 
-    // All members of spi_peripheral_s must be initialized to make the structure
-    // constant-initialized, and hence able to be omitted by the linker,
-    // as SingletonPtr now relies on C++ constant-initialization. (Previously it
-    // worked through C++ zero-initialization). And all the constants should be zero
-    // to ensure it stays in the actual zero-init part of the image if used, avoiding
-    // an initialized-data cost.
-    struct spi_peripheral_s {
-        /* Internal SPI name identifying the resources. */
-        SPIName name = SPIName(0);
-        /* Internal SPI object handling the resources' state. */
-        spi_t spi{};
-        /* Used by lock and unlock for thread safety */
-        SingletonPtr<PlatformMutex> mutex;
-        /* Current user of the SPI */
-        SPI *owner = nullptr;
-#if DEVICE_SPI_ASYNCH && TRANSACTION_QUEUE_SIZE_SPI
-        /* Queue of pending transfers */
-        SingletonPtr<CircularBuffer<Transaction<SPI>, TRANSACTION_QUEUE_SIZE_SPI> > transaction_buffer;
-#endif
-    };
+    // // All members of spi_peripheral_s must be initialized to make the structure
+    // // constant-initialized, and hence able to be omitted by the linker,
+    // // as SingletonPtr now relies on C++ constant-initialization. (Previously it
+    // // worked through C++ zero-initialization). And all the constants should be zero
+    // // to ensure it stays in the actual zero-init part of the image if used, avoiding
+    // // an initialized-data cost.
+    // struct spi_peripheral_s {
+    //     /* Internal SPI name identifying the resources. */
+    //     SPIName name = SPIName(0);
+    //     /* Internal SPI object handling the resources' state. */
+    //     spi_t spi{};
+    //     /* Used by lock and unlock for thread safety */
+    //     SingletonPtr<PlatformMutex> mutex;
+    //     /* Current user of the SPI */
+    //     SPI *owner = nullptr;
+// #if DEVICE_SPI_ASYNCH && TRANSACTION_QUEUE_SIZE_SPI
+//         /* Queue of pending transfers */
+//         SingletonPtr<CircularBuffer<Transaction<SPI>, TRANSACTION_QUEUE_SIZE_SPI> > transaction_buffer;
+// #endif
+    // };
 
-    // holds spi_peripheral_s per peripheral on the device.
-    // Drawback: it costs ram size even if the device is not used, however
-    // application can limit the allocation via JSON.
-    static spi_peripheral_s _peripherals[SPI_PERIPHERALS_USED];
-    static int _peripherals_used;
+    // // holds spi_peripheral_s per peripheral on the device.
+    // // Drawback: it costs ram size even if the device is not used, however
+    // // application can limit the allocation via JSON.
+    // static spi_peripheral_s _peripherals[SPI_PERIPHERALS_USED];
+    // static int _peripherals_used;
 
-    // Holds the reference to the associated peripheral.
-    spi_peripheral_s *_peripheral;
+    // // Holds the reference to the associated peripheral.
+    // spi_peripheral_s *_peripheral;
 
-#if DEVICE_SPI_ASYNCH
-    /* Interrupt */
-    CThunk<SPI> _irq;
-    /* Interrupt handler callback */
-    event_callback_t _callback;
-    /* Current preferred DMA mode @see dma_api.h */
-    DMAUsage _usage;
-    /* Current sate of the sleep manager */
-    bool _deep_sleep_locked;
-#endif // DEVICE_SPI_ASYNCH
+// #if DEVICE_SPI_ASYNCH
+//     /* Interrupt */
+//     CThunk<SPI> _irq;
+//     /* Interrupt handler callback */
+//     event_callback_t _callback;
+//     /* Current preferred DMA mode @see dma_api.h */
+//     DMAUsage _usage;
+//     /* Current sate of the sleep manager */
+//     bool _deep_sleep_locked;
+// #endif // DEVICE_SPI_ASYNCH
 
-    // Configuration.
-    PinName _mosi;
-    PinName _miso;
-    PinName _sclk;
-    PinName _hw_ssel;
+    // // Configuration.
+    // PinName _mosi;
+    // PinName _miso;
+    // PinName _sclk;
+    // PinName _hw_ssel;
 
-    // The Slave Select GPIO if we're doing it ourselves.
-    DigitalOut _sw_ssel;
+    // // The Slave Select GPIO if we're doing it ourselves.
+    // DigitalOut _sw_ssel;
 
-    /* Size of the SPI frame */
-    int _bits;
-    /* Clock polairy and phase */
-    int _mode;
-    /* Clock frequency */
-    int _hz;
-    /* Default character used for NULL transfers */
-    char _write_fill;
-    /* Select count to handle re-entrant selection */
-    int8_t _select_count;
-    /* Static pinmap data */
-    const spi_pinmap_t *_static_pinmap;
-    /* SPI peripheral name */
-    SPIName _peripheral_name;
-    /* Pointer to spi init function */
-    void (*_init_func)(SPI *);
+    // /* Size of the SPI frame */
+    // int _bits;
+    // /* Clock polairy and phase */
+    // int _mode;
+    // /* Clock frequency */
+    // int _hz;
+    // /* Default character used for NULL transfers */
+    // char _write_fill;
+    // /* Select count to handle re-entrant selection */
+    // int8_t _select_count;
+    // /* Static pinmap data */
+    // const spi_pinmap_t *_static_pinmap;
+    // /* SPI peripheral name */
+    // SPIName _peripheral_name;
+    // /* Pointer to spi init function */
+    // void (*_init_func)(SPI *);
 
-private:
-    void _do_construct();
+// private:
+//     void _do_construct();
 
-    /** Private acquire function without locking/unlocking.
-     *  Implemented in order to avoid duplicate locking and boost performance.
-     */
-    void _acquire(void);
-    void _set_ssel(int);
+//     /** Private acquire function without locking/unlocking.
+//      *  Implemented in order to avoid duplicate locking and boost performance.
+//      */
+//     void _acquire(void);
+//     void _set_ssel(int);
 
-    /** Private lookup in the static _peripherals table.
-     */
-    static spi_peripheral_s *_lookup(SPIName name);
-    /** Allocate an entry in the static _peripherals table.
-     */
-    static spi_peripheral_s *_alloc();
+//     /** Private lookup in the static _peripherals table.
+//      */
+//     static spi_peripheral_s *_lookup(SPIName name);
+//     /** Allocate an entry in the static _peripherals table.
+//      */
+//     static spi_peripheral_s *_alloc();
 
-    static void _do_init(SPI *obj);
-    static void _do_init_direct(SPI *obj);
+//     static void _do_init(SPI *obj);
+//     static void _do_init_direct(SPI *obj);
 
 
-#endif //!defined(DOXYGEN_ONLY)
+// #endif //!defined(DOXYGEN_ONLY)
 };
 
 /** @}*/

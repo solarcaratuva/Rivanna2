@@ -150,6 +150,9 @@ public:
     }
 };
 
+// Internally used event type
+using event_callback_t = Callback<void(int)>;
+
 /** Create a callback class with type inferred from the arguments
  *
  *  @param func     Static function to attach

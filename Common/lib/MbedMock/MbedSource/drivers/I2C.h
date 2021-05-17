@@ -98,7 +98,7 @@ public:
      *
      *  @param hz The bus frequency in hertz
      */
-    void frequency(int hz);
+    virtual void frequency(int hz) = 0;
 
     /** Read from an I2C slave
      *
@@ -115,7 +115,7 @@ public:
      *       0 on success (ack),
      *       nonzero on failure (nack)
      */
-    int read(int address, char *data, int length, bool repeated = false);
+    virtual int read(int address, char *data, int length, bool repeated = false) = 0;
 
     /** Read a single byte from the I2C bus
      *
@@ -124,7 +124,7 @@ public:
      *  @returns
      *    the byte read
      */
-    int read(int ack);
+    virtual int read(int ack) = 0;
 
     /** Write to an I2C slave
      *
@@ -141,7 +141,7 @@ public:
      *       0 on success (ack),
      *       nonzero on failure (nack)
      */
-    int write(int address, const char *data, int length, bool repeated = false);
+    virtual int write(int address, const char *data, int length, bool repeated = false) = 0;
 
     /** Write single byte out on the I2C bus
      *
@@ -152,15 +152,15 @@ public:
      *    '1' - ACK was received,
      *    '2' - timeout
      */
-    int write(int data);
+    virtual int write(int data) = 0;
 
     /** Creates a start condition on the I2C bus
      */
-    void start(void);
+    virtual void start(void) = 0;
 
     /** Creates a stop condition on the I2C bus
      */
-    void stop(void);
+    virtual void stop(void) = 0;
 
     /** Acquire exclusive access to this I2C bus
      */
@@ -170,10 +170,7 @@ public:
      */
     virtual void unlock(void);
 
-    virtual ~I2C()
-    {
-        // Do nothing
-    }
+    virtual ~I2C() {}
 
 #if DEVICE_I2C_ASYNCH
 
@@ -199,47 +196,47 @@ public:
      */
     void abort_transfer();
 
-#if !defined(DOXYGEN_ONLY)
-protected:
-    /** Lock deep sleep only if it is not yet locked */
-    void lock_deep_sleep();
+// #if !defined(DOXYGEN_ONLY)
+// protected:
+//     /** Lock deep sleep only if it is not yet locked */
+//     void lock_deep_sleep();
 
-    /** Unlock deep sleep only if it has been locked */
-    void unlock_deep_sleep();
+//     /** Unlock deep sleep only if it has been locked */
+//     void unlock_deep_sleep();
 
-    void irq_handler_asynch(void);
-    event_callback_t _callback;
-    CThunk<I2C> _irq;
-    DMAUsage _usage;
-    bool _deep_sleep_locked;
+//     void irq_handler_asynch(void);
+//     event_callback_t _callback;
+//     CThunk<I2C> _irq;
+//     DMAUsage _usage;
+//     bool _deep_sleep_locked;
+// #endif
 #endif
-#endif
 
-#if !defined(DOXYGEN_ONLY)
-protected:
-    void aquire();
+// #if !defined(DOXYGEN_ONLY)
+// protected:
+//     void aquire();
 
-    i2c_t _i2c;
-    static I2C  *_owner;
-    int    _hz;
-    static SingletonPtr<PlatformMutex> _mutex;
-    PinName _sda;
-    PinName _scl;
+//     i2c_t _i2c;
+//     static I2C  *_owner;
+//     int    _hz;
+//     static SingletonPtr<PlatformMutex> _mutex;
+//     PinName _sda;
+//     PinName _scl;
 
-private:
-    /** Recover I2C bus, when stuck with SDA low
-     *  @note : Initialization of I2C bus is required after this API.
-     *
-     *  @param sda I2C data line pin
-     *  @param scl I2C clock line pin
-     *
-     * @returns
-     *    '0' - Successfully recovered
-     *    'I2C_ERROR_BUS_BUSY' - In case of failure
-     *
-     */
-    int recover(PinName sda, PinName scl);
-#endif
+// private:
+//     /** Recover I2C bus, when stuck with SDA low
+//      *  @note : Initialization of I2C bus is required after this API.
+//      *
+//      *  @param sda I2C data line pin
+//      *  @param scl I2C clock line pin
+//      *
+//      * @returns
+//      *    '0' - Successfully recovered
+//      *    'I2C_ERROR_BUS_BUSY' - In case of failure
+//      *
+//      */
+//     int recover(PinName sda, PinName scl);
+// #endif
 };
 
 /** @}*/
