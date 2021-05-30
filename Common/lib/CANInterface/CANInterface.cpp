@@ -1,36 +1,47 @@
 #include "CANInterface.h"
 #include "Printing.h"
 
-#define CAN_PERIOD  10ms
+#define CAN_PERIOD  1000ms
 
-CANInterface::CANInterface(CAN &c, CANParser &cp, Ticker &tx, DigitalOut *stby, std::chrono::microseconds txPeriod) : can(c), canParser(cp), txTicker(tx)
-{
-    txTicker.attach(callback(this, &CANInterface::txHandler), (txPeriod==0s ? CAN_PERIOD : txPeriod));
-    can.attach(callback(this, &CANInterface::rxHandler), CAN::RxIrq);
-    if(stby)
-    {
+CANInterface::CANInterface(CAN &c, CANParser &cp, Thread &tx_thrd, Thread &rx_thrd, DigitalOut *stby, std::chrono::milliseconds tx_prd) : can(c), can_parser(cp), tx_thread(rx_thrd), rx_thread(tx_thrd), tx_period(tx_prd)
+{    
+    if(stby)    // should these be checked in the rx/tx threads? once we initialize this we 
+    {           // won't have control over it anymore 
         standby = stby;
         *standby = 0;   // active low
     }
 }
 
-// WARNING: This method will be called in an ISR context
-void CANInterface::rxHandler()
+void CANInterface::startCANTransmission(void)
 {
-    CANMessage receivedCANMessage;
-    while (can.read(receivedCANMessage))
+    tx_thread.start(callback(this, &CANInterface::tx_handler));
+    rx_thread.start(callback(this, &CANInterface::rx_handler));
+}
+
+// WARNING: This method will be called in an ISR context
+void CANInterface::rx_handler(void)
+{
+    while(1)
     {
-        canParser.parse(receivedCANMessage);
+        CANMessage receivedCANMessage;
+        while (can.read(receivedCANMessage))
+        {
+            can_parser.parse(receivedCANMessage);
+        }
     }
 }
 
 // WARNING: This method will be called in an ISR context
-void CANInterface::txHandler()
+void CANInterface::tx_handler(void)
 {
-    queue<CANMessage> fifo = canParser.getMessages();
-    while(!fifo.empty())
+    while(1)
     {
-        can.write(fifo.front());
-        fifo.pop();
+        queue<CANMessage> fifo = can_parser.getMessages();
+        while(!fifo.empty())
+        {
+            can.write(fifo.front());
+            fifo.pop();
+        }
+        ThisThread::sleep_for(tx_period);
     }
 }
