@@ -13,13 +13,18 @@ void printIntegerAsFloat(int num, int decimals) {
 
     if(d < 0)
     {
+        printing_mutex.lock();
         PRINT("ERROR: printIntegerAsFloat() argument decimals was negative.");
+        printing_mutex.unlock();
         return;
     }
 
     if(left < 0)
+    {
+        printing_mutex.lock();
         PRINT("-");
-    
+        printing_mutex.unlock();
+    }
     int mult = 1;
     for(int i = 0; i < d; ++i)
         mult *= 10;
@@ -27,15 +32,24 @@ void printIntegerAsFloat(int num, int decimals) {
     left = abs(left/mult);
     right = abs(right) - left * mult;
 
+    printing_mutex.lock();
     PRINT("%d.", left);
+    printing_mutex.unlock();
 
     for(int i = 10; i < mult; i*=10)
     {
         if(right < i)
+        {
+            printing_mutex.lock();
             PRINT("0");
+            printing_mutex.unlock();
+        }    
     }
 
+    printing_mutex.lock();
     PRINT("%d", right);
+    printing_mutex.unlock();
+
 #endif //PRINTING
 }
 
@@ -48,7 +62,9 @@ void printFloat(float num, int decimals) {
     
     if(d < 0)
     {
+        printing_mutex.lock();
         PRINT("ERROR: printFloat() argument decimals was negative.");
+        printing_mutex.unlock();
         return;
     }
 
@@ -57,5 +73,6 @@ void printFloat(float num, int decimals) {
         mult *= 10;
 
     printIntegerAsFloat((int)(n*mult), d);
+
 #endif //PRINTING
 }

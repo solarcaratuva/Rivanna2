@@ -19,4 +19,7 @@ void printIntegerAsFloat(int num, int decimals);
 // Output: print num as a float
 void printFloat(float num, int decimals);
 
+// Used to make printing thread safe
+Mutex printing_mutex;
+
 #endif // PRINTING_H
