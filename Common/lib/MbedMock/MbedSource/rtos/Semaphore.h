@@ -120,10 +120,10 @@ public:
     ~Semaphore() {}
 
 private:
-    void constructor(int32_t count, uint16_t max_count);
+    virtual void constructor(int32_t count, uint16_t max_count) = 0;
 
 #if MBED_CONF_RTOS_PRESENT
-    int32_t _wait(uint32_t millisec);
+    virtual int32_t _wait(uint32_t millisec) = 0;
 
     osSemaphoreId_t               _id;
     mbed_rtos_storage_semaphore_t _obj_mem;

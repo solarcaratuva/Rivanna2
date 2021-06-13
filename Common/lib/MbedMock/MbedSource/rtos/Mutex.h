@@ -87,7 +87,7 @@ public:
 
       @note You cannot call this function from ISR context.
      */
-    void lock();
+    virtual void lock() = 0;
 
     /** Try to lock the mutex, and return immediately
       @return true if the mutex was acquired, false otherwise.
@@ -95,7 +95,7 @@ public:
 
       @note You cannot call this function from ISR context.
      */
-    bool trylock();
+    virtual bool trylock() = 0;
 
     /** Try to lock the mutex for a specified time
       @param   millisec  timeout value.
@@ -109,7 +109,7 @@ public:
       @deprecated Pass a chrono duration, not an integer millisecond count. For example use `5s` rather than `5000`.
      */
     MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono duration, not an integer millisecond count. For example use `5s` rather than `5000`.")
-    bool trylock_for(uint32_t millisec);
+    virtual bool trylock_for(uint32_t millisec) = 0;
 
     /** Try to lock the mutex for a specified time
       @param   rel_time  timeout value.
@@ -121,7 +121,7 @@ public:
 
       @note You cannot call this function from ISR context.
      */
-    bool trylock_for(Kernel::Clock::duration_u32 rel_time);
+    virtual bool trylock_for(Kernel::Clock::duration_u32 rel_time) = 0;
 
     /** Try to lock the mutex until specified time
       @param   millisec  absolute timeout time, referenced to Kernel::get_ms_count()
@@ -136,7 +136,7 @@ public:
                   `Kernel::Clock::now() + 5s` rather than `Kernel::get_ms_count() + 5000`.
      */
     MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono time_point, not an integer millisecond count. For example use `Kernel::Clock::now() + 5s` rather than `Kernel::get_ms_count() + 5000`.")
-    bool trylock_until(uint64_t millisec);
+    virtual bool trylock_until(uint64_t millisec) = 0;
 
     /** Try to lock the mutex until specified time
       @param   abs_time  absolute timeout time, referenced to Kernel::Clock
@@ -148,21 +148,21 @@ public:
 
       @note You cannot call this function from ISR context.
      */
-    bool trylock_until(Kernel::Clock::time_point abs_time);
+    virtual bool trylock_until(Kernel::Clock::time_point abs_time) = 0;
 
     /**
       Unlock the mutex that has previously been locked by the same thread
 
       @note You cannot call this function from ISR context.
      */
-    void unlock();
+    virtual void unlock() = 0;
 
     /** Get the owner the this mutex
       @return  the current owner of this mutex.
 
       @note You cannot call this function from ISR context.
      */
-    osThreadId_t get_owner();
+    virtual osThreadId_t get_owner() = 0;
 
     /** Mutex destructor
      *

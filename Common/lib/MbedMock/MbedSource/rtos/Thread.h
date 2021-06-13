@@ -136,21 +136,21 @@ public:
 
       @note You cannot call this function ISR context.
     */
-    osStatus start(mbed::Callback<void()> task);
+    virtual osStatus start(mbed::Callback<void()> task) = 0;
 
     /** Wait for thread to terminate
       @return  status code that indicates the execution status of the function.
 
       @note You cannot call this function from ISR context.
     */
-    osStatus join();
+    virtual osStatus join() = 0;
 
     /** Terminate execution of a thread and remove it from Active Threads
       @return  status code that indicates the execution status of the function.
 
       @note You cannot call this function from ISR context.
     */
-    osStatus terminate();
+    virtual osStatus terminate() = 0;
 
     /** Set priority of an active thread
       @param   priority  new priority value for the thread function.
@@ -158,14 +158,14 @@ public:
 
       @note You cannot call this function from ISR context.
     */
-    osStatus set_priority(osPriority priority);
+    virtual osStatus set_priority(osPriority priority) = 0;
 
     /** Get priority of an active thread
       @return  current priority value of the thread function.
 
       @note You cannot call this function from ISR context.
     */
-    osPriority get_priority() const;
+    virtual osPriority get_priority() const = 0;
 
     /** Set the specified Thread Flags for the thread.
       @param   flags  specifies the flags of the thread that should be set.
@@ -173,7 +173,7 @@ public:
 
       @note You may call this function from ISR context.
     */
-    uint32_t flags_set(uint32_t flags);
+    virtual uint32_t flags_set(uint32_t flags) = 0;
 
     /** State of the Thread */
     enum State {
@@ -203,55 +203,55 @@ public:
 
       @note You cannot call this function from ISR context.
     */
-    State get_state() const;
+    virtual State get_state() const = 0;
 
     /** Get the total stack memory size for this Thread
       @return  the total stack memory size in bytes
 
       @note You cannot call this function from ISR context.
     */
-    uint32_t stack_size() const;
+    virtual uint32_t stack_size() const = 0;
 
     /** Get the currently unused stack memory for this Thread
       @return  the currently unused stack memory in bytes
 
       @note You cannot call this function from ISR context.
     */
-    uint32_t free_stack() const;
+    virtual uint32_t free_stack() const = 0;
 
     /** Get the currently used stack memory for this Thread
       @return  the currently used stack memory in bytes
 
       @note You cannot call this function from ISR context.
     */
-    uint32_t used_stack() const;
+    virtual uint32_t used_stack() const = 0;
 
     /** Get the maximum stack memory usage to date for this Thread
       @return  the maximum stack memory usage to date in bytes
 
       @note You cannot call this function from ISR context.
     */
-    uint32_t max_stack() const;
+    virtual uint32_t max_stack() const = 0;
 
     /** Get thread name
       @return  thread name or nullptr if the name was not set.
 
       @note You may call this function from ISR context.
      */
-    const char *get_name() const;
+    virtual const char *get_name() const = 0;
 
     /** Get thread id
       @return  thread ID for reference by other functions.
 
       @note You may call this function from ISR context.
      */
-    osThreadId_t get_id() const;
+    virtual osThreadId_t get_id() const = 0;
 
     /** Thread destructor
      *
      * @note You cannot call this function from ISR context.
      */
-    virtual ~Thread();
+    virtual ~Thread() {}
 
 private:
     // Required to share definitions without
