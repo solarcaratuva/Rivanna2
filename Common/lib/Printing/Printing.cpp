@@ -3,6 +3,9 @@
 
 using namespace std;
 
+// Used to make printing thread safe
+Mutex printing_mutex;
+
 // Input: an integer representing a float with decimals digits past decimal multiplied by 10^decimals
 // Output: print num as a float
 void printIntegerAsFloat(int num, int decimals) {
