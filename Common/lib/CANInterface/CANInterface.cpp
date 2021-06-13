@@ -2,9 +2,10 @@
 #include "Printing.h"
 
 #define CAN_PERIOD  1000ms
+#define RX_QUEUE_EVENT_SIZE (EVENTS_EVENT_SIZE + sizeof(CANMessage))
 
-CANInterface::CANInterface(CAN &c, CANParser &cp, Thread &tx_thrd, Thread &rx_thrd, DigitalOut *stby, std::chrono::milliseconds tx_prd) : can(c), can_parser(cp), tx_thread(rx_thrd), rx_thread(tx_thrd), tx_period(tx_prd)
-{    
+CANInterface::CANInterface(PinName rd, PinName td, CANParser &cp, Thread &rx_thrd, Thread &tx_thrd, DigitalOut *stby, std::chrono::milliseconds tx_prd, int rx_queue_size) : can(rd, td), can_parser(cp), rx_thread(rx_thrd), tx_thread(tx_thrd), tx_period(tx_prd), rx_queue(rx_queue_size * RX_QUEUE_EVENT_SIZE)
+{
     if(stby)    // should these be checked in the rx/tx threads? once we initialize this we 
     {           // won't have control over it anymore 
         standby = stby;
@@ -12,26 +13,29 @@ CANInterface::CANInterface(CAN &c, CANParser &cp, Thread &tx_thrd, Thread &rx_th
     }
 }
 
-void CANInterface::startCANTransmission(void)
+void CANInterface::start_CAN_transmission(void)
 {
+    rx_thread.start(callback(&rx_queue, &EventQueue::dispatch_forever));
     tx_thread.start(callback(this, &CANInterface::tx_handler));
-    rx_thread.start(callback(this, &CANInterface::rx_handler));
+
+    can.attach(callback(this, &CANInterface::rx_isr), CAN::RxIrq);
 }
 
 // WARNING: This method will be called in an ISR context
-void CANInterface::rx_handler(void)
+void CANInterface::rx_isr(void)
 {
-    while(1)
+    CANMessage received_message;
+    while (can.read(received_message))
     {
-        CANMessage receivedCANMessage;
-        while (can.read(receivedCANMessage))
-        {
-            can_parser.parse(receivedCANMessage);
-        }
+        rx_queue.call(callback(this, &CANInterface::rx_handler), received_message);
     }
 }
 
-// WARNING: This method will be called in an ISR context
+void CANInterface::rx_handler(CANMessage received_message)
+{
+    can_parser.parse(received_message);
+}
+
 void CANInterface::tx_handler(void)
 {
     while(1)
