@@ -6,8 +6,8 @@
 #include <stdint.h>
 #include <chrono>
 #include "rtos/mbed_rtos_types.h"
-#include "rtos/internal/mbed_rtos1_types.h"
-#include "rtos/internal/mbed_rtos_storage.h"
+#include "../internal/mbed_rtos1_types.h"
+#include "../internal/mbed_rtos_storage.h"
 #include "rtos/Kernel.h"
 //#include "platform/mbed_toolchain.h"
 //#include "platform/NonCopyable.h"
@@ -27,7 +27,7 @@ namespace rtos {
  * Memory considerations: The semaphore control structures will be created on current thread's stack, both for the mbed OS
  * and underlying RTOS objects (static or dynamic RTOS memory pools are not being used).
  */
-class Semaphore : private mbed::NonCopyable<Semaphore> {
+class Semaphore {
 public:
     /** Create and Initialize a Semaphore object used for managing resources.
       @param count      number of available resources; maximum index value is (count-1). (default: 0).

@@ -6,6 +6,8 @@
 
 #define DEVICE_ANALOGIN TRUE  // enable AnalogIn
 #define DEVICE_CAN      TRUE  // enable CAN
+#define DEVICE_I2C      TRUE  // enable I2C
+#define DEVICE_SPI      TRUE  // enable SPI
 
 // mbed Peripheral components
 #include "MbedSource/drivers/AnalogIn.h"
@@ -13,6 +15,8 @@
 #include "MbedSource/drivers/DigitalOut.h"
 #include "MbedSource/drivers/CAN.h"
 #include "MbedSource/drivers/Ticker.h"
+#include "MbedSource/drivers/SPI.h"
+#include "MbedSource/drivers/I2C.h"
 
 // standard library includes
 #include <string>   // for string class

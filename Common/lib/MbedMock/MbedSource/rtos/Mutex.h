@@ -24,21 +24,22 @@
 #define MUTEX_H
 
 #include <stdint.h>
-#include "rtos/mbed_rtos_types.h"
-#include "rtos/internal/mbed_rtos1_types.h"
-#include "rtos/internal/mbed_rtos_storage.h"
-#include "rtos/Kernel.h"
+#include "../rtos/mbed_rtos_types.h"
+#include "../rtos/internal/mbed_rtos1_types.h"
+#include "../rtos/internal/mbed_rtos_storage.h"
+#include "../rtos/Kernel.h"
 
-// #include "platform/NonCopyable.h"
-// #include "platform/ScopedLock.h"
-// #include "platform/mbed_toolchain.h"
+//#include "platform/NonCopyable.h"
+//#include "platform/ScopedLock.h"
+//#include "platform/mbed_toolchain.h"
 
-namespace rtos {
-/** \addtogroup rtos-public-api */
-/** @{*/
+namespace rtos
+{
+  /** \addtogroup rtos-public-api */
+  /** @{*/
 
-class Mutex;
-/** Typedef for the mutex lock
+  class Mutex;
+  /** Typedef for the mutex lock
  *
  * Usage:
  * @code
@@ -48,14 +49,14 @@ class Mutex;
  * }
  * @endcode
  */
-typedef mbed::ScopedLock<Mutex> ScopedMutexLock;
+  //typedef mbed::ScopedLock<Mutex> ScopedMutexLock;
 
-/**
+  /**
  * \defgroup rtos_Mutex Mutex class
  * @{
  */
 
-/** The Mutex class is used to synchronize the execution of threads.
+  /** The Mutex class is used to synchronize the execution of threads.
  This is, for example, used to protect access to a shared resource.
 
  In bare-metal builds, the Mutex class is a dummy, so lock() and unlock() are no-ops.
@@ -67,8 +68,9 @@ typedef mbed::ScopedLock<Mutex> ScopedMutexLock;
  Memory considerations: The mutex control structures are created on the current thread's stack, both for the Mbed OS
  and underlying RTOS objects (static or dynamic RTOS memory pools are not being used).
 */
-class Mutex : private mbed::NonCopyable<Mutex> {
-public:
+  class Mutex
+  {
+  public:
     /** Create and Initialize a Mutex object
      *
      * @note You cannot call this function from ISR context.
@@ -170,65 +172,65 @@ public:
      */
     ~Mutex();
 
-private:
+  private:
 #if MBED_CONF_RTOS_PRESENT
     void constructor(const char *name = nullptr);
     friend class ConditionVariable;
 
-    osMutexId_t               _id;
+    osMutexId_t _id;
     mbed_rtos_storage_mutex_t _obj_mem;
-    uint32_t                  _count;
+    uint32_t _count;
 #endif
-};
+  };
 
 #if !MBED_CONF_RTOS_PRESENT
-inline Mutex::Mutex()
-{
-}
+  inline Mutex::Mutex()
+  {
+  }
 
-inline Mutex::Mutex(const char *)
-{
-}
+  inline Mutex::Mutex(const char *)
+  {
+  }
 
-inline Mutex::~Mutex()
-{
-}
+  inline Mutex::~Mutex()
+  {
+  }
 
-inline void Mutex::lock()
-{
-}
+  inline void Mutex::lock()
+  {
+  }
 
-inline bool Mutex::trylock()
-{
+  inline bool Mutex::trylock()
+  {
     return true;
-}
+  }
 
-inline bool Mutex::trylock_for(uint32_t)
-{
+  inline bool Mutex::trylock_for(uint32_t)
+  {
     return true;
-}
+  }
 
-inline bool Mutex::trylock_for(Kernel::Clock::duration_u32)
-{
+  inline bool Mutex::trylock_for(Kernel::Clock::duration_u32)
+  {
     return true;
-}
+  }
 
-inline bool Mutex::trylock_until(uint64_t)
-{
+  inline bool Mutex::trylock_until(uint64_t)
+  {
     return true;
-}
+  }
 
-inline bool Mutex::trylock_until(Kernel::Clock::time_point)
-{
+  inline bool Mutex::trylock_until(Kernel::Clock::time_point)
+  {
     return true;
-}
+  }
 
-inline void Mutex::unlock()
-{
-}
+  inline void Mutex::unlock()
+  {
+  }
 #endif
 
-/** @}*/
-/** @}*/
+  /** @}*/
+  /** @}*/
 }
 #endif
