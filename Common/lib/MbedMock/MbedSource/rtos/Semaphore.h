@@ -5,10 +5,10 @@
 
 #include <stdint.h>
 #include <chrono>
-#include "rtos/mbed_rtos_types.h"
+#include "../rtos/mbed_rtos_types.h"
 #include "../internal/mbed_rtos1_types.h"
 #include "../internal/mbed_rtos_storage.h"
-#include "rtos/Kernel.h"
+#include "../rtos/Kernel.h"
 //#include "platform/mbed_toolchain.h"
 //#include "platform/NonCopyable.h"
 
