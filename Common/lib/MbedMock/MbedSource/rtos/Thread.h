@@ -24,14 +24,14 @@
 #define THREAD_H
 
 #include <stdint.h>
-#include "rtos/mbed_rtos_types.h"
-#include "rtos/internal/mbed_rtos1_types.h"
-#include "rtos/internal/mbed_rtos_storage.h"
-// #include "platform/Callback.h"
-// #include "platform/mbed_toolchain.h"
-// #include "platform/NonCopyable.h"
-#include "rtos/Semaphore.h"
-#include "rtos/Mutex.h"
+#include "../rtos/mbed_rtos_types.h"
+#include "../rtos/internal/mbed_rtos1_types.h"
+#include "../rtos/internal/mbed_rtos_storage.h"
+#include "../platform/Callback.h"
+//#include "platform/mbed_toolchain.h"
+//#include "platform/NonCopyable.h"
+#include "../rtos/Semaphore.h"
+#include "../rtos/Mutex.h"
 
 #if MBED_CONF_RTOS_PRESENT || defined(DOXYGEN_ONLY) || defined(UNITTEST)
 
