@@ -3,7 +3,7 @@
 #ifndef MBED_I2C_API_H
 #define MBED_I2C_API_H
 
-#include "device.h"
+#include "../../device.h"
 #include "pinmap.h"
 #include "buffer.h"
 #include "../PinNames.h"

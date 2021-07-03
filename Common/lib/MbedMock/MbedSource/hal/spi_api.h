@@ -3,7 +3,7 @@
 #ifndef MBED_SPI_API_H
 #define MBED_SPI_API_H
 
-#include "device.h"
+#include "../../device.h"
 #include "pinmap.h"
 #include "../PinNames.h"
 
