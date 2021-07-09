@@ -11,6 +11,8 @@
 #define PRINT(formatstring, ...) do { } while(0)
 #endif //PRINTING
 
+void print(const char* formatstring);
+
 // Input: an integer representing a float with decimals digits past decimal multiplied by 10^decimals
 // Output: print num as a float
 void printIntegerAsFloat(int num, int decimals);

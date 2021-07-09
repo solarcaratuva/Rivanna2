@@ -4,19 +4,19 @@
 using namespace std;
 
 // Used to make printing thread safe
-Mutex printing_mutex;
+Mutex & printing_mutex;
 
 // Input: an integer representing a float with decimals digits past decimal multiplied by 10^decimals
 // Output: print num as a float
 void printIntegerAsFloat(int num, int decimals) {
 #ifdef PRINTING
+    printing_mutex.lock();
     int left = num;
     int right = num;
     int d = decimals;
 
     if(d < 0)
     {
-        printing_mutex.lock();
         PRINT("ERROR: printIntegerAsFloat() argument decimals was negative.");
         printing_mutex.unlock();
         return;
@@ -24,9 +24,7 @@ void printIntegerAsFloat(int num, int decimals) {
 
     if(left < 0)
     {
-        printing_mutex.lock();
         PRINT("-");
-        printing_mutex.unlock();
     }
     int mult = 1;
     for(int i = 0; i < d; ++i)
@@ -35,22 +33,18 @@ void printIntegerAsFloat(int num, int decimals) {
     left = abs(left/mult);
     right = abs(right) - left * mult;
 
-    printing_mutex.lock();
     PRINT("%d.", left);
-    printing_mutex.unlock();
 
     for(int i = 10; i < mult; i*=10)
     {
         if(right < i)
         {
-            printing_mutex.lock();
             PRINT("0");
-            printing_mutex.unlock();
         }    
     }
 
-    printing_mutex.lock();
     PRINT("%d", right);
+    PRINT("\n");
     printing_mutex.unlock();
 
 #endif //PRINTING
@@ -65,9 +59,7 @@ void printFloat(float num, int decimals) {
     
     if(d < 0)
     {
-        printing_mutex.lock();
-        PRINT("ERROR: printFloat() argument decimals was negative.");
-        printing_mutex.unlock();
+        print("ERROR: printFloat() argument decimals was negative.");
         return;
     }
 
@@ -78,4 +70,11 @@ void printFloat(float num, int decimals) {
     printIntegerAsFloat((int)(n*mult), d);
 
 #endif //PRINTING
+}
+
+void print(const char* formatstring)
+{
+    printing_mutex.lock();
+    PRINT(formatstring);
+    printing_mutex.unlock();
 }
