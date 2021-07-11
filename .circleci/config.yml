@@ -34,6 +34,8 @@ jobs:
       - run:
           name: Lint
           command: |
+            sudo apt-get install -y clang-tidy
+            ln -sf /usr/bin/clang-tidy /home/circleci/.platformio/packages/tool-clangtidy/clang-tidy
             pipenv run pio check -e native -v
       - run:
           name: Test
