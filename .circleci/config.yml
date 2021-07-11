@@ -32,6 +32,10 @@ jobs:
           command: |
             pipenv run pio run -e ecu -e motor -e power_aux -e solar -e nucleo_f413zh_ecu
       - run:
+          name: Lint
+          command: |
+            pipenv run pio check -e native
+      - run:
           name: Test
           command: |
             pipenv run pio test -e native
