@@ -32,13 +32,6 @@ jobs:
           command: |
             pipenv run pio run -e ecu -e motor -e power_aux -e solar -e nucleo_f413zh_ecu
       - run:
-          name: Lint
-          command: |
-            sudo apt-get install -y clang-tidy
-            mkdir -p /home/circleci/.platformio/packages/tool-clangtidy/
-            ln -sf /usr/bin/clang-tidy /home/circleci/.platformio/packages/tool-clangtidy/clang-tidy
-            pipenv run pio check -e native -v
-      - run:
           name: Test
           command: |
             pipenv run pio test -e native
