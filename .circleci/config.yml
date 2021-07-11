@@ -34,7 +34,7 @@ jobs:
       - run:
           name: Lint
           command: |
-            pipenv run pio check -e native
+            pipenv run pio check -e native -v
       - run:
           name: Test
           command: |
