@@ -39,7 +39,6 @@ jobs:
           name: Lint
           command: |
             sudo apt install -y libtinfo5
-            sudo ln -s /lib/x86_64-linux-gnu/libtinfo.so.6 /lib/x86_64-linux-gnu/libtinfo.so.5 
             pipenv run pio check -e native -v
       - run:
           name: Coverage
