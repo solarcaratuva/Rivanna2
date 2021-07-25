@@ -1,8 +1,7 @@
 #ifndef MBED_H
 #define MBED_H
 
-#define TRUE (1==1)
-#define FALSE (!TRUE)
+#include "device.h"
 
 // mbed Peripheral components
 #include "MbedSource/drivers/AnalogIn.h"
