@@ -1,6 +1,8 @@
 #ifndef ECU_CAN_STRUCTS_H
 #define ECU_CAN_STRUCTS_H
 
+#include <stdio.h>
+
 typedef struct MotorMessage
 {
     uint16_t throttle : 16;
