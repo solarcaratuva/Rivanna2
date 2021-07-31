@@ -6,6 +6,16 @@ using namespace std;
 // Used to make printing thread safe
 Mutex mutex;
 Mutex &printing_mutex = mutex;
+
+void print_thread_safe(const char *s, ...) {
+    printing_mutex.lock();
+    va_list args;
+    va_start(args, s);
+    printf(s, args);
+    va_end(args);
+    printing_mutex.unlock();
+}
+
 // Input: an integer representing a float with decimals digits past decimal multiplied by 10^decimals
 // Output: print num as a float
 void printIntegerAsFloat(int num, int decimals) {
@@ -59,7 +69,7 @@ void printFloat(float num, int decimals) {
     
     if(d < 0)
     {
-        print("ERROR: printFloat() argument decimals was negative.");
+        PRINT("ERROR: printFloat() argument decimals was negative.");
         return;
     }
 
@@ -70,11 +80,4 @@ void printFloat(float num, int decimals) {
     printIntegerAsFloat((int)(n*mult), d);
 
 #endif //PRINTING
-}
-
-void print(const char* formatstring)
-{
-    printing_mutex.lock();
-    PRINT(formatstring);
-    printing_mutex.unlock();
 }
