@@ -39,7 +39,7 @@ jobs:
           name: Lint
           command: |
             sudo apt install -y libtinfo5
-            pipenv run pio check -e native -v
+            pipenv run pio check --fail-on-defect high -e native
       - run:
           name: Coverage
           command: |
