@@ -73,10 +73,10 @@ bool ECUInputReader::readIgnition() {
     return ignition;
 }
 
-uint16_t ECUInputReader::readThrottle() {
+float ECUInputReader::readThrottle() {
     return throttle;
 }
 
-uint16_t ECUInputReader::readRegen() {
+float ECUInputReader::readRegen() {
     return regen;
 }
