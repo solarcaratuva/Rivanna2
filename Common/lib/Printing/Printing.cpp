@@ -1,5 +1,6 @@
 #include "Printing.h"
 #include <stdlib.h>
+#include <stdarg.h>
 
 using namespace std;
 
@@ -11,7 +12,7 @@ void print_thread_safe(const char *s, ...) {
     printing_mutex.lock();
     va_list args;
     va_start(args, s);
-    printf(s, args);
+    vprintf(s, args);
     va_end(args);
     printing_mutex.unlock();
 }
