@@ -19,7 +19,7 @@
 
 #if MBED_CONF_RTOS_PRESENT || defined(UNITTEST)
 
-#include "mbed_rtx_storage.h"
+// #include "mbed_rtx_storage.h"
 
 #endif
 

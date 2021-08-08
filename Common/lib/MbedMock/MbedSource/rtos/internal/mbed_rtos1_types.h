@@ -19,14 +19,14 @@
 
 #include <stdint.h>
 
-#if MBED_CONF_RTOS_PRESENT || defined(UNITTEST)
+// #if MBED_CONF_RTOS_PRESENT || defined(UNITTEST)
 
-#include "cmsis_os.h"
+// #include "cmsis_os.h"
 
-#else
+// #else
 
 typedef int32_t osStatus;
 
-#endif
+// #endif
 
 #endif

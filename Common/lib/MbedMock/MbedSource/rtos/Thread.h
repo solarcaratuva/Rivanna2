@@ -89,7 +89,7 @@ namespace rtos {
  * Bare metal profile: This class is not supported.
  */
 
-class Thread {
+class Thread { //: private mbed::NonCopyable<Thread> {
 public:
     /** Allocate a new thread without starting execution
       @param   priority       initial priority of the thread function. (default: osPriorityNormal).
@@ -253,28 +253,28 @@ public:
      */
     virtual ~Thread() {}
 
-private:
-    // Required to share definitions without
-    // delegated constructors
-    void constructor(osPriority priority = osPriorityNormal,
-                     uint32_t stack_size = OS_STACK_SIZE,
-                     unsigned char *stack_mem = nullptr,
-                     const char *name = nullptr);
-    void constructor(uint32_t tz_module,
-                     osPriority priority = osPriorityNormal,
-                     uint32_t stack_size = OS_STACK_SIZE,
-                     unsigned char *stack_mem = nullptr,
-                     const char *name = nullptr);
-    static void _thunk(void *thread_ptr);
+// private:
+//     // Required to share definitions without
+//     // delegated constructors
+//     void constructor(osPriority priority = osPriorityNormal,
+//                      uint32_t stack_size = OS_STACK_SIZE,
+//                      unsigned char *stack_mem = nullptr,
+//                      const char *name = nullptr);
+//     void constructor(uint32_t tz_module,
+//                      osPriority priority = osPriorityNormal,
+//                      uint32_t stack_size = OS_STACK_SIZE,
+//                      unsigned char *stack_mem = nullptr,
+//                      const char *name = nullptr);
+//     static void _thunk(void *thread_ptr);
 
-    mbed::Callback<void()>     _task;
-    osThreadId_t               _tid;
-    osThreadAttr_t             _attr;
-    bool                       _dynamic_stack;
-    bool                       _finished;
-    Semaphore                  _join_sem;
-    mutable Mutex              _mutex;
-    mbed_rtos_storage_thread_t _obj_mem;
+//     mbed::Callback<void()>     _task;
+//     osThreadId_t               _tid;
+//     osThreadAttr_t             _attr;
+//     bool                       _dynamic_stack;
+//     bool                       _finished;
+//     Semaphore                  _join_sem;
+//     mutable Mutex              _mutex;
+//     mbed_rtos_storage_thread_t _obj_mem;
 };
 /** @}*/
 /** @}*/

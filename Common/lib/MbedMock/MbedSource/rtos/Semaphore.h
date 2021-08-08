@@ -5,9 +5,9 @@
 
 #include <stdint.h>
 #include <chrono>
-#include "../rtos/mbed_rtos_types.h"
-#include "../internal/mbed_rtos1_types.h"
-#include "../internal/mbed_rtos_storage.h"
+// #include "../rtos/mbed_rtos_types.h"
+#include "../rtos/internal/mbed_rtos1_types.h"
+// #include "../rtos/internal/mbed_rtos_storage.h"
 #include "../rtos/Kernel.h"
 //#include "platform/mbed_toolchain.h"
 //#include "platform/NonCopyable.h"
@@ -65,7 +65,7 @@ public:
       @note You may call this function from ISR context if the millisec parameter is set to 0.
       @deprecated Pass a chrono duration, not an integer millisecond count. For example use `5s` rather than `5000`.
     */
-    //MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono duration, not an integer millisecond count. For example use `5s` rather than `5000`.")
+    // MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono duration, not an integer millisecond count. For example use `5s` rather than `5000`.")
     virtual bool try_acquire_for(uint32_t millisec) = 0;
 
     /** Wait until a Semaphore resource becomes available.
@@ -88,7 +88,7 @@ public:
       @deprecated Pass a chrono time_point, not an integer millisecond count. For example use
                   `Kernel::Clock::now() + 5s` rather than `Kernel::get_ms_count() + 5000`.
     */
-    //MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono time_point, not an integer millisecond count. For example use `Kernel::Clock::now() + 5s` rather than `Kernel::get_ms_count() + 5000`.")
+    // MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono time_point, not an integer millisecond count. For example use `Kernel::Clock::now() + 5s` rather than `Kernel::get_ms_count() + 5000`.")
     virtual bool try_acquire_until(uint64_t millisec) = 0;
 
     /** Wait until a Semaphore resource becomes available.
@@ -119,19 +119,19 @@ public:
      */
     ~Semaphore() {}
 
-private:
-    virtual void constructor(int32_t count, uint16_t max_count) = 0;
+// private:
+//     virtual void constructor(int32_t count, uint16_t max_count) = 0;
 
-#if MBED_CONF_RTOS_PRESENT
-    virtual int32_t _wait(uint32_t millisec) = 0;
+// #if MBED_CONF_RTOS_PRESENT
+//     virtual int32_t _wait(uint32_t millisec) = 0;
 
-    osSemaphoreId_t               _id;
-    mbed_rtos_storage_semaphore_t _obj_mem;
-#else
-    static bool semaphore_available(void *);
-    int32_t _count;
-    uint16_t _max_count;
-#endif
+//     osSemaphoreId_t               _id;
+//     mbed_rtos_storage_semaphore_t _obj_mem;
+// #else
+//     static bool semaphore_available(void *);
+//     int32_t _count;
+//     uint16_t _max_count;
+// #endif
 };
 /** @}*/
 /** @}*/

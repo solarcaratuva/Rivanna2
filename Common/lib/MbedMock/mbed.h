@@ -3,6 +3,12 @@
 
 #include "device.h"
 
+// mbed RTOS
+#if MBED_CONF_RTOS_API_PRESENT || PIO_FRAMEWORK_MBED_RTOS_PRESENT
+#define MBED_CONF_RTOS_PRESENT 1
+#include "MbedSource/rtos/rtos.h"
+#endif
+
 // mbed Peripheral components
 #include "MbedSource/drivers/AnalogIn.h"
 #include "MbedSource/drivers/DigitalIn.h"

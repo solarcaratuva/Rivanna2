@@ -27,9 +27,9 @@
 #include <chrono>
 #include "../rtos/mbed_rtos_types.h"
 //#include "platform/mbed_toolchain.h"
-#if !MBED_CONF_RTOS_PRESENT
-#include "../platform/internal/mbed_os_timer.h"
-#endif
+// #if !MBED_CONF_RTOS_PRESENT
+// #include "../platform/internal/mbed_os_timer.h"
+// #endif
 
 
 namespace rtos {
@@ -61,7 +61,7 @@ uint64_t get_tick_count();
      @note You cannot call this function from ISR context.
      @deprecated Use `Kernel::Clock::now()` to get a chrono time_point instead of an integer millisecond count.
  */
-//MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Use `Kernel::Clock::now()` to get a chrono time_point instead of an integer millisecond count.")
+// MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Use `Kernel::Clock::now()` to get a chrono time_point instead of an integer millisecond count.")
 uint64_t get_ms_count();
 
 /** A C++11 chrono TrivialClock for the kernel millisecond tick count
@@ -82,7 +82,7 @@ struct Clock {
     /* In non-RTOS builds, the clock maps directly to the underlying clock, and must
      * indicate that here, so we can do implicit conversion internally.
      */
-    using time_point = std::chrono::time_point<mbed::internal::OsClock, duration>;
+    // using time_point = std::chrono::time_point<mbed::internal::OsClock, duration>;
 #endif
     static constexpr bool is_steady = true;
     static time_point now()

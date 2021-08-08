@@ -19,9 +19,9 @@
 
 #include <stdint.h>
 
-#if MBED_CONF_RTOS_PRESENT || defined(DOXYGEN_ONLY) || defined(UNITTEST)
-#include "cmsis_os2.h"
-#else
+// #if MBED_CONF_RTOS_PRESENT || defined(DOXYGEN_ONLY) || defined(UNITTEST)
+// #include "cmsis_os2.h"
+// #else
 
 #ifdef __cplusplus
 extern "C" {
@@ -76,7 +76,7 @@ uint32_t osThreadFlagsSet(osThreadId_t thread_id, uint32_t flags);
 }
 #endif
 
-#endif
+// #endif
 
 
 #endif /* RTOS_TYPES_H_ */
