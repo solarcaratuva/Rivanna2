@@ -26,7 +26,8 @@
 #include <stdint.h>
 #include "../rtos/mbed_rtos_types.h"
 #include "../rtos/internal/mbed_rtos1_types.h"
-#include "../rtos/internal/mbed_rtos_storage.h"
+// #include "../rtos/internal/mbed_rtos_storage.h"
+#include "../rtos/internal/cmsis_os.h"
 #include "../platform/Callback.h"
 //#include "platform/mbed_toolchain.h"
 //#include "platform/NonCopyable.h"
@@ -101,32 +102,32 @@ public:
       @note You cannot call this function from ISR context.
     */
 
-    Thread(osPriority priority = osPriorityNormal,
-           uint32_t stack_size = OS_STACK_SIZE,
-           unsigned char *stack_mem = nullptr, const char *name = nullptr)
-    {
-        constructor(priority, stack_size, stack_mem, name);
-    }
+    // Thread(osPriority priority = osPriorityNormal,
+    //        uint32_t stack_size = OS_STACK_SIZE,
+    //        unsigned char *stack_mem = nullptr, const char *name = nullptr)
+    // {
+    //     constructor(priority, stack_size, stack_mem, name);
+    // }
 
-    /** Allocate a new thread without starting execution
-      @param   tz_module      trustzone thread identifier (osThreadAttr_t::tz_module)
-                              Context of RTOS threads in non-secure state must be saved when calling secure functions.
-                              tz_module ID is used to allocate context memory for threads, and it can be safely set to zero for
-                              threads not using secure calls at all. See "TrustZone RTOS Context Management" for more details.
-      @param   priority       initial priority of the thread function. (default: osPriorityNormal).
-      @param   stack_size     stack size (in bytes) requirements for the thread function. (default: OS_STACK_SIZE).
-      @param   stack_mem      pointer to the stack area to be used by this thread (default: nullptr).
-      @param   name           name to be used for this thread. It has to stay allocated for the lifetime of the thread (default: nullptr)
+    // /** Allocate a new thread without starting execution
+    //   @param   tz_module      trustzone thread identifier (osThreadAttr_t::tz_module)
+    //                           Context of RTOS threads in non-secure state must be saved when calling secure functions.
+    //                           tz_module ID is used to allocate context memory for threads, and it can be safely set to zero for
+    //                           threads not using secure calls at all. See "TrustZone RTOS Context Management" for more details.
+    //   @param   priority       initial priority of the thread function. (default: osPriorityNormal).
+    //   @param   stack_size     stack size (in bytes) requirements for the thread function. (default: OS_STACK_SIZE).
+    //   @param   stack_mem      pointer to the stack area to be used by this thread (default: nullptr).
+    //   @param   name           name to be used for this thread. It has to stay allocated for the lifetime of the thread (default: nullptr)
 
-      @note You cannot call this function from ISR context.
-    */
+    //   @note You cannot call this function from ISR context.
+    // */
 
-    Thread(uint32_t tz_module, osPriority priority = osPriorityNormal,
-           uint32_t stack_size = OS_STACK_SIZE,
-           unsigned char *stack_mem = nullptr, const char *name = nullptr)
-    {
-        constructor(tz_module, priority, stack_size, stack_mem, name);
-    }
+    // Thread(uint32_t tz_module, osPriority priority = osPriorityNormal,
+    //        uint32_t stack_size = OS_STACK_SIZE,
+    //        unsigned char *stack_mem = nullptr, const char *name = nullptr)
+    // {
+    //     constructor(tz_module, priority, stack_size, stack_mem, name);
+    // }
 
 
     /** Starts a thread executing the specified function.

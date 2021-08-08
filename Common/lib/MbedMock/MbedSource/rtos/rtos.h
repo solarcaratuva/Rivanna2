@@ -26,9 +26,9 @@
 
 // #include "./internal/mbed_rtos_storage.h"
 // #include "./Kernel.h"
-// #include "./Thread.h"
-// #include "./ThisThread.h"
-// #include "./Mutex.h"
+#include "./Thread.h"
+#include "./ThisThread.h"
+#include "./Mutex.h"
 #include "./Semaphore.h"
 // #include "./Mail.h"
 // #include "./MemoryPool.h"

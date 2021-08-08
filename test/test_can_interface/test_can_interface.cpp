@@ -75,13 +75,13 @@ void test_compiles()
 void test_start_transmission()
 {
     // initialization
-    Fake(OverloadedMethod(mockThread, start, void(Callback<void()>, std::chrono::microseconds)));
+    Fake(OverloadedMethod(mockThread, start, osStatus(Callback<void()>)));
 
     // the test
-    testCanInterface.startCANTransmission();
+    testCANInterface->startCANTransmission();
     
     // verification
-    Verify(OverloadedMethod(mockThread, start, void(Callback<void()>, std::chrono::microseconds))).Exactly(Once);
+    Verify(OverloadedMethod(mockThread, start, osStatus(Callback<void()>))).Exactly(2_Times);
 }
 
 int main()
