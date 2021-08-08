@@ -89,7 +89,7 @@ namespace rtos {
  * Bare metal profile: This class is not supported.
  */
 
-class Thread : private mbed::NonCopyable<Thread> {
+class Thread {
 public:
     /** Allocate a new thread without starting execution
       @param   priority       initial priority of the thread function. (default: osPriorityNormal).

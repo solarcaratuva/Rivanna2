@@ -61,7 +61,7 @@ uint64_t get_tick_count();
      @note You cannot call this function from ISR context.
      @deprecated Use `Kernel::Clock::now()` to get a chrono time_point instead of an integer millisecond count.
  */
-MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Use `Kernel::Clock::now()` to get a chrono time_point instead of an integer millisecond count.")
+//MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Use `Kernel::Clock::now()` to get a chrono time_point instead of an integer millisecond count.")
 uint64_t get_ms_count();
 
 /** A C++11 chrono TrivialClock for the kernel millisecond tick count

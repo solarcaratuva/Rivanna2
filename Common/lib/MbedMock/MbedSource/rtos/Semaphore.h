@@ -65,7 +65,7 @@ public:
       @note You may call this function from ISR context if the millisec parameter is set to 0.
       @deprecated Pass a chrono duration, not an integer millisecond count. For example use `5s` rather than `5000`.
     */
-    MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono duration, not an integer millisecond count. For example use `5s` rather than `5000`.")
+    //MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono duration, not an integer millisecond count. For example use `5s` rather than `5000`.")
     virtual bool try_acquire_for(uint32_t millisec) = 0;
 
     /** Wait until a Semaphore resource becomes available.
@@ -88,7 +88,7 @@ public:
       @deprecated Pass a chrono time_point, not an integer millisecond count. For example use
                   `Kernel::Clock::now() + 5s` rather than `Kernel::get_ms_count() + 5000`.
     */
-    MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono time_point, not an integer millisecond count. For example use `Kernel::Clock::now() + 5s` rather than `Kernel::get_ms_count() + 5000`.")
+    //MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono time_point, not an integer millisecond count. For example use `Kernel::Clock::now() + 5s` rather than `Kernel::get_ms_count() + 5000`.")
     virtual bool try_acquire_until(uint64_t millisec) = 0;
 
     /** Wait until a Semaphore resource becomes available.
