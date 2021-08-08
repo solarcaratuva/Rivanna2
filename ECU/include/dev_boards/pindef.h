@@ -11,21 +11,37 @@
 /*************************************/
 /* pin definitions for Analog Inputs */
 /*************************************/
-#define ANALOG_INPUT_1      PA_0
+#define THROTTLE      PB_13
+#define REGEN         PB_14
 
 /***************************************/
 /* pin definitions for Digital Inputs */
 /***************************************/
-#define DIGITAL_INPUT_1     PB_4
+#define HAZARDS            PC_13
+#define LEFT_TURN_SIG      PA_0
+#define RIGHT_TURN_SIG     PA_1
+#define HORN               PA_2
+#define CRUISE_SPEED_DOWN  PA_3
+#define CRUISE_SPEED_UP    PA_4
+#define CRUISE_THROTTLE_EN PA_5
+#define RUNNING_LIGHTS_EN  PA_6
+#define BRAKE_PEDAL        PA_7
+#define MOTOR_ON           PB_0
+#define REVERSE_EN         PB_1
+#define FORWARD_EN         PB_2
+#define BATTERY_CONTACT    PB_11
+#define IGNITION           PB_12
 
-/***************************************/
-/* pin definitions for Digital Outputs */
-/***************************************/
-#define DIGITAL_OUTPUT_1    PB_5
 
 /**********************************/
 /* pin definitions for Unused I/O */
 /**********************************/
-#define UNUSED_PIN_0    PA_2
+#define UNUSED_PIN_1    PA_9
+#define UNUSED_PIN_2    PA_10
+#define UNUSED_PIN_3    PA_8
+#define UNUSED_PIN_4    PB_15
+#define UNUSED_PIN_5    PB_9
+#define UNUSED_PIN_6    PB_5
+#define UNUSED_PIN_7    PB_4
 
 #endif // PINDEF_H

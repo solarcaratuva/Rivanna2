@@ -3,10 +3,11 @@
 
 #include <stdio.h>
 
+
 typedef struct MotorMessage
 {
-    uint16_t throttle : 16;
-    uint16_t regen : 16;
+    uint16_t throttle : 13;
+    uint16_t regen : 13;
     uint8_t reverse_en : 1;
     uint8_t forward_en : 1;
     uint8_t cruise_control_en : 1;
