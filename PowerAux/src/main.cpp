@@ -13,6 +13,8 @@
 
 BufferedSerial device(USBTX, USBRX);
 
+Mutex main_printing_mutex;
+
 CAN bms_can(CAN_RX, CAN_TX);
 DigitalOut bms_can_stby(CAN_STBY);
 Thread bms_can_tx_thread;
@@ -31,6 +33,8 @@ CANInterface vehicle_can_interface(vehicle_can, vehicle_can_parser, vehicle_can_
 int main() {
     // device.set_baud(38400);
     
+    init_printing(&main_printing_mutex);
+
 #ifdef TESTING
     PRINT("start main() \r\n");
 #endif //TESTING

@@ -6,10 +6,14 @@
 #include <mbed.h>
 
 #ifdef PRINTING
-#define PRINT(formatstring, ...) printf(formatstring, ##__VA_ARGS__)
+#define PRINT(formatstring, ...) print_thread_safe(formatstring, ##__VA_ARGS__)
 #else  //PRINTING
 #define PRINT(formatstring, ...) do { } while(0)
 #endif //PRINTING
+
+void init_printing(Mutex *mutex);
+
+void print_thread_safe(const char *s, ...);
 
 // Input: an integer representing a float with decimals digits past decimal multiplied by 10^decimals
 // Output: print num as a float
