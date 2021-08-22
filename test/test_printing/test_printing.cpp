@@ -1,9 +1,12 @@
 #include <unity.h>
 #include <unistd.h>
 #include <cstring>
+#include <mbed.h>
+#include <fakeit.hpp>
 #include "Printing.h"
 
 using namespace std;
+using namespace fakeit;
 
 #define STDOUT_BUFFER_SIZE 1024
 
@@ -12,6 +15,10 @@ char stdout_buffer[STDOUT_BUFFER_SIZE];
 
 // extern int dup(int oldfd);
 // extern int dup2(int oldfd, int newfd);
+
+Mock<Mutex> mockMutex;
+
+Mutex *testMutex;
 
 void redirect_stdout()
 {
@@ -34,6 +41,13 @@ void restore_stdout()
 void setUp()
 {
     redirect_stdout();
+
+    testMutex = &mockMutex.get();
+
+    Fake(Method(mockMutex, lock));
+    Fake(Method(mockMutex, unlock));
+
+    init_printing(testMutex);
 }
 
 // Called after every test
@@ -41,6 +55,12 @@ void tearDown()
 {
     // restore_stdout();    // Don't need because every test function needs to call this before any assertions anyways (to allow fail messages to be printed)
     memset(stdout_buffer, 0, STDOUT_BUFFER_SIZE);   // clear the stdout_buffer with all zeros
+    
+    // final verifications
+    VerifyNoOtherInvocations(mockMutex);
+    
+    // clean up
+    mockMutex.Reset();
 }
 
 // Write all tests here
@@ -52,6 +72,10 @@ void test_print()
     PRINT(test_message);
     restore_stdout();
     TEST_ASSERT_EQUAL_STRING(test_message, stdout_buffer);
+    
+    // verification
+    Verify(Method(mockMutex, lock)).Exactly(Once);
+    Verify(Method(mockMutex, unlock)).Exactly(Once);
 }
 
 // Boundary Test
@@ -61,6 +85,10 @@ void test_print_empty()
     PRINT(test_message);
     restore_stdout();
     TEST_ASSERT_EQUAL_STRING(test_message, stdout_buffer);
+    
+    // verification
+    Verify(Method(mockMutex, lock)).Exactly(Once);
+    Verify(Method(mockMutex, unlock)).Exactly(Once);
 }
 
 // Boundary Test
@@ -70,6 +98,10 @@ void test_print_newline()
     PRINT(test_message);
     restore_stdout();
     TEST_ASSERT_EQUAL_STRING(test_message, stdout_buffer);
+    
+    // verification
+    Verify(Method(mockMutex, lock)).Exactly(Once);
+    Verify(Method(mockMutex, unlock)).Exactly(Once);
 }
 
 // Equivalence Test
@@ -81,6 +113,10 @@ void test_print_positive_integer()
     PRINT(test_message, test_num);
     restore_stdout();
     TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+    
+    // verification
+    Verify(Method(mockMutex, lock)).Exactly(Once);
+    Verify(Method(mockMutex, unlock)).Exactly(Once);
 }
 
 // Boundary Test
@@ -92,6 +128,10 @@ void test_print_negative_integer()
     PRINT(test_message, test_num);
     restore_stdout();
     TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+    
+    // verification
+    Verify(Method(mockMutex, lock)).Exactly(Once);
+    Verify(Method(mockMutex, unlock)).Exactly(Once);
 }
 
 // Boundary Test
@@ -103,6 +143,10 @@ void test_print_zero_integer()
     PRINT(test_message, test_num);
     restore_stdout();
     TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+    
+    // verification
+    Verify(Method(mockMutex, lock)).Exactly(Once);
+    Verify(Method(mockMutex, unlock)).Exactly(Once);
 }
 
 // Equivalence Test
@@ -114,6 +158,10 @@ void test_print_integer_as_float()
     printIntegerAsFloat(test_num, test_decimals);
     restore_stdout();
     TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+    
+    // verification
+    Verify(Method(mockMutex, lock)).Exactly(Once);
+    Verify(Method(mockMutex, unlock)).Exactly(Once);
 }
 
 // Boundary Test
@@ -125,6 +173,10 @@ void test_print_integer_as_float_negative()
     printIntegerAsFloat(test_num, test_decimals);
     restore_stdout();
     TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+    
+    // verification
+    Verify(Method(mockMutex, lock)).Exactly(Once);
+    Verify(Method(mockMutex, unlock)).Exactly(Once);
 }
 
 // Boundary Test
@@ -136,6 +188,10 @@ void test_print_integer_as_float_middle_zeros()
     printIntegerAsFloat(test_num, test_decimals);
     restore_stdout();
     TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+    
+    // verification
+    Verify(Method(mockMutex, lock)).Exactly(Once);
+    Verify(Method(mockMutex, unlock)).Exactly(Once);
 }
 
 // Boundary Test
@@ -147,6 +203,10 @@ void test_print_integer_as_float_trailing_zero()
     printIntegerAsFloat(test_num, test_decimals);
     restore_stdout();
     TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+    
+    // verification
+    Verify(Method(mockMutex, lock)).Exactly(Once);
+    Verify(Method(mockMutex, unlock)).Exactly(Once);
 }
 
 // Boundary Test
@@ -158,6 +218,10 @@ void test_print_integer_as_float_leading_zero()
     printIntegerAsFloat(test_num, test_decimals);
     restore_stdout();
     TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+    
+    // verification
+    Verify(Method(mockMutex, lock)).Exactly(Once);
+    Verify(Method(mockMutex, unlock)).Exactly(Once);
 }
 
 // Exception Test
@@ -169,6 +233,10 @@ void test_print_integer_as_float_negative_decimals()
     printIntegerAsFloat(test_num, test_decimals);
     restore_stdout();
     TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+    
+    // verification
+    Verify(Method(mockMutex, lock)).Exactly(Once);
+    Verify(Method(mockMutex, unlock)).Exactly(Once);
 }
 
 // Equivalence Test
@@ -180,6 +248,10 @@ void test_print_float()
     printFloat(test_num, test_decimals);
     restore_stdout();
     TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+    
+    // verification
+    Verify(Method(mockMutex, lock)).Exactly(Once);
+    Verify(Method(mockMutex, unlock)).Exactly(Once);
 }
 
 // Boundary Test
@@ -191,6 +263,10 @@ void test_print_float_negative()
     printFloat(test_num, test_decimals);
     restore_stdout();
     TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+    
+    // verification
+    Verify(Method(mockMutex, lock)).Exactly(Once);
+    Verify(Method(mockMutex, unlock)).Exactly(Once);
 }
 
 // Boundary Test
@@ -202,6 +278,10 @@ void test_print_float_middle_zeros()
     printFloat(test_num, test_decimals);
     restore_stdout();
     TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+    
+    // verification
+    Verify(Method(mockMutex, lock)).Exactly(Once);
+    Verify(Method(mockMutex, unlock)).Exactly(Once);
 }
 
 // Boundary Test
@@ -213,6 +293,10 @@ void test_print_float_trailing_zero()
     printFloat(test_num, test_decimals);
     restore_stdout();
     TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+    
+    // verification
+    Verify(Method(mockMutex, lock)).Exactly(Once);
+    Verify(Method(mockMutex, unlock)).Exactly(Once);
 }
 
 // Boundary Test
@@ -224,6 +308,10 @@ void test_print_float_leading_zero()
     printFloat(test_num, test_decimals);
     restore_stdout();
     TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+    
+    // verification
+    Verify(Method(mockMutex, lock)).Exactly(Once);
+    Verify(Method(mockMutex, unlock)).Exactly(Once);
 }
 
 // Exception Test
@@ -235,6 +323,10 @@ void test_print_float_negative_decimals()
     printFloat(test_num, test_decimals);
     restore_stdout();
     TEST_ASSERT_EQUAL_STRING(expected_result, stdout_buffer);
+    
+    // verification
+    Verify(Method(mockMutex, lock)).Exactly(Once);
+    Verify(Method(mockMutex, unlock)).Exactly(Once);
 
 }
 
