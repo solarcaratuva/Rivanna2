@@ -1,11 +1,13 @@
 #ifndef MBED_H
 #define MBED_H
 
-#define TRUE (1==1)
-#define FALSE (!TRUE)
+#include "device.h"
 
-#define DEVICE_ANALOGIN TRUE  // enable AnalogIn
-#define DEVICE_CAN      TRUE  // enable CAN
+// mbed RTOS
+#if MBED_CONF_RTOS_API_PRESENT || PIO_FRAMEWORK_MBED_RTOS_PRESENT
+#define MBED_CONF_RTOS_PRESENT 1
+#include "MbedSource/rtos/rtos.h"
+#endif
 
 // mbed Peripheral components
 #include "MbedSource/drivers/AnalogIn.h"
@@ -13,6 +15,8 @@
 #include "MbedSource/drivers/DigitalOut.h"
 #include "MbedSource/drivers/CAN.h"
 #include "MbedSource/drivers/Ticker.h"
+#include "MbedSource/drivers/SPI.h"
+#include "MbedSource/drivers/I2C.h"
 
 // standard library includes
 #include <string>   // for string class
