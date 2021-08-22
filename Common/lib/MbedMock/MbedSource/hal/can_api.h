@@ -3,7 +3,7 @@
 #ifndef MBED_CAN_API_H
 #define MBED_CAN_API_H
 
-// #include "device.h"
+#include "../../device.h"
 // #include "pinmap.h"
 
 #if DEVICE_CAN
