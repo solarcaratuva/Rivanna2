@@ -18,7 +18,6 @@ void CANInterface::startCANTransmission(void)
     rx_thread.start(callback(this, &CANInterface::rx_handler));
 }
 
-// WARNING: This method will be called in an ISR context
 void CANInterface::rx_handler(void)
 {
     while(1)
@@ -31,7 +30,6 @@ void CANInterface::rx_handler(void)
     }
 }
 
-// WARNING: This method will be called in an ISR context
 void CANInterface::tx_handler(void)
 {
     while(1)
