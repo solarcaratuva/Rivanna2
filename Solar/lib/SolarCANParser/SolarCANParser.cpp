@@ -11,7 +11,7 @@ void SolarCANParser::parse(const CANMessage& msg)
     PRINT("[ID: %d] Data received: a=%u, b=%u, c=%u, d=%d\r\n", msg.id, solar_example_struct.a, solar_example_struct.b, solar_example_struct.c, solar_example_struct.d);
 }
 
-queue<CANMessage> SolarCANParser::getMessages()
+queue<CANMessage> SolarCANParser::get_messages()
 {
     static int id = 0;
     

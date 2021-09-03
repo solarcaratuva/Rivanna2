@@ -10,7 +10,7 @@ class PowerAuxCANParser : public CANParser
 {
 public:
     void parse(const CANMessage &msg) override;
-    queue<CANMessage> getMessages() override;
+    queue<CANMessage> get_messages() override;
     
     PowerAuxExampleStruct powerAuxExampleStruct;
 };

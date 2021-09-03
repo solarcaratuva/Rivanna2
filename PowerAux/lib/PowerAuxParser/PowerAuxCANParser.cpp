@@ -11,7 +11,7 @@ void PowerAuxCANParser::parse(const CANMessage& msg)
     PRINT("[ID: %d] Data received: a=%u, b=%u, c=%u, d=%d\r\n", msg.id, powerAuxExampleStruct.a, powerAuxExampleStruct.b, powerAuxExampleStruct.c, powerAuxExampleStruct.d);
 }
 
-queue<CANMessage> PowerAuxCANParser::getMessages()
+queue<CANMessage> PowerAuxCANParser::get_messages()
 {
     static int id = 0;
     

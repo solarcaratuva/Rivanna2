@@ -78,7 +78,7 @@ void test_start_transmission()
     Fake(OverloadedMethod(mockThread, start, osStatus(Callback<void()>)));
 
     // the test
-    testCANInterface->startCANTransmission();
+    testCANInterface->start_CAN_transmission();
     
     // verification
     Verify(OverloadedMethod(mockThread, start, osStatus(Callback<void()>))).Exactly(2_Times);

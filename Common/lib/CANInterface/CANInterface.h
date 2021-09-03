@@ -8,7 +8,7 @@ class CANInterface
 {
 public:
     CANInterface(CAN &c, CANParser &cp, Thread &tx_thread, Thread &rx_thread, DigitalOut *stby=nullptr, std::chrono::milliseconds can_period = 1s);
-    void startCANTransmission(void);
+    void start_CAN_transmission(void);
 
 private:
     void rx_handler(void);

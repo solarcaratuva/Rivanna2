@@ -12,7 +12,7 @@ CANInterface::CANInterface(CAN &c, CANParser &cp, Thread &tx_thrd, Thread &rx_th
     }
 }
 
-void CANInterface::startCANTransmission(void)
+void CANInterface::start_CAN_transmission(void)
 {
     tx_thread.start(callback(this, &CANInterface::tx_handler));
     rx_thread.start(callback(this, &CANInterface::rx_handler));
@@ -34,7 +34,7 @@ void CANInterface::tx_handler(void)
 {
     while(1)
     {
-        queue<CANMessage> fifo = can_parser.getMessages();
+        queue<CANMessage> fifo = can_parser.get_messages();
         while(!fifo.empty())
         {
             can.write(fifo.front());

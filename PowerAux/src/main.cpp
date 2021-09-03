@@ -39,8 +39,8 @@ int main() {
     PRINT("start main() \r\n");
 #endif //TESTING
     
-    bms_can_interface.startCANTransmission();
-    vehicle_can_interface.startCANTransmission();
+    bms_can_interface.start_CAN_transmission();
+    vehicle_can_interface.start_CAN_transmission();
 
     while(1){
         #ifdef TESTING
