@@ -1,21 +1,15 @@
 #include "CANInterface.h"
 #include "Printing.h"
 
-#define CAN_PERIOD  1000ms
-
-CANInterface::CANInterface(CAN &c, CANParser &cp, Thread &tx_thrd, Thread &rx_thrd, DigitalOut *stby, std::chrono::milliseconds tx_prd) : can(c), can_parser(cp), tx_thread(rx_thrd), rx_thread(tx_thrd), tx_period(tx_prd)
-{    
-    if(stby)    // should these be checked in the rx/tx threads? once we initialize this we 
-    {           // won't have control over it anymore 
-        standby = stby;
-        *standby = 0;   // active low
-    }
+CANInterface::CANInterface(PinName rd, PinName td, CANParser &cp, PinName standby_pin, std::chrono::milliseconds tx_prd) : can(rd, td), can_parser(cp), standby(standby_pin), tx_period(tx_prd)
+{
+    standby = 0;
 }
 
 void CANInterface::start_CAN_transmission(void)
 {
-    tx_thread.start(callback(this, &CANInterface::tx_handler));
     rx_thread.start(callback(this, &CANInterface::rx_handler));
+    tx_thread.start(callback(this, &CANInterface::tx_handler));
 }
 
 void CANInterface::rx_handler(void)
