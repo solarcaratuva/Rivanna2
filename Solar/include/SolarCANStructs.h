@@ -8,6 +8,11 @@ typedef struct SolarExampleStruct {
     uint16_t b;
     uint8_t c;
     int8_t d;
+
+    template<class Archive>
+    void serialize(Archive &archive) {
+        archive(a, b, c, d);
+    }
 } SolarExampleStruct;
 
 #endif
