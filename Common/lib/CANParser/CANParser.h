@@ -20,7 +20,7 @@ public:
 
     virtual void parse(const CANMessage &msg) = 0;
 
-    virtual queue<CANMessage> get_messages() = 0;
+    virtual queue<CANMessage> *get_messages() = 0;
 };
 
 #endif

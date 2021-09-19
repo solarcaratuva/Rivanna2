@@ -28,6 +28,9 @@ int main() {
 #ifdef TESTING
     PRINT("start main() \r\n");
 #endif //TESTING
+
+    PowerAuxExampleStruct a = {1, 2, 3, 4};
+    PowerAuxExampleStruct b = {5, 6, 7, 8};
     
     bms_can_interface.start_CAN_transmission();
     vehicle_can_interface.start_CAN_transmission();
@@ -37,10 +40,8 @@ int main() {
             PRINT("main thread loop \r\n");
         #endif //TESTING
 
-        bms_can_parser.powerAuxExampleStruct.a++;
-        bms_can_parser.powerAuxExampleStruct.b += 2;
-        bms_can_parser.powerAuxExampleStruct.c += 3;
-        bms_can_parser.powerAuxExampleStruct.d += 4;
+        bms_can_parser.push_power_aux_example_struct(&a);
+        vehicle_can_parser.push_power_aux_example_struct(&b);
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }

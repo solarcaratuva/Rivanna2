@@ -7,7 +7,7 @@
 #include "cereal/archives/binary.hpp"
 
 template<class CANStruct>
-void serialize_can_struct(CANMessage *message, CANStruct *data)
+void serialize_can_struct(CANMessage *message, const CANStruct *data)
 {
     std::stringstream stream;
 
@@ -22,16 +22,13 @@ void serialize_can_struct(CANMessage *message, CANStruct *data)
     int len = stream.tellg();
     stream.seekg(0, std::ios::beg);
 
-    // TODO: Remove
-    PRINT("length: %d\n", len);
-
     // Copy stream to message
     stream.read((char *)message->data, len);
     message->len = len;
 }
 
 template<class CANStruct>
-void deserialize_can_struct(CANStruct *data, CANMessage *message)
+void deserialize_can_struct(CANStruct *data, const CANMessage *message)
 {
     std::stringstream stream;
 

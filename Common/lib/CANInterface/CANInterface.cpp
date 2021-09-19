@@ -28,11 +28,11 @@ void CANInterface::tx_handler(void)
 {
     while(1)
     {
-        queue<CANMessage> fifo = can_parser.get_messages();
-        while(!fifo.empty())
+        queue<CANMessage> *fifo = can_parser.get_messages();
+        while(!fifo->empty())
         {
-            can.write(fifo.front());
-            fifo.pop();
+            can.write(fifo->front());
+            fifo->pop();
         }
         ThisThread::sleep_for(tx_period);
     }
