@@ -8,9 +8,11 @@
 class SolarCANParser : public CANParser {
     public:
     void parse(const CANMessage &msg) override;
-    queue<CANMessage> get_messages() override;
+    queue<CANMessage> *get_messages() override;
     
-    SolarExampleStruct solar_example_struct;
+    void push_solar_example_struct(SolarExampleStruct *example_struct);
+private:
+    queue<CANMessage> messages;
 };
 
 

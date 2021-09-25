@@ -6,23 +6,28 @@ void SolarCANParser::parse(const CANMessage& msg)
     uint8_t messagePriority = CAN_PRIORITY(msg.id);
     uint8_t messageNodeID = CAN_NODE_ID(msg.id);
 
-    solar_example_struct = *(SolarExampleStruct*)msg.data;
+    SolarExampleStruct example_struct;
+    example_struct.deserialize(msg.data, msg.len);
 
-    PRINT("[ID: %d] Data received: a=%u, b=%u, c=%u, d=%d\r\n", msg.id, solar_example_struct.a, solar_example_struct.b, solar_example_struct.c, solar_example_struct.d);
+    PRINT("[ID: %d] Data received: a=%u, b=%u, c=%u, d=%d\r\n", msg.id, example_struct.a, example_struct.b, example_struct.c, example_struct.d);
 }
 
-queue<CANMessage> SolarCANParser::get_messages()
+queue<CANMessage> *SolarCANParser::get_messages()
 {
-    static int id = 0;
-    
-    queue<CANMessage> fifo;
-    fifo.push(CANMessage(id, (char*)&solar_example_struct, sizeof(solar_example_struct)));
+    return &messages;
+}
 
-    PRINT("[ID: %d] Data sent: a=%u, b=%u, c=%u, d=%d\r\n", id, solar_example_struct.a, solar_example_struct.b, solar_example_struct.c, solar_example_struct.d);
-    
-    id++;
-    if(id == 10)
+void SolarCANParser::push_solar_example_struct(SolarExampleStruct *example_struct) {
+    static int id = 0;
+    if (++id == 10) {
         id = 0;
-    
-    return fifo;
+    }
+
+    CANMessage message;
+    message.id = id;
+    example_struct->serialize(message.data, &(message.len));
+
+    PRINT("[ID: %d] Data queued: a=%u, b=%u, c=%u, d=%d\r\n", id, example_struct->a, example_struct->b, example_struct->c, example_struct->d);
+
+    messages.push(message);
 }

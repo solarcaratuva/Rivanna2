@@ -37,10 +37,8 @@ int main() {
             PRINT("main thread loop \r\n");
         #endif //TESTING
 
-        bms_can_parser.powerAuxExampleStruct.a++;
-        bms_can_parser.powerAuxExampleStruct.b += 2;
-        bms_can_parser.powerAuxExampleStruct.c += 3;
-        bms_can_parser.powerAuxExampleStruct.d += 4;
+        PowerAuxExampleStruct a = { 1, 2, 3, 4 };
+        bms_can_parser.push_power_aux_example_struct(&a);
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }

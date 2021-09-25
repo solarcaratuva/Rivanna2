@@ -6,23 +6,28 @@ void PowerAuxCANParser::parse(const CANMessage& msg)
     uint8_t messagePriority = CAN_PRIORITY(msg.id);
     uint8_t messageNodeID = CAN_NODE_ID(msg.id);
 
-    powerAuxExampleStruct = *(PowerAuxExampleStruct*)msg.data;
+    PowerAuxExampleStruct example_struct;
+    example_struct.deserialize(msg.data, msg.len);
 
-    PRINT("[ID: %d] Data received: a=%u, b=%u, c=%u, d=%d\r\n", msg.id, powerAuxExampleStruct.a, powerAuxExampleStruct.b, powerAuxExampleStruct.c, powerAuxExampleStruct.d);
+    PRINT("[ID: %d] Data received: a=%u, b=%u, c=%u, d=%d\r\n", msg.id, example_struct.a, example_struct.b, example_struct.c, example_struct.d);
 }
 
-queue<CANMessage> PowerAuxCANParser::get_messages()
+queue<CANMessage> *PowerAuxCANParser::get_messages()
 {
-    static int id = 0;
-    
-    queue<CANMessage> fifo;
-    fifo.push(CANMessage(id, (char*)&powerAuxExampleStruct, sizeof(powerAuxExampleStruct)));
+    return &messages;
+}
 
-    PRINT("[ID: %d] Data sent: a=%u, b=%u, c=%u, d=%d\r\n", id, powerAuxExampleStruct.a, powerAuxExampleStruct.b, powerAuxExampleStruct.c, powerAuxExampleStruct.d);
-    
-    id++;
-    if(id == 10)
+void PowerAuxCANParser::push_power_aux_example_struct(PowerAuxExampleStruct *example_struct) {
+    static int id = 0;
+    if (++id == 10) {
         id = 0;
-    
-    return fifo;
+    }
+
+    CANMessage message;
+    message.id = id;
+    example_struct->serialize(message.data, &(message.len));
+
+    PRINT("[ID: %d] Data queued: a=%u, b=%u, c=%u, d=%d\r\n", id, example_struct->a, example_struct->b, example_struct->c, example_struct->d);
+
+    messages.push(message);
 }

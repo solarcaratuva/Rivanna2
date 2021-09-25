@@ -16,10 +16,10 @@ void CANInterface::rx_handler(void)
 {
     while(1)
     {
-        CANMessage receivedCANMessage;
-        while (can.read(receivedCANMessage))
+        CANMessage received_CAN_message;
+        while (can.read(received_CAN_message))
         {
-            can_parser.parse(receivedCANMessage);
+            can_parser.parse(received_CAN_message);
         }
     }
 }
@@ -28,11 +28,11 @@ void CANInterface::tx_handler(void)
 {
     while(1)
     {
-        queue<CANMessage> fifo = can_parser.get_messages();
-        while(!fifo.empty())
+        queue<CANMessage> *fifo = can_parser.get_messages();
+        while(!fifo->empty())
         {
-            can.write(fifo.front());
-            fifo.pop();
+            can.write(fifo->front());
+            fifo->pop();
         }
         ThisThread::sleep_for(tx_period);
     }
