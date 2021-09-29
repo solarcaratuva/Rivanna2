@@ -35,11 +35,12 @@ jobs:
           name: Test
           command: |
             pipenv run pio test -e native
-      - run:
-          name: Lint
-          command: |
-            sudo apt install -y libtinfo5
-            pipenv run pio check --fail-on-defect high -e native
+      # Disable linting because this uses ~8 minutes of CircleCI time
+      # - run:
+      #     name: Lint
+      #     command: |
+      #       sudo apt install -y libtinfo5
+      #       pipenv run pio check --fail-on-defect high -e native
       - run:
           name: Coverage
           command: |
