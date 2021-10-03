@@ -34,6 +34,7 @@
 /**********************************/
 #define UNUSED_PIN_0    PA_2
 
+<<<<<<< HEAD
 /**********************************/
 /* pin definitions for Direction Acceleration */
 /**********************************/
@@ -86,5 +87,21 @@
 
 // pin defintion SWD10
 #define SWD10   PA13
+=======
+
+/* pin definitions for motor*/
+#define MTR_CTRL_MCU_CAN_TX      PA_12
+#define MTR_CTRL_MCU_CAN_RX      PA_11
+#define MTR_CTRL_MCU_CAN_STBY    PA_10
+#define SCL_REGEN                PA_9
+#define SDA_REGEN                PA_8
+#define DIR_REGEN                PB_15
+#define MAIN_CAN_TX              PB_13
+#define MAIN_CAN_RX              PB_12
+#define EXTRA_1                  PA_5
+#define EXTRA_2                  PA_4
+#define VSS                      VSS_1
+
+>>>>>>> 4a44245... Max Kouzel, adding motor pin definitions
 
 #endif // PINDEF_H
