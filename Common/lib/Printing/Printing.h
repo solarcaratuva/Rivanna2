@@ -11,8 +11,6 @@
 #define PRINT(formatstring, ...) do { } while(0)
 #endif //PRINTING
 
-void init_printing(Mutex *mutex);
-
 void print_thread_safe(const char *s, ...);
 
 // Input: an integer representing a float with decimals digits past decimal multiplied by 10^decimals

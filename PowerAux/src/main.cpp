@@ -32,8 +32,6 @@ CANInterface vehicle_can_interface(vehicle_can, vehicle_can_parser, vehicle_can_
 
 int main() {
     // device.set_baud(38400);
-    
-    init_printing(&main_printing_mutex);
 
 #ifdef TESTING
     PRINT("start main() \r\n");
