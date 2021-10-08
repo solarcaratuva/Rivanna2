@@ -1,9 +1,8 @@
 # Template Code
-[![CircleCI](https://img.shields.io/circleci/build/gh/solarcaratuva/TemplateCode.svg?logo=circleci)](https://circleci.com/gh/solarcaratuva/TemplateCode)
+[![CircleCI](https://img.shields.io/circleci/build/gh/solarcaratuva/Rivanna2.svg?logo=circleci)](https://circleci.com/gh/solarcaratuva/Rivanna2)
 [![Coveralls](https://img.shields.io/coveralls/github/solarcaratuva/TemplateCode.svg?logo=coveralls)](https://coveralls.io/github/solarcaratuva/TemplateCode)
 
-UVA Solar Car Template code repository. This repository contains the embedded systems template dev environment setup to be used by all boards.
-
+Embedded system code for Rivanna 2. 
 
 ## Hardware
 * The PCB layouts and associated schematics for all boards can be found on the [associated repositories on CADLAB.io](https://cadlab.io/solar-car-uva).
