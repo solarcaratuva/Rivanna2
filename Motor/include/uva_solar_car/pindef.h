@@ -15,42 +15,42 @@
 #define USB_TX  PB_6
 
 // pin definition for acceleration direction
-#define DIR_ACCEL   PC13
+#define DIR_ACCEL   PC_13
 
 // pin definition for MAIN_SWITCH
-#define MAIN_SWITCH PA2
+#define MAIN_SWITCH PA_2
 
 // pin definition for PWR_ECO
-#define PWR_ECO PA3
+#define PWR_ECO PA_3
 
 // pin definition for FWD_REV
-#define FWD_REV PA4
+#define FWD_REV PA_4
 
 // pin definition for SDA_ACCEL
-#define SDA_ACCEL   PB9
+#define SDA_ACCEL   PB_9
 
 // pin definition for SWD
-#define SWD    PB3
+#define SWD    PB_3
 
 // pin definiiton SCL_ACCEL
-#define SCL_ACCEL   PA15
+#define SCL_ACCEL   PA_15
 
 // pin definition SWCLK
-#define SWCLK   PA14
+#define SWCLK   PA_14
 
 // pin defintion SWD10
-#define SWD10   PA13
+#define SWD10   PA_13
 
 // pin definition for EXTRA_4
-#define EXTRA_4    PB5
+#define EXTRA_4    PB_5
 
 // pin definition for EXTRA_3
-#define EXTRA_3    PB4
+#define EXTRA_3    PB_4
 
 // pin definition for SWD
-#define SWD    PB3
+#define SWD    PB_3
 
 // pin definiiton SCL_ACCEL
-#define SCL_ACCEL   PA15
+#define SCL_ACCEL   PA_15
 
 #endif // PINDEF_H
