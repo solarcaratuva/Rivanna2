@@ -15,13 +15,13 @@ BufferedSerial device(USBTX, USBRX);
 
 Mutex main_printing_mutex;
 
-CAN bms_can(CAN_RX, CAN_TX);
-DigitalOut bms_can_stby(CAN_STBY);
+CAN bms_can(BMS_CAN1_RX, BMS_CAN1_TX);
+DigitalOut bms_can_stby(BMS_CAN1_STBY);
 Thread bms_can_tx_thread;
 Thread bms_can_rx_thread;
 
-CAN vehicle_can(CAN2_RX, CAN2_TX);
-DigitalOut vehicle_can_stby(CAN2_STBY);
+CAN vehicle_can(MAIN_CAN_RX, MAIN_CAN_TX);
+DigitalOut vehicle_can_stby(MAIN_CAN_STBY);
 Thread vehicle_can_tx_thread;
 Thread vehicle_can_rx_thread;
 
