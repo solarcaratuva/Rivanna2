@@ -5,23 +5,16 @@
 using namespace std;
 
 // Used to make printing thread safe
-Mutex *printing_mutex;
-
-void init_printing(Mutex *mutex) {
-    printing_mutex = mutex;
-}
+Mutex printing_mutex;
 
 void print_thread_safe(const char *s, ...) {
 #ifdef PRINTING
-    if(!printing_mutex) {
-        return;
-    }
-    printing_mutex->lock();
+    printing_mutex.lock();
     va_list args;
     va_start(args, s);
     vprintf(s, args);
     va_end(args);
-    printing_mutex->unlock();
+    printing_mutex.unlock();
 #endif //PRINTING
 }
 
@@ -29,10 +22,7 @@ void print_thread_safe(const char *s, ...) {
 // Output: print num as a float
 void printIntegerAsFloat(int num, int decimals) {
 #ifdef PRINTING
-    if(!printing_mutex) {
-        return;
-    }
-    printing_mutex->lock();
+    printing_mutex.lock();
     int left = num;
     int right = num;
     int d = decimals;
@@ -40,7 +30,7 @@ void printIntegerAsFloat(int num, int decimals) {
     if(d < 0)
     {
         printf("ERROR: printIntegerAsFloat() argument decimals was negative.");
-        printing_mutex->unlock();
+        printing_mutex.unlock();
         return;
     }
 
@@ -66,7 +56,7 @@ void printIntegerAsFloat(int num, int decimals) {
     }
 
     printf("%d", right);
-    printing_mutex->unlock();
+    printing_mutex.unlock();
 
 #endif //PRINTING
 }
@@ -75,9 +65,6 @@ void printIntegerAsFloat(int num, int decimals) {
 // Output: print num as a float
 void printFloat(float num, int decimals) {
 #ifdef PRINTING
-    if(!printing_mutex) {
-        return;
-    }
     float n = num;
     int d = decimals;
     
