@@ -30,7 +30,7 @@
 #define SDA_ACCEL   PB_9
 
 // pin definition for SWD
-#define SWD    PB_3
+#define SWO    PB_3
 
 // pin definiiton SCL_ACCEL
 #define SCL_ACCEL   PA_15
@@ -39,16 +39,13 @@
 #define SWCLK   PA_14
 
 // pin defintion SWD10
-#define SWD10   PA_13
+#define SWDIO   PA_13
 
 // pin definition for EXTRA_4
 #define EXTRA_4    PB_5
 
 // pin definition for EXTRA_3
 #define EXTRA_3    PB_4
-
-// pin definition for SWD
-#define SWD    PB_3
 
 // pin definiiton SCL_ACCEL
 #define SCL_ACCEL   PA_15
