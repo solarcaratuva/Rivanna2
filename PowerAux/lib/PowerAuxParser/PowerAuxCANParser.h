@@ -10,9 +10,12 @@ class PowerAuxCANParser : public CANParser
 {
 public:
     void parse(const CANMessage &msg) override;
-    queue<CANMessage> getMessages() override;
-    
-    PowerAuxExampleStruct powerAuxExampleStruct;
+    queue<CANMessage> *get_messages() override;
+
+    void push_power_aux_example_struct(PowerAuxExampleStruct *example_struct);
+
+private:
+    queue<CANMessage> messages;
 };
 
 #endif
