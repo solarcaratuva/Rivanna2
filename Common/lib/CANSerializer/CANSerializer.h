@@ -10,7 +10,7 @@
 
 // Bit mask for lower bit_count bits
 #define BITMASK(bit_count) \
-    (bit_count >= sizeof(std::uint64_t) * BITS_PER_BYTE ? -1ULL : (1ULL << bit_count) - 1ULL)
+    (bit_count >= sizeof(uint64_t) * BITS_PER_BYTE ? -1ULL : (1ULL << bit_count) - 1ULL)
 
 // Add value of field_name to serialized variable
 // Increment field_start bit by field_size
@@ -39,17 +39,17 @@
 #define SERIALIZATION_METHODS(...) \
     void serialize(unsigned char *data, unsigned char *len) \
     { \
-        std::uint64_t serialized = 0; \
-        std::uint8_t field_start_bit = 0; \
+        uint64_t serialized = 0; \
+        uint8_t field_start_bit = 0; \
         BOOST_PP_SEQ_FOR_EACH(SERIALIZE_FIELD_MACRO, (), BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__)) \
         *len = (field_start_bit + BITS_PER_BYTE - 1) / BITS_PER_BYTE; \
         memcpy(data, &serialized, *len); \
     } \
     void deserialize(const unsigned char *data, const unsigned char len) \
     { \
-        std::uint64_t serialized = 0; \
+        uint64_t serialized = 0; \
         memcpy(&serialized, data, len); \
-        std::uint8_t field_start_bit = 0; \
+        uint8_t field_start_bit = 0; \
         BOOST_PP_SEQ_FOR_EACH(DESERIALIZE_FIELD_MACRO, (), BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__)) \
     } \
 
