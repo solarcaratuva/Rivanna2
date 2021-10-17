@@ -1,7 +1,6 @@
 #ifndef POWER_AUX_CAN_STRUCTS_H
 #define POWER_AUX_CAN_STRUCTS_H
 
-#include <stdio.h>
 #include "CANSerializer.h"
 
 typedef struct PowerAuxExampleStruct

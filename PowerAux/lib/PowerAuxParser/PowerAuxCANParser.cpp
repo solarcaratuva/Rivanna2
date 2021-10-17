@@ -18,10 +18,7 @@ queue<CANMessage> *PowerAuxCANParser::get_messages()
 }
 
 void PowerAuxCANParser::push_power_aux_example_struct(PowerAuxExampleStruct *example_struct) {
-    static int id = 0;
-    if (++id == 10) {
-        id = 0;
-    }
+    static int id = 3;
 
     CANMessage message;
     message.id = id;
