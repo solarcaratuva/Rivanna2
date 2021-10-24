@@ -35,9 +35,12 @@ int main() {
             PRINT("main thread loop \r\n");
         #endif //TESTING
         char cmd[1];
-        cmd[0] = 0x00;
-        int result = motorInterface.sendThrottle(cmd);
-        printf("%d", result);
+        cmd[0] = 0xFF;
+        // int result = motorInterface.sendThrottle(cmd);
+        // printf("%d", result);
+        int result1 = throttle.read(0x00, cmd, 1);
+        printf("%d", result1);
+        // printf("%d", cmd[0]);
         thread_sleep_for(MAIN_LOOP_PERIOD_MS);
     }
 }

@@ -1,13 +1,13 @@
 #include "MotorInterface.h"
 
 MotorInterface::MotorInterface(I2C &throttle, I2C& regen, DigitalOut &throttleEnable, DigitalOut &regenEnable) : throttleBus(throttle), regenBus(regen), throttleEn(throttleEnable), regenEn(regenEnable) {
-    this->throttleEn.write(1);
-    this->regenEn.write(1);
+    // this->throttleEn.write(1);
+    // this->regenEn.write(1);
 }
 
 int MotorInterface::sendThrottle(char* throttle) {
     // this->throttleBus.start();
-    int result = throttleBus.write(0x2E, throttle, 1);
+    int result = throttleBus.write(0x00, throttle, 1);
     // this->throttleBus.stop();
     return result;
 }
