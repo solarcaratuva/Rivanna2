@@ -1,4 +1,5 @@
 #include <mbed.h>
+#include <limits.h>
 #include "pindef.h"
 #include "Printing.h"
 #include "MotorInterface.h"
@@ -17,8 +18,10 @@ Ticker canTxTicker;
 
 I2C throttle(SDA_ACCEL, SCL_ACCEL);
 I2C regen(SDA_REGEN, SCL_REGEN);
-DigitalOut enable(DIR_ACCEL);
-MotorInterface motorInterface(throttle, regen, enable);
+DigitalOut ThrottleEn(DIR_ACCEL);
+DigitalOut RegenEn(DIR_REGEN);
+
+MotorInterface motorInterface(throttle, regen, ThrottleEn, RegenEn);
 
 int main() {
     // device.set_baud(38400);
@@ -26,13 +29,15 @@ int main() {
 #ifdef TESTING
     PRINT("start main() \r\n");
 #endif //TESTING
-    motorInterface.startTransmission();
-    throttle.start();
+    // motorInterface.sendThrottle(1500);
     while(1){
         #ifdef TESTING
             PRINT("main thread loop \r\n");
         #endif //TESTING
-        motorInterface.sendThrottle(15);
+        char cmd[1];
+        cmd[0] = 0x00;
+        int result = motorInterface.sendThrottle(cmd);
+        printf("%d", result);
         thread_sleep_for(MAIN_LOOP_PERIOD_MS);
     }
 }
