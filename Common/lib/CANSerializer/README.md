@@ -18,13 +18,13 @@ struct can_struct {
 
 The generated `serialize` and `deserialize` methods will have the signatures shown below.
 ```
-void serialize(unsigned char *data, unsigned char *len)
-void deserialize(const unsigned char *data, const unsigned char len)
+void serialize(CANMessage *message)
+void deserialize(const CANMessage *message)
 ```
 
-`serialize` will read the fields of the struct, serialize them into `data`, and set `len` to the number of bytes required by the serialization.
+`serialize` will read the fields of the struct, serialize them into `message->data`, and set the `message->len` field to the number of bytes required by the serialization.
 
-`deserialize` will deserialize `data` and set each field of the struct accordingly.
+`deserialize` will deserialize `message->data` and set each field of the struct accordingly.
 
 The behavior of `serialize` and `deserialize` is shown below, relying on `can_struct` defined above.
 
@@ -32,15 +32,14 @@ The behavior of `serialize` and `deserialize` is shown below, relying on `can_st
 // Initialize a
 struct can_struct a = { -7, true, false, 38 };
 
-unsigned char data[8];
-unsigned char len;
+CANMessage messsage;
 
 // Serialize a into data and set len
-a.serialize(data, &len);
+a.serialize(&message);
 
 // Build b from the contents of data
 struct can_struct b;
-b.deserialize(data, len);
+b.deserialize(&message);
 
 // Here, b.a == -7, b.b == true, b.c == false, and b.d == 38
 ```
@@ -55,6 +54,6 @@ On the serialization side, a 64-bit unsigned integer (`serialized`) represents t
 
 Then, the Boost Preprocessor library macro `BOOST_PP_SEQ_FOR_EACH` is used to apply the `SERIALIZE_FIELD` macro to each field pair passed to `SERIALIZATION_METHODS(...)`. This will set bits in `serialized` based on the value of each field using bit manipulation.
 
-Finally, the `len` variable will be set and the `serialized` variable is copied to `data`. 
+Finally, the `message->len` variable will be set and the `serialized` variable is copied to `message->data`. 
 
 This process is repeated in reverse to generate the `deserialize` method.

@@ -4,6 +4,7 @@
 #include <inttypes.h>
 #include <stdio.h>
 #include <cstring>
+#include <mbed.h>
 #include <boost/preprocessor.hpp>
 
 #define BITS_PER_BYTE 8
@@ -37,18 +38,18 @@
 // Macro to generate serialize and deserialize methods
 // Input is of the form (field1_name, field1_size), (field2_name, field2_size), ...
 #define SERIALIZATION_METHODS(...) \
-    void serialize(unsigned char *data, unsigned char *len) \
+    void serialize(CANMessage *message) \
     { \
         uint64_t serialized = 0; \
         uint8_t field_start_bit = 0; \
         BOOST_PP_SEQ_FOR_EACH(SERIALIZE_FIELD_MACRO, (), BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__)) \
-        *len = (field_start_bit + BITS_PER_BYTE - 1) / BITS_PER_BYTE; \
-        memcpy(data, &serialized, *len); \
+        message->len = (field_start_bit + BITS_PER_BYTE - 1) / BITS_PER_BYTE; \
+        memcpy(&(message->data), &serialized, message->len); \
     } \
-    void deserialize(const unsigned char *data, const unsigned char len) \
+    void deserialize(const CANMessage *message) \
     { \
         uint64_t serialized = 0; \
-        memcpy(&serialized, data, len); \
+        memcpy(&serialized, &(message->data), message->len); \
         uint8_t field_start_bit = 0; \
         BOOST_PP_SEQ_FOR_EACH(DESERIALIZE_FIELD_MACRO, (), BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__)) \
     } \
