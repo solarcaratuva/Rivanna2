@@ -1,27 +1,21 @@
 #include "MotorInterface.h"
 
-MotorInterface::MotorInterface(I2C &throttle, I2C& regen, DigitalOut &throttleEnable, DigitalOut &regenEnable) : throttleBus(throttle), regenBus(regen), throttleEn(throttleEnable), regenEn(regenEnable) {
-    // this->throttleEn.write(1);
-    // this->regenEn.write(1);
-}
+MotorInterface::MotorInterface(I2C &throttle, I2C& regen) : throttleBus(throttle), regenBus(regen) {}
 
-int MotorInterface::sendThrottle(char* throttle) {
-    // this->throttleBus.start();
-    int result = throttleBus.write(0x00, throttle, 1);
-    // this->throttleBus.stop();
+int MotorInterface::sendThrottle(uint16_t throttle) 
+{
+    char cmd[2];
+    cmd[0] = (throttle & 0x100) >> 8;
+    cmd[1] = throttle & 0xFF; 
+    int result = throttleBus.write(0x5C, cmd, 2);
     return result;
 }
 
-uint8_t MotorInterface::getThrottle() {
-    return throttleBus.read(0);
-}
-
-void MotorInterface::sendRegen(uint8_t regen_val) {
-    regenBus.start();
-    regenBus.write(regen_val);
-    regenBus.stop();
-}
-
-uint8_t MotorInterface::getRegen() {
-    return regenBus.read(0);
+int MotorInterface::sendRegen(uint16_t regen) 
+{
+    char cmd[2];
+    cmd[0] = (regen & 0x100) >> 8;
+    cmd[1] = regen & 0xFF; 
+    int result = regenBus.write(0x5C, cmd, 2);
+    return result;
 }

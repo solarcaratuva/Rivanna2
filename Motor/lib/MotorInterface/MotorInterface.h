@@ -6,17 +6,14 @@
 class MotorInterface {
 
     public:
-        MotorInterface(I2C &throttle, I2C &regen, DigitalOut &throttleEnable, DigitalOut &regenEnable);
-        int sendThrottle(char* throttle);
-        uint8_t getThrottle();
-        void sendRegen(uint8_t regen_value);
-        uint8_t getRegen();
+        MotorInterface(I2C &throttle, I2C &regen);
+        int sendThrottle(uint16_t throttle);
+        int sendRegen(uint16_t regen);
 
     private:
         I2C &throttleBus;
         I2C &regenBus;
-        DigitalOut &throttleEn;
-        DigitalOut &regenEn;
+
 };
 
 #endif

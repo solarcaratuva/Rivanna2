@@ -7,7 +7,7 @@
 #define TESTING     // only defined if using test functions
 // #define DEBUGGING   // only define if debugging
 
-#define MAIN_LOOP_PERIOD_MS 1000  // units of 1 ms
+#define MAIN_LOOP_PERIOD_MS 20  // units of 1 ms
 
 Mutex main_printing_mutex;
 BufferedSerial device(USBTX, USBRX);
@@ -18,10 +18,8 @@ Ticker canTxTicker;
 
 I2C throttle(SDA_ACCEL, SCL_ACCEL);
 I2C regen(SDA_REGEN, SCL_REGEN);
-DigitalOut ThrottleEn(DIR_ACCEL);
-DigitalOut RegenEn(DIR_REGEN);
 
-MotorInterface motorInterface(throttle, regen, ThrottleEn, RegenEn);
+MotorInterface motorInterface(throttle, regen);
 
 int main() {
     // device.set_baud(38400);
@@ -34,13 +32,18 @@ int main() {
         #ifdef TESTING
             PRINT("main thread loop \r\n");
         #endif //TESTING
-        char cmd[1];
-        cmd[0] = 0xFF;
-        // int result = motorInterface.sendThrottle(cmd);
-        // printf("%d", result);
-        int result1 = throttle.read(0x00, cmd, 1);
-        printf("%d", result1);
-        // printf("%d", cmd[0]);
+        motorInterface.sendThrottle(256);
         thread_sleep_for(MAIN_LOOP_PERIOD_MS);
+        motorInterface.sendThrottle(200);
+        thread_sleep_for(MAIN_LOOP_PERIOD_MS);
+        motorInterface.sendThrottle(150);
+        thread_sleep_for(MAIN_LOOP_PERIOD_MS);
+        motorInterface.sendThrottle(100);
+        thread_sleep_for(MAIN_LOOP_PERIOD_MS);
+        motorInterface.sendThrottle(50);
+        thread_sleep_for(MAIN_LOOP_PERIOD_MS);
+        motorInterface.sendThrottle(0);
+        thread_sleep_for(MAIN_LOOP_PERIOD_MS);
+
     }
 }
