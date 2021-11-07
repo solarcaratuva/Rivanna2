@@ -1,7 +1,16 @@
 #include "MotorInterface.h"
 
+/**
+ * Motor driver that controls the throttle and regen values
+ * @param throttle Mbed I2C object for throttle communication
+ * @param regen Mbed I2C object for regen communication 
+ */
 MotorInterface::MotorInterface(I2C &throttle, I2C& regen) : throttleBus(throttle), regenBus(regen) {}
 
+/**
+ * Sends a throttle value to motor
+ * @param throttle Throttle value
+ */
 int MotorInterface::sendThrottle(uint16_t throttle) 
 {
     char cmd[2];
@@ -11,6 +20,10 @@ int MotorInterface::sendThrottle(uint16_t throttle)
     return result;
 }
 
+/**
+ * Sends a regen value to motor
+ * @param regen Regen value
+ */
 int MotorInterface::sendRegen(uint16_t regen) 
 {
     char cmd[2];
