@@ -26,7 +26,7 @@ int main() {
             PRINT("main thread loop \r\n");
         #endif //TESTING
 
-        PowerAuxExampleStruct a = { 1, 2, 3, 4 };
+        PowerAuxExampleStruct a(1, 2, 3, 4);
         vehicle_can_parser.push_power_aux_example_struct(&a);
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
