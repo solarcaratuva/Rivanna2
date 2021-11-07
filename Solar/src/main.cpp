@@ -11,12 +11,17 @@
 
 #define MAIN_LOOP_PERIOD 1s
 #define CAN_PERIOD 1s
+#define ADC_REF_VOLTAGE 3.3
 
 SolarCANParser vehicle_can_parser;
 CANInterface vehicle_can_interface(CAN_RX, CAN_TX, vehicle_can_parser, PB_10, CAN_PERIOD);
 
 SPI spi1(ADC1_MOSI, ADC1_MISO, ADC1_CLK);
 MCP3008 spi1_inteface(&spi1, ADC1_CS);
+
+float convert_voltage(int adc_reading) {
+    return ((float) adc_reading) / 1024.0 * ADC_REF_VOLTAGE;
+}
 
 int main() {
 #ifdef TESTING
