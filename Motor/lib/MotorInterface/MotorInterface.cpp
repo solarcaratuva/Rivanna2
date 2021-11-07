@@ -9,7 +9,7 @@ MotorInterface::MotorInterface(I2C &throttle, I2C& regen) : throttleBus(throttle
 
 /**
  * Sends a throttle value to motor
- * @param throttle Throttle value
+ * @param throttle Throttle value (between 0x0000 and 0x0100)
  */
 int MotorInterface::sendThrottle(uint16_t throttle) 
 {
@@ -22,7 +22,7 @@ int MotorInterface::sendThrottle(uint16_t throttle)
 
 /**
  * Sends a regen value to motor
- * @param regen Regen value
+ * @param regen Regen value (between 0x0000 and 0x0100)
  */
 int MotorInterface::sendRegen(uint16_t regen) 
 {
