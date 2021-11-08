@@ -6,7 +6,7 @@
 
 The interface defines virtual methods for handling receipt of each type of CAN struct. For example, the `virtual void handle(ECUMotorCommands *can_struct)` will be called whenever an `ECUMotorCommands` struct is received. By default, all of these methods do nothing. As such, this interface is not intended to be used directly; it should be extended by another class. 
 
-Classes that extend `CANInterface`, such as `SolarCANInterface`, should define handlers for each struct they need to receive. 
+Classes that extend `CANInterface`, such as `SolarCANInterface`, should override the `handle` method for each struct they need to receive. 
 
 Subclasses will inherit the `void send(CANStruct *can_struct)` method to send structs across the bus. The `send` method is capable of sending any [`CANStruct`](../CANStructs/README.md) object. 
 
