@@ -1,7 +1,6 @@
 #include "CANInterface.h"
-#include "Printing.h"
 
-CANInterface::CANInterface(PinName rd, PinName td, CANParser &cp, PinName standby_pin, std::chrono::milliseconds tx_prd) : can(rd, td), can_parser(cp), standby(standby_pin), tx_period(tx_prd)
+CANInterface::CANInterface(PinName rd, PinName td, PinName standby_pin) : can(rd, td), standby(standby_pin)
 {
     standby = 0;
 }
@@ -9,31 +8,65 @@ CANInterface::CANInterface(PinName rd, PinName td, CANParser &cp, PinName standb
 void CANInterface::start_CAN_transmission(void)
 {
     rx_thread.start(callback(this, &CANInterface::rx_handler));
-    tx_thread.start(callback(this, &CANInterface::tx_handler));
 }
 
-void CANInterface::rx_handler(void)
+void CANInterface::send(CANStruct *can_struct)
 {
-    while(1)
-    {
-        CANMessage received_CAN_message;
-        while (can.read(received_CAN_message))
-        {
-            can_parser.parse(received_CAN_message);
-        }
-    }
+    CANMessage message;
+    can_struct->serialize(&message);
+    message.id = can_struct->get_message_ID();
+    can.write(message);
 }
 
-void CANInterface::tx_handler(void)
+void CANInterface::rx_handler()
 {
-    while(1)
+    while (true)
     {
-        queue<CANMessage> *fifo = can_parser.get_messages();
-        while(!fifo->empty())
+        CANMessage message;
+        while (can.read(message))
         {
-            can.write(fifo->front());
-            fifo->pop();
+            if (message.id == ECUMotorCommands_MESSAGE_ID)
+            {
+                ECUMotorCommands can_struct;
+                can_struct.deserialize(&message);
+                handle(&can_struct);
+            }
+            else if (message.id == ECUPowerAuxCommands_MESSAGE_ID)
+            {
+                ECUPowerAuxCommands can_struct;
+                can_struct.deserialize(&message);
+                handle(&can_struct);
+            }
+            else if (message.id == PowerAuxExampleStruct_MESSAGE_ID)
+            {
+                PowerAuxExampleStruct can_struct;
+                can_struct.deserialize(&message);
+                handle(&can_struct);
+            }
+            else if (message.id == SolarCurrent_MESSAGE_ID)
+            {
+                SolarCurrent can_struct;
+                can_struct.deserialize(&message);
+                handle(&can_struct);
+            }
+            else if (message.id == SolarTemp_MESSAGE_ID)
+            {
+                SolarTemp can_struct;
+                can_struct.deserialize(&message);
+                handle(&can_struct);
+            }
+            else if (message.id == SolarVoltage_MESSAGE_ID)
+            {
+                SolarVoltage can_struct;
+                can_struct.deserialize(&message);
+                handle(&can_struct);
+            }
+            else if (message.id == SolarPhoto_MESSAGE_ID)
+            {
+                SolarPhoto can_struct;
+                can_struct.deserialize(&message);
+                handle(&can_struct);
+            }
         }
-        ThisThread::sleep_for(tx_period);
     }
 }

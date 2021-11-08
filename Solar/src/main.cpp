@@ -2,8 +2,7 @@
 #include <rtos.h>
 #include "pindef.h"
 #include "Printing.h"
-#include "SolarCANParser.h"
-#include "CANInterface.h"
+#include "SolarCANInterface.h"
 
 #define TESTING     // only defined if using test functions
 // #define DEBUGGING   // only define if debugging
@@ -11,8 +10,7 @@
 #define MAIN_LOOP_PERIOD 1s
 #define CAN_PERIOD 1s
 
-SolarCANParser vehicle_can_parser;
-CANInterface vehicle_can_interface(CAN_RX, CAN_TX, vehicle_can_parser, PB_10, CAN_PERIOD);
+SolarCANInterface vehicle_can_interface(CAN_RX, CAN_TX, PB_10);
 
 int main() {
 #ifdef TESTING
@@ -27,8 +25,13 @@ int main() {
         #endif //TESTING
 
         PowerAuxExampleStruct a(1, 2, 3, 4);
-        vehicle_can_parser.push_power_aux_example_struct(&a);
+        vehicle_can_interface.send(&a);
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }
+}
+
+void SolarCANInterface::handle(PowerAuxExampleStruct *can_struct)
+{
+    PRINT("Received PowerAuxExampleStruct: a=%u, b=%u, c=%u, d=%d\r\n", can_struct->a, can_struct->b, can_struct->c, can_struct->d);
 }

@@ -5,7 +5,7 @@
 #include "CANStruct.h"
 #include "CANSerializer.h"
 
-class ECUMotorCommands : CANStruct
+class ECUMotorCommands : public CANStruct
 {
 public:
     uint16_t throttle;
@@ -32,18 +32,13 @@ public:
         (motor_on, 1)
     )
 
-    static uint8_t get_node_id()
+    uint16_t get_message_ID()
     {
-        return 1;
-    }
-
-    static uint8_t get_priority()
-    {
-        return 1;
+        return ECUMotorCommands_MESSAGE_ID;
     }
 };
 
-class ECUPowerAuxCommands : CANStruct
+class ECUPowerAuxCommands : public CANStruct
 {
 public:
     bool hazards;
@@ -70,14 +65,9 @@ public:
         (battery_contact, 1)
     )
 
-    static uint8_t get_node_id()
+    uint16_t get_message_ID()
     {
-        return 1;
-    }
-
-    static uint8_t get_priority()
-    {
-        return 2;
+        return ECUPowerAuxCommands_MESSAGE_ID;
     }
 };
 

@@ -2,27 +2,30 @@
 #define CAN_INTERFACE_H
 
 #include <mbed.h>
-#include "CANParser.h"
+#include "CANStructs.h"
 
 class CANInterface
 {
 public:
-    CANInterface(PinName rd, PinName td, CANParser &cp, PinName standby_pin = NC, std::chrono::milliseconds can_period = 1s);
+    CANInterface(PinName rd, PinName td, PinName standby_pin = NC);
+    
     void start_CAN_transmission(void);
 
+    void send(CANStruct *can_struct);
+
+    virtual void handle(ECUMotorCommands *can_struct) {}
+    virtual void handle(ECUPowerAuxCommands *can_struct) {}
+    virtual void handle(PowerAuxExampleStruct *can_struct) {}
+    virtual void handle(SolarCurrent *can_struct) {}
+    virtual void handle(SolarVoltage *can_struct) {}
+    virtual void handle(SolarTemp *can_struct) {}
+    virtual void handle(SolarPhoto *can_struct) {}
+
 private:
-    void rx_handler(void);
-    void tx_handler(void);
-
     CAN can;
-    CANParser &can_parser;
     DigitalOut standby;
-
-    Thread tx_thread;
     Thread rx_thread;
-
-    std::chrono::milliseconds tx_period;
-
+    void rx_handler();
 };
 
 #endif

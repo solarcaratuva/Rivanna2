@@ -4,7 +4,7 @@
 #include "CANStruct.h"
 #include "CANSerializer.h"
 
-class PowerAuxExampleStruct : CANStruct
+class PowerAuxExampleStruct : public CANStruct
 {
 public:
     uint32_t a;
@@ -18,14 +18,9 @@ public:
 
     SERIALIZATION_METHODS((a, 32), (b, 16), (c, 8), (d, 8))
 
-    static uint8_t get_node_id()
+    uint16_t get_message_ID()
     {
-        return 3;
-    }
-
-    static uint8_t get_priority()
-    {
-        return 3;
+        return PowerAuxExampleStruct_MESSAGE_ID;
     }
 };
 

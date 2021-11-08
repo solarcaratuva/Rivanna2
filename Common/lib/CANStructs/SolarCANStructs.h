@@ -4,7 +4,7 @@
 #include "CANStruct.h"
 #include "CANSerializer.h"
 
-typedef struct SolarCurrent : CANStruct
+typedef struct SolarCurrent : public CANStruct
 {
     int16_t total_current;
 
@@ -13,18 +13,13 @@ typedef struct SolarCurrent : CANStruct
 
     SERIALIZATION_METHODS((total_current, 16))
 
-    static uint8_t get_node_id()
+    uint16_t get_message_ID()
     {
-        return 4;
-    }
-
-    static uint8_t get_priority()
-    {
-        return 4;
+        return SolarCurrent_MESSAGE_ID;
     }
 } SolarCurrent;
 
-typedef struct SolarVoltage : CANStruct
+typedef struct SolarVoltage : public CANStruct
 {
     int16_t panel1_voltage;
     int16_t panel2_voltage;
@@ -42,18 +37,13 @@ typedef struct SolarVoltage : CANStruct
         (panel4_voltage, 16)
     )
 
-    static uint8_t get_node_id()
+    uint16_t get_message_ID()
     {
-        return 4;
-    }
-
-    static uint8_t get_priority()
-    {
-        return 5;
+        return SolarVoltage_MESSAGE_ID;
     }
 } SolarVoltage;
 
-typedef struct SolarTemp : CANStruct
+typedef struct SolarTemp : public CANStruct
 {
     int16_t panel1_temp;
     int16_t panel2_temp;
@@ -71,18 +61,13 @@ typedef struct SolarTemp : CANStruct
         (panel4_temp, 16)
     )
 
-    static uint8_t get_node_id()
+    uint16_t get_message_ID()
     {
-        return 4;
-    }
-
-    static uint8_t get_priority()
-    {
-        return 6;
+        return SolarTemp_MESSAGE_ID;
     }
 } SolarTemp;
 
-typedef struct SolarPhoto : CANStruct
+typedef struct SolarPhoto : public CANStruct
 {
     int16_t panel1_photo;
     int16_t panel2_photo;
@@ -100,14 +85,9 @@ typedef struct SolarPhoto : CANStruct
         (panel4_photo, 16)
     )
 
-    static uint8_t get_node_id()
+    uint16_t get_message_ID()
     {
-        return 4;
-    }
-
-    static uint8_t get_priority()
-    {
-        return 7;
+        return SolarPhoto_MESSAGE_ID;
     }
 } SolarPhoto;
 
