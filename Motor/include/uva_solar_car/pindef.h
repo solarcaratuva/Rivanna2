@@ -4,12 +4,12 @@
 /***************************/
 /* pin definitions for CAN */
 /***************************/
-#define CAN_RX      PA_11   // Rx for MCU
-#define CAN_TX      PA_12
-#define CAN_STBY    PA_10   // Digital Output
-#define MTR_CTL_MCU_CAN_TX PA_12
-#define MTR_CTL_MCU_CAN_RX PA_11
-#define MTR_CTL_MCU_CAN_STBY PA_10
+#define MAIN_CAN_RX         PB_12
+#define MAIN_CAN_TX         PB_13
+
+#define MTR_CTRL_CAN_RX     PA_11
+#define MTR_CTRL_CAN_TX     PA_12
+#define MTR_CTRL_CAN_STBY   PA_10
 
 /***************************/
 /* pin definitions for USB */

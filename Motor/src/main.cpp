@@ -19,7 +19,7 @@ Mutex main_printing_mutex;
 BufferedSerial device(USBTX, USBRX);
 
 MotorCANParser vehicle_can_parser;
-CANInterface vehicle_can_interface(PB_12, PB_13, vehicle_can_parser, PA_10, CAN_PERIOD);
+CANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX, vehicle_can_parser, NC, CAN_PERIOD);
 
 I2C throttle(SDA_ACCEL, SCL_ACCEL);
 I2C regen(SDA_REGEN, SCL_REGEN);
