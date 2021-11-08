@@ -7,7 +7,6 @@
 class CANStruct
 {
 public:
-    // TODO: Change serialize method to set node id and priority using the new methods
     virtual void serialize(CANMessage *message);
     virtual void deserialize(const CANMessage *message);
     virtual uint16_t get_message_ID();
