@@ -6,7 +6,7 @@
 /***************************/
 #define CAN_RX      PA_11   // Rx for MCU
 #define CAN_TX      PA_12
-#define CAN_STBY    PA_10   // Digital Output
+#define CAN_STBY    PB_10   // Digital Output
 
 /***************************/
 /* pin definitions for USB */
