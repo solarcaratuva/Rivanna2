@@ -12,7 +12,7 @@
 #define CAN_PERIOD 1s
 
 SolarCANParser vehicle_can_parser;
-CANInterface vehicle_can_interface(CAN_RX, CAN_TX, vehicle_can_parser, PB_10, CAN_PERIOD);
+CANInterface vehicle_can_interface(CAN_RX, CAN_TX, vehicle_can_parser, CAN_STBY, CAN_PERIOD);
 
 int main() {
 #ifdef TESTING

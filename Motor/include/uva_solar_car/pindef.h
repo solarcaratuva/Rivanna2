@@ -17,40 +17,39 @@
 #define USB_RX  PB_7    // Rx for MCU
 #define USB_TX  PB_6
 
-// pin definition for acceleration direction
-#define DIR_ACCEL   PC_13
+/***************************************/
+/* pin definitions for Trottle */
+/***************************************/
+#define SCL_ACCEL PA_15
+#define SDA_ACCEL PB_9
+#define DIR_ACCEL PC_13
 
-// pin definition for MAIN_SWITCH
+
+/***************************************/
+/* pin definitions for Regen */
+/***************************************/
+#define SCL_REGEN PA_9
+#define SDA_REGEN PA_8
+#define DIR_REGEN PB_15
+
+/***************************************/
+/* pin definitions for Switching Logic */
+/***************************************/
 #define MAIN_SWITCH PA_2
+#define PWR_ECO_ON PA_3
+#define FWD_REV_EN PA_4
 
-// pin definition for PWR_ECO
-#define PWR_ECO PA_3
-
-// pin definition for FWD_REV
-#define FWD_REV PA_4
-
-// pin definition for SDA_ACCEL
-#define SDA_ACCEL   PB_9
-
-// pin definition for SWD
-#define SWO    PB_3
-
-// pin definiiton SCL_ACCEL
-#define SCL_ACCEL   PA_15
-
-// pin definition SWCLK
-#define SWCLK   PA_14
-
-// pin defintion SWD10
-#define SWDIO   PA_13
-
-// pin definition for EXTRA_4
-#define EXTRA_4    PB_5
-
-// pin definition for EXTRA_3
-#define EXTRA_3    PB_4
-
-// pin definiiton SCL_ACCEL
-#define SCL_ACCEL   PA_15
+/**********************************/
+/* pin definitions for Unused I/O */
+/**********************************/
+#define PULLUP_2 PB_14
+#define PULLUP_3 PB_11
+#define PULLUP_6 PB_10
+#define PULLUP_7 PA_1
+#define PULLUP_8 PA_0
+#define PULLUP_9 PB_2
+#define PULLUP_10 PB_1
+#define PULLUP_11 PB_0
+#define PULLUP_12 PA_7
 
 #endif // PINDEF_H

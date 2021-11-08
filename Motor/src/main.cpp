@@ -2,6 +2,7 @@
 // DigitalOut vehicle_can_stby(PA_10);
 
 #include <mbed.h>
+#include "MotorInterface.h"
 #include <rtos.h>
 #include "pindef.h"
 #include "Printing.h"
@@ -14,10 +15,16 @@
 #define MAIN_LOOP_PERIOD 1s
 #define CAN_PERIOD 1s
 
+Mutex main_printing_mutex;
 BufferedSerial device(USBTX, USBRX);
 
 MotorCANParser vehicle_can_parser;
 CANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX, vehicle_can_parser, NC, CAN_PERIOD);
+
+I2C throttle(SDA_ACCEL, SCL_ACCEL);
+I2C regen(SDA_REGEN, SCL_REGEN);
+
+MotorInterface motorInterface(throttle, regen);
 
 int main() {
 #ifdef TESTING
@@ -30,11 +37,18 @@ int main() {
         #ifdef TESTING
             PRINT("main thread loop \r\n");
         #endif //TESTING
-
-        PowerAuxExampleStruct a = { 1, 2, 3, 4 };
-        vehicle_can_parser.push_power_aux_example_struct(&a);
-
+        motorInterface.sendThrottle(256);
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
+        motorInterface.sendThrottle(200);
+        ThisThread::sleep_for(MAIN_LOOP_PERIOD);
+        motorInterface.sendThrottle(150);
+        ThisThread::sleep_for(MAIN_LOOP_PERIOD);
+        motorInterface.sendThrottle(100);
+        ThisThread::sleep_for(MAIN_LOOP_PERIOD);
+        motorInterface.sendThrottle(50);
+        ThisThread::sleep_for(MAIN_LOOP_PERIOD);
+        motorInterface.sendThrottle(0);
+        ThisThread::sleep_for(MAIN_LOOP_PERIOD); 
     }
 }
 
