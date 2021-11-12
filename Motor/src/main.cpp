@@ -1,13 +1,9 @@
-// CAN vehicle_can(PB_12, PB_13);
-// DigitalOut vehicle_can_stby(PA_10);
-
 #include <mbed.h>
 #include "MotorInterface.h"
 #include <rtos.h>
 #include "pindef.h"
 #include "Printing.h"
-#include "MotorCANParser.h"
-#include "CANInterface.h"
+#include "MotorCANInterface.h"
 
 #define TESTING     // only defined if using test functions
 // #define DEBUGGING   // only define if debugging
@@ -15,11 +11,9 @@
 #define MAIN_LOOP_PERIOD 1s
 #define CAN_PERIOD 1s
 
-Mutex main_printing_mutex;
 BufferedSerial device(USBTX, USBRX);
 
-MotorCANParser vehicle_can_parser;
-CANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX, vehicle_can_parser, NC, CAN_PERIOD);
+MotorCANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX);
 
 I2C throttle(SDA_ACCEL, SCL_ACCEL);
 I2C regen(SDA_REGEN, SCL_REGEN);
@@ -37,6 +31,10 @@ int main() {
         #ifdef TESTING
             PRINT("main thread loop \r\n");
         #endif //TESTING
+
+        PowerAuxExampleStruct a(1, 2, 3, 4);
+        vehicle_can_interface.send(&a);
+
         motorInterface.sendThrottle(256);
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
         motorInterface.sendThrottle(200);
@@ -52,3 +50,7 @@ int main() {
     }
 }
 
+void MotorCANInterface::handle(PowerAuxExampleStruct *can_struct)
+{
+    PRINT("Received PowerAuxExampleStruct: a=%u, b=%u, c=%u, d=%d\r\n", can_struct->a, can_struct->b, can_struct->c, can_struct->d);
+}

@@ -2,10 +2,12 @@
 #define ECU_CAN_STRUCTS_H
 
 #include <stdio.h>
+#include "CANStruct.h"
 #include "CANSerializer.h"
 
-typedef struct ECUMotorCommands
+class ECUMotorCommands : public CANStruct
 {
+public:
     uint16_t throttle;
     uint16_t regen;
     bool reverse_en;
@@ -14,6 +16,11 @@ typedef struct ECUMotorCommands
     bool cruise_speed_up;
     bool cruise_speed_down;
     bool motor_on;
+
+    ECUMotorCommands() {}
+    ECUMotorCommands(uint16_t throttle, uint16_t regen, bool reverse_en, bool forward_en, bool cruise_control_en, bool cruise_speed_up, bool cruise_speed_down, bool motor_on)
+        : throttle(throttle), regen(regen), reverse_en(reverse_en), forward_en(forward_en), cruise_control_en(cruise_control_en), cruise_speed_up(cruise_speed_up), cruise_speed_down(cruise_speed_down), motor_on(motor_on) {}
+
     SERIALIZATION_METHODS(
         (throttle, 16),
         (regen, 16),
@@ -24,10 +31,16 @@ typedef struct ECUMotorCommands
         (cruise_speed_down, 1),
         (motor_on, 1)
     )
-} ECUMotorCommands;
 
-typedef struct ECUPowerAuxCommands
+    uint16_t get_message_ID()
+    {
+        return ECUMotorCommands_MESSAGE_ID;
+    }
+};
+
+class ECUPowerAuxCommands : public CANStruct
 {
+public:
     bool hazards;
     bool brake_lights;
     bool headlights;
@@ -36,6 +49,11 @@ typedef struct ECUPowerAuxCommands
     bool right_turn_signal;
     bool ignition;
     bool battery_contact;
+
+    ECUPowerAuxCommands() {}
+    ECUPowerAuxCommands(bool hazards, bool brake_lights, bool headlights, bool horn, bool left_turn_signal, bool right_turn_signal, bool ignition, bool battery_contact)
+        : hazards(hazards), brake_lights(brake_lights), headlights(headlights), horn(horn), left_turn_signal(left_turn_signal), right_turn_signal(right_turn_signal), ignition(ignition), battery_contact(battery_contact) {}
+
     SERIALIZATION_METHODS(
         (hazards, 1),
         (brake_lights, 1),
@@ -46,6 +64,11 @@ typedef struct ECUPowerAuxCommands
         (ignition, 1),
         (battery_contact, 1)
     )
-} ECUPowerAuxCommands;
+
+    uint16_t get_message_ID()
+    {
+        return ECUPowerAuxCommands_MESSAGE_ID;
+    }
+};
 
 #endif

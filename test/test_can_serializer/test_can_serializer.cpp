@@ -3,11 +3,10 @@
 #include "CANSerializer.h"
 
 #define SERIALIZE_AND_DESERIALIZE \
-    unsigned char buffer[8]; \
-    unsigned char len; \
-    a.serialize(buffer, &len); \
+    CANMessage message; \
+    a.serialize(&message); \
     struct test b; \
-    b.deserialize(buffer, len); \
+    b.deserialize(&message); \
 
 void single_int_test()
 {
@@ -19,7 +18,7 @@ void single_int_test()
 
     SERIALIZE_AND_DESERIALIZE
 
-    TEST_ASSERT_TRUE(len == 4);
+    TEST_ASSERT_TRUE(message.len == 4);
     TEST_ASSERT_TRUE(a.a == b.a);
 }
 
@@ -45,7 +44,7 @@ void multiple_types_test()
 
     SERIALIZE_AND_DESERIALIZE
 
-    TEST_ASSERT_TRUE(len == 6);
+    TEST_ASSERT_TRUE(message.len == 6);
     TEST_ASSERT_TRUE(a.a == b.a);
     TEST_ASSERT_TRUE(a.b == b.b);
     TEST_ASSERT_TRUE(a.c == b.c);
@@ -69,7 +68,7 @@ void seven_bit_unsigned_int_test()
 
     SERIALIZE_AND_DESERIALIZE
 
-    TEST_ASSERT_TRUE(len == 1);
+    TEST_ASSERT_TRUE(message.len == 1);
     TEST_ASSERT_TRUE(a.a == b.a);
     TEST_ASSERT_TRUE(a.b == b.b);
 }
@@ -86,7 +85,7 @@ void unserialized_fields_test()
 
     SERIALIZE_AND_DESERIALIZE
 
-    TEST_ASSERT_TRUE(len == 1);
+    TEST_ASSERT_TRUE(message.len == 1);
     TEST_ASSERT_TRUE(a.a == b.a);
 }
 
@@ -100,7 +99,7 @@ void unsigned_long_long_test()
 
     SERIALIZE_AND_DESERIALIZE
 
-    TEST_ASSERT_TRUE(len == 8);
+    TEST_ASSERT_TRUE(message.len == 8);
     TEST_ASSERT_TRUE(a.a == b.a);
 }
 
@@ -116,7 +115,7 @@ void max_values_test()
 
     SERIALIZE_AND_DESERIALIZE
 
-    TEST_ASSERT_TRUE(len == 7);
+    TEST_ASSERT_TRUE(message.len == 7);
     TEST_ASSERT_TRUE(a.a == b.a);
     TEST_ASSERT_TRUE(a.b == b.b);
     TEST_ASSERT_TRUE(a.c == b.c);
@@ -269,7 +268,7 @@ void sixty_four_booleans_test()
 
     SERIALIZE_AND_DESERIALIZE
 
-    TEST_ASSERT_TRUE(len == 8);
+    TEST_ASSERT_TRUE(message.len == 8);
     TEST_ASSERT_TRUE(a.a0 == b.a0);
     TEST_ASSERT_TRUE(a.a1 == b.a1);
     TEST_ASSERT_TRUE(a.a2 == b.a2);
