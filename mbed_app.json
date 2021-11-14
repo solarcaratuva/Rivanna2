@@ -3,7 +3,8 @@
       "*": {
         "target.c_lib": "small",
         "target.printf_lib": "minimal-printf",
-        "platform.minimal-printf-enable-floating-point": false,
+        "platform.minimal-printf-enable-floating-point": true,
+        "platform.minimal-printf-set-floating-point-max-decimals": 5,
         "platform.stdio-minimal-console-only": true
       }
     }
