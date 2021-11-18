@@ -2,7 +2,10 @@
 
 CANInterface::CANInterface(PinName rd, PinName td, PinName standby_pin) : can(rd, td), standby(standby_pin)
 {
-    standby = 0;
+    if (standby_pin != NC)
+    {
+        standby = 0;
+    }
 }
 
 void CANInterface::start_CAN_transmission()
