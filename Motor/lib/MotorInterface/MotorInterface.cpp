@@ -8,27 +8,29 @@
 MotorInterface::MotorInterface(I2C &throttle, I2C& regen) : throttleBus(throttle), regenBus(regen) {}
 
 /**
- * Sends a throttle value to motor
- * @param throttle Throttle value (between 0x0000 and 0x0100)
+ * Converts a throttle percentage into a throttle value for the motor and sends it
+ * @param throttle Throttle value (decimal percentage between 0 and 100)
  */
-int MotorInterface::sendThrottle(uint16_t throttle) 
+int MotorInterface::sendThrottle(float throttle) 
 {
+    uint16_t updated_throttle = 0x0100-(0x0100*throttle/100);
     char cmd[2];
-    cmd[0] = (throttle & 0x100) >> 8;
-    cmd[1] = throttle & 0xFF; 
+    cmd[0] = (updated_throttle & 0x100) >> 8;
+    cmd[1] = updated_throttle & 0xFF; 
     int result = throttleBus.write(0x5C, cmd, 2);
     return result;
 }
 
 /**
- * Sends a regen value to motor
- * @param regen Regen value (between 0x0000 and 0x0100)
+ * Converts a regen percentage into a regen value for the motor and sends it
+ * @param regen Regen value (decimal percentage between 0 and 100)
  */
-int MotorInterface::sendRegen(uint16_t regen) 
+int MotorInterface::sendRegen(float regen) 
 {
+    uint16_t updated_regen = 0x0100-(0x0100*regen/100);
     char cmd[2];
-    cmd[0] = (regen & 0x100) >> 8;
-    cmd[1] = regen & 0xFF; 
+    cmd[0] = (updated_regen & 0x100) >> 8;
+    cmd[1] = updated_regen & 0xFF; 
     int result = regenBus.write(0x5C, cmd, 2);
     return result;
 }
