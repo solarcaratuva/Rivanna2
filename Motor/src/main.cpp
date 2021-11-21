@@ -4,6 +4,7 @@
 #include "pindef.h"
 #include "Printing.h"
 #include "MotorCANInterface.h"
+#include "MotorControllerCANInterface.h"
 
 #define TESTING     // only defined if using test functions
 // #define DEBUGGING   // only define if debugging
@@ -14,6 +15,7 @@
 BufferedSerial device(USBTX, USBRX);
 
 MotorCANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX);
+MotorControllerCANInterface motor_controller_can_interface(MTR_CTRL_CAN_RX, MTR_CTRL_CAN_TX, MTR_CTRL_CAN_STBY);
 
 I2C throttle(SDA_ACCEL, SCL_ACCEL);
 I2C regen(SDA_REGEN, SCL_REGEN);
