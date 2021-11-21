@@ -7,7 +7,7 @@ class MotorControllerCANInterface : public CANInterface
 {
 public:
     MotorControllerCANInterface(PinName rd, PinName td, PinName standby_pin) : CANInterface(rd, td, standby_pin) {}
-
+    void sendRequest(void);
 private:
     void rx_handler() override;
 };

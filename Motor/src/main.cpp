@@ -28,27 +28,31 @@ int main() {
 #endif //TESTING
     
     vehicle_can_interface.start_CAN_transmission();
+    motor_controller_can_interface.start_CAN_transmission();
 
     while(1){
         #ifdef TESTING
             PRINT("main thread loop \r\n");
         #endif //TESTING
 
-        PowerAuxExampleStruct a(1, 2, 3, 4);
-        vehicle_can_interface.send(&a);
+        // PowerAuxExampleStruct a(1, 2, 3, 4);
+        // vehicle_can_interface.send(&a);
 
-        motorInterface.sendThrottle(256);
+        // motorInterface.sendThrottle(256);
+        // ThisThread::sleep_for(MAIN_LOOP_PERIOD);
+        // motorInterface.sendThrottle(200);
+        // ThisThread::sleep_for(MAIN_LOOP_PERIOD);
+        // motorInterface.sendThrottle(150);
+        // ThisThread::sleep_for(MAIN_LOOP_PERIOD);
+        // motorInterface.sendThrottle(100);
+        // ThisThread::sleep_for(MAIN_LOOP_PERIOD);
+        // motorInterface.sendThrottle(50);
+        // ThisThread::sleep_for(MAIN_LOOP_PERIOD);
+        // motorInterface.sendThrottle(0);
+        // ThisThread::sleep_for(MAIN_LOOP_PERIOD);
+        motor_controller_can_interface.sendRequest();
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
-        motorInterface.sendThrottle(200);
-        ThisThread::sleep_for(MAIN_LOOP_PERIOD);
-        motorInterface.sendThrottle(150);
-        ThisThread::sleep_for(MAIN_LOOP_PERIOD);
-        motorInterface.sendThrottle(100);
-        ThisThread::sleep_for(MAIN_LOOP_PERIOD);
-        motorInterface.sendThrottle(50);
-        ThisThread::sleep_for(MAIN_LOOP_PERIOD);
-        motorInterface.sendThrottle(0);
-        ThisThread::sleep_for(MAIN_LOOP_PERIOD); 
+
     }
 }
 
