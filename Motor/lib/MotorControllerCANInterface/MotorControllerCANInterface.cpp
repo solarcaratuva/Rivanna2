@@ -21,7 +21,7 @@ void MotorControllerCANInterface::rx_handler()
         while (can.read(message))
         {
             PRINT("Received CAN message with id = %X\n", message.id);
-            if (message.id == 0x08950225)
+            if (message.id == 0x08850225)
             {
                 PRINT("%d", ((int) message.data & 0x3FF) / 2);
             }
