@@ -32,7 +32,7 @@ int main() {
 
     while(1){
         #ifdef TESTING
-            PRINT("main thread loop \r\n");
+            // PRINT("main thread loop \r\n");
         #endif //TESTING
 
         // PowerAuxExampleStruct a(1, 2, 3, 4);
@@ -50,8 +50,11 @@ int main() {
         // ThisThread::sleep_for(MAIN_LOOP_PERIOD);
         // motorInterface.sendThrottle(0);
         // ThisThread::sleep_for(MAIN_LOOP_PERIOD);
-        motor_controller_can_interface.sendRequest();
-        ThisThread::sleep_for(MAIN_LOOP_PERIOD);
+        // motorInterface.sendThrottle(100.0f);
+        motorInterface.sendThrottle(50.0f);
+        motorInterface.sendRegen(100.0f);
+        motor_controller_can_interface.request_frames(true, true, true);
+        ThisThread::sleep_for(10ms);
 
     }
 }
@@ -59,4 +62,19 @@ int main() {
 void MotorCANInterface::handle(PowerAuxExampleStruct *can_struct)
 {
     PRINT("Received PowerAuxExampleStruct: a=%u, b=%u, c=%u, d=%d\r\n", can_struct->a, can_struct->b, can_struct->c, can_struct->d);
+}
+
+void MotorControllerCANInterface::handle(Frame0 *can_struct)
+{
+    // PRINT("%d\n", can_struct->advanced_lead_angle / 2);
+}
+
+void MotorControllerCANInterface::handle(Frame1 *can_struct)
+{
+    // PRINT("%d\n", can_struct->regeneration_vr_position);
+}
+
+void MotorControllerCANInterface::handle(Frame2 *can_struct)
+{
+    // PRINT("%d\n", can_struct->ad_sensor_error);
 }

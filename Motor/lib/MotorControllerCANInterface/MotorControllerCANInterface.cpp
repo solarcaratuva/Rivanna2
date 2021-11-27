@@ -5,12 +5,14 @@ MotorControllerCANInterface::MotorControllerCANInterface(PinName rd, PinName td,
     can.frequency(125000);
 }
 
-void MotorControllerCANInterface::sendRequest()
+void MotorControllerCANInterface::request_frames(bool frame0, bool frame1, bool frame2)
 {
-    char data[1];
-    data[0] = 1;
-    CANMessage msg(0x08F89540, data, 1, CANType::CANData, CANFormat::CANExtended);
-    PRINT("result of writing to bus: %d\n", can.write(msg));
+    CANMessage message;
+    FrameRequest request(frame0, frame1, frame2);
+    request.serialize(&message);
+    message.id = request.get_message_ID();
+    message.format = CANFormat::CANExtended;
+    can.write(message);
 }
 
 void MotorControllerCANInterface::rx_handler() 
@@ -20,10 +22,23 @@ void MotorControllerCANInterface::rx_handler()
         CANMessage message;
         while (can.read(message))
         {
-            PRINT("Received CAN message with id = %X\n", message.id);
-            if (message.id == 0x08850225)
+            if (message.id == MOTOR_CONTROLLER_Frame0_MESSAGE_ID)
             {
-                PRINT("%d", ((int) message.data & 0x3FF) / 2);
+                Frame0 can_struct;
+                can_struct.deserialize(&message);
+                handle(&can_struct);
+            }
+            else if (message.id == MOTOR_CONTROLLER_Frame1_MESSAGE_ID)
+            {
+                Frame1 can_struct;
+                can_struct.deserialize(&message);
+                handle(&can_struct);
+            }
+            if (message.id == MOTOR_CONTROLLER_Frame2_MESSAGE_ID)
+            {
+                Frame2 can_struct;
+                can_struct.deserialize(&message);
+                handle(&can_struct);
             }
         }
     }
