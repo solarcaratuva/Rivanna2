@@ -18,7 +18,7 @@ public:
 
     SERIALIZATION_METHODS((a, 32), (b, 16), (c, 8), (d, 8))
 
-    uint16_t get_message_ID()
+    uint32_t get_message_ID()
     {
         return PowerAuxExampleStruct_MESSAGE_ID;
     }

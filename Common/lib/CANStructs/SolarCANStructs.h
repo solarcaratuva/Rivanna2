@@ -13,7 +13,7 @@ typedef struct SolarCurrent : public CANStruct
 
     SERIALIZATION_METHODS((total_current, 16))
 
-    uint16_t get_message_ID()
+    uint32_t get_message_ID()
     {
         return SolarCurrent_MESSAGE_ID;
     }
@@ -37,7 +37,7 @@ typedef struct SolarVoltage : public CANStruct
         (panel4_voltage, 16)
     )
 
-    uint16_t get_message_ID()
+    uint32_t get_message_ID()
     {
         return SolarVoltage_MESSAGE_ID;
     }
@@ -61,7 +61,7 @@ typedef struct SolarTemp : public CANStruct
         (panel4_temp, 16)
     )
 
-    uint16_t get_message_ID()
+    uint32_t get_message_ID()
     {
         return SolarTemp_MESSAGE_ID;
     }
@@ -85,7 +85,7 @@ typedef struct SolarPhoto : public CANStruct
         (panel4_photo, 16)
     )
 
-    uint16_t get_message_ID()
+    uint32_t get_message_ID()
     {
         return SolarPhoto_MESSAGE_ID;
     }
