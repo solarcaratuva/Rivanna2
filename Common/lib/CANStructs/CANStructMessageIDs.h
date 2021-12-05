@@ -7,14 +7,22 @@
 #define CAN_NODE_ID(CAN_MESSAGE_ID)         (CAN_MESSAGE_ID&0x07)
 #define CAN_PRIORITY(CAN_MESSAGE_ID)        ((CAN_MESSAGE_ID>>7)&0xFF)
 
-#define ECUMotorCommands_MESSAGE_ID             CAN_MESSAGE_ID(1, 1)
-#define ECUPowerAuxCommands_MESSAGE_ID          CAN_MESSAGE_ID(1, 2)
+#define ECUMotorCommands_MESSAGE_ID                     CAN_MESSAGE_ID(1, 1)
+#define ECUPowerAuxCommands_MESSAGE_ID                  CAN_MESSAGE_ID(1, 2)
 
-#define PowerAuxExampleStruct_MESSAGE_ID        CAN_MESSAGE_ID(3, 3)
+#define PowerAuxExampleStruct_MESSAGE_ID                CAN_MESSAGE_ID(3, 3)
 
-#define SolarCurrent_MESSAGE_ID                 CAN_MESSAGE_ID(4, 4)
-#define SolarVoltage_MESSAGE_ID                 CAN_MESSAGE_ID(4, 5)
-#define SolarTemp_MESSAGE_ID                    CAN_MESSAGE_ID(4, 6)
-#define SolarPhoto_MESSAGE_ID                   CAN_MESSAGE_ID(4, 7)
+#define SolarCurrent_MESSAGE_ID                         CAN_MESSAGE_ID(4, 4)
+#define SolarVoltage_MESSAGE_ID                         CAN_MESSAGE_ID(4, 5)
+#define SolarTemp_MESSAGE_ID                            CAN_MESSAGE_ID(4, 6)
+#define SolarPhoto_MESSAGE_ID                           CAN_MESSAGE_ID(4, 7)
+
+// Motor Controller CAN bus message IDs
+// These IDs use the CAN extended format
+
+#define MOTOR_CONTROLLER_FrameRequest_MESSAGE_ID        0x08F89540
+#define MOTOR_CONTROLLER_Frame0_MESSAGE_ID              0x08850225
+#define MOTOR_CONTROLLER_Frame1_MESSAGE_ID              0x08950225
+#define MOTOR_CONTROLLER_Frame2_MESSAGE_ID              0x08A50225
 
 #endif

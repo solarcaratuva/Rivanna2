@@ -24,7 +24,7 @@ jobs:
           command: |
             sudo apt update
             pip install --upgrade pipenv
-            pipenv --python 3.9.8 install
+            pipenv --python 3 install
             pipenv run pio update
             pipenv run pio platform install native
       - run:

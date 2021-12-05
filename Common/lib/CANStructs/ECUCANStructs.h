@@ -28,7 +28,7 @@ public:
         (motor_on, 1)
     )
 
-    uint16_t get_message_ID()
+    uint32_t get_message_ID()
     {
         return ECUMotorCommands_MESSAGE_ID;
     }
@@ -61,7 +61,7 @@ public:
         (battery_contact, 1)
     )
 
-    uint16_t get_message_ID()
+    uint32_t get_message_ID()
     {
         return ECUPowerAuxCommands_MESSAGE_ID;
     }
