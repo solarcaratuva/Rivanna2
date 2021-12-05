@@ -2,6 +2,7 @@
 #define MAIN_CAN_INTERFACE_H
 
 #include "CANInterface.h"
+#include "CANStructs.h"
 
 class MainCANInterface : public CANInterface
 {

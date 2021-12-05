@@ -9,7 +9,7 @@ class CANStruct
 public:
     virtual void serialize(CANMessage *message);
     virtual void deserialize(const CANMessage *message);
-    virtual uint16_t get_message_ID();
+    virtual uint32_t get_message_ID();
 };
 
 #endif

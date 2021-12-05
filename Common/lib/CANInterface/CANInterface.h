@@ -2,7 +2,6 @@
 #define CAN_INTERFACE_H
 
 #include <mbed.h>
-#include "CANStructs.h"
 
 class CANInterface
 {
