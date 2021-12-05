@@ -9,8 +9,6 @@ class CANInterface
 public:
     CANInterface(PinName rd, PinName td, PinName standby_pin = NC);
 
-    void start_CAN_transmission();
-
 protected:
     CAN can;
     DigitalOut standby;
