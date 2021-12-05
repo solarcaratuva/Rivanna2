@@ -26,9 +26,6 @@ int main() {
 #ifdef TESTING
     PRINT("start main() \r\n");
 #endif //TESTING
-    
-    vehicle_can_interface.start_CAN_transmission();
-    motor_controller_can_interface.start_CAN_transmission();
 
     while(1){
         #ifdef TESTING
