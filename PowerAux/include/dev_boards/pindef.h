@@ -4,31 +4,31 @@
 /***************************/
 /* pin definitions for CAN */
 /***************************/
-#define CAN_RX      PD_0    // Rx for MCU
-#define CAN_TX      PD_1
-#define CAN_STBY    PG_1    // Digital Output
-#define CAN2_RX     PB_5    // Rx for MCU
-#define CAN2_TX     PB_6
-#define CAN2_STBY   PD_7    // Digital Output
+#define CAN_RX      NC    // Rx for MCU
+#define CAN_TX      NC
+#define CAN_STBY    NC   // Digital Output
+#define CAN2_RX     NC    // Rx for MCU
+#define CAN2_TX     NC
+#define CAN2_STBY   NC    // Digital Output
 
 /*************************************/
 /* pin definitions for Analog Inputs */
 /*************************************/
-#define ANALOG_INPUT_1      PA_0
+#define ANALOG_INPUT_1      NC
 
 /***************************************/
 /* pin definitions for Digital Inputs */
 /***************************************/
-#define DIGITAL_INPUT_1     PB_4
+#define DIGITAL_INPUT_1     NC
 
 /***************************************/
 /* pin definitions for Digital Outputs */
 /***************************************/
-#define DIGITAL_OUTPUT_1    PB_5
+#define DIGITAL_OUTPUT_1    NC
 
 /**********************************/
 /* pin definitions for Unused I/O */
 /**********************************/
-#define UNUSED_PIN_0    PA_2
+#define UNUSED_PIN_0    NC
 
 #endif // PINDEF_H
