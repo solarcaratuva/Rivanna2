@@ -10,25 +10,21 @@ class ECUMotorCommands : public CANStruct
 public:
     uint16_t throttle;
     uint16_t regen;
-    bool reverse_en;
     bool forward_en;
     bool cruise_control_en;
-    bool cruise_speed_up;
-    bool cruise_speed_down;
+    uint8_t cruise_control_speed;
     bool motor_on;
 
     ECUMotorCommands() {}
-    ECUMotorCommands(uint16_t throttle, uint16_t regen, bool reverse_en, bool forward_en, bool cruise_control_en, bool cruise_speed_up, bool cruise_speed_down, bool motor_on)
-        : throttle(throttle), regen(regen), reverse_en(reverse_en), forward_en(forward_en), cruise_control_en(cruise_control_en), cruise_speed_up(cruise_speed_up), cruise_speed_down(cruise_speed_down), motor_on(motor_on) {}
+    ECUMotorCommands(uint16_t throttle, uint16_t regen, bool forward_en, bool cruise_control_en, uint8_t cruise_control_speed, bool motor_on)
+        : throttle(throttle), regen(regen), forward_en(forward_en), cruise_control_en(cruise_control_en), cruise_control_speed(cruise_control_speed), motor_on(motor_on) {}
 
     SERIALIZATION_METHODS(
         (throttle, 16),
         (regen, 16),
-        (reverse_en, 1),
         (forward_en, 1),
         (cruise_control_en, 1),
-        (cruise_speed_up, 1),
-        (cruise_speed_down, 1),
+        (cruise_control_en, 8),
         (motor_on, 1)
     )
 
