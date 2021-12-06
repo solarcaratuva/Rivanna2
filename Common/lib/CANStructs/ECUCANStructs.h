@@ -24,7 +24,7 @@ public:
         (regen, 16),
         (forward_en, 1),
         (cruise_control_en, 1),
-        (cruise_control_en, 8),
+        (cruise_control_speed, 8),
         (motor_on, 1)
     )
 
