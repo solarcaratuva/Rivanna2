@@ -4,7 +4,7 @@
 #include "CANStruct.h"
 #include "CANSerializer.h"
 
-typedef struct SolarCurrent : public CANStruct
+typedef struct SolarCurrent : CANStruct
 {
     int16_t total_current;
 
@@ -19,7 +19,7 @@ typedef struct SolarCurrent : public CANStruct
     }
 } SolarCurrent;
 
-typedef struct SolarVoltage : public CANStruct
+typedef struct SolarVoltage : CANStruct
 {
     int16_t panel1_voltage;
     int16_t panel2_voltage;
@@ -43,7 +43,7 @@ typedef struct SolarVoltage : public CANStruct
     }
 } SolarVoltage;
 
-typedef struct SolarTemp : public CANStruct
+typedef struct SolarTemp : CANStruct
 {
     int16_t panel1_temp;
     int16_t panel2_temp;
@@ -67,7 +67,7 @@ typedef struct SolarTemp : public CANStruct
     }
 } SolarTemp;
 
-typedef struct SolarPhoto : public CANStruct
+typedef struct SolarPhoto : CANStruct
 {
     int16_t panel1_photo;
     int16_t panel2_photo;

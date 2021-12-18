@@ -4,9 +4,8 @@
 #include <mbed.h>
 #include "CANStructMessageIDs.h"
 
-class CANStruct
+struct CANStruct
 {
-public:
     virtual void serialize(CANMessage *message);
     virtual void deserialize(const CANMessage *message);
     virtual uint32_t get_message_ID();

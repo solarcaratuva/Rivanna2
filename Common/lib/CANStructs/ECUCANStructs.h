@@ -5,9 +5,8 @@
 #include "CANStruct.h"
 #include "CANSerializer.h"
 
-class ECUMotorCommands : public CANStruct
+typedef struct ECUMotorCommands : CANStruct
 {
-public:
     uint16_t throttle;
     uint16_t regen;
     bool forward_en;
@@ -32,11 +31,10 @@ public:
     {
         return ECUMotorCommands_MESSAGE_ID;
     }
-};
+} ECUMotorCommands;
 
-class ECUPowerAuxCommands : public CANStruct
+typedef struct ECUPowerAuxCommands : CANStruct
 {
-public:
     bool hazards;
     bool brake_lights;
     bool headlights;
@@ -65,6 +63,6 @@ public:
     {
         return ECUPowerAuxCommands_MESSAGE_ID;
     }
-};
+} ECUPowerAuxCommands;
 
 #endif
