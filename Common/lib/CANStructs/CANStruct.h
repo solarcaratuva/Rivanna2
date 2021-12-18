@@ -4,6 +4,9 @@
 #include <mbed.h>
 #include "CANStructMessageIDs.h"
 
+/**
+ * Serializable object to be sent over a CAN bus.
+ */
 struct CANStruct
 {
     virtual void serialize(CANMessage *message);

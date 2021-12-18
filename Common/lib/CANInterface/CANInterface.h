@@ -3,6 +3,11 @@
 
 #include <mbed.h>
 
+/**
+ * Abstract CAN interface. Uses an mbed::CAN object to read and write from the
+ * CAN bus. Creates rx_thread to constantly read from the CAN bus. This thread 
+ * calls the rx_handler function, which is to be implemented by subclasses.
+ */
 class CANInterface
 {
 public:
