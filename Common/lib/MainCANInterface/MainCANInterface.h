@@ -4,6 +4,20 @@
 #include "CANInterface.h"
 #include "CANStructs.h"
 
+/**
+ * CANInterface for use with the main CAN bus. 
+ * 
+ * The interface defines virtual methods for handling receipt of each type of
+ * CAN struct. For example, the handle(ECUMotorCommands *can_struct) method 
+ * will be called whenever an ECUMotorCommands struct is received. By default,
+ * all of these methods do nothing. As such, this interface is not intended to 
+ * be used directly; it should be extended by another class. 
+ * 
+ * Classes that extend MainCANInterface, such as SolarCANInterface, should 
+ * override the handle method for each struct they need to receive. 
+ * 
+ * The send method will send a CANStruct on the bus. 
+ */
 class MainCANInterface : public CANInterface
 {
 public:

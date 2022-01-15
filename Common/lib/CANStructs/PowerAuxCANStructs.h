@@ -4,9 +4,8 @@
 #include "CANStruct.h"
 #include "CANSerializer.h"
 
-class PowerAuxExampleStruct : public CANStruct
+typedef struct PowerAuxExampleStruct : CANStruct
 {
-public:
     uint32_t a;
     uint16_t b;
     uint8_t c;
@@ -22,6 +21,6 @@ public:
     {
         return PowerAuxExampleStruct_MESSAGE_ID;
     }
-};
+} PowerAuxExampleStruct;
 
 #endif
