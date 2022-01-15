@@ -1,7 +1,7 @@
 #include "MotorControllerCANInterface.h"
-#include "Printing.h"
 
-MotorControllerCANInterface::MotorControllerCANInterface(PinName rd, PinName td, PinName standby_pin) : CANInterface(rd, td, standby_pin) {
+MotorControllerCANInterface::MotorControllerCANInterface(PinName rd, PinName td, PinName standby_pin) : CANInterface(rd, td, standby_pin)
+{
     can.frequency(125000);
 }
 
