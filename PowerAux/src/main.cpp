@@ -12,7 +12,7 @@
 #define CAN_PERIOD 1s
 
 PowerAuxCANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX, MAIN_CAN_STBY);
-PowerAuxBPSCANInterface bps_can_interface(BMS_CAN1_TX, BMS_CAN1_RX, BMS_CAN1_STBY);
+PowerAuxBPSCANInterface bps_can_interface(BMS_CAN1_RX, BMS_CAN1_TX, BMS_CAN1_STBY);
 
 int main() {
     // device.set_baud(38400);
