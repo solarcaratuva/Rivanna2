@@ -19,6 +19,9 @@ DigitalIn ignition(IGNITION);
 AnalogIn throttle(THROTTLE);
 AnalogIn regen(REGEN);
 
+bool cruise_up_release_flag;
+bool cruise_down_release_flag;
+
 ECUInputReader::ECUInputReader() {}
 
 bool ECUInputReader::readHazards() {
@@ -38,11 +41,39 @@ bool ECUInputReader::readHorn() {
 }
 
 bool ECUInputReader::readCruiseSpeedDown() {
-    return cruise_speed_down;
+    bool read_input = cruise_speed_down.read();
+    if (read_input && cruise_down_release_flag)
+    {
+        return 0;
+    }
+    else if (read_input)
+    {
+        cruise_down_release_flag = 1;
+        return 1;
+    }
+    else
+    {
+        cruise_down_release_flag = 0;
+        return 0;
+    }
 }
 
 bool ECUInputReader::readCruiseSpeedUp() {
-    return cruise_speed_up;
+    bool read_input = cruise_speed_up.read();
+    if (read_input && cruise_up_release_flag)
+    {
+        return 0;
+    }
+    else if (read_input)
+    {
+        cruise_up_release_flag = 1;
+        return 1;
+    }
+    else
+    {
+        cruise_up_release_flag = 0;
+        return 0;
+    }
 }
 
 bool ECUInputReader::readCruiseThrottleEn() {
