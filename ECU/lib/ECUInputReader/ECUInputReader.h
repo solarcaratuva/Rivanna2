@@ -14,8 +14,8 @@ class ECUInputReader {
         bool readRunningLights();
         bool readBrakePedal();
         bool readMotorOn();
-        bool readReverseEn();
         bool readForwardEn();
+        bool readReverseEn();
         bool readBatteryContact();
         bool readIgnition();
         float readThrottle();

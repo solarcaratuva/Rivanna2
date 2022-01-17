@@ -37,6 +37,7 @@ void motor_message_handler()
     to_motor.throttle = input_reader.readThrottle();
     to_motor.regen = input_reader.readRegen();
     to_motor.forward_en = input_reader.readForwardEn();
+    to_motor.reverse_en = input_reader.readReverseEn();
     to_motor.cruise_control_en = input_reader.readCruiseThrottleEn();
     to_motor.cruise_control_speed = current_speed + input_reader.readCruiseSpeedUp() - input_reader.readCruiseSpeedDown();
     to_motor.motor_on = input_reader.readMotorOn();
@@ -83,7 +84,7 @@ int main() {
         motor_thread.start(motor_message_handler);
 
         poweraux_thread.start(poweraux_message_handler);
-        
+
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }
 }

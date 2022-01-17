@@ -12,8 +12,8 @@ DigitalIn cruise_throttle_en(CRUISE_THROTTLE_EN);
 DigitalIn running_lights(RUNNING_LIGHTS_EN);
 DigitalIn brake_pedal(BRAKE_PEDAL);
 DigitalIn motor_on(MOTOR_ON);
-DigitalIn reverse_en(REVERSE_EN);
 DigitalIn forward_en(FORWARD_EN);
+DigitalIn reverse_en(REVERSE_EN);
 DigitalIn battery_contact(BATTERY_CONTACT);
 DigitalIn ignition(IGNITION);
 AnalogIn throttle(THROTTLE);
@@ -90,6 +90,10 @@ bool ECUInputReader::readBrakePedal() {
 
 bool ECUInputReader::readMotorOn() {
     return motor_on;
+}
+
+bool ECUInputReader::readForwardEn() {
+    return forward_en;
 }
 
 bool ECUInputReader::readReverseEn() {
