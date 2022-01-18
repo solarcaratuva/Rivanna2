@@ -18,8 +18,8 @@ class ECUInputReader {
         bool readReverseEn();
         bool readBatteryContact();
         bool readIgnition();
-        float readThrottle();
-        float readRegen();
+        uint8_t readThrottle();
+        uint8_t readRegen();
 
 };
 

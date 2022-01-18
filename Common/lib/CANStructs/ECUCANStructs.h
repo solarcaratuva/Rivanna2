@@ -16,12 +16,12 @@ typedef struct ECUMotorCommands : CANStruct
     bool motor_on;
 
     ECUMotorCommands() {}
-    ECUMotorCommands(uint16_t throttle, uint16_t regen, bool forward_en, bool reverse_en, bool cruise_control_en, uint8_t cruise_control_speed, bool motor_on)
+    ECUMotorCommands(uint8_t throttle, uint8_t regen, bool forward_en, bool reverse_en, bool cruise_control_en, uint8_t cruise_control_speed, bool motor_on)
         : throttle(throttle), regen(regen), forward_en(forward_en), reverse_en(reverse_en), cruise_control_en(cruise_control_en), cruise_control_speed(cruise_control_speed), motor_on(motor_on) {}
 
     SERIALIZATION_METHODS(
-        (throttle, 16),
-        (regen, 16),
+        (throttle, 8),
+        (regen, 8),
         (forward_en, 1),
         (reverse_en, 1),
         (cruise_control_en, 1),

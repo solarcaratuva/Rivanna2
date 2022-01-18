@@ -1,6 +1,7 @@
 #include "ECUInputReader.h"
 #include "pindef.h"
 #include <mbed.h>
+#include <cmath>
 
 DigitalIn hazards(HAZARDS);
 DigitalIn left_turn_signal(LEFT_TURN_SIG);
@@ -108,10 +109,10 @@ bool ECUInputReader::readIgnition() {
     return ignition;
 }
 
-float ECUInputReader::readThrottle() {
-    return throttle;
+uint8_t ECUInputReader::readThrottle() {
+    return floor(throttle / 255);
 }
 
-float ECUInputReader::readRegen() {
-    return regen;
+uint8_t ECUInputReader::readRegen() {
+    return floor(regen / 255);
 }
