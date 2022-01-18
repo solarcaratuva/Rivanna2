@@ -88,5 +88,3 @@ int main() {
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }
 }
-
-
