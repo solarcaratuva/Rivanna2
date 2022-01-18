@@ -9,10 +9,13 @@ class MotorInterface {
         MotorInterface(I2C &throttle, I2C &regen);
         int sendThrottle(float throttle);
         int sendRegen(float regen);
+        int sendForwardEn();
+        int sendReverseEn();
 
     private:
         I2C &throttleBus;
         I2C &regenBus;
+        uint8_t gear;  // -1: reverse, 0: neutral, 1: forward
 
 };
 

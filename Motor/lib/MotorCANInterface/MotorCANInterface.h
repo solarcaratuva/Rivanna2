@@ -8,7 +8,7 @@ class MotorCANInterface : public MainCANInterface
 public:
     MotorCANInterface(PinName rd, PinName td) : MainCANInterface(rd, td, NC) {}
 
-    void handle(PowerAuxExampleStruct *can_struct) override;
+    void handle(ECUMotorCommands *can_struct) override;
 };
 
 #endif

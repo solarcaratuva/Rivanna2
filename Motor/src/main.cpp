@@ -20,7 +20,7 @@ MotorControllerCANInterface motor_controller_can_interface(MTR_CTRL_CAN_RX, MTR_
 I2C throttle(SDA_ACCEL, SCL_ACCEL);
 I2C regen(SDA_REGEN, SCL_REGEN);
 
-MotorInterface motorInterface(throttle, regen);
+MotorInterface motor_interface(throttle, regen);
 
 int main() {
 #ifdef TESTING
@@ -35,30 +35,35 @@ int main() {
         // PowerAuxExampleStruct a(1, 2, 3, 4);
         // vehicle_can_interface.send(&a);
 
-        // motorInterface.sendThrottle(256);
+        // motor_interface.sendThrottle(256);
         // ThisThread::sleep_for(MAIN_LOOP_PERIOD);
-        // motorInterface.sendThrottle(200);
+        // motor_interface.sendThrottle(200);
         // ThisThread::sleep_for(MAIN_LOOP_PERIOD);
-        // motorInterface.sendThrottle(150);
+        // motor_interface.sendThrottle(150);
         // ThisThread::sleep_for(MAIN_LOOP_PERIOD);
-        // motorInterface.sendThrottle(100);
+        // motor_interface.sendThrottle(100);
         // ThisThread::sleep_for(MAIN_LOOP_PERIOD);
-        // motorInterface.sendThrottle(50);
+        // motor_interface.sendThrottle(50);
         // ThisThread::sleep_for(MAIN_LOOP_PERIOD);
-        // motorInterface.sendThrottle(0);
+        // motor_interface.sendThrottle(0);
         // ThisThread::sleep_for(MAIN_LOOP_PERIOD);
-        // motorInterface.sendThrottle(100.0f);
-        motorInterface.sendThrottle(50.0f);
-        motorInterface.sendRegen(100.0f);
-        motor_controller_can_interface.request_frames(true, true, true);
-        ThisThread::sleep_for(10ms);
+        // motor_interface.sendThrottle(100.0f);
+        // motor_interface.sendThrottle(50.0f);
+        // motor_interface.sendRegen(100.0f);
+        // motor_controller_can_interface.request_frames(true, true, true);
+        // ThisThread::sleep_for(10ms);
 
     }
 }
 
-void MotorCANInterface::handle(PowerAuxExampleStruct *can_struct)
+void MotorCANInterface::handle(ECUMotorCommands *can_struct)
 {
-    PRINT("Received PowerAuxExampleStruct: a=%u, b=%u, c=%u, d=%d\r\n", can_struct->a, can_struct->b, can_struct->c, can_struct->d);
+    
+    PRINT("Received ECUMotorCommands: throttle=%u, regen=%u, forward_en=%d, cruise_control_en=%d, cruise_control_speed=%u, motor_on=%d\r\n", 
+        can_struct->throttle, can_struct->regen, can_struct->forward_en, can_struct->cruise_control_en, can_struct->cruise_control_speed, can_struct->motor_on);
+
+    
+
 }
 
 void MotorControllerCANInterface::handle(Frame0 *can_struct)
