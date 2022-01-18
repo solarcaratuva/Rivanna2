@@ -1,6 +1,7 @@
 #include "ECUInputReader.h"
 #include "pindef.h"
 #include <mbed.h>
+#include <cmath>
 
 DigitalIn hazards(HAZARDS);
 DigitalIn left_turn_signal(LEFT_TURN_SIG);
@@ -12,12 +13,15 @@ DigitalIn cruise_throttle_en(CRUISE_THROTTLE_EN);
 DigitalIn running_lights(RUNNING_LIGHTS_EN);
 DigitalIn brake_pedal(BRAKE_PEDAL);
 DigitalIn motor_on(MOTOR_ON);
-DigitalIn reverse_en(REVERSE_EN);
 DigitalIn forward_en(FORWARD_EN);
+DigitalIn reverse_en(REVERSE_EN);
 DigitalIn battery_contact(BATTERY_CONTACT);
 DigitalIn ignition(IGNITION);
 AnalogIn throttle(THROTTLE);
 AnalogIn regen(REGEN);
+
+bool cruise_up_release_flag;
+bool cruise_down_release_flag;
 
 ECUInputReader::ECUInputReader() {}
 
@@ -38,11 +42,39 @@ bool ECUInputReader::readHorn() {
 }
 
 bool ECUInputReader::readCruiseSpeedDown() {
-    return cruise_speed_down;
+    bool read_input = cruise_speed_down.read();
+    if (read_input && cruise_down_release_flag)
+    {
+        return 0;
+    }
+    else if (read_input)
+    {
+        cruise_down_release_flag = 1;
+        return 1;
+    }
+    else
+    {
+        cruise_down_release_flag = 0;
+        return 0;
+    }
 }
 
 bool ECUInputReader::readCruiseSpeedUp() {
-    return cruise_speed_up;
+    bool read_input = cruise_speed_up.read();
+    if (read_input && cruise_up_release_flag)
+    {
+        return 0;
+    }
+    else if (read_input)
+    {
+        cruise_up_release_flag = 1;
+        return 1;
+    }
+    else
+    {
+        cruise_up_release_flag = 0;
+        return 0;
+    }
 }
 
 bool ECUInputReader::readCruiseThrottleEn() {
@@ -61,6 +93,10 @@ bool ECUInputReader::readMotorOn() {
     return motor_on;
 }
 
+bool ECUInputReader::readForwardEn() {
+    return forward_en;
+}
+
 bool ECUInputReader::readReverseEn() {
     return reverse_en;
 }
@@ -73,10 +109,10 @@ bool ECUInputReader::readIgnition() {
     return ignition;
 }
 
-float ECUInputReader::readThrottle() {
-    return throttle;
+uint8_t ECUInputReader::readThrottle() {
+    return floor(throttle / 255);
 }
 
-float ECUInputReader::readRegen() {
-    return regen;
+uint8_t ECUInputReader::readRegen() {
+    return floor(regen / 255);
 }

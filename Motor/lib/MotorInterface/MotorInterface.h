@@ -7,8 +7,8 @@ class MotorInterface {
 
     public:
         MotorInterface(I2C &throttle, I2C &regen);
-        int sendThrottle(float throttle);
-        int sendRegen(float regen);
+        int sendThrottle(uint8_t throttle);
+        int sendRegen(uint8_t regen);
 
     private:
         I2C &throttleBus;

@@ -11,7 +11,7 @@ MotorInterface::MotorInterface(I2C &throttle, I2C& regen) : throttleBus(throttle
  * Converts a throttle percentage into a throttle value for the motor and sends it
  * @param throttle Throttle value (decimal percentage between 0 and 100)
  */
-int MotorInterface::sendThrottle(float throttle) 
+int MotorInterface::sendThrottle(uint8_t throttle) 
 {
     uint16_t updated_throttle = 0x0100-(0x0100*throttle/100);
     char cmd[2];
@@ -25,7 +25,7 @@ int MotorInterface::sendThrottle(float throttle)
  * Converts a regen percentage into a regen value for the motor and sends it
  * @param regen Regen value (decimal percentage between 0 and 100)
  */
-int MotorInterface::sendRegen(float regen) 
+int MotorInterface::sendRegen(uint8_t regen) 
 {
     uint16_t updated_regen = 0x0100-(0x0100*regen/100);
     char cmd[2];
