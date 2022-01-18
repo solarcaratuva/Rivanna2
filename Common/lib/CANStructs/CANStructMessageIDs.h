@@ -30,4 +30,10 @@
 #define MOTOR_CONTROLLER_Frame1_MESSAGE_ID              0x08950225
 #define MOTOR_CONTROLLER_Frame2_MESSAGE_ID              0x08A50225
 
+// PowerAux BPS CAN bus message IDs
+
+#define POWER_AUX_BPS_CAN_PackInformation               0x03
+#define POWER_AUX_BPS_CAN_CellVoltage                   0x0B
+#define POWER_AUX_BPS_CAN_CellTemperature               0x13
+
 #endif

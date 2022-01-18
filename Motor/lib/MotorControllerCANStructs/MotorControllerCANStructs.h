@@ -9,9 +9,8 @@
  * Any combination of frames can be requested in one FrameRequest.
  * Defined on page 5 of the Motor CAN bus documentation.
  */
-class FrameRequest : public CANStruct
+typedef struct FrameRequest : public CANStruct
 {
-public:
     bool frame0;
     bool frame1;
     bool frame2;
@@ -29,15 +28,14 @@ public:
     {
         return MOTOR_CONTROLLER_FrameRequest_MESSAGE_ID;
     }
-};
+} FrameRequest;
 
 /**
  * Diagnostic information from the motor controller.
  * Defined on page 5 of the Motor CAN bus documentation.
  */
-class Frame0 : public CANStruct
+typedef struct Frame0 : public CANStruct
 {
-public:
     /**
      * 0.5V/LSB
      */
@@ -89,15 +87,14 @@ public:
     {
         return MOTOR_CONTROLLER_Frame0_MESSAGE_ID;
     }
-};
+} Frame0;
 
 /**
  * Input information from the motor controller.
  * Defined on page 5 of the Motor CAN bus documentation.
  */
-class Frame1 : public CANStruct
+typedef struct Frame1 : public CANStruct
 {
-public:
     /**
      * 0: eco mode
      * 1: power mode
@@ -154,14 +151,14 @@ public:
     {
         return MOTOR_CONTROLLER_Frame1_MESSAGE_ID;
     } 
-};
+} Frame1;
 
 /**
  * Errors from the motor controller.
  * Padding is required to match the specification defined on page 5 of the Motor CAN bus documentation.
  * NOTE: This frame has not been tested, there may be transcription or padding errors. 
  */
-class Frame2 : public CANStruct
+typedef struct Frame2 : public CANStruct
 {
 public:
     bool analog_sensor_error;
@@ -226,6 +223,6 @@ public:
     {
         return MOTOR_CONTROLLER_Frame2_MESSAGE_ID;
     }
-};
+} Frame2;
 
 #endif
