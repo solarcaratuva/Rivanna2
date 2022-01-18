@@ -6,7 +6,7 @@ jobs:
     docker:
       - image: cimg/python:3.9-node
         # environment:
-          # PIPENV_VENV_IN_PROJECT: true
+        # PIPENV_VENV_IN_PROJECT: true
     steps:
       - checkout
       # - run: sudo chown -R circleci:circleci /usr/local/bin
@@ -30,7 +30,7 @@ jobs:
       - run:
           name: Build
           command: |
-            pipenv run pio run -e ecu -e motor -e power_aux -e solar -e nucleo_f413zh_ecu
+            pipenv run pio run -e ecu -e motor -e power_aux -e solar
       - run:
           name: Test
           command: |
@@ -54,7 +54,7 @@ jobs:
       #       lcov --capture --base-directory . --directory . --no-external --exclude "*/Common/lib/FakeIt/*" --exclude "*/Common/lib/MbedMock/*" --exclude "*/test/*" --output-file .coverage/input/coverage.info
       - save_cache:
           paths:
-            - ~/.local/share/virtualenvs  # this path depends on where pipenv creates a virtualenv
+            - ~/.local/share/virtualenvs # this path depends on where pipenv creates a virtualenv
             - ~/.platformio/cache
             - .coverage
           key: platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}-{{ checksum ".circleci/config.yml" }}
