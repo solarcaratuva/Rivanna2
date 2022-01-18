@@ -6,6 +6,7 @@
 
 /**
  * General BPS information and errors.
+ * NOTE: This struct has not been tested thoroughly, there may be transcription or padding errors.
  */
 typedef struct PackInformation : public CANStruct
 {
@@ -71,6 +72,7 @@ typedef struct PackInformation : public CANStruct
 
 /**
  * Extreme (low and high only) cell voltage data.
+ * NOTE: This struct has not been tested thoroughly, there may be transcription or padding errors.
  */
 typedef struct CellVoltage : public CANStruct
 {
@@ -96,6 +98,7 @@ typedef struct CellVoltage : public CANStruct
 
 /**
  * Extreme (low and high only) cell temperature data.
+ * NOTE: This struct has not been tested thoroughly, there may be transcription or padding errors.
  */
 typedef struct CellTemperature : public CANStruct
 {

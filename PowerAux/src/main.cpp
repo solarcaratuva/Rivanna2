@@ -39,15 +39,15 @@ void PowerAuxCANInterface::handle(PowerAuxExampleStruct *can_struct)
 
 void PowerAuxBPSCANInterface::handle(PackInformation *can_struct)
 {
-    PRINT("Received PackInformation struct: pack_voltage=%u", can_struct->pack_voltage);
+    PRINT("Received PackInformation struct: pack_voltage=%u\n", can_struct->pack_voltage);
 }
 
 void PowerAuxBPSCANInterface::handle(CellVoltage *can_struct)
 {
-    PRINT("Received CellVoltage struct: low_cell_voltage=%u", can_struct->low_cell_voltage);
+    PRINT("Received CellVoltage struct: low_cell_voltage=%u\n", can_struct->low_cell_voltage);
 }
 
 void PowerAuxBPSCANInterface::handle(CellTemperature *can_struct)
 {
-    PRINT("Received CellTemperature struct: low_temperature=%u", can_struct->low_temperature);
+    PRINT("Received CellTemperature struct: low_temperature=%u\n", can_struct->low_temperature);
 }
