@@ -8,7 +8,7 @@ class PowerAuxCANInterface : public MainCANInterface
 public:
     PowerAuxCANInterface(PinName rd, PinName td, PinName standby_pin) : MainCANInterface(rd, td, standby_pin) {}
 
-    void handle(PowerAuxExampleStruct *can_struct) override;
+    void handle(ECUPowerAuxCommands *can_struct) override;
 };
 
 #endif
