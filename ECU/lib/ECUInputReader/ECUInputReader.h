@@ -1,6 +1,8 @@
 #ifndef ECU_INPUT_READER_H
 #define ECU_INPUT_READER_H
 
+#include <mbed.h>
+
 class ECUInputReader {
     public:
         ECUInputReader();
