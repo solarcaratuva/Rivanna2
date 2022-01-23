@@ -1,6 +1,8 @@
 #ifndef ECU_INPUT_READER_H
 #define ECU_INPUT_READER_H
 
+#include <mbed.h>
+
 class ECUInputReader {
     public:
         ECUInputReader();
@@ -14,12 +16,12 @@ class ECUInputReader {
         bool readRunningLights();
         bool readBrakePedal();
         bool readMotorOn();
-        bool readReverseEn();
         bool readForwardEn();
+        bool readReverseEn();
         bool readBatteryContact();
         bool readIgnition();
-        float readThrottle();
-        float readRegen();
+        uint8_t readThrottle();
+        uint8_t readRegen();
 
 };
 
