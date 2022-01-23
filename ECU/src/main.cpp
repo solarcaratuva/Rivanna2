@@ -73,6 +73,9 @@ int main() {
     PRINT("start main() \r\n");
 #endif //TESTING
 
+    motor_thread.start(motor_message_handler);
+    poweraux_thread.start(poweraux_message_handler);
+
     while(1){
         #ifdef TESTING
             PRINT("main thread loop \r\n");
@@ -80,10 +83,6 @@ int main() {
 
         // PowerAuxExampleStruct a(1, 2, 3, 4);
         // vehicle_can_interface.send(&a);
-        
-        motor_thread.start(motor_message_handler);
-
-        poweraux_thread.start(poweraux_message_handler);
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }
