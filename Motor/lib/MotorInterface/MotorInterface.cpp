@@ -34,3 +34,13 @@ int MotorInterface::sendRegen(uint8_t regen)
     int result = regenBus.write(0x5C, cmd, 2);
     return result;
 }
+
+void MotorInterface::sendDirection(uint8_t direction)
+{
+
+}
+
+void MotorInterface::sendIgnition(bool ignition)
+{
+    
+}
