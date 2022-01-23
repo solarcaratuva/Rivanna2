@@ -17,8 +17,12 @@ SolarCANInterface vehicle_can_interface(CAN_RX, CAN_TX, CAN_STBY);
 SPI spi1(ADC1_MOSI, ADC1_MISO, ADC1_CLK);
 MCP3008 spi1_inteface(&spi1, ADC1_CS);
 
+SPI spi2(ADC2_MOSI, ADC2_MOSI,ADC2_CLK);
+MCP3008 spi2_inteface(&spi2, ADC2_CS);
+
 float convert_voltage(int adc_reading) {
     return ((float) adc_reading) / 1024.0 * ADC_REF_VOLTAGE;
+
 }
 
 int main() {
