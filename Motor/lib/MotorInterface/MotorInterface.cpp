@@ -1,4 +1,5 @@
 #include "MotorInterface.h"
+#include "pindef.h"
 
 /**
  * Motor driver that controls the throttle and regen values
@@ -42,5 +43,12 @@ void MotorInterface::sendDirection(uint8_t direction)
 
 void MotorInterface::sendIgnition(bool ignition)
 {
-    
+    DigitalOut main_Switch(MAIN_SWITCH); {}
+        if (ignition == true) {
+             main_Switch = true;
+        }
+        if (ignition == false) {
+            main_Switch = false;
+        }
+
 }
