@@ -34,6 +34,8 @@ typedef struct PackInformation : public CANStruct
     bool internal_memory_fault;
     bool internal_thermistor_fault;
     bool internal_logic_fault;
+    bool discharge_relay;
+    bool charge_relay;
 
     PackInformation() {}
 
@@ -61,7 +63,9 @@ typedef struct PackInformation : public CANStruct
         (charger_safety_relay_fault, 1),
         (internal_memory_fault, 1),
         (internal_thermistor_fault, 1),
-        (internal_logic_fault, 1)
+        (internal_logic_fault, 1),
+        (discharge_relay, 1),
+        (charge_relay, 1)
     );
 
     uint32_t get_message_ID()
