@@ -6,7 +6,7 @@
 class MotorInterface {
 
     public:
-        MotorInterface(I2C &throttle, I2C &regen, DigitalOut &gear);
+        MotorInterface(I2C &throttle, I2C &regen, DigitalOut &gear, DigitalOut &ignition);
         int sendThrottle(uint8_t throttle);
         int sendRegen(uint8_t regen);
         void sendDirection(bool direction);
@@ -16,7 +16,7 @@ class MotorInterface {
         I2C &throttleBus;
         I2C &regenBus;
         DigitalOut &gearBus; // false: reverse, true: forward
-
+        DigitalOut &mainSwitch;
 };
 
 #endif
