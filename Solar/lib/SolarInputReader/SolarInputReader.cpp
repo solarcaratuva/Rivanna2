@@ -65,24 +65,24 @@ uint16_t SolarInputReader::readPanel4Temp() {
 
 uint16_t SolarInputReader::readPanel1Photo() {
     float voltage = get_voltage_from_adc_channel(adc2_interface, 1);
-    float transformed_value = voltage;
+    float transformed_value = voltage; // placeholder transfer function; needs to be changed
     return (uint16_t)transformed_value;
 }
 
 uint16_t SolarInputReader::readPanel2Photo() {
     float voltage = get_voltage_from_adc_channel(adc2_interface, 3);
-    float transformed_value = voltage;
+    float transformed_value = voltage; // placeholder transfer function; needs to be changed
     return (uint16_t)transformed_value;
 }
 
 uint16_t SolarInputReader::readPanel3Photo() {
     float voltage = get_voltage_from_adc_channel(adc2_interface, 5);
-    float transformed_value = voltage;
+    float transformed_value = voltage; // placeholder transfer function; needs to be changed
     return (uint16_t)transformed_value;
 }
 
 uint16_t SolarInputReader::readPanel4Photo() {
     float voltage = get_voltage_from_adc_channel(adc2_interface, 6);
-    float transformed_value = voltage;
+    float transformed_value = voltage; // placeholder transfer function; needs to be changed
     return (uint16_t)transformed_value;
 }
