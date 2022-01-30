@@ -14,10 +14,10 @@
 SolarCANInterface vehicle_can_interface(CAN_RX, CAN_TX, CAN_STBY);
 
 SPI adc1(ADC1_MOSI, ADC1_MISO, ADC1_CLK);
-MCP3008 adc1_inteface(&adc1, ADC1_CS);
+MCP3008 adc1_interface(&adc1, ADC1_CS);
 
-SPI adc2(ADC2_MOSI, ADC2_MOSI,ADC2_CLK);
-MCP3008 adc2_inteface(&adc2, ADC2_CS);
+SPI adc2(ADC2_MOSI, ADC2_MISO,ADC2_CLK);
+MCP3008 adc2_interface(&adc2, ADC2_CS);
 
 int main() {
 #ifdef TESTING
