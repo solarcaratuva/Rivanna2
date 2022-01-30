@@ -11,8 +11,8 @@ void MotorStateTracker::setFrame1(Frame1 new_frame)
 }
 
 void MotorStateTracker::setFrame2(Frame2 new_frame)
-{   frame2 = new_frame;
-
+{   
+    frame2 = new_frame;
 }
 
 Frame0 MotorStateTracker::getFrame0(void)
