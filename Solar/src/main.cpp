@@ -10,16 +10,14 @@
 
 #define MAIN_LOOP_PERIOD 1s
 #define CAN_PERIOD 1s
-#define ADC_REF_VOLTAGE 3.3
 
 SolarCANInterface vehicle_can_interface(CAN_RX, CAN_TX, CAN_STBY);
 
-SPI spi1(ADC1_MOSI, ADC1_MISO, ADC1_CLK);
-MCP3008 spi1_inteface(&spi1, ADC1_CS);
+SPI adc1(ADC1_MOSI, ADC1_MISO, ADC1_CLK);
+MCP3008 adc1_interface(&adc1, ADC1_CS);
 
-float convert_voltage(int adc_reading) {
-    return ((float) adc_reading) / 1024.0 * ADC_REF_VOLTAGE;
-}
+SPI adc2(ADC2_MOSI, ADC2_MISO,ADC2_CLK);
+MCP3008 adc2_interface(&adc2, ADC2_CS);
 
 int main() {
 #ifdef TESTING
@@ -32,13 +30,6 @@ int main() {
 
         PowerAuxExampleStruct a(1, 2, 3, 4);
         vehicle_can_interface.send(&a);
-
-        for (int channel = 0; channel < 8; channel += 1) {
-            uint16_t result = spi1_inteface.read_input_u16(channel);
-            if (result > 0) {
-                printf("Channel %d = %d\n", channel, result);
-            }
-        }
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }
