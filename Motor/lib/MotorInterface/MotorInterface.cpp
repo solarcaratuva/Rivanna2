@@ -5,7 +5,7 @@
  * @param throttle Mbed I2C object for throttle communication
  * @param regen Mbed I2C object for regen communication 
  */
-MotorInterface::MotorInterface(I2C &throttle, I2C& regen) : throttleBus(throttle), regenBus(regen) {}
+MotorInterface::MotorInterface(I2C &throttle, I2C &regen, DigitalOut &gear) : throttleBus(throttle), regenBus(regen), gearBus(gear) {}
 
 /**
  * Converts a throttle percentage into a throttle value for the motor and sends it
@@ -35,12 +35,16 @@ int MotorInterface::sendRegen(uint8_t regen)
     return result;
 }
 
-void MotorInterface::sendDirection(uint8_t direction)
+/**
+ * Controls the gear of the motor
+ * @param direction Reverse (false) or forward (true)
+ */
+void MotorInterface::sendDirection(bool direction)
 {
-
+    gearBus.write(direction);
 }
 
 void MotorInterface::sendIgnition(bool ignition)
 {
-    
+
 }

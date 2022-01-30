@@ -19,8 +19,9 @@ MotorControllerCANInterface motor_controller_can_interface(MTR_CTRL_CAN_RX, MTR_
 
 I2C throttle(SDA_ACCEL, SCL_ACCEL);
 I2C regen(SDA_REGEN, SCL_REGEN);
+DigitalOut gear(FWD_REV_EN);
 
-MotorInterface motor_interface(throttle, regen);
+MotorInterface motor_interface(throttle, regen, gear);
 
 int main() {
 #ifdef TESTING
@@ -58,16 +59,18 @@ int main() {
 
 void MotorCANInterface::handle(ECUMotorCommands *can_struct)
 {
-    
+    motor_interface.sendIgnition(can_struct->motor_on);
+    motor_interface.sendDirection(can_struct->forward_en); // TODO: verify motor controller will not allow gear change when velocity is non-zero
+    motor_interface.sendThrottle(can_struct->throttle);
+    motor_interface.sendRegen(can_struct->regen);
     PRINT("Received ECUMotorCommands: throttle=%u, regen=%u, forward_en=%d, cruise_control_en=%d, cruise_control_speed=%u, motor_on=%d\r\n", 
-        can_struct->throttle, can_struct->regen, can_struct->forward_en, can_struct->cruise_control_en, can_struct->cruise_control_speed, can_struct->motor_on);
-
-    
+        can_struct->throttle, can_struct->regen, can_struct->forward_en, can_struct->cruise_control_en, can_struct->cruise_control_speed, can_struct->motor_on);    
 
 }
 
 void MotorControllerCANInterface::handle(Frame0 *can_struct)
 {
+    
     // PRINT("%d\n", can_struct->advanced_lead_angle / 2);
 }
 
