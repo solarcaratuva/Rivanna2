@@ -10,9 +10,43 @@
 
 #define MAIN_LOOP_PERIOD 1s
 #define CAN_PERIOD 1s
+#define FLASH_PERIOD 10ms
 
 PowerAuxCANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX, MAIN_CAN_STBY);
 PowerAuxBPSCANInterface bps_can_interface(BMS_CAN1_RX, BMS_CAN1_TX, BMS_CAN1_STBY);
+
+bool flashHazards, flashLSignal, flashRSignal;
+Thread signalFlashThread;
+
+DigitalOut brake_lights(BRAKE_LIGHT_EN);
+DigitalOut headlights(DRL_EN);
+DigitalOut horn(HORN_EN);
+DigitalOut leftTurnSignal(LEFT_TURN_EN);
+DigitalOut rightTurnSignal(RIGHT_TURN_EN);
+
+void signalFlashHandler() {
+    if (flashHazards) {
+        leftTurnSignal = !leftTurnSignal;
+        rightTurnSignal = !rightTurnSignal;
+    } else {
+        leftTurnSignal = false;
+        rightTurnSignal = false;
+    }
+
+    if (flashLSignal & !flashHazards) {
+        leftTurnSignal = !leftTurnSignal;
+    } else {
+        leftTurnSignal = false;
+    }
+
+    if (flashRSignal & !flashHazards) {
+        rightTurnSignal = !rightTurnSignal;
+    } else {
+        rightTurnSignal = false;
+    }
+
+    ThisThread::sleep_for(FLASH_PERIOD);
+}
 
 int main() {
     // device.set_baud(38400);
@@ -20,21 +54,27 @@ int main() {
 #ifdef TESTING
     PRINT("start main() \r\n");
 #endif //TESTING
-    while(1){
+
+    signalFlashThread.start(signalFlashHandler);
+
+    while(1) {
         #ifdef TESTING
             PRINT("main thread loop \r\n");
         #endif //TESTING
-
-        PowerAuxExampleStruct a(5, 6, 7, 8);
-        vehicle_can_interface.send(&a);
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }
 }
 
-void PowerAuxCANInterface::handle(PowerAuxExampleStruct *can_struct)
+void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct)
 {
-    PRINT("Received PowerAuxExampleStruct: a=%u, b=%u, c=%u, d=%d\r\n", can_struct->a, can_struct->b, can_struct->c, can_struct->d);
+    brake_lights = can_struct->brake_lights;
+    headlights = can_struct->headlights;
+    horn = can_struct->horn;
+
+    flashLSignal = can_struct->left_turn_signal;
+    flashRSignal = can_struct->right_turn_signal;
+    flashHazards = can_struct->hazards;
 }
 
 void PowerAuxBPSCANInterface::handle(PackInformation *can_struct)
