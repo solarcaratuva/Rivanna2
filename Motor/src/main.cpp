@@ -22,8 +22,9 @@ MotorControllerCANInterface motor_controller_can_interface(MTR_CTRL_CAN_RX, MTR_
 I2C throttle(SDA_ACCEL, SCL_ACCEL);
 I2C regen(SDA_REGEN, SCL_REGEN);
 DigitalOut gear(FWD_REV_EN);
+DigitalOut ignition(MAIN_SWITCH);
 
-MotorInterface motor_interface(throttle, regen, gear);
+MotorInterface motor_interface(throttle, regen, gear, ignition);
 
 // Motor State Tracker
 MotorStateTracker motor_state_tracker;
