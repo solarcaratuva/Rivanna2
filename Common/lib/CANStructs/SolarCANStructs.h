@@ -6,10 +6,13 @@
 
 typedef struct SolarCurrent : CANStruct
 {
-    int16_t total_current;
+    /**
+     * 1mA/LSB
+     */
+    uint16_t total_current;
 
     SolarCurrent() {}
-    SolarCurrent(int16_t total_current) : total_current(total_current) {}
+    SolarCurrent(uint16_t total_current) : total_current(total_current) {}
 
     SERIALIZATION_METHODS((total_current, 16))
 
@@ -21,13 +24,25 @@ typedef struct SolarCurrent : CANStruct
 
 typedef struct SolarVoltage : CANStruct
 {
-    int16_t panel1_voltage;
-    int16_t panel2_voltage;
-    int16_t panel3_voltage;
-    int16_t panel4_voltage;
+    /**
+     * 1mV/LSB
+     */
+    uint16_t panel1_voltage;
+    /**
+     * 1mV/LSB
+     */
+    uint16_t panel2_voltage;
+    /**
+     * 1mV/LSB
+     */
+    uint16_t panel3_voltage;
+    /**
+     * 1mV/LSB
+     */
+    uint16_t panel4_voltage;
 
     SolarVoltage() {}
-    SolarVoltage(int16_t panel1_voltage, int16_t panel2_voltage, int16_t panel3_voltage, int16_t panel4_voltage)
+    SolarVoltage(uint16_t panel1_voltage, uint16_t panel2_voltage, uint16_t panel3_voltage, uint16_t panel4_voltage)
         : panel1_voltage(panel1_voltage), panel2_voltage(panel2_voltage), panel3_voltage(panel3_voltage), panel4_voltage(panel4_voltage) {}
 
     SERIALIZATION_METHODS(
@@ -45,13 +60,25 @@ typedef struct SolarVoltage : CANStruct
 
 typedef struct SolarTemp : CANStruct
 {
-    int16_t panel1_temp;
-    int16_t panel2_temp;
-    int16_t panel3_temp;
-    int16_t panel4_temp;
+    /**
+     * 1°C/LSB
+     */
+    uint16_t panel1_temp;
+    /**
+     * 1°C/LSB
+     */
+    uint16_t panel2_temp;
+    /**
+     * 1°C/LSB
+     */
+    uint16_t panel3_temp;
+    /**
+     * 1°C/LSB
+     */
+    uint16_t panel4_temp;
 
     SolarTemp() {}
-    SolarTemp(int16_t panel1_temp, int16_t panel2_temp, int16_t panel3_temp, int16_t panel4_temp)
+    SolarTemp(uint16_t panel1_temp, uint16_t panel2_temp, uint16_t panel3_temp, uint16_t panel4_temp)
         : panel1_temp(panel1_temp), panel2_temp(panel2_temp), panel3_temp(panel3_temp), panel4_temp(panel4_temp) {}
 
     SERIALIZATION_METHODS(
@@ -69,13 +96,13 @@ typedef struct SolarTemp : CANStruct
 
 typedef struct SolarPhoto : CANStruct
 {
-    int16_t panel1_photo;
-    int16_t panel2_photo;
-    int16_t panel3_photo;
-    int16_t panel4_photo;
+    uint16_t panel1_photo;
+    uint16_t panel2_photo;
+    uint16_t panel3_photo;
+    uint16_t panel4_photo;
 
     SolarPhoto() {}
-    SolarPhoto(int16_t panel1_photo, int16_t panel2_photo, int16_t panel3_photo, int16_t panel4_photo)
+    SolarPhoto(uint16_t panel1_photo, uint16_t panel2_photo, uint16_t panel3_photo, uint16_t panel4_photo)
         : panel1_photo(panel1_photo), panel2_photo(panel2_photo), panel3_photo(panel3_photo), panel4_photo(panel4_photo) {}
 
     SERIALIZATION_METHODS(
