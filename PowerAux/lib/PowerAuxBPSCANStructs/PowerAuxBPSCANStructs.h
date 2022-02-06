@@ -10,8 +10,17 @@
  */
 typedef struct PackInformation : public CANStruct
 {
+    /**
+     * 0.1V/LSB
+     */
     uint16_t pack_voltage;
+    /**
+     * 0.1A/LSB
+     */
     uint16_t pack_current;
+    /**
+     * 0.5%/LSB
+     */
     uint8_t pack_soc;
     bool internal_communications_fault;
     bool internal_conversion_fault;
@@ -80,9 +89,21 @@ typedef struct PackInformation : public CANStruct
  */
 typedef struct CellVoltage : public CANStruct
 {
+    /**
+     * 0.0001V/LSB
+     */
     uint16_t low_cell_voltage;
+    /**
+     * Id of the cell with the lowest voltage
+     */
     uint8_t low_cell_voltage_id;
+    /**
+     * 0.0001V/LSB
+     */
     uint16_t high_cell_voltage;
+    /**
+     * Id of the cell with the highest voltage
+     */
     uint8_t high_cell_voltage_id;
 
     CellVoltage() {}
@@ -106,9 +127,21 @@ typedef struct CellVoltage : public CANStruct
  */
 typedef struct CellTemperature : public CANStruct
 {
+    /**
+     * 1°C/LSB
+     */
     uint8_t low_temperature;
+    /**
+     * Id of the cell with the lowest temperature
+     */
     uint8_t low_thermistor_id;
+    /**
+     * 1°C/LSB
+     */
     uint8_t high_temperature;
+    /**
+     * Id of the cell with the highest temperature
+     */
     uint8_t high_thermistor_id;
 
     CellTemperature() {}
