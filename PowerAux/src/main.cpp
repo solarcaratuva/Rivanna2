@@ -24,6 +24,7 @@ DigitalOut horn(HORN_EN);
 DigitalOut leftTurnSignal(LEFT_TURN_EN);
 DigitalOut rightTurnSignal(RIGHT_TURN_EN);
 
+
 void signalFlashHandler() {
     if (flashHazards) {
         leftTurnSignal = !leftTurnSignal;
@@ -48,6 +49,22 @@ void signalFlashHandler() {
     ThisThread::sleep_for(FLASH_PERIOD);
 }
 
+bool bpsFaultIndicator;
+Thread signalBPSThread;
+
+DigitalOut bpsLight(BMS_STROBE_EN);
+
+void signalBPSStrobe() {
+    if (bpsFaultIndicator) {
+        bpsLight = !bpsLight;
+    }
+    else {
+        bpsLight = false;
+    }
+
+    ThisThread::sleep_for(FLASH_PERIOD);
+}
+
 int main() {
     // device.set_baud(38400);
 
@@ -56,6 +73,7 @@ int main() {
 #endif //TESTING
 
     signalFlashThread.start(signalFlashHandler);
+    signalBPSThread.start(signalBPSStrobe);
 
     while(1) {
         #ifdef TESTING
@@ -79,6 +97,8 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct)
 
 void PowerAuxBPSCANInterface::handle(PackInformation *can_struct)
 {
+    bpsFaultIndicator = can_struct->has_error();
+
     PRINT("Received PackInformation struct: pack_voltage=%u\n", can_struct->pack_voltage);
 }
 

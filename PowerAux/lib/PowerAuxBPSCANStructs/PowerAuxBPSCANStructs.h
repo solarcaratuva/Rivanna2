@@ -81,6 +81,32 @@ typedef struct PackInformation : public CANStruct
     {
         return POWER_AUX_BPS_CAN_PackInformation;
     }
+
+    bool has_error() {
+        return internal_communications_fault  
+            || internal_conversion_fault 
+            || weak_cell_fault 
+            || low_cell_voltage_fault 
+            || open_wiring_fault 
+            || current_sensor_fault 
+            || pack_voltage_sensor_fault 
+            || weak_pack_fault 
+            || voltage_redundancy_fault 
+            || fan_monitor_fault 
+            || thermistor_fault 
+            || CANBUS_communications_fault 
+            || always_on_supply_fault 
+            || high_voltage_isolation_fault 
+            || power_supply_12v_fault 
+            || charge_limit_enforcement_fault 
+            || discharge_limit_enforcement_fault
+            || charger_safety_relay_fault 
+            || internal_memory_fault 
+            || internal_thermistor_fault 
+            || internal_logic_fault 
+            || discharge_relay 
+            || charge_relay;
+    }
 } PackInformation;
 
 /**
