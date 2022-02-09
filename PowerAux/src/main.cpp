@@ -56,7 +56,7 @@ DigitalOut bpsLight(BMS_STROBE_EN);
 
 void signalBPSStrobe() {
     if (bpsFaultIndicator) {
-        bpsLight = !bpsLight
+        bpsLight = !bpsLight;
     }
     else {
         bpsLight = false;
