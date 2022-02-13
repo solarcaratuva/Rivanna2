@@ -4,15 +4,15 @@
 #include "CANStruct.h"
 #include "CANSerializer.h"
 
-typedef struct PowerAuxExampleStruct : CANStruct
+typedef struct PowerAuxErrorStruct : CANStruct
 {
     uint32_t a;
     uint16_t b;
     uint8_t c;
     int8_t d;
 
-    PowerAuxExampleStruct() {}
-    PowerAuxExampleStruct(uint32_t a, uint16_t b, uint8_t c, int8_t d)
+    PowerAuxErrorStruct() {}
+    PowerAuxErrorStruct(uint32_t a, uint16_t b, uint8_t c, int8_t d)
         : a(a), b(b), c(c), d(d) {}
 
     SERIALIZATION_METHODS((a, 32), (b, 16), (c, 8), (d, 8))
@@ -21,6 +21,6 @@ typedef struct PowerAuxExampleStruct : CANStruct
     {
         return PowerAuxExampleStruct_MESSAGE_ID;
     }
-} PowerAuxExampleStruct;
+} PowerAuxErrorStruct;
 
 #endif
