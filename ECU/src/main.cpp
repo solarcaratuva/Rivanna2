@@ -55,7 +55,6 @@ void poweraux_message_handler()
     to_poweraux.hazards = input_reader.readHazards();
     to_poweraux.brake_lights = input_reader.readBrakePedal();
     to_poweraux.headlights = input_reader.readRunningLights();
-    to_poweraux.horn = input_reader.readHorn();
     to_poweraux.left_turn_signal = input_reader.readLeftTurnSignal();
     to_poweraux.right_turn_signal = input_reader.readRightTurnSignal();
 

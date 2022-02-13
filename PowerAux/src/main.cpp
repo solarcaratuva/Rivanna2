@@ -20,7 +20,6 @@ Thread signalFlashThread;
 
 DigitalOut brake_lights(BRAKE_LIGHT_EN);
 DigitalOut headlights(DRL_EN);
-DigitalOut horn(HORN_EN);
 DigitalOut leftTurnSignal(LEFT_TURN_EN);
 DigitalOut rightTurnSignal(RIGHT_TURN_EN);
 
@@ -88,7 +87,6 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct)
 {
     brake_lights = can_struct->brake_lights;
     headlights = can_struct->headlights;
-    horn = can_struct->horn;
 
     flashLSignal = can_struct->left_turn_signal;
     flashRSignal = can_struct->right_turn_signal;
