@@ -10,8 +10,17 @@
  */
 typedef struct PackInformation : public CANStruct
 {
+    /**
+     * 0.1V/LSB
+     */
     uint16_t pack_voltage;
+    /**
+     * 0.1A/LSB
+     */
     uint16_t pack_current;
+    /**
+     * 0.5%/LSB
+     */
     uint8_t pack_soc;
     bool internal_communications_fault;
     bool internal_conversion_fault;
@@ -34,6 +43,8 @@ typedef struct PackInformation : public CANStruct
     bool internal_memory_fault;
     bool internal_thermistor_fault;
     bool internal_logic_fault;
+    bool discharge_relay;
+    bool charge_relay;
 
     PackInformation() {}
 
@@ -61,12 +72,40 @@ typedef struct PackInformation : public CANStruct
         (charger_safety_relay_fault, 1),
         (internal_memory_fault, 1),
         (internal_thermistor_fault, 1),
-        (internal_logic_fault, 1)
+        (internal_logic_fault, 1),
+        (discharge_relay, 1),
+        (charge_relay, 1)
     );
 
     uint32_t get_message_ID()
     {
         return POWER_AUX_BPS_CAN_PackInformation;
+    }
+
+    bool has_error() {
+        return internal_communications_fault  
+            || internal_conversion_fault 
+            || weak_cell_fault 
+            || low_cell_voltage_fault 
+            || open_wiring_fault 
+            || current_sensor_fault 
+            || pack_voltage_sensor_fault 
+            || weak_pack_fault 
+            || voltage_redundancy_fault 
+            || fan_monitor_fault 
+            || thermistor_fault 
+            || CANBUS_communications_fault 
+            || always_on_supply_fault 
+            || high_voltage_isolation_fault 
+            || power_supply_12v_fault 
+            || charge_limit_enforcement_fault 
+            || discharge_limit_enforcement_fault
+            || charger_safety_relay_fault 
+            || internal_memory_fault 
+            || internal_thermistor_fault 
+            || internal_logic_fault 
+            || discharge_relay 
+            || charge_relay;
     }
 } PackInformation;
 
@@ -76,9 +115,21 @@ typedef struct PackInformation : public CANStruct
  */
 typedef struct CellVoltage : public CANStruct
 {
+    /**
+     * 0.0001V/LSB
+     */
     uint16_t low_cell_voltage;
+    /**
+     * Id of the cell with the lowest voltage
+     */
     uint8_t low_cell_voltage_id;
+    /**
+     * 0.0001V/LSB
+     */
     uint16_t high_cell_voltage;
+    /**
+     * Id of the cell with the highest voltage
+     */
     uint8_t high_cell_voltage_id;
 
     CellVoltage() {}
@@ -102,9 +153,21 @@ typedef struct CellVoltage : public CANStruct
  */
 typedef struct CellTemperature : public CANStruct
 {
+    /**
+     * 1°C/LSB
+     */
     uint8_t low_temperature;
+    /**
+     * Id of the cell with the lowest temperature
+     */
     uint8_t low_thermistor_id;
+    /**
+     * 1°C/LSB
+     */
     uint8_t high_temperature;
+    /**
+     * Id of the cell with the highest temperature
+     */
     uint8_t high_thermistor_id;
 
     CellTemperature() {}

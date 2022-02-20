@@ -58,8 +58,6 @@ void poweraux_message_handler()
     to_poweraux.horn = input_reader.readHorn();
     to_poweraux.left_turn_signal = input_reader.readLeftTurnSignal();
     to_poweraux.right_turn_signal = input_reader.readRightTurnSignal();
-    to_poweraux.ignition = input_reader.readIgnition();
-    to_poweraux.battery_contact = input_reader.readBatteryContact();
 
     // Send message
     vehicle_can_interface.send(&to_poweraux);
@@ -73,6 +71,9 @@ int main() {
     PRINT("start main() \r\n");
 #endif //TESTING
 
+    motor_thread.start(motor_message_handler);
+    poweraux_thread.start(poweraux_message_handler);
+
     while(1){
         #ifdef TESTING
             PRINT("main thread loop \r\n");
@@ -80,10 +81,6 @@ int main() {
 
         // PowerAuxExampleStruct a(1, 2, 3, 4);
         // vehicle_can_interface.send(&a);
-        
-        motor_thread.start(motor_message_handler);
-
-        poweraux_thread.start(poweraux_message_handler);
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }

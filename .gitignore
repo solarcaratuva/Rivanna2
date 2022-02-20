@@ -37,3 +37,6 @@ __pycache__
 
 # Coverage reports
 .coverage
+
+# Mac OS Folders
+.DS_Store
