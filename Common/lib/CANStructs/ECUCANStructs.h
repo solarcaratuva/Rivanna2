@@ -7,8 +7,8 @@
 
 typedef struct ECUMotorCommands : CANStruct
 {
-    uint16_t throttle;
-    uint16_t regen;
+    uint8_t throttle;
+    uint8_t regen;
     bool forward_en;
     bool reverse_en;
     bool cruise_control_en;
