@@ -4,6 +4,7 @@
 #include "Printing.h"
 #include "PowerAuxCANInterface.h"
 #include "PowerAuxBPSCANInterface.h"
+#include "PowerAuxErrorReader.h"
 
 #define TESTING     // only defined if using test functions
 // #define DEBUGGING   // only define if debugging
@@ -24,6 +25,14 @@ DigitalOut horn(HORN_EN);
 DigitalOut leftTurnSignal(LEFT_TURN_EN);
 DigitalOut rightTurnSignal(RIGHT_TURN_EN);
 
+DigitalIn fan_error(FanTach);
+DigitalIn brake_light_error(BRAKE_LIGHT_CURRENT);
+DigitalIn headlight_error(DRL_CURRENT);
+DigitalIn bms_strobe_error(BMS_STROBE_CURRENT);
+DigitalIn left_turn_error(LEFT_TURN_CURRENT);
+DigitalIn right_turn_error(RIGHT_TURN_CURRENT);
+
+PowerAuxErrorReader error_reader(fan_error, brake_light_error, headlight_error, bms_strobe_error, left_turn_error, right_turn_error);
 
 void signalFlashHandler() {
     if (flashHazards) {

@@ -14,8 +14,9 @@ typedef struct PowerAuxErrorStruct : CANStruct
     bool right_turn_error; 
 
     PowerAuxErrorStruct() {}
-    // PowerAuxErrorStruct(uint32_t a, uint16_t b, uint8_t c, int8_t d)
-    //     : a(a), b(b), c(c), d(d) {}
+    PowerAuxErrorStruct(bool fan_error, bool brake_light_error, bool headlight_error, bool bms_strobe_error, bool left_turn_error, bool right_turn_error)
+        : fan_error(fan_error), brake_light_error(brake_light_error), headlight_error(headlight_error), bms_strobe_error(bms_strobe_error),
+        left_turn_error(left_turn_error), right_turn_error(right_turn_error) {}
 
     SERIALIZATION_METHODS(
         (fan_error, 1), 

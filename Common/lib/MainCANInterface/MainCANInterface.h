@@ -27,7 +27,7 @@ public:
 
     virtual void handle(ECUMotorCommands *can_struct) {}
     virtual void handle(ECUPowerAuxCommands *can_struct) {}
-    virtual void handle(PowerAuxExampleStruct *can_struct) {}
+    virtual void handle(PowerAuxErrorStruct *can_struct) {}
     virtual void handle(SolarCurrent *can_struct) {}
     virtual void handle(SolarVoltage *can_struct) {}
     virtual void handle(SolarTemp *can_struct) {}
