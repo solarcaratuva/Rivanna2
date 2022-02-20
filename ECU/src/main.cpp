@@ -33,37 +33,45 @@ Thread poweraux_thread;
 
 void motor_message_handler()
 {
-    // Read motor commands
-    to_motor.throttle = input_reader.readThrottle();
-    to_motor.regen = input_reader.readRegen();
-    to_motor.forward_en = input_reader.readForwardEn();
-    to_motor.reverse_en = input_reader.readReverseEn();
-    to_motor.cruise_control_en = input_reader.readCruiseThrottleEn();
-    to_motor.cruise_control_speed = current_speed + input_reader.readCruiseSpeedUp() - input_reader.readCruiseSpeedDown();
-    to_motor.motor_on = input_reader.readMotorOn();
+    while (true)
+    {
+        // Read motor commands
+        to_motor.throttle = input_reader.readThrottle();
+        to_motor.regen = input_reader.readRegen();
+        to_motor.forward_en = input_reader.readForwardEn();
+        to_motor.reverse_en = input_reader.readReverseEn();
+        to_motor.cruise_control_en = input_reader.readCruiseThrottleEn();
+        to_motor.cruise_control_speed = current_speed + input_reader.readCruiseSpeedUp() - input_reader.readCruiseSpeedDown();
+        to_motor.motor_on = input_reader.readMotorOn();
 
-    // Send message
-    vehicle_can_interface.send(&to_motor);
+        // Send message
 
-    // Sleep
-    ThisThread::sleep_for(MOTOR_THREAD_PERIOD);
+        PRINT("Motor Message Send Status: %d\r\n", vehicle_can_interface.send(&to_motor));
+
+        // Sleep
+        ThisThread::sleep_for(MOTOR_THREAD_PERIOD);
+    }
 }
 
 void poweraux_message_handler()
 {
-    // Read poweraux commands
-    to_poweraux.hazards = input_reader.readHazards();
-    to_poweraux.brake_lights = input_reader.readBrakePedal();
-    to_poweraux.headlights = input_reader.readRunningLights();
-    to_poweraux.horn = input_reader.readHorn();
-    to_poweraux.left_turn_signal = input_reader.readLeftTurnSignal();
-    to_poweraux.right_turn_signal = input_reader.readRightTurnSignal();
+    while (true)
+    {
+        // Read poweraux commands
+        to_poweraux.hazards = input_reader.readHazards();
+        to_poweraux.brake_lights = input_reader.readBrakePedal();
+        to_poweraux.headlights = input_reader.readRunningLights();
+        to_poweraux.horn = input_reader.readHorn();
+        to_poweraux.left_turn_signal = input_reader.readLeftTurnSignal();
+        to_poweraux.right_turn_signal = input_reader.readRightTurnSignal();
 
-    // Send message
-    vehicle_can_interface.send(&to_poweraux);
+        // Send message
+        PRINT("PowerAux Message Send Status: %d\r\n", vehicle_can_interface.send(&to_poweraux));
 
-    // Sleep
-    ThisThread::sleep_for(POWERAUX_THREAD_PERIOD);
+
+        // Sleep
+        ThisThread::sleep_for(POWERAUX_THREAD_PERIOD);
+    }
 }
 
 int main() {
@@ -74,9 +82,10 @@ int main() {
     motor_thread.start(motor_message_handler);
     poweraux_thread.start(poweraux_message_handler);
 
-    while(1){
+    while(true)
+    {
         #ifdef TESTING
-            PRINT("main thread loop \r\n");
+            PRINT("main thread loop meep \r\n");
         #endif //TESTING
 
         // PowerAuxExampleStruct a(1, 2, 3, 4);

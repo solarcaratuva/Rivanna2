@@ -37,26 +37,29 @@ int main() {
     while(1)
     {
         #ifdef TESTING
-            // PRINT("main thread loop \r\n");
+            PRINT("main thread loop \r\n");
         #endif //TESTING
         
-        PRINT("Motor State\r\n");
-        PRINT("-------------------\r\n");
-        PRINT("Battery Voltage: %d\r\n", motor_state_tracker.getFrame0().battery_voltage);
-        PRINT("Motor Rotating Speed: %d\r\n", motor_state_tracker.getFrame0().motor_rotating_speed);
-        PRINT("Power Eco: %d\r\n", motor_state_tracker.getFrame1().power_eco);
-        PRINT("Motor Status: %d/r/n", motor_state_tracker.getFrame1().motor_status);
+        // PRINT("Motor State\r\n");
+        // PRINT("-------------------\r\n");
+        // PRINT("Battery Voltage: %d\r\n", motor_state_tracker.getFrame0().battery_voltage);
+        // PRINT("Motor Rotating Speed: %d\r\n", motor_state_tracker.getFrame0().motor_rotating_speed);
+        // PRINT("Power Eco: %d\r\n", motor_state_tracker.getFrame1().power_eco);
+        // PRINT("Motor Status: %d/r/n", motor_state_tracker.getFrame1().motor_status);
+        ThisThread::sleep_for(MAIN_LOOP_PERIOD);
+
     }
 }
 
 void MotorCANInterface::handle(ECUMotorCommands *can_struct)
 {
+    PRINT("MEEP\r\n");
     motor_interface.sendIgnition(can_struct->motor_on);
     motor_interface.sendDirection(can_struct->forward_en); // TODO: verify motor controller will not allow gear change when velocity is non-zero
     motor_interface.sendThrottle(can_struct->throttle);
     motor_interface.sendRegen(can_struct->regen);
-    PRINT("Received ECUMotorCommands: throttle=%u, regen=%u, forward_en=%d, cruise_control_en=%d, cruise_control_speed=%u, motor_on=%d\r\n", 
-        can_struct->throttle, can_struct->regen, can_struct->forward_en, can_struct->cruise_control_en, can_struct->cruise_control_speed, can_struct->motor_on);    
+    // PRINT("Received ECUMotorCommands: throttle=%u, regen=%u, forward_en=%d, cruise_control_en=%d, cruise_control_speed=%u, motor_on=%d\r\n", 
+    //     can_struct->throttle, can_struct->regen, can_struct->forward_en, can_struct->cruise_control_en, can_struct->cruise_control_speed, can_struct->motor_on);    
 
 }
 
