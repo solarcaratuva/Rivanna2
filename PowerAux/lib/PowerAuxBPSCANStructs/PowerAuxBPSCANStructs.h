@@ -103,9 +103,7 @@ typedef struct PackInformation : public CANStruct
             || charger_safety_relay_fault 
             || internal_memory_fault 
             || internal_thermistor_fault 
-            || internal_logic_fault 
-            || discharge_relay 
-            || charge_relay;
+            || internal_logic_fault;
     }
 } PackInformation;
 
