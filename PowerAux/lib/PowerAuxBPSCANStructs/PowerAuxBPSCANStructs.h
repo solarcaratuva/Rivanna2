@@ -22,6 +22,7 @@ typedef struct PackInformation : public CANStruct
      * 0.5%/LSB
      */
     uint8_t pack_soc;
+
     bool internal_communications_fault;
     bool internal_conversion_fault;
     bool weak_cell_fault;
@@ -43,6 +44,7 @@ typedef struct PackInformation : public CANStruct
     bool internal_memory_fault;
     bool internal_thermistor_fault;
     bool internal_logic_fault;
+    
     bool discharge_relay;
     bool charge_relay;
 
@@ -103,9 +105,7 @@ typedef struct PackInformation : public CANStruct
             || charger_safety_relay_fault 
             || internal_memory_fault 
             || internal_thermistor_fault 
-            || internal_logic_fault 
-            || discharge_relay 
-            || charge_relay;
+            || internal_logic_fault;
     }
 } PackInformation;
 
