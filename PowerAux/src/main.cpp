@@ -25,27 +25,29 @@ DigitalOut rightTurnSignal(RIGHT_TURN_EN);
 
 
 void signalFlashHandler() {
-    if (flashHazards) {
-        leftTurnSignal = !leftTurnSignal;
-        rightTurnSignal = !rightTurnSignal;
-    } else {
-        leftTurnSignal = false;
-        rightTurnSignal = false;
-    }
+    while (true) {
+        if (flashHazards) {
+            leftTurnSignal = !leftTurnSignal;
+            rightTurnSignal = !rightTurnSignal;
+        } else {
+            leftTurnSignal = false;
+            rightTurnSignal = false;
+        }
 
-    if (flashLSignal & !flashHazards) {
-        leftTurnSignal = !leftTurnSignal;
-    } else {
-        leftTurnSignal = false;
-    }
+        if (flashLSignal & !flashHazards) {
+            leftTurnSignal = !leftTurnSignal;
+        } else {
+            leftTurnSignal = false;
+        }
 
-    if (flashRSignal & !flashHazards) {
-        rightTurnSignal = !rightTurnSignal;
-    } else {
-        rightTurnSignal = false;
-    }
+        if (flashRSignal & !flashHazards) {
+            rightTurnSignal = !rightTurnSignal;
+        } else {
+            rightTurnSignal = false;
+        }
 
-    ThisThread::sleep_for(FLASH_PERIOD);
+        ThisThread::sleep_for(FLASH_PERIOD);
+    }
 }
 
 bool bpsFaultIndicator;
@@ -54,14 +56,16 @@ Thread signalBPSThread;
 DigitalOut bpsLight(BMS_STROBE_EN);
 
 void signalBPSStrobe() {
-    if (bpsFaultIndicator) {
-        bpsLight = !bpsLight;
-    }
-    else {
-        bpsLight = false;
-    }
+    while (true) {
+        if (bpsFaultIndicator) {
+            bpsLight = !bpsLight;
+        }
+        else {
+            bpsLight = false;
+        }
 
-    ThisThread::sleep_for(FLASH_PERIOD);
+        ThisThread::sleep_for(FLASH_PERIOD);
+    }
 }
 
 int main() {
