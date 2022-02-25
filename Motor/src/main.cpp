@@ -53,7 +53,6 @@ int main() {
 
 void MotorCANInterface::handle(ECUMotorCommands *can_struct)
 {
-    PRINT("MEEP\r\n");
     motor_interface.sendIgnition(can_struct->motor_on);
     motor_interface.sendDirection(can_struct->forward_en); // TODO: verify motor controller will not allow gear change when velocity is non-zero
     motor_interface.sendThrottle(can_struct->throttle);

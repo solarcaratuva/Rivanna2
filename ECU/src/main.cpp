@@ -85,7 +85,7 @@ int main() {
     while(true)
     {
         #ifdef TESTING
-            PRINT("main thread loop meep \r\n");
+            PRINT("main thread loop \r\n");
         #endif //TESTING
 
         // PowerAuxExampleStruct a(1, 2, 3, 4);
