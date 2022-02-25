@@ -72,6 +72,7 @@ void poweraux_message_handler()
         // Sleep
         ThisThread::sleep_for(POWERAUX_THREAD_PERIOD);
     }
+
 }
 
 int main() {

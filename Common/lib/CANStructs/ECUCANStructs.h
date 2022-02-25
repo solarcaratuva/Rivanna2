@@ -40,19 +40,17 @@ typedef struct ECUPowerAuxCommands : CANStruct
     bool hazards;
     bool brake_lights;
     bool headlights;
-    bool horn;
     bool left_turn_signal;
     bool right_turn_signal;
 
     ECUPowerAuxCommands() {}
-    ECUPowerAuxCommands(bool hazards, bool brake_lights, bool headlights, bool horn, bool left_turn_signal, bool right_turn_signal)
-        : hazards(hazards), brake_lights(brake_lights), headlights(headlights), horn(horn), left_turn_signal(left_turn_signal), right_turn_signal(right_turn_signal) {}
+    ECUPowerAuxCommands(bool hazards, bool brake_lights, bool headlights, bool left_turn_signal, bool right_turn_signal)
+        : hazards(hazards), brake_lights(brake_lights), headlights(headlights), left_turn_signal(left_turn_signal), right_turn_signal(right_turn_signal) {}
 
     SERIALIZATION_METHODS(
         (hazards, 1),
         (brake_lights, 1),
         (headlights, 1),
-        (horn, 1),
         (left_turn_signal, 1),
         (right_turn_signal, 1)
     )

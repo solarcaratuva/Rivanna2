@@ -20,33 +20,34 @@ Thread signalFlashThread;
 
 DigitalOut brake_lights(BRAKE_LIGHT_EN);
 DigitalOut headlights(DRL_EN);
-DigitalOut horn(HORN_EN);
 DigitalOut leftTurnSignal(LEFT_TURN_EN);
 DigitalOut rightTurnSignal(RIGHT_TURN_EN);
 
 
 void signalFlashHandler() {
-    if (flashHazards) {
-        leftTurnSignal = !leftTurnSignal;
-        rightTurnSignal = !rightTurnSignal;
-    } else {
-        leftTurnSignal = false;
-        rightTurnSignal = false;
-    }
+    while (true) {
+        if (flashHazards) {
+            leftTurnSignal = !leftTurnSignal;
+            rightTurnSignal = !rightTurnSignal;
+        } else {
+            leftTurnSignal = false;
+            rightTurnSignal = false;
+        }
 
-    if (flashLSignal & !flashHazards) {
-        leftTurnSignal = !leftTurnSignal;
-    } else {
-        leftTurnSignal = false;
-    }
+        if (flashLSignal & !flashHazards) {
+            leftTurnSignal = !leftTurnSignal;
+        } else {
+            leftTurnSignal = false;
+        }
 
-    if (flashRSignal & !flashHazards) {
-        rightTurnSignal = !rightTurnSignal;
-    } else {
-        rightTurnSignal = false;
-    }
+        if (flashRSignal & !flashHazards) {
+            rightTurnSignal = !rightTurnSignal;
+        } else {
+            rightTurnSignal = false;
+        }
 
-    ThisThread::sleep_for(FLASH_PERIOD);
+        ThisThread::sleep_for(FLASH_PERIOD);
+    }
 }
 
 bool bpsFaultIndicator;
@@ -55,14 +56,16 @@ Thread signalBPSThread;
 DigitalOut bpsLight(BMS_STROBE_EN);
 
 void signalBPSStrobe() {
-    if (bpsFaultIndicator) {
-        bpsLight = !bpsLight;
-    }
-    else {
-        bpsLight = false;
-    }
+    while (true) {
+        if (bpsFaultIndicator) {
+            bpsLight = !bpsLight;
+        }
+        else {
+            bpsLight = false;
+        }
 
-    ThisThread::sleep_for(FLASH_PERIOD);
+        ThisThread::sleep_for(FLASH_PERIOD);
+    }
 }
 
 int main() {
@@ -88,7 +91,6 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct)
 {
     brake_lights = can_struct->brake_lights;
     headlights = can_struct->headlights;
-    horn = can_struct->horn;
 
     flashLSignal = can_struct->left_turn_signal;
     flashRSignal = can_struct->right_turn_signal;
