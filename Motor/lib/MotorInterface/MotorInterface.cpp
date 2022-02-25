@@ -45,13 +45,11 @@ void MotorInterface::sendDirection(bool direction)
     gearBus.write(direction);
 }
 
+/**
+ * Controls the ignition of the motor
+ * @param ignition 
+ */
 void MotorInterface::sendIgnition(bool ignition)
 {       
-        if (ignition == true) {
-             mainSwitch = true;
-        }
-        if (ignition == false) {
-            mainSwitch = false;
-        }
-
+    mainSwitch.write(ignition);
 }
