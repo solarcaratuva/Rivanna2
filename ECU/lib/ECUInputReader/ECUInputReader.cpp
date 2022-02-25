@@ -7,7 +7,6 @@
 DigitalIn hazards(HAZARDS);
 DigitalIn left_turn_signal(LEFT_TURN_SIG);
 DigitalIn right_turn_signal(RIGHT_TURN_SIG);
-DigitalIn horn(HORN);
 DigitalIn cruise_speed_down(CRUISE_SPEED_DOWN);
 DigitalIn cruise_speed_up(CRUISE_SPEED_UP);
 DigitalIn cruise_throttle_en(CRUISE_THROTTLE_EN);
@@ -36,10 +35,6 @@ bool ECUInputReader::readLeftTurnSignal() {
 
 bool ECUInputReader::readRightTurnSignal() {
     return right_turn_signal;
-}
-
-bool ECUInputReader::readHorn() {
-    return horn;
 }
 
 bool ECUInputReader::readCruiseSpeedDown() {
