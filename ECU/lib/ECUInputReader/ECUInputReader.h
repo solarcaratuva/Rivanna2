@@ -9,7 +9,6 @@ class ECUInputReader {
         bool readHazards();
         bool readLeftTurnSignal();
         bool readRightTurnSignal();
-        bool readHorn();
         bool readCruiseSpeedDown();
         bool readCruiseSpeedUp();
         bool readCruiseThrottleEn();
