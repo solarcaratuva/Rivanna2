@@ -47,6 +47,7 @@ typedef struct ECUPowerAuxCommands : CANStruct {
                           (left_turn_signal, 1), (right_turn_signal, 1))
 
     uint32_t get_message_ID() { return ECUPowerAuxCommands_MESSAGE_ID; }
+    void printStruct() { printf("ECUCANSTRUCT\n Hazards: %d\n Brake lights: %d\n Headlights: %d\n Left turn signal: %d\n Right turn signal: %d\n", hazards, brake_lights, headlights, left_turn_signal, right_turn_signal);}
 } ECUPowerAuxCommands;
 
 #endif

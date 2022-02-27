@@ -11,6 +11,9 @@ struct CANStruct {
     virtual void serialize(CANMessage *message);
     virtual void deserialize(const CANMessage *message);
     virtual uint32_t get_message_ID();
+    virtual void printStruct();
 };
+
+
 
 #endif
