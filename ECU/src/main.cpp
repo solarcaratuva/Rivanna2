@@ -20,6 +20,12 @@ ECUCANInterface vehicle_can_interface(CAN_RX, CAN_TX, CAN_STBY);
 // Input Reader //
 ECUInputReader input_reader;
 
+
+
+
+
+
+
 // CAN Messages //
 ECUMotorCommands to_motor;
 ECUPowerAuxCommands to_poweraux;
