@@ -1,8 +1,8 @@
 #ifndef POWER_AUX_CAN_STRUCTS_H
 #define POWER_AUX_CAN_STRUCTS_H
 
-#include "CANStruct.h"
 #include "CANSerializer.h"
+#include "CANStruct.h"
 
 typedef struct PowerAuxErrorStruct : CANStruct
 {

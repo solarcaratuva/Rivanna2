@@ -4,25 +4,23 @@
 #include <mbed.h>
 
 class ECUInputReader {
-    public:
-        ECUInputReader();
-        bool readHazards();
-        bool readLeftTurnSignal();
-        bool readRightTurnSignal();
-        bool readHorn();
-        bool readCruiseSpeedDown();
-        bool readCruiseSpeedUp();
-        bool readCruiseThrottleEn();
-        bool readRunningLights();
-        bool readBrakePedal();
-        bool readMotorOn();
-        bool readForwardEn();
-        bool readReverseEn();
-        bool readBatteryContact();
-        bool readIgnition();
-        uint8_t readThrottle();
-        uint8_t readRegen();
-
+  public:
+    ECUInputReader();
+    bool readHazards();
+    bool readLeftTurnSignal();
+    bool readRightTurnSignal();
+    bool readCruiseSpeedDown();
+    bool readCruiseSpeedUp();
+    bool readCruiseThrottleEn();
+    bool readRunningLights();
+    bool readBrakePedal();
+    bool readMotorOn();
+    bool readForwardEn();
+    bool readReverseEn();
+    bool readBatteryContact();
+    bool readIgnition();
+    uint8_t readThrottle();
+    uint8_t readRegen();
 };
 
 #endif

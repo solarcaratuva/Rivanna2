@@ -1,7 +1,7 @@
-#include <unity.h>
-#include <mbed.h>
-#include <fakeit.hpp>
 #include "MbedTester.h"
+#include <fakeit.hpp>
+#include <mbed.h>
+#include <unity.h>
 
 using namespace fakeit;
 
@@ -17,8 +17,7 @@ CANMessage *testCANMessage;
 MbedTester *mbedTester;
 
 // Called before every test
-void setUp()
-{
+void setUp() {
     testDigitalIn = &mockDigitalIn.get();
     testDigitalOut = &mockDigitalOut.get();
     testCAN = &mockCAN.get();
@@ -27,13 +26,12 @@ void setUp()
 }
 
 // Called after every test
-void tearDown()
-{
+void tearDown() {
     // final verifications
     VerifyNoOtherInvocations(mockDigitalIn);
     VerifyNoOtherInvocations(mockDigitalOut);
     VerifyNoOtherInvocations(mockCAN);
-    
+
     // clean up
     delete testCANMessage;
     delete mbedTester;
@@ -47,40 +45,37 @@ void tearDown()
 /****************************** DigitalIn tests ******************************/
 
 // Equivalence Test
-void test_digital_in_read()
-{
+void test_digital_in_read() {
     // initialization
     Fake(Method(mockDigitalIn, read));
 
     // the test
     int result = testDigitalIn->read();
-    
+
     // verification
     Verify(Method(mockDigitalIn, read)).Exactly(Once);
 }
 
 // Equivalence Test
-void test_mbed_tester_digital_in_read()
-{
+void test_mbed_tester_digital_in_read() {
     // initialization
     Fake(Method(mockDigitalIn, read));
 
     // the test
     int result = mbedTester->testDigitalInRead(*testDigitalIn);
-    
+
     // verification
     Verify(Method(mockDigitalIn, read)).Exactly(Once);
 }
 
 // Equivalence Test
-void test_mbed_tester_digital_in_read_private()
-{
+void test_mbed_tester_digital_in_read_private() {
     // initialization
     Fake(Method(mockDigitalIn, read));
 
     // the test
     int result = mbedTester->testDigitalInRead();
-    
+
     // verification
     Verify(Method(mockDigitalIn, read)).Exactly(Once);
 }
@@ -88,56 +83,52 @@ void test_mbed_tester_digital_in_read_private()
 /****************************** DigitalOut tests ******************************/
 
 // Equivalence Test
-void test_digital_out_read()
-{
+void test_digital_out_read() {
     // initialization
     Fake(Method(mockDigitalOut, read));
 
     // the test
     int result = testDigitalOut->read();
-    
+
     // verification
     Verify(Method(mockDigitalOut, read)).Exactly(Once);
 }
 
 // Equivalence Test
-void test_digital_out_write()
-{
+void test_digital_out_write() {
     // initialization
     Fake(Method(mockDigitalOut, write));
     int testValue = 1;
 
-    //the test
+    // the test
     testDigitalOut->write(testValue);
-    
+
     // verification
     Verify(Method(mockDigitalOut, write).Using(testValue)).Exactly(Once);
 }
 
 // Equivalence Test
-void test_mbed_tester_digital_out_write()
-{
+void test_mbed_tester_digital_out_write() {
     // initialization
     Fake(Method(mockDigitalOut, write));
     int testValue = 1;
 
     // the test
     mbedTester->testDigitalOutWrite(*testDigitalOut, testValue);
-    
+
     // verification
     Verify(Method(mockDigitalOut, write).Using(testValue)).Exactly(Once);
 }
 
 // Equivalence Test
-void test_mbed_tester_digital_out_write_private()
-{
+void test_mbed_tester_digital_out_write_private() {
     // initialization
     Fake(Method(mockDigitalOut, write));
     int testValue = 1;
 
     // the test
     mbedTester->testDigitalOutWrite(testValue);
-    
+
     // verification
     Verify(Method(mockDigitalOut, write).Using(testValue)).Exactly(Once);
 }
@@ -145,24 +136,25 @@ void test_mbed_tester_digital_out_write_private()
 /****************************** CAN tests ******************************/
 
 // Equivalence Test
-void test_can_read()
-{
+void test_can_read() {
     // initialization
     Fake(Method(mockCAN, read));
-    
+
     // the test
     testCAN->read(*testCANMessage);
-    
+
     // verification
-    Verify(Method(mockCAN, read).Using(_, 0)).Exactly(Once);    // FakeIt has a known limitation for spying the usage of reference arguments, so we use _ to indicate any value
+    Verify(Method(mockCAN, read).Using(_, 0))
+        .Exactly(
+            Once); // FakeIt has a known limitation for spying the usage of
+                   // reference arguments, so we use _ to indicate any value
 }
 
 // Equivalence Test
-void test_can_write()
-{
+void test_can_write() {
     // initialization
     Fake(Method(mockCAN, write));
-    
+
     // the test
     testCAN->write(*testCANMessage);
 
@@ -171,36 +163,36 @@ void test_can_write()
 }
 
 // Equivalence Test
-void test_mbed_tester_can_message()
-{
+void test_mbed_tester_can_message() {
     // initialization
-    
+
     // the test
     CANMessage result = mbedTester->testCANMessage();
-    
+
     // verification
     TEST_ASSERT_EQUAL_MEMORY(testCANMessage, &result, sizeof(CANMessage));
 }
 
 // Equivalence Test
-void test_mbed_tester_can_read()
-{
+void test_mbed_tester_can_read() {
     // initialization
     Fake(Method(mockCAN, read));
-    
+
     // the test
     mbedTester->testCANRead(*testCAN, *testCANMessage);
-    
+
     // verification
-    Verify(Method(mockCAN, read).Using(_, 0)).Exactly(Once);    // FakeIt has a known limitation for spying the usage of reference arguments, so we use _ to indicate any value
+    Verify(Method(mockCAN, read).Using(_, 0))
+        .Exactly(
+            Once); // FakeIt has a known limitation for spying the usage of
+                   // reference arguments, so we use _ to indicate any value
 }
 
 // Equivalence Test
-void test_mbed_tester_can_write()
-{
+void test_mbed_tester_can_write() {
     // initialization
     Fake(Method(mockCAN, write));
-    
+
     // the test
     mbedTester->testCANWrite(*testCAN, *testCANMessage);
 
@@ -209,24 +201,25 @@ void test_mbed_tester_can_write()
 }
 
 // Equivalence Test
-void test_mbed_tester_can_read_private()
-{
+void test_mbed_tester_can_read_private() {
     // initialization
     Fake(Method(mockCAN, read));
-    
+
     // the test
     mbedTester->testCANRead(*testCANMessage);
-    
+
     // verification
-    Verify(Method(mockCAN, read).Using(_, 0)).Exactly(Once);    // FakeIt has a known limitation for spying the usage of reference arguments, so we use _ to indicate any value
+    Verify(Method(mockCAN, read).Using(_, 0))
+        .Exactly(
+            Once); // FakeIt has a known limitation for spying the usage of
+                   // reference arguments, so we use _ to indicate any value
 }
 
 // Equivalence Test
-void test_mbed_tester_can_write_private()
-{
+void test_mbed_tester_can_write_private() {
     // initialization
     Fake(Method(mockCAN, write));
-    
+
     // the test
     mbedTester->testCANWrite(*testCANMessage);
 
@@ -234,16 +227,17 @@ void test_mbed_tester_can_write_private()
     Verify(Method(mockCAN, write).Using(*testCANMessage)).Exactly(Once);
 }
 
-int main()
-{
+int main() {
     UNITY_BEGIN();
 
-    /****************************** DigitalIn tests ******************************/
+    /****************************** DigitalIn tests
+     * ******************************/
     RUN_TEST(test_digital_in_read);
     RUN_TEST(test_mbed_tester_digital_in_read);
     RUN_TEST(test_mbed_tester_digital_in_read_private);
-    
-    /****************************** DigitalOut tests ******************************/
+
+    /****************************** DigitalOut tests
+     * ******************************/
     RUN_TEST(test_digital_out_read);
     RUN_TEST(test_digital_out_write);
     RUN_TEST(test_mbed_tester_digital_out_write);
@@ -257,10 +251,11 @@ int main()
     RUN_TEST(test_mbed_tester_can_write);
     RUN_TEST(test_mbed_tester_can_read_private);
     RUN_TEST(test_mbed_tester_can_write_private);
-    
+
     UNITY_END();
 
 #ifndef NATIVE
-    while(1){}
+    while (1) {
+    }
 #endif
 }
