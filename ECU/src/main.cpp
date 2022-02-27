@@ -14,6 +14,13 @@
 #define MOTOR_THREAD_PERIOD    1s
 #define POWERAUX_THREAD_PERIOD 1s
 
+
+
+
+
+
+
+
 // Can Interface //
 ECUCANInterface vehicle_can_interface(CAN_RX, CAN_TX, CAN_STBY);
 
