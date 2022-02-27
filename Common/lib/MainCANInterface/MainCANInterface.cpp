@@ -1,11 +1,11 @@
 #include "MainCANInterface.h"
 
-void MainCANInterface::send(CANStruct *can_struct)
+int MainCANInterface::send(CANStruct *can_struct)
 {
     CANMessage message;
     can_struct->serialize(&message);
     message.id = can_struct->get_message_ID();
-    can.write(message);
+    return can.write(message);
 }
 
 void MainCANInterface::rx_handler()

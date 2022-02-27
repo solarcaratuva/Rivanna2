@@ -2,11 +2,11 @@
 #include "pindef.h"
 #include <mbed.h>
 #include <cmath>
+#include "Printing.h"
 
 DigitalIn hazards(HAZARDS);
 DigitalIn left_turn_signal(LEFT_TURN_SIG);
 DigitalIn right_turn_signal(RIGHT_TURN_SIG);
-DigitalIn horn(HORN);
 DigitalIn cruise_speed_down(CRUISE_SPEED_DOWN);
 DigitalIn cruise_speed_up(CRUISE_SPEED_UP);
 DigitalIn cruise_throttle_en(CRUISE_THROTTLE_EN);
@@ -35,10 +35,6 @@ bool ECUInputReader::readLeftTurnSignal() {
 
 bool ECUInputReader::readRightTurnSignal() {
     return right_turn_signal;
-}
-
-bool ECUInputReader::readHorn() {
-    return horn;
 }
 
 bool ECUInputReader::readCruiseSpeedDown() {
@@ -110,9 +106,9 @@ bool ECUInputReader::readIgnition() {
 }
 
 uint8_t ECUInputReader::readThrottle() {
-    return floor(throttle / 255);
+    return (int)(throttle.read() * 200.0);
 }
 
 uint8_t ECUInputReader::readRegen() {
-    return floor(regen / 255);
+    return (int)(regen.read() * 200.0);
 }
