@@ -17,7 +17,7 @@ typedef struct PowerAuxExampleStruct : CANStruct {
     SERIALIZATION_METHODS((a, 32), (b, 16), (c, 8), (d, 8))
 
     uint32_t get_message_ID() { return PowerAuxExampleStruct_MESSAGE_ID; }
-    void printStruct() {printf("POWERAUXEXAMPLESTRUCT\n a: %u\n b: %u\n c: %u\n d: %u\n", a, b, c ,d);}
+    void printStruct() {printf("POWERAUXEXAMPLESTRUCT\n a: %lu\n b: %u\n c: %u\n d: %u\n", a, b, c ,d);}
 } PowerAuxExampleStruct;
 
 #endif
