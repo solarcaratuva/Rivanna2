@@ -16,9 +16,7 @@ typedef struct SolarCurrent : CANStruct {
     SERIALIZATION_METHODS((total_current, 16))
 
     uint32_t get_message_ID() { return SolarCurrent_MESSAGE_ID; }
-    /*
-    void printStruct() { printf("ECUCANSTRUCT\n Hazards: %d\n Brake lights: %d\n Headlights: %d\n Left turn signal: %d\n Right turn signal: %d\n", hazards, brake_lights, headlights, left_turn_signal, right_turn_signal);}
-    */
+    
    void printStruct() {printf("SolarCurret\n total_currentL %u\n", total_current);}
 } SolarCurrent;
 
