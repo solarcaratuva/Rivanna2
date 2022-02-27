@@ -31,9 +31,6 @@ int main() {
         PRINT("main thread loop \r\n");
 #endif // TESTING
 
-        PowerAuxExampleStruct a(1, 2, 3, 4);
-        vehicle_can_interface.send(&a);
-
         SolarCurrent current(input_reader.readTotalCurrent());
         vehicle_can_interface.send(&current);
 
