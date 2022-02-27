@@ -5,7 +5,6 @@
 #include <mbed.h>
 #include <rtos.h>
 #include "pindef.h"
-#include "Printing.h"
 #include "PowerAuxCANInterface.h"
 #include "PowerAuxBPSCANInterface.h"
 

@@ -27,7 +27,7 @@ typedef struct ECUMotorCommands : CANStruct {
                           (cruise_control_speed, 8), (motor_on, 1))
 
     uint32_t get_message_ID() { return ECUMotorCommands_MESSAGE_ID; }
-    void printStruct() {printf("ECUMotorCommands\n Throttle: %u\n Regen: %u\n Forward_Enable: %d\n Reverse_Enable: %d\n, Cruise_Control_Enable: %d\n Cruise_Control_Speed %u\n Motor_On %d\n", throttle, regen, forward_en, reverse_en, cruise_control_en, cruise_control_speed, motor_on);}
+    void printStruct() {PRINT("ECUMotorCommands\n Throttle: %u\n Regen: %u\n Forward_Enable: %d\n Reverse_Enable: %d\n, Cruise_Control_Enable: %d\n Cruise_Control_Speed %u\n Motor_On %d\n", throttle, regen, forward_en, reverse_en, cruise_control_en, cruise_control_speed, motor_on);}
 } ECUMotorCommands;
 
 typedef struct ECUPowerAuxCommands : CANStruct {

@@ -3,6 +3,7 @@
 
 #include "CANSerializer.h"
 #include "CANStruct.h"
+#include "Printing.h"
 
 /**
  * Struct for requesting information from the motor controller.
@@ -23,6 +24,11 @@ typedef struct FrameRequest : public CANStruct {
     uint32_t get_message_ID() {
         return MOTOR_CONTROLLER_FrameRequest_MESSAGE_ID;
     }
+
+    void printStruct() {
+        PRINT("TODO");
+    }
+
 } FrameRequest;
 
 /**
@@ -72,6 +78,11 @@ typedef struct Frame0 : public CANStruct {
                           (pwm_duty, 10), (advanced_lead_angle, 7));
 
     uint32_t get_message_ID() { return MOTOR_CONTROLLER_Frame0_MESSAGE_ID; }
+
+    void printStruct() {
+        PRINT("TODO");
+    }
+
 } Frame0;
 
 /**
@@ -127,6 +138,11 @@ typedef struct Frame1 : public CANStruct {
                           (drive_regen, 1));
 
     uint32_t get_message_ID() { return MOTOR_CONTROLLER_Frame1_MESSAGE_ID; }
+
+    void printStruct() {
+        PRINT("TODO");
+    }
+
 } Frame1;
 
 /**
@@ -181,6 +197,11 @@ typedef struct Frame2 : public CANStruct {
         (overheat_level, 2));
 
     uint32_t get_message_ID() { return MOTOR_CONTROLLER_Frame2_MESSAGE_ID; }
+
+    void printStruct() {
+        PRINT("TODO");
+    }
+    
 } Frame2;
 
 #endif

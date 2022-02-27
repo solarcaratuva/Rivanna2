@@ -3,6 +3,7 @@
 
 #include "CANSerializer.h"
 #include "CANStruct.h"
+#include "Printing.h"
 
 typedef struct PowerAuxErrorStruct : CANStruct
 {
@@ -28,7 +29,9 @@ typedef struct PowerAuxErrorStruct : CANStruct
     
     );
 
-    void printStruct( /** TODO **/ );
+    void printStruct() {
+        PRINT("TODO");
+    }
 
     uint32_t get_message_ID()
     {

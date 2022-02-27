@@ -3,6 +3,7 @@
 
 #include "CANSerializer.h"
 #include "CANStruct.h"
+#include "Printing.h"
 
 /**
  * General BPS information and errors.
@@ -79,6 +80,11 @@ typedef struct PackInformation : public CANStruct {
                charger_safety_relay_fault || internal_memory_fault ||
                internal_thermistor_fault || internal_logic_fault;
     }
+
+    void printStruct() {
+        PRINT("TODO");
+    }
+
 } PackInformation;
 
 /**
@@ -110,6 +116,11 @@ typedef struct CellVoltage : public CANStruct {
                           (high_cell_voltage, 16), (high_cell_voltage_id, 8));
 
     uint32_t get_message_ID() { return POWER_AUX_BPS_CAN_CellVoltage; }
+
+    void printStruct() {
+        PRINT("TODO");
+    }
+
 } CellVoltage;
 
 /**
@@ -141,6 +152,11 @@ typedef struct CellTemperature : public CANStruct {
                           (high_temperature, 8), (high_thermistor_id, 8));
 
     uint32_t get_message_ID() { return POWER_AUX_BPS_CAN_CellTemperature; }
+
+    void printStruct() {
+        PRINT("TODO");
+    }
+    
 } CellTemperature;
 
 #endif
