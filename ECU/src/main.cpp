@@ -5,6 +5,7 @@
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>
+#include "STMUniqueID.h"
 
 #define TESTING                // only defined if using test functions
 // #define DEBUGGING   // only define if debugging
@@ -81,6 +82,7 @@ int main() {
     poweraux_thread.start(poweraux_message_handler);
 
     while (true) {
+        check_ecu_board();
 #ifdef TESTING
         PRINT("main thread loop \r\n");
 #endif // TESTING

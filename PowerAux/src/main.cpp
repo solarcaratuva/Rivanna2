@@ -4,6 +4,7 @@
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>
+#include "STMUniqueID.h"
 
 #define TESTING          // only defined if using test functions
 // #define DEBUGGING   // only define if debugging
@@ -69,8 +70,6 @@ void signalBPSStrobe() {
 }
 
 int main() {
-    // device.set_baud(38400);
-
 #ifdef TESTING
     PRINT("start main() \r\n");
 #endif // TESTING
@@ -79,6 +78,7 @@ int main() {
     signalBPSThread.start(signalBPSStrobe);
 
     while (1) {
+        check_power_aux_board();
 #ifdef TESTING
         PRINT("main thread loop \r\n");
 #endif // TESTING

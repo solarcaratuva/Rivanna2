@@ -5,6 +5,7 @@
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>
+#include "STMUniqueID.h"
 
 #define TESTING          // only defined if using test functions
 // #define DEBUGGING   // only define if debugging
@@ -27,6 +28,7 @@ int main() {
     PRINT("start main() \r\n");
 #endif // TESTING
     while (1) {
+        check_solar_board();
 #ifdef TESTING
         PRINT("main thread loop \r\n");
 #endif // TESTING
