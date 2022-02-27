@@ -55,8 +55,3 @@ int main() {
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }
 }
-
-void SolarCANInterface::handle(PowerAuxExampleStruct *can_struct) {
-    PRINT("Received PowerAuxExampleStruct: a=%u, b=%u, c=%u, d=%d\r\n",
-          can_struct->a, can_struct->b, can_struct->c, can_struct->d);
-}
