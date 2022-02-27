@@ -97,6 +97,7 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
 }
 
 void PowerAuxBPSCANInterface::handle(PackInformation *can_struct) {
+    vehicle_can_interface.send(can_struct);
     bpsFaultIndicator = can_struct->has_error();
 
     PRINT("Received PackInformation struct: pack_voltage=%u\n",
@@ -104,11 +105,13 @@ void PowerAuxBPSCANInterface::handle(PackInformation *can_struct) {
 }
 
 void PowerAuxBPSCANInterface::handle(CellVoltage *can_struct) {
+    vehicle_can_interface.send(can_struct);
     PRINT("Received CellVoltage struct: low_cell_voltage=%u\n",
           can_struct->low_cell_voltage);
 }
 
 void PowerAuxBPSCANInterface::handle(CellTemperature *can_struct) {
+    vehicle_can_interface.send(can_struct);
     PRINT("Received CellTemperature struct: low_temperature=%u\n",
           can_struct->low_temperature);
 }
