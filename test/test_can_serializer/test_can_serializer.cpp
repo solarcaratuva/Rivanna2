@@ -1,20 +1,19 @@
-#include <unity.h>
-#include <mbed.h>
 #include "CANSerializer.h"
+#include <mbed.h>
+#include <unity.h>
 
-#define SERIALIZE_AND_DESERIALIZE \
-    CANMessage message; \
-    a.serialize(&message); \
-    struct test b; \
-    b.deserialize(&message); \
+#define SERIALIZE_AND_DESERIALIZE                                              \
+    CANMessage message;                                                        \
+    a.serialize(&message);                                                     \
+    struct test b;                                                             \
+    b.deserialize(&message);
 
-void single_int_test()
-{
+void single_int_test() {
     struct test {
         std::int32_t a;
         SERIALIZATION_METHODS((a, 32))
     };
-    struct test a = { 1 };
+    struct test a = {1};
 
     SERIALIZE_AND_DESERIALIZE
 
@@ -22,8 +21,7 @@ void single_int_test()
     TEST_ASSERT_TRUE(a.a == b.a);
 }
 
-void multiple_types_test()
-{
+void multiple_types_test() {
     struct test {
         bool a;
         std::int32_t b;
@@ -31,16 +29,9 @@ void multiple_types_test()
         bool d;
         std::uint8_t e;
         bool f;
-        SERIALIZATION_METHODS(
-            (a, 1),
-            (b, 32),
-            (c, 1),
-            (d, 1),
-            (e, 8),
-            (f, 1)
-        )
+        SERIALIZATION_METHODS((a, 1), (b, 32), (c, 1), (d, 1), (e, 8), (f, 1))
     };
-    struct test a = { true, -37, false, true, 5, true };
+    struct test a = {true, -37, false, true, 5, true};
 
     SERIALIZE_AND_DESERIALIZE
 
@@ -57,14 +48,13 @@ void multiple_types_test()
 // 8-bit unsigned integer. This should work, but only for
 // values that fit in 7 bits. In this case, the serialized
 // struct should only require 1 byte.
-void seven_bit_unsigned_int_test()
-{
+void seven_bit_unsigned_int_test() {
     struct test {
         bool a;
         std::uint8_t b;
         SERIALIZATION_METHODS((a, 1), (b, 7))
     };
-    struct test a = { false, 14 };
+    struct test a = {false, 14};
 
     SERIALIZE_AND_DESERIALIZE
 
@@ -73,15 +63,13 @@ void seven_bit_unsigned_int_test()
     TEST_ASSERT_TRUE(a.b == b.b);
 }
 
-
-void unserialized_fields_test()
-{
+void unserialized_fields_test() {
     struct test {
         std::uint8_t a;
         std::uint32_t b;
         SERIALIZATION_METHODS((a, 8))
     };
-    struct test a = { 8, 14 };
+    struct test a = {8, 14};
 
     SERIALIZE_AND_DESERIALIZE
 
@@ -89,13 +77,12 @@ void unserialized_fields_test()
     TEST_ASSERT_TRUE(a.a == b.a);
 }
 
-void unsigned_long_long_test()
-{
+void unsigned_long_long_test() {
     struct test {
         std::uint64_t a;
         SERIALIZATION_METHODS((a, 64))
     };
-    struct test a = { 18446744073709551615ull };
+    struct test a = {18446744073709551615ull};
 
     SERIALIZE_AND_DESERIALIZE
 
@@ -103,15 +90,14 @@ void unsigned_long_long_test()
     TEST_ASSERT_TRUE(a.a == b.a);
 }
 
-void max_values_test()
-{
+void max_values_test() {
     struct test {
         std::uint32_t a;
         std::int16_t b;
         std::uint8_t c;
         SERIALIZATION_METHODS((a, 32), (b, 16), (c, 8))
     };
-    struct test a = { 4294967295, -32768, 255 };
+    struct test a = {4294967295, -32768, 255};
 
     SERIALIZE_AND_DESERIALIZE
 
@@ -121,8 +107,7 @@ void max_values_test()
     TEST_ASSERT_TRUE(a.c == b.c);
 }
 
-void sixty_four_booleans_test()
-{
+void sixty_four_booleans_test() {
     struct test {
         bool a0;
         bool a1;
@@ -188,83 +173,27 @@ void sixty_four_booleans_test()
         bool a61;
         bool a62;
         bool a63;
-        SERIALIZATION_METHODS(
-            (a0, 1),
-            (a1, 1),
-            (a2, 1),
-            (a3, 1),
-            (a4, 1),
-            (a5, 1),
-            (a6, 1),
-            (a7, 1),
-            (a8, 1),
-            (a9, 1),
-            (a10, 1),
-            (a11, 1),
-            (a12, 1),
-            (a13, 1),
-            (a14, 1),
-            (a15, 1),
-            (a16, 1),
-            (a17, 1),
-            (a18, 1),
-            (a19, 1),
-            (a20, 1),
-            (a21, 1),
-            (a22, 1),
-            (a23, 1),
-            (a24, 1),
-            (a25, 1),
-            (a26, 1),
-            (a27, 1),
-            (a28, 1),
-            (a29, 1),
-            (a30, 1),
-            (a31, 1),
-            (a32, 1),
-            (a33, 1),
-            (a34, 1),
-            (a35, 1),
-            (a36, 1),
-            (a37, 1),
-            (a38, 1),
-            (a39, 1),
-            (a40, 1),
-            (a41, 1),
-            (a42, 1),
-            (a43, 1),
-            (a44, 1),
-            (a45, 1),
-            (a46, 1),
-            (a47, 1),
-            (a48, 1),
-            (a49, 1),
-            (a50, 1),
-            (a51, 1),
-            (a52, 1),
-            (a53, 1),
-            (a54, 1),
-            (a55, 1),
-            (a56, 1),
-            (a57, 1),
-            (a58, 1),
-            (a59, 1),
-            (a60, 1),
-            (a61, 1),
-            (a62, 1),
-            (a63, 1)
-        )
+        SERIALIZATION_METHODS((a0, 1), (a1, 1), (a2, 1), (a3, 1), (a4, 1),
+                              (a5, 1), (a6, 1), (a7, 1), (a8, 1), (a9, 1),
+                              (a10, 1), (a11, 1), (a12, 1), (a13, 1), (a14, 1),
+                              (a15, 1), (a16, 1), (a17, 1), (a18, 1), (a19, 1),
+                              (a20, 1), (a21, 1), (a22, 1), (a23, 1), (a24, 1),
+                              (a25, 1), (a26, 1), (a27, 1), (a28, 1), (a29, 1),
+                              (a30, 1), (a31, 1), (a32, 1), (a33, 1), (a34, 1),
+                              (a35, 1), (a36, 1), (a37, 1), (a38, 1), (a39, 1),
+                              (a40, 1), (a41, 1), (a42, 1), (a43, 1), (a44, 1),
+                              (a45, 1), (a46, 1), (a47, 1), (a48, 1), (a49, 1),
+                              (a50, 1), (a51, 1), (a52, 1), (a53, 1), (a54, 1),
+                              (a55, 1), (a56, 1), (a57, 1), (a58, 1), (a59, 1),
+                              (a60, 1), (a61, 1), (a62, 1), (a63, 1))
     };
-    struct test a = { 
-        true, true, true, true, true, true, true, true,
-        true, true, true, true, true, true, true, true, 
-        true, true, true, true, true, true, true, true, 
-        true, true, true, true, true, true, true, true, 
-        true, true, true, true, true, true, true, true, 
-        true, true, true, true, true, true, true, true, 
-        true, true, true, true, true, true, true, true, 
-        true, true, true, true, true, true, true, true
-    };
+    struct test a = {true, true, true, true, true, true, true, true, true, true,
+                     true, true, true, true, true, true, true, true, true, true,
+                     true, true, true, true, true, true, true, true, true, true,
+                     true, true, true, true, true, true, true, true, true, true,
+                     true, true, true, true, true, true, true, true, true, true,
+                     true, true, true, true, true, true, true, true, true, true,
+                     true, true, true, true};
 
     SERIALIZE_AND_DESERIALIZE
 
@@ -335,8 +264,7 @@ void sixty_four_booleans_test()
     TEST_ASSERT_TRUE(a.a63 == b.a63);
 }
 
-int main()
-{
+int main() {
     UNITY_BEGIN();
     RUN_TEST(single_int_test);
     RUN_TEST(multiple_types_test);
@@ -348,6 +276,7 @@ int main()
     UNITY_END();
 
 #ifndef NATIVE
-    while(1){}
+    while (1) {
+    }
 #endif
 }

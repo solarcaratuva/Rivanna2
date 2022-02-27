@@ -3,11 +3,10 @@
 
 #include "MainCANInterface.h"
 
-class ECUCANInterface : public MainCANInterface
-{
-public:
-    ECUCANInterface(PinName rd, PinName td, PinName standby_pin) : MainCANInterface(rd, td, standby_pin) {}
-
+class ECUCANInterface : public MainCANInterface {
+  public:
+    ECUCANInterface(PinName rd, PinName td, PinName standby_pin)
+        : MainCANInterface(rd, td, standby_pin) {}
 };
 
 #endif

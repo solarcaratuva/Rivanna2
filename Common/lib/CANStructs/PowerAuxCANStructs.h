@@ -1,11 +1,10 @@
 #ifndef POWER_AUX_CAN_STRUCTS_H
 #define POWER_AUX_CAN_STRUCTS_H
 
-#include "CANStruct.h"
 #include "CANSerializer.h"
+#include "CANStruct.h"
 
-typedef struct PowerAuxExampleStruct : CANStruct
-{
+typedef struct PowerAuxExampleStruct : CANStruct {
     uint32_t a;
     uint16_t b;
     uint8_t c;
@@ -17,10 +16,7 @@ typedef struct PowerAuxExampleStruct : CANStruct
 
     SERIALIZATION_METHODS((a, 32), (b, 16), (c, 8), (d, 8))
 
-    uint32_t get_message_ID()
-    {
-        return PowerAuxExampleStruct_MESSAGE_ID;
-    }
+    uint32_t get_message_ID() { return PowerAuxExampleStruct_MESSAGE_ID; }
 } PowerAuxExampleStruct;
 
 #endif
