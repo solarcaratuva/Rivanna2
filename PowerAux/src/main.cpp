@@ -1,19 +1,21 @@
+#include "PowerAuxBPSCANInterface.h"
+#include "PowerAuxCANInterface.h"
+#include "Printing.h"
+#include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>
-#include "pindef.h"
-#include "Printing.h"
-#include "PowerAuxCANInterface.h"
-#include "PowerAuxBPSCANInterface.h"
 
-#define TESTING     // only defined if using test functions
+#define TESTING          // only defined if using test functions
 // #define DEBUGGING   // only define if debugging
 
 #define MAIN_LOOP_PERIOD 1s
-#define CAN_PERIOD 1s
-#define FLASH_PERIOD 10ms
+#define CAN_PERIOD       1s
+#define FLASH_PERIOD     10ms
 
-PowerAuxCANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX, MAIN_CAN_STBY);
-PowerAuxBPSCANInterface bps_can_interface(BMS_CAN1_RX, BMS_CAN1_TX, BMS_CAN1_STBY);
+PowerAuxCANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX,
+                                           MAIN_CAN_STBY);
+PowerAuxBPSCANInterface bps_can_interface(BMS_CAN1_RX, BMS_CAN1_TX,
+                                          BMS_CAN1_STBY);
 
 bool flashHazards, flashLSignal, flashRSignal;
 Thread signalFlashThread;
@@ -22,7 +24,6 @@ DigitalOut brake_lights(BRAKE_LIGHT_EN);
 DigitalOut headlights(DRL_EN);
 DigitalOut leftTurnSignal(LEFT_TURN_EN);
 DigitalOut rightTurnSignal(RIGHT_TURN_EN);
-
 
 void signalFlashHandler() {
     while (true) {
@@ -59,8 +60,7 @@ void signalBPSStrobe() {
     while (true) {
         if (bpsFaultIndicator) {
             bpsLight = !bpsLight;
-        }
-        else {
+        } else {
             bpsLight = false;
         }
 
@@ -73,22 +73,21 @@ int main() {
 
 #ifdef TESTING
     PRINT("start main() \r\n");
-#endif //TESTING
+#endif // TESTING
 
     signalFlashThread.start(signalFlashHandler);
     signalBPSThread.start(signalBPSStrobe);
 
-    while(1) {
-        #ifdef TESTING
-            PRINT("main thread loop \r\n");
-        #endif //TESTING
+    while (1) {
+#ifdef TESTING
+        PRINT("main thread loop \r\n");
+#endif // TESTING
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }
 }
 
-void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct)
-{
+void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
     brake_lights = can_struct->brake_lights;
     headlights = can_struct->headlights;
 
@@ -97,19 +96,19 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct)
     flashHazards = can_struct->hazards;
 }
 
-void PowerAuxBPSCANInterface::handle(PackInformation *can_struct)
-{
+void PowerAuxBPSCANInterface::handle(PackInformation *can_struct) {
     bpsFaultIndicator = can_struct->has_error();
 
-    PRINT("Received PackInformation struct: pack_voltage=%u\n", can_struct->pack_voltage);
+    PRINT("Received PackInformation struct: pack_voltage=%u\n",
+          can_struct->pack_voltage);
 }
 
-void PowerAuxBPSCANInterface::handle(CellVoltage *can_struct)
-{
-    PRINT("Received CellVoltage struct: low_cell_voltage=%u\n", can_struct->low_cell_voltage);
+void PowerAuxBPSCANInterface::handle(CellVoltage *can_struct) {
+    PRINT("Received CellVoltage struct: low_cell_voltage=%u\n",
+          can_struct->low_cell_voltage);
 }
 
-void PowerAuxBPSCANInterface::handle(CellTemperature *can_struct)
-{
-    PRINT("Received CellTemperature struct: low_temperature=%u\n", can_struct->low_temperature);
+void PowerAuxBPSCANInterface::handle(CellTemperature *can_struct) {
+    PRINT("Received CellTemperature struct: low_temperature=%u\n",
+          can_struct->low_temperature);
 }

@@ -1,8 +1,8 @@
 #include "ECUInputReader.h"
-#include "pindef.h"
-#include <mbed.h>
-#include <cmath>
 #include "Printing.h"
+#include "pindef.h"
+#include <cmath>
+#include <mbed.h>
 
 DigitalIn hazards(HAZARDS);
 DigitalIn left_turn_signal(LEFT_TURN_SIG);
@@ -25,31 +25,20 @@ bool cruise_down_release_flag;
 
 ECUInputReader::ECUInputReader() {}
 
-bool ECUInputReader::readHazards() {
-    return hazards;
-}
+bool ECUInputReader::readHazards() { return hazards; }
 
-bool ECUInputReader::readLeftTurnSignal() {
-    return left_turn_signal;
-}
+bool ECUInputReader::readLeftTurnSignal() { return left_turn_signal; }
 
-bool ECUInputReader::readRightTurnSignal() {
-    return right_turn_signal;
-}
+bool ECUInputReader::readRightTurnSignal() { return right_turn_signal; }
 
 bool ECUInputReader::readCruiseSpeedDown() {
     bool read_input = cruise_speed_down.read();
-    if (read_input && cruise_down_release_flag)
-    {
+    if (read_input && cruise_down_release_flag) {
         return 0;
-    }
-    else if (read_input)
-    {
+    } else if (read_input) {
         cruise_down_release_flag = 1;
         return 1;
-    }
-    else
-    {
+    } else {
         cruise_down_release_flag = 0;
         return 0;
     }
@@ -57,58 +46,35 @@ bool ECUInputReader::readCruiseSpeedDown() {
 
 bool ECUInputReader::readCruiseSpeedUp() {
     bool read_input = cruise_speed_up.read();
-    if (read_input && cruise_up_release_flag)
-    {
+    if (read_input && cruise_up_release_flag) {
         return 0;
-    }
-    else if (read_input)
-    {
+    } else if (read_input) {
         cruise_up_release_flag = 1;
         return 1;
-    }
-    else
-    {
+    } else {
         cruise_up_release_flag = 0;
         return 0;
     }
 }
 
-bool ECUInputReader::readCruiseThrottleEn() {
-    return cruise_throttle_en;
-}
+bool ECUInputReader::readCruiseThrottleEn() { return cruise_throttle_en; }
 
-bool ECUInputReader::readRunningLights() {
-    return running_lights;
-}
+bool ECUInputReader::readRunningLights() { return running_lights; }
 
-bool ECUInputReader::readBrakePedal() {
-    return brake_pedal;
-}
+bool ECUInputReader::readBrakePedal() { return brake_pedal; }
 
-bool ECUInputReader::readMotorOn() {
-    return motor_on;
-}
+bool ECUInputReader::readMotorOn() { return motor_on; }
 
-bool ECUInputReader::readForwardEn() {
-    return forward_en;
-}
+bool ECUInputReader::readForwardEn() { return forward_en; }
 
-bool ECUInputReader::readReverseEn() {
-    return reverse_en;
-}
+bool ECUInputReader::readReverseEn() { return reverse_en; }
 
-bool ECUInputReader::readBatteryContact() {
-    return battery_contact;
-}
+bool ECUInputReader::readBatteryContact() { return battery_contact; }
 
-bool ECUInputReader::readIgnition() {
-    return ignition;
-}
+bool ECUInputReader::readIgnition() { return ignition; }
 
 uint8_t ECUInputReader::readThrottle() {
     return (int)(throttle.read() * 200.0);
 }
 
-uint8_t ECUInputReader::readRegen() {
-    return (int)(regen.read() * 200.0);
-}
+uint8_t ECUInputReader::readRegen() { return (int)(regen.read() * 200.0); }

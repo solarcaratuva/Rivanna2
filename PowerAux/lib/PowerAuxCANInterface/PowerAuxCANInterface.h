@@ -3,10 +3,10 @@
 
 #include "MainCANInterface.h"
 
-class PowerAuxCANInterface : public MainCANInterface
-{
-public:
-    PowerAuxCANInterface(PinName rd, PinName td, PinName standby_pin) : MainCANInterface(rd, td, standby_pin) {}
+class PowerAuxCANInterface : public MainCANInterface {
+  public:
+    PowerAuxCANInterface(PinName rd, PinName td, PinName standby_pin)
+        : MainCANInterface(rd, td, standby_pin) {}
 
     void handle(ECUPowerAuxCommands *can_struct) override;
 };

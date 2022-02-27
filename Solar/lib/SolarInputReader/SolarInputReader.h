@@ -2,13 +2,12 @@
 #define SOLAR_INPUT_READER_H
 #include "mcp3008.h"
 
-
 #include <mbed.h>
 
 class SolarInputReader {
-public:
+  public:
     SolarInputReader(MCP3008 adc1_interface, MCP3008 adc2_interface);
- 
+
     /*
     Return value: 1mA/LSB
     */
@@ -38,9 +37,9 @@ public:
     uint16_t readPanel3Photo();
     uint16_t readPanel4Photo();
 
-private:
+  private:
     MCP3008 adc1_interface;
-    MCP3008 adc2_interface; 
+    MCP3008 adc2_interface;
 };
 
 #endif

@@ -4,15 +4,15 @@
 /***************************/
 /* pin definitions for CAN */
 /***************************/
-#define CAN_RX      PA_11   // Rx for MCU
-#define CAN_TX      PA_12
-#define CAN_STBY    PB_10   // Digital Output
+#define CAN_RX             PA_11 // Rx for MCU
+#define CAN_TX             PA_12
+#define CAN_STBY           PB_10 // Digital Output
 
 /*************************************/
 /* pin definitions for Analog Inputs */
 /*************************************/
-#define THROTTLE      PB_13
-#define REGEN         PB_14
+#define THROTTLE           PB_13
+#define REGEN              PB_14
 
 /***************************************/
 /* pin definitions for Digital Inputs */
@@ -32,16 +32,15 @@
 #define BATTERY_CONTACT    PB_11
 #define IGNITION           PB_12
 
-
 /**********************************/
 /* pin definitions for Unused I/O */
 /**********************************/
-#define UNUSED_PIN_1    PA_9
-#define UNUSED_PIN_2    PA_10
-#define UNUSED_PIN_3    PA_8
-#define UNUSED_PIN_4    PB_15
-#define UNUSED_PIN_5    PB_9
-#define UNUSED_PIN_6    PB_5
-#define UNUSED_PIN_7    PB_4
+#define UNUSED_PIN_1       PA_9
+#define UNUSED_PIN_2       PA_10
+#define UNUSED_PIN_3       PA_8
+#define UNUSED_PIN_4       PB_15
+#define UNUSED_PIN_5       PB_9
+#define UNUSED_PIN_6       PB_5
+#define UNUSED_PIN_7       PB_4
 
 #endif // PINDEF_H
