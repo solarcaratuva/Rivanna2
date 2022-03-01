@@ -22,13 +22,15 @@ void read_unique_id(STMUniqueID *id) {
 }
 
 void print_unique_id(STMUniqueID *id) {
-    PRINT("STM unique id:\r\n\tpart0: %X\r\n\tpart1: %X\r\n\tpart2: %X\r\n", id->part0, id->part1, id->part2);
+    PRINT("STM unique id:\r\n\tpart0: %X\r\n\tpart1: %X\r\n\tpart2: %X\r\n",
+          id->part0, id->part1, id->part2);
 }
 
 void check_ecu_board() {
     STMUniqueID id;
     read_unique_id(&id);
-    if (id.part0 != 0x1B002F || id.part1 != 0x32535007 || id.part2 != 0x20333657) {
+    if (id.part0 != 0x1B002F || id.part1 != 0x32535007 ||
+        id.part2 != 0x20333657) {
         PRINT("WARNING: ECU code uploaded to incorrect board\r\n");
     }
 }
@@ -36,7 +38,8 @@ void check_ecu_board() {
 void check_motor_board() {
     STMUniqueID id;
     read_unique_id(&id);
-    if (id.part0 != 0x2D002F || id.part1 != 0x32535007 || id.part2 != 0x20333657) {
+    if (id.part0 != 0x2D002F || id.part1 != 0x32535007 ||
+        id.part2 != 0x20333657) {
         PRINT("WARNING: Motor code uploaded to incorrect board\r\n");
     }
 }
@@ -44,16 +47,17 @@ void check_motor_board() {
 void check_power_aux_board() {
     STMUniqueID id;
     read_unique_id(&id);
-    if (id.part0 != 0x3C0031 || id.part1 != 0x32535007 || id.part2 != 0x20333657) {
+    if (id.part0 != 0x3C0031 || id.part1 != 0x32535007 ||
+        id.part2 != 0x20333657) {
         PRINT("WARNING: PowerAux code uploaded to incorrect board\r\n");
     }
 }
 
-
 void check_solar_board() {
     STMUniqueID id;
     read_unique_id(&id);
-    if (id.part0 != 0x500031 || id.part1 != 0x32535007 || id.part2 != 0x20333657) {
+    if (id.part0 != 0x500031 || id.part1 != 0x32535007 ||
+        id.part2 != 0x20333657) {
         PRINT("WARNING: Solar code uploaded to incorrect board\r\n");
     }
 }

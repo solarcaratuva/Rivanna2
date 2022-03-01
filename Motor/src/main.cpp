@@ -3,10 +3,10 @@
 #include "MotorInterface.h"
 #include "MotorStateTracker.h"
 #include "Printing.h"
+#include "STMUniqueID.h"
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>
-#include "STMUniqueID.h"
 
 #define TESTING          // only defined if using test functions
 // #define DEBUGGING   // only define if debugging

@@ -1,11 +1,11 @@
 #include "Printing.h"
+#include "STMUniqueID.h"
 #include "SolarCANInterface.h"
 #include "SolarInputReader.h"
 #include "mcp3008.h"
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>
-#include "STMUniqueID.h"
 
 #define TESTING          // only defined if using test functions
 // #define DEBUGGING   // only define if debugging
