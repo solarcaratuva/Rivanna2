@@ -1,22 +1,22 @@
 name: "clang-format"
-
 on:
   - pull_request
-
 jobs:
   clang-format:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
     steps:
-      - uses: actions/checkout@v2
+      - name: "Checkout codebase"
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - uses: solarcaratuva/clang-format-action-1@2b570d380402fb8fef553bea2ed3e42780249dd7
+          ref: ${{ github.head_ref }}
+      - name: "Run clang-format"
+        uses: solarcaratuva/clang-format-action-1@2b570d380402fb8fef553bea2ed3e42780249dd7
         with:
           commit: "remotes/origin/master"
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Apply clang-format changes
+      - name: "Commit and push changes"
+        run: |
+          sudo git config user.name "GitHub Action"
+          sudo git config user.email "actions@github.com"
+          sudo git add .
+          sudo git commit -m "Apply clang-format changes" && sudo git push || echo "No changes to commit"
