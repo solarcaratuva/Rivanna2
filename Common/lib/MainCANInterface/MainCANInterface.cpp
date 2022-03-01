@@ -19,9 +19,7 @@ void MainCANInterface::rx_handler() {
                 ECUPowerAuxCommands can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            }
-            else if (message.id == PowerAuxErrorStruct_MESSAGE_ID)
-            {
+            } else if (message.id == PowerAuxErrorStruct_MESSAGE_ID) {
                 PowerAuxErrorStruct can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
