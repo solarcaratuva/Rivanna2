@@ -27,6 +27,10 @@ typedef struct PowerAuxErrorStruct : CANStruct {
 
     );
 
+    bool has_error() {
+      return fan_error || brake_light_error || headlight_error || bms_strobe_error || left_turn_error || right_turn_error;
+    }
+
     uint32_t get_message_ID() { return PowerAuxErrorStruct_MESSAGE_ID; }
 } PowerAuxErrorStruct;
 

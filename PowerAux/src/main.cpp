@@ -75,22 +75,24 @@ DigitalIn headlight_error(DRL_CURRENT);
 DigitalIn bms_strobe_error(BMS_STROBE_CURRENT);
 DigitalIn left_turn_error(LEFT_TURN_CURRENT);
 DigitalIn right_turn_error(RIGHT_TURN_CURRENT);
-Thread peripheralErrorThread;
+Thread peripheral_error_thread;
 
-void peripheralErrorHandler() {
+void peripheral_error_handler() {
+    PowerAuxErrorStruct msg;
     while (true) {
-        PowerAuxErrorStruct msg;
-        msg.bms_strobe_error = (!bms_strobe_error.read() && bpsFaultIndicator);
-        msg.brake_light_error =
-            (!brake_light_error.read() && brake_lights.read());
-        msg.fan_error = (!fan_error.read());
-        msg.headlight_error = (!headlight_error.read() && headlights.read());
-        msg.left_turn_error =
-            (!left_turn_error.read() && leftTurnSignal.read());
-        msg.right_turn_error =
-            (!right_turn_error.read() && rightTurnSignal.read());
-        vehicle_can_interface.send(&msg);
-        ThisThread::sleep_for(ERROR_CHECK_PERIOD);
+        if (msg.has_error()) {
+            msg.bms_strobe_error = (!bms_strobe_error.read() && bpsFaultIndicator);
+            msg.brake_light_error =
+                (!brake_light_error.read() && brake_lights.read());
+            msg.fan_error = (!fan_error.read());
+            msg.headlight_error = (!headlight_error.read() && headlights.read());
+            msg.left_turn_error =
+                (!left_turn_error.read() && leftTurnSignal.read());
+            msg.right_turn_error =
+                (!right_turn_error.read() && rightTurnSignal.read());
+            vehicle_can_interface.send(&msg);
+            ThisThread::sleep_for(ERROR_CHECK_PERIOD);
+        }
     }
 }
 
@@ -103,8 +105,7 @@ int main() {
 
     signalFlashThread.start(signalFlashHandler);
     signalBPSThread.start(signalBPSStrobe);
-    peripheralErrorThread.start(peripheralErrorHandler);
-
+    peripheral_error_thread.start(peripheral_error_handler);
     while (1) {
 #ifdef TESTING
         PRINT("main thread loop \r\n");
