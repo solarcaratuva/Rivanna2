@@ -6,7 +6,7 @@
 #include <rtos.h>
 
 #define TESTING          // only defined if using test functions
-// #define DEBUGGING   // only define if debugging
+// #define DEBUG   // only define if DEBUG
 
 #define MAIN_LOOP_PERIOD 1s
 #define CAN_PERIOD       1s
@@ -88,6 +88,9 @@ int main() {
 }
 
 void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
+#ifdef DEBUG
+    can_struct->printStruct();
+#endif
     brake_lights = can_struct->brake_lights;
     headlights = can_struct->headlights;
 
@@ -97,6 +100,9 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
 }
 
 void PowerAuxBPSCANInterface::handle(PackInformation *can_struct) {
+#ifdef DEBUG
+    can_struct->printStruct();
+#endif
     bpsFaultIndicator = can_struct->has_error();
 
     PRINT("Received PackInformation struct: pack_voltage=%u\n",
@@ -104,11 +110,17 @@ void PowerAuxBPSCANInterface::handle(PackInformation *can_struct) {
 }
 
 void PowerAuxBPSCANInterface::handle(CellVoltage *can_struct) {
+#ifdef DEBUG
+    can_struct->printStruct();
+#endif
     PRINT("Received CellVoltage struct: low_cell_voltage=%u\n",
           can_struct->low_cell_voltage);
 }
 
 void PowerAuxBPSCANInterface::handle(CellTemperature *can_struct) {
+#ifdef DEBUG
+    can_struct->printStruct();
+#endif
     PRINT("Received CellTemperature struct: low_temperature=%u\n",
           can_struct->low_temperature);
 }

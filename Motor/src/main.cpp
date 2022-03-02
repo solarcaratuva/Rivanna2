@@ -8,7 +8,7 @@
 #include <rtos.h>
 
 #define TESTING          // only defined if using test functions
-// #define DEBUGGING   // only define if debugging
+// #define DEBUG   // only define if debugging
 
 #define MAIN_LOOP_PERIOD 1s
 #define CAN_PERIOD       1s
@@ -69,13 +69,22 @@ void MotorCANInterface::handle(ECUMotorCommands *can_struct) {
 }
 
 void MotorControllerCANInterface::handle(Frame0 *can_struct) {
+#ifdef DEBUG
+    can_struct->printStruct();
+#endif
     motor_state_tracker.setFrame0(*can_struct);
 }
 
 void MotorControllerCANInterface::handle(Frame1 *can_struct) {
+#ifdef DEBUG
+    can_struct->printStruct();
+#endif
     motor_state_tracker.setFrame1(*can_struct);
 }
 
 void MotorControllerCANInterface::handle(Frame2 *can_struct) {
+#ifdef DEBUG
+    can_struct->printStruct();
+#endif
     motor_state_tracker.setFrame2(*can_struct);
 }

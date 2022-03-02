@@ -81,7 +81,7 @@ void SetSysClock(void)
         }
     }
 
-    /* Output clock on MCO1 pin(PA8) for debugging purpose */
+    /* Output clock on MCO1 pin(PA8) for DEBUG purpose */
     //HAL_RCC_MCOConfig(RCC_MCO1, RCC_MCO1SOURCE_SYSCLK, RCC_MCODIV_1);
     //HAL_RCC_MCOConfig(RCC_MCO1, RCC_MCO1SOURCE_HSI48, RCC_MCODIV_1);
 }

@@ -7,7 +7,7 @@
 #include <rtos.h>
 
 #define TESTING          // only defined if using test functions
-// #define DEBUGGING   // only define if debugging
+// #define DEBUG   // only define if DEBUG
 
 #define MAIN_LOOP_PERIOD 1s
 #define CAN_PERIOD       1s
