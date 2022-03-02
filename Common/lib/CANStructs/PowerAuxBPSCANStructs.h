@@ -65,7 +65,7 @@ typedef struct PackInformation : public CANStruct {
         (internal_memory_fault, 1), (internal_thermistor_fault, 1),
         (internal_logic_fault, 1), (discharge_relay, 1), (charge_relay, 1));
 
-    uint32_t get_message_ID() { return POWER_AUX_BPS_CAN_PackInformation; }
+    uint32_t get_message_ID() { return PackInformation_Message_ID; }
 
     bool has_error() {
         return internal_communications_fault || internal_conversion_fault ||
@@ -139,7 +139,7 @@ typedef struct CellVoltage : public CANStruct {
     SERIALIZATION_METHODS((low_cell_voltage, 16), (low_cell_voltage_id, 8),
                           (high_cell_voltage, 16), (high_cell_voltage_id, 8));
 
-    uint32_t get_message_ID() { return POWER_AUX_BPS_CAN_CellVoltage; }
+    uint32_t get_message_ID() { return CellVoltage_Message_ID; }
 
     void print() {
         PRINT("CellVoltage\n low_cell_voltage: %u\n low_cell_voltage_id: %u\n "
@@ -178,7 +178,7 @@ typedef struct CellTemperature : public CANStruct {
     SERIALIZATION_METHODS((low_temperature, 8), (low_thermistor_id, 8),
                           (high_temperature, 8), (high_thermistor_id, 8));
 
-    uint32_t get_message_ID() { return POWER_AUX_BPS_CAN_CellTemperature; }
+    uint32_t get_message_ID() { return CellTemperature_Message_ID; }
 
     void print() {
         PRINT("CellTemperature: \n low_temperature: %u\n low_thermistor_id: "

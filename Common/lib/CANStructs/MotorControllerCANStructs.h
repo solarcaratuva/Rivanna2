@@ -78,7 +78,7 @@ typedef struct Frame0 : public CANStruct {
                           (fet_temperature, 5), (motor_rotating_speed, 12),
                           (pwm_duty, 10), (advanced_lead_angle, 7));
 
-    uint32_t get_message_ID() { return MOTOR_CONTROLLER_Frame0_MESSAGE_ID; }
+    uint32_t get_message_ID() { return Frame0_MESSAGE_ID; }
 
     void print() {
         PRINT("Frame0\n battery_voltage: %u\n battery_current: %u\n "
@@ -144,7 +144,7 @@ typedef struct Frame1 : public CANStruct {
                           (target_value, 10), (motor_status, 2),
                           (drive_regen, 1));
 
-    uint32_t get_message_ID() { return MOTOR_CONTROLLER_Frame1_MESSAGE_ID; }
+    uint32_t get_message_ID() { return Frame1_MESSAGE_ID; }
 
     void print() {
         PRINT("Frame1\n power_eco: %d\n control_mode: %d\n "
@@ -208,7 +208,7 @@ typedef struct Frame2 : public CANStruct {
         (hall_sensor_short, 1), (hall_sensor_open, 1), (padding6, 4),
         (overheat_level, 2));
 
-    uint32_t get_message_ID() { return MOTOR_CONTROLLER_Frame2_MESSAGE_ID; }
+    uint32_t get_message_ID() { return Frame2_MESSAGE_ID; }
 
     void print() {
         PRINT("TODO");
