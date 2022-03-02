@@ -1,4 +1,5 @@
 #include "Printing.h"
+#include "STMUniqueID.h"
 #include "SolarCANInterface.h"
 #include "SolarInputReader.h"
 #include "mcp3008.h"
@@ -7,7 +8,7 @@
 #include <rtos.h>
 
 #define TESTING          // only defined if using test functions
-// #define DEBUGGING   // only define if debugging
+// #define DEBUG   // only define if DEBUG
 
 #define MAIN_LOOP_PERIOD 1s
 #define CAN_PERIOD       1s
@@ -27,6 +28,7 @@ int main() {
     PRINT("start main() \r\n");
 #endif // TESTING
     while (1) {
+        check_solar_board();
 #ifdef TESTING
         PRINT("main thread loop \r\n");
 #endif // TESTING
