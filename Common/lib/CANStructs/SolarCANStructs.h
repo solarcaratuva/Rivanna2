@@ -18,9 +18,7 @@ typedef struct SolarCurrent : CANStruct {
 
     uint32_t get_message_ID() { return SolarCurrent_MESSAGE_ID; }
 
-    void print() {
-        PRINT("SolarCurret\n total_currentL %u\n", total_current);
-    }
+    void print() { PRINT("SolarCurret\n total_currentL %u\n", total_current); }
 
 } SolarCurrent;
 
