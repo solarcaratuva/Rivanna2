@@ -1,6 +1,7 @@
 #include "PowerAuxBPSCANInterface.h"
 #include "PowerAuxCANInterface.h"
 #include "Printing.h"
+#include "STMUniqueID.h"
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>
@@ -69,8 +70,6 @@ void signalBPSStrobe() {
 }
 
 int main() {
-    // device.set_baud(38400);
-
 #ifdef TESTING
     PRINT("start main() \r\n");
 #endif // TESTING
@@ -79,6 +78,7 @@ int main() {
     signalBPSThread.start(signalBPSStrobe);
 
     while (1) {
+        check_power_aux_board();
 #ifdef TESTING
         PRINT("main thread loop \r\n");
 #endif // TESTING

@@ -2,6 +2,7 @@
 #include "ECUCANStructs.h"
 #include "ECUInputReader.h"
 #include "Printing.h"
+#include "STMUniqueID.h"
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>
@@ -81,6 +82,7 @@ int main() {
     poweraux_thread.start(poweraux_message_handler);
 
     while (true) {
+        check_ecu_board();
 #ifdef TESTING
         PRINT("main thread loop \r\n");
 #endif // TESTING
