@@ -9,8 +9,9 @@
 #define TESTING          // only defined if using test functions
 // #define DEBUG   // only define if DEBUG
 
-#define MAIN_LOOP_PERIOD 1s
-#define CAN_PERIOD       1s
+#define MAIN_LOOP_PERIOD   1s
+#define CAN_PERIOD         1s
+#define ERROR_CHECK_PERIOD 1s
 #define FLASH_PERIOD     10ms
 
 PowerAuxCANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX,
@@ -69,6 +70,31 @@ void signalBPSStrobe() {
     }
 }
 
+DigitalIn fan_error(FanTach);
+DigitalIn brake_light_error(BRAKE_LIGHT_CURRENT);
+DigitalIn headlight_error(DRL_CURRENT);
+DigitalIn bms_strobe_error(BMS_STROBE_CURRENT);
+DigitalIn left_turn_error(LEFT_TURN_CURRENT);
+DigitalIn right_turn_error(RIGHT_TURN_CURRENT);
+Thread peripheralErrorThread;
+
+void peripheralErrorHandler() {
+    while (true) {
+        PowerAuxErrorStruct msg;
+        msg.bms_strobe_error = (!bms_strobe_error.read() && bpsFaultIndicator);
+        msg.brake_light_error =
+            (!brake_light_error.read() && brake_lights.read());
+        msg.fan_error = (!fan_error.read());
+        msg.headlight_error = (!headlight_error.read() && headlights.read());
+        msg.left_turn_error =
+            (!left_turn_error.read() && leftTurnSignal.read());
+        msg.right_turn_error =
+            (!right_turn_error.read() && rightTurnSignal.read());
+        vehicle_can_interface.send(&msg);
+        ThisThread::sleep_for(ERROR_CHECK_PERIOD);
+    }
+}
+
 int main() {
 #ifdef TESTING
     PRINT("start main() \r\n");
@@ -76,6 +102,7 @@ int main() {
 
     signalFlashThread.start(signalFlashHandler);
     signalBPSThread.start(signalBPSStrobe);
+    peripheralErrorThread.start(peripheralErrorHandler);
 
     while (1) {
         check_power_aux_board();
