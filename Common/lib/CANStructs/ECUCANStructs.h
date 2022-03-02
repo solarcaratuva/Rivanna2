@@ -29,7 +29,7 @@ typedef struct ECUMotorCommands : CANStruct {
 
     uint32_t get_message_ID() { return ECUMotorCommands_MESSAGE_ID; }
 
-    void printStruct() {
+    void print() {
         PRINT("ECUMotorCommands\n Throttle: %u\n Regen: %u\n Forward_Enable: "
               "%d\n Reverse_Enable: %d\n, Cruise_Control_Enable: %d\n "
               "Cruise_Control_Speed %u\n Motor_On %d\n",
@@ -58,7 +58,7 @@ typedef struct ECUPowerAuxCommands : CANStruct {
 
     uint32_t get_message_ID() { return ECUPowerAuxCommands_MESSAGE_ID; }
 
-    void printStruct() {
+    void print() {
         PRINT("ECUPOWERAUXCOMMANDS\n Hazards: %d\n Brake_Lights: %d\n "
               "Headlights: %d\n Left_Turn_Signal: %d\n Right_Turn_Signal: %d\n",
               hazards, brake_lights, headlights, left_turn_signal,

@@ -81,7 +81,7 @@ typedef struct PackInformation : public CANStruct {
                internal_thermistor_fault || internal_logic_fault;
     }
 
-    void printStruct() {
+    void print() {
         PRINT("PackInformation\n pack_voltage: %u\n pack_current:  %u\n "
               "pack_sock: %u\n internal_communications_fault: %d\n "
               "internal_conversion_fault: %d\n weak_cell_fault: %d\n "
@@ -141,7 +141,7 @@ typedef struct CellVoltage : public CANStruct {
 
     uint32_t get_message_ID() { return POWER_AUX_BPS_CAN_CellVoltage; }
 
-    void printStruct() {
+    void print() {
         PRINT("CellVoltage\n low_cell_voltage: %u\n low_cell_voltage_id: %u\n "
               "high_cell_voltage: %u\n high_cell_voltage_id: %u\n",
               low_cell_voltage, low_cell_voltage_id, high_cell_voltage,
@@ -180,7 +180,7 @@ typedef struct CellTemperature : public CANStruct {
 
     uint32_t get_message_ID() { return POWER_AUX_BPS_CAN_CellTemperature; }
 
-    void printStruct() {
+    void print() {
         PRINT("CellTemperature: \n low_temperature: %u\n low_thermistor_id: "
               "%u\n high_temperature: %u\n high_thermistor_id: %u\n",
               low_temperature, low_thermistor_id, high_temperature,
