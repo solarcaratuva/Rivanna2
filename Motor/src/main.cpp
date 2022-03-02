@@ -93,3 +93,5 @@ void MotorControllerCANInterface::handle(Frame2 *can_struct) {
     vehicle_can_interface.send(can_struct);
     motor_state_tracker.setFrame2(*can_struct);
 }
+
+//

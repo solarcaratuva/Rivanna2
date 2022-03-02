@@ -3,6 +3,8 @@
 
 #include "CANInterface.h"
 #include "CANStructs.h"
+#include "MotorControllerCANStructs.h"
+#include "PowerAuxBPSCANStructs.h"
 
 /**
  * CANInterface for use with the main CAN bus.
@@ -32,6 +34,12 @@ class MainCANInterface : public CANInterface {
     virtual void handle(SolarVoltage *can_struct) {}
     virtual void handle(SolarTemp *can_struct) {}
     virtual void handle(SolarPhoto *can_struct) {}
+    virtual void handle(Frame0 *can_struct) {}
+    virtual void handle(Frame1 *can_struct) {}
+    virtual void handle(Frame2 *can_struct) {}
+    virtual void handle(PackInformation *can_struct) {}
+    virtual void handle(CellVoltage *can_struct) {}
+    virtual void handle(CellTemperature *can_struct) {}
 
   private:
     void rx_handler() override;

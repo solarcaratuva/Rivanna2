@@ -2,6 +2,8 @@
 #define CAN_STRUCTS_H
 
 #include "ECUCANStructs.h"
+#include "MotorControllerCANStructs.h"
+#include "PowerAuxBPSCANStructs.h"
 #include "PowerAuxCANStructs.h"
 #include "SolarCANStructs.h"
 

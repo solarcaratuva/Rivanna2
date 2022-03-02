@@ -127,6 +127,7 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
 }
 
 void PowerAuxBPSCANInterface::handle(PackInformation *can_struct) {
+    vehicle_can_interface.send(can_struct);
 #ifdef DEBUG
     can_struct->print();
 #endif
@@ -137,6 +138,7 @@ void PowerAuxBPSCANInterface::handle(PackInformation *can_struct) {
 }
 
 void PowerAuxBPSCANInterface::handle(CellVoltage *can_struct) {
+    vehicle_can_interface.send(can_struct);
 #ifdef DEBUG
     can_struct->print();
 #endif
@@ -145,6 +147,7 @@ void PowerAuxBPSCANInterface::handle(CellVoltage *can_struct) {
 }
 
 void PowerAuxBPSCANInterface::handle(CellTemperature *can_struct) {
+    vehicle_can_interface.send(can_struct);
 #ifdef DEBUG
     can_struct->print();
 #endif

@@ -23,6 +23,16 @@
 #define SolarTemp_MESSAGE_ID                     CAN_MESSAGE_ID(4, 6)
 #define SolarPhoto_MESSAGE_ID                    CAN_MESSAGE_ID(4, 7)
 
+// IDs to use the Motor IDs for sending to main bus
+#define Frame0_MESSAGE_ID                        CAN_MESSAGE_ID(5, 1)
+#define Frame1_MESSAGE_ID                        CAN_MESSAGE_ID(5, 2)
+#define Frame2_MESSAGE_ID                        CAN_MESSAGE_ID(5, 3)
+
+//// IDs to use the PowerAux IDs for sending to main bus
+#define PackInformation_Message_ID               CAN_MESSAGE_ID(6, 1)
+#define CellVoltage_Message_ID                   CAN_MESSAGE_ID(6, 2)
+#define CellTemperature_Message_ID               CAN_MESSAGE_ID(6, 3)
+
 // Motor Controller CAN bus message IDs
 // These IDs use the CAN extended format
 
