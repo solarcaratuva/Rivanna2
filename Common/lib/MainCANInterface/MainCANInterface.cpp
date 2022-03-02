@@ -39,6 +39,30 @@ void MainCANInterface::rx_handler() {
                 SolarPhoto can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
+            } else if (message.id == Frame0_MESSAGE_ID) {
+                Frame0 can_struct;
+                can_struct.deserialize(&message);
+                handle(&can_struct);
+            } else if (message.id == Frame1_MESSAGE_ID) {
+                Frame1 can_struct;
+                can_struct.deserialize(&message);
+                handle(&can_struct);
+            } else if (message.id == Frame2_MESSAGE_ID) {
+                Frame2 can_struct;
+                can_struct.deserialize(&message);
+                handle(&can_struct);
+            } else if (message.id == PackInformation_Message_ID) {
+                PackInformation can_struct;
+                can_struct.deserialize(&message);
+                handle(&can_struct);
+            } else if (message.id == CellVoltage_Message_ID) {
+                CellVoltage can_struct;
+                can_struct.deserialize(&message);
+                handle(&can_struct);
+            } else if (message.id == CellTemperature_Message_ID) {
+                CellTemperature can_struct;
+                can_struct.deserialize(&message);
+                handle(&can_struct);
             }
         }
     }
