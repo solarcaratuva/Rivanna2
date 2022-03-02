@@ -1,15 +1,17 @@
 #include "PowerAuxBPSCANInterface.h"
 #include "PowerAuxCANInterface.h"
 #include "Printing.h"
+#include "STMUniqueID.h"
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>
 
 #define TESTING          // only defined if using test functions
-// #define DEBUGGING   // only define if debugging
+// #define DEBUG   // only define if DEBUG
 
-#define MAIN_LOOP_PERIOD 1s
-#define CAN_PERIOD       1s
+#define MAIN_LOOP_PERIOD   1s
+#define CAN_PERIOD         1s
+#define ERROR_CHECK_PERIOD 1s
 #define FLASH_PERIOD     10ms
 
 PowerAuxCANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX,
@@ -68,17 +70,42 @@ void signalBPSStrobe() {
     }
 }
 
-int main() {
-    // device.set_baud(38400);
+DigitalIn fan_error(FanTach);
+DigitalIn brake_light_error(BRAKE_LIGHT_CURRENT);
+DigitalIn headlight_error(DRL_CURRENT);
+DigitalIn bms_strobe_error(BMS_STROBE_CURRENT);
+DigitalIn left_turn_error(LEFT_TURN_CURRENT);
+DigitalIn right_turn_error(RIGHT_TURN_CURRENT);
+Thread peripheralErrorThread;
 
+void peripheralErrorHandler() {
+    while (true) {
+        PowerAuxErrorStruct msg;
+        msg.bms_strobe_error = (!bms_strobe_error.read() && bpsFaultIndicator);
+        msg.brake_light_error =
+            (!brake_light_error.read() && brake_lights.read());
+        msg.fan_error = (!fan_error.read());
+        msg.headlight_error = (!headlight_error.read() && headlights.read());
+        msg.left_turn_error =
+            (!left_turn_error.read() && leftTurnSignal.read());
+        msg.right_turn_error =
+            (!right_turn_error.read() && rightTurnSignal.read());
+        vehicle_can_interface.send(&msg);
+        ThisThread::sleep_for(ERROR_CHECK_PERIOD);
+    }
+}
+
+int main() {
 #ifdef TESTING
     PRINT("start main() \r\n");
 #endif // TESTING
 
     signalFlashThread.start(signalFlashHandler);
     signalBPSThread.start(signalBPSStrobe);
+    peripheralErrorThread.start(peripheralErrorHandler);
 
     while (1) {
+        check_power_aux_board();
 #ifdef TESTING
         PRINT("main thread loop \r\n");
 #endif // TESTING
@@ -88,6 +115,9 @@ int main() {
 }
 
 void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
+#ifdef DEBUG
+    can_struct->print();
+#endif
     brake_lights = can_struct->brake_lights;
     headlights = can_struct->headlights;
 
@@ -98,6 +128,9 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
 
 void PowerAuxBPSCANInterface::handle(PackInformation *can_struct) {
     vehicle_can_interface.send(can_struct);
+#ifdef DEBUG
+    can_struct->print();
+#endif
     bpsFaultIndicator = can_struct->has_error();
 
     PRINT("Received PackInformation struct: pack_voltage=%u\n",
@@ -106,12 +139,18 @@ void PowerAuxBPSCANInterface::handle(PackInformation *can_struct) {
 
 void PowerAuxBPSCANInterface::handle(CellVoltage *can_struct) {
     vehicle_can_interface.send(can_struct);
+#ifdef DEBUG
+    can_struct->print();
+#endif
     PRINT("Received CellVoltage struct: low_cell_voltage=%u\n",
           can_struct->low_cell_voltage);
 }
 
 void PowerAuxBPSCANInterface::handle(CellTemperature *can_struct) {
     vehicle_can_interface.send(can_struct);
+#ifdef DEBUG
+    can_struct->print();
+#endif
     PRINT("Received CellTemperature struct: low_temperature=%u\n",
           can_struct->low_temperature);
 }

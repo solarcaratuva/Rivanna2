@@ -1,4 +1,5 @@
 #include "Printing.h"
+#include "STMUniqueID.h"
 #include "SolarCANInterface.h"
 #include "SolarInputReader.h"
 #include "mcp3008.h"
@@ -7,7 +8,7 @@
 #include <rtos.h>
 
 #define TESTING          // only defined if using test functions
-// #define DEBUGGING   // only define if debugging
+// #define DEBUG   // only define if DEBUG
 
 #define MAIN_LOOP_PERIOD 1s
 #define CAN_PERIOD       1s
@@ -27,12 +28,10 @@ int main() {
     PRINT("start main() \r\n");
 #endif // TESTING
     while (1) {
+        check_solar_board();
 #ifdef TESTING
         PRINT("main thread loop \r\n");
 #endif // TESTING
-
-        PowerAuxExampleStruct a(1, 2, 3, 4);
-        vehicle_can_interface.send(&a);
 
         SolarCurrent current(input_reader.readTotalCurrent());
         vehicle_can_interface.send(&current);
@@ -54,9 +53,4 @@ int main() {
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }
-}
-
-void SolarCANInterface::handle(PowerAuxExampleStruct *can_struct) {
-    PRINT("Received PowerAuxExampleStruct: a=%u, b=%u, c=%u, d=%d\r\n",
-          can_struct->a, can_struct->b, can_struct->c, can_struct->d);
 }

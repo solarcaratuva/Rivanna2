@@ -16,7 +16,7 @@
 #define ECUMotorCommands_MESSAGE_ID              CAN_MESSAGE_ID(1, 1)
 #define ECUPowerAuxCommands_MESSAGE_ID           CAN_MESSAGE_ID(1, 2)
 
-#define PowerAuxExampleStruct_MESSAGE_ID         CAN_MESSAGE_ID(3, 3)
+#define PowerAuxErrorStruct_MESSAGE_ID           CAN_MESSAGE_ID(3, 3)
 
 #define SolarCurrent_MESSAGE_ID                  CAN_MESSAGE_ID(4, 4)
 #define SolarVoltage_MESSAGE_ID                  CAN_MESSAGE_ID(4, 5)

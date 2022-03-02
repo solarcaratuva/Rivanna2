@@ -8,7 +8,6 @@ class SolarCANInterface : public MainCANInterface {
     SolarCANInterface(PinName rd, PinName td, PinName standby_pin)
         : MainCANInterface(rd, td, standby_pin) {}
 
-    void handle(PowerAuxExampleStruct *can_struct) override;
 };
 
 #endif
