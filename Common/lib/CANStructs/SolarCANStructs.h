@@ -17,7 +17,7 @@ typedef struct SolarCurrent : CANStruct {
     SERIALIZATION_METHODS((total_current, 16))
 
     uint32_t get_message_ID() { return SolarCurrent_MESSAGE_ID; }
-    
+
     void printStruct() {
         PRINT("SolarCurret\n total_currentL %u\n", total_current);
     }
@@ -52,8 +52,10 @@ typedef struct SolarVoltage : CANStruct {
                           (panel3_voltage, 16), (panel4_voltage, 16))
 
     uint32_t get_message_ID() { return SolarVoltage_MESSAGE_ID; }
-    void printStruct() { 
-        PRINT("SolarVoltage\n panel1_voltage: %u\n panel2_voltage: %u\n panel3_voltage: %u\n panel4_voltage: %u\n", panel1_voltage, panel2_voltage, panel3_voltage, panel4_voltage);
+    void printStruct() {
+        PRINT("SolarVoltage\n panel1_voltage: %u\n panel2_voltage: %u\n "
+              "panel3_voltage: %u\n panel4_voltage: %u\n",
+              panel1_voltage, panel2_voltage, panel3_voltage, panel4_voltage);
     }
 
 } SolarVoltage;
@@ -87,8 +89,10 @@ typedef struct SolarTemp : CANStruct {
 
     uint32_t get_message_ID() { return SolarTemp_MESSAGE_ID; }
 
-    void printStruct() { 
-        PRINT("SolarTemp\n panel1_temp: %u\n panel2_temp: %u\n panel3_temp: %u\n panel4_temp: %u\n", panel1_temp, panel2_temp, panel3_temp, panel4_temp);
+    void printStruct() {
+        PRINT("SolarTemp\n panel1_temp: %u\n panel2_temp: %u\n panel3_temp: "
+              "%u\n panel4_temp: %u\n",
+              panel1_temp, panel2_temp, panel3_temp, panel4_temp);
     }
 } SolarTemp;
 
@@ -108,9 +112,11 @@ typedef struct SolarPhoto : CANStruct {
                           (panel3_photo, 16), (panel4_photo, 16))
 
     uint32_t get_message_ID() { return SolarPhoto_MESSAGE_ID; }
-    void printStruct() { 
-        PRINT("SolarPhoto\n panel1_photo: %u\n panel2_photo: %u\n panel3_photo: %u\n panel4_photo: %u\n", panel1_photo, panel2_photo, panel3_photo, panel4_photo);
-    }    
+    void printStruct() {
+        PRINT("SolarPhoto\n panel1_photo: %u\n panel2_photo: %u\n "
+              "panel3_photo: %u\n panel4_photo: %u\n",
+              panel1_photo, panel2_photo, panel3_photo, panel4_photo);
+    }
 } SolarPhoto;
 
 #endif

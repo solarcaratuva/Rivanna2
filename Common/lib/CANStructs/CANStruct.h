@@ -14,6 +14,4 @@ struct CANStruct {
     virtual void printStruct();
 };
 
-
-
 #endif

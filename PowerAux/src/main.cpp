@@ -4,9 +4,6 @@
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>
-#include "pindef.h"
-#include "PowerAuxCANInterface.h"
-#include "PowerAuxBPSCANInterface.h"
 
 #define TESTING          // only defined if using test functions
 // #define DEBUGGING   // only define if debugging
@@ -80,17 +77,18 @@ DigitalIn left_turn_error(LEFT_TURN_CURRENT);
 DigitalIn right_turn_error(RIGHT_TURN_CURRENT);
 Thread peripheralErrorThread;
 
-void peripheralErrorHandler()
-{
-    while (true)
-    {
+void peripheralErrorHandler() {
+    while (true) {
         PowerAuxErrorStruct msg;
         msg.bms_strobe_error = (!bms_strobe_error.read() && bpsFaultIndicator);
-        msg.brake_light_error = (!brake_light_error.read() && brake_lights.read());
+        msg.brake_light_error =
+            (!brake_light_error.read() && brake_lights.read());
         msg.fan_error = (!fan_error.read());
         msg.headlight_error = (!headlight_error.read() && headlights.read());
-        msg.left_turn_error = (!left_turn_error.read() && leftTurnSignal.read());
-        msg.right_turn_error = (!right_turn_error.read() && rightTurnSignal.read());
+        msg.left_turn_error =
+            (!left_turn_error.read() && leftTurnSignal.read());
+        msg.right_turn_error =
+            (!right_turn_error.read() && rightTurnSignal.read());
         vehicle_can_interface.send(&msg);
         ThisThread::sleep_for(ERROR_CHECK_PERIOD);
     }
