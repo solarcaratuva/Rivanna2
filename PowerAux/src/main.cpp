@@ -82,11 +82,13 @@ void peripheral_error_handler() {
     PowerAuxErrorStruct msg;
     while (true) {
         if (msg.has_error()) {
-            msg.bms_strobe_error = (!bms_strobe_error.read() && bpsFaultIndicator);
+            msg.bms_strobe_error =
+                (!bms_strobe_error.read() && bpsFaultIndicator);
             msg.brake_light_error =
                 (!brake_light_error.read() && brake_lights.read());
             msg.fan_error = (!fan_error.read());
-            msg.headlight_error = (!headlight_error.read() && headlights.read());
+            msg.headlight_error =
+                (!headlight_error.read() && headlights.read());
             msg.left_turn_error =
                 (!left_turn_error.read() && leftTurnSignal.read());
             msg.right_turn_error =
