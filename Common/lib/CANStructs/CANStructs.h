@@ -4,5 +4,7 @@
 #include "ECUCANStructs.h"
 #include "PowerAuxCANStructs.h"
 #include "SolarCANStructs.h"
+#include "MotorControllerCANStructs.h"
+#include "PowerAuxBPSCANStructs.h"
 
 #endif
