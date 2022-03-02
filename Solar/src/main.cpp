@@ -1,4 +1,5 @@
 #include "Printing.h"
+#include "STMUniqueID.h"
 #include "SolarCANInterface.h"
 #include "SolarInputReader.h"
 #include "mcp3008.h"
@@ -27,6 +28,7 @@ int main() {
     PRINT("start main() \r\n");
 #endif // TESTING
     while (1) {
+        check_solar_board();
 #ifdef TESTING
         PRINT("main thread loop \r\n");
 #endif // TESTING
