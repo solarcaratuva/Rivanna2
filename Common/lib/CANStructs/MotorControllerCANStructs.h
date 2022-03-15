@@ -10,7 +10,9 @@
  * Any combination of frames can be requested in one FrameRequest.
  * Defined on page 5 of the Motor CAN bus documentation.
  */
-typedef struct MotorControllerFrameRequest : CANStruct, BitprotoMotorControllerFrameRequest {
+typedef struct MotorControllerFrameRequest
+    : CANStruct,
+      BitprotoMotorControllerFrameRequest {
     void serialize(CANMessage *message) {
         EncodeBitprotoMotorControllerFrameRequest(this, message->data);
     }
@@ -19,7 +21,9 @@ typedef struct MotorControllerFrameRequest : CANStruct, BitprotoMotorControllerF
         DecodeBitprotoMotorControllerFrameRequest(this, message->data);
     }
 
-    uint32_t get_message_ID() { return MOTOR_CONTROLLER_FrameRequest_MESSAGE_ID; }
+    uint32_t get_message_ID() {
+        return MOTOR_CONTROLLER_FrameRequest_MESSAGE_ID;
+    }
 
     void print() {
         PRINT("FrameRequest\n frame0: %d\n frame1: %d\n frame2: %d\n", frame0,
@@ -31,7 +35,8 @@ typedef struct MotorControllerFrameRequest : CANStruct, BitprotoMotorControllerF
  * Diagnostic information from the motor controller.
  * Defined on page 5 of the Motor CAN bus documentation.
  */
-typedef struct MotorControllerFrame0 : CANStruct, BitprotoMotorControllerFrame0 {
+typedef struct MotorControllerFrame0 : CANStruct,
+                                       BitprotoMotorControllerFrame0 {
     void serialize(CANMessage *message) {
         EncodeBitprotoMotorControllerFrame0(this, message->data);
     }
@@ -41,7 +46,7 @@ typedef struct MotorControllerFrame0 : CANStruct, BitprotoMotorControllerFrame0 
     }
 
     uint32_t get_message_ID() { return Frame0_MESSAGE_ID; }
-    
+
     void print() {
         PRINT("Frame0\n battery_voltage: %u\n battery_current: %u\n "
               "battery_current_direction: %d\n motor_current: %u\n "
