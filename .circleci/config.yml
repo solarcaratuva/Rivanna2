@@ -31,10 +31,10 @@ jobs:
           name: Build
           command: |
             pipenv run pio run -e ecu -e motor -e power_aux -e solar
-      - run:
-          name: Test
-          command: |
-            pipenv run pio test -e native
+      # - run:
+      #     name: Test
+      #     command: |
+      #       pipenv run pio test -e native
       # Disable linting because this uses ~8 minutes of CircleCI time
       # - run:
       #     name: Lint
