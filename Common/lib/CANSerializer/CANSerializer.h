@@ -50,7 +50,7 @@
         message->len = (field_start_bit + BITS_PER_BYTE - 1) / BITS_PER_BYTE;  \
         memcpy(&(message->data), &serialized, message->len);                   \
     }                                                                          \
-    void deserialize(CANMessage *message) {                              \
+    void deserialize(CANMessage *message) {                                    \
         uint64_t serialized = 0;                                               \
         memcpy(&serialized, &(message->data), message->len);                   \
         uint8_t field_start_bit = 0;                                           \
