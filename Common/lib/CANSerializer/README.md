@@ -2,7 +2,7 @@
 
 ## Usage
 
-`CANSerializer.h` defines the `SERIALIZATION_METHODS(...)` macro, which automatically generates `serialize` and `deserialize` methods for a CAN struct. 
+`CANSerializer.h` defines the `SERIALIZATION_METHODS(...)` macro, which automatically generates `serialize` and `deserialize` methods for a CAN struct.
 
 The macro takes in a variable number of (`field_name`, `field_size_in_bits`) pairs, each describing one field of the CAN struct, as shown below.
 
@@ -17,9 +17,10 @@ struct can_struct {
 ```
 
 The generated `serialize` and `deserialize` methods will have the signatures shown below.
+
 ```
 void serialize(CANMessage *message)
-void deserialize(const CANMessage *message)
+void deserialize(CANMessage *message)
 ```
 
 `serialize` will read the fields of the struct, serialize them into `message->data`, and set the `message->len` field to the number of bytes required by the serialization.
@@ -54,6 +55,6 @@ On the serialization side, a 64-bit unsigned integer (`serialized`) represents t
 
 Then, the Boost Preprocessor library macro `BOOST_PP_SEQ_FOR_EACH` is used to apply the `SERIALIZE_FIELD` macro to each field pair passed to `SERIALIZATION_METHODS(...)`. This will set bits in `serialized` based on the value of each field using bit manipulation.
 
-Finally, the `message->len` variable will be set and the `serialized` variable is copied to `message->data`. 
+Finally, the `message->len` variable will be set and the `serialized` variable is copied to `message->data`.
 
 This process is repeated in reverse to generate the `deserialize` method.

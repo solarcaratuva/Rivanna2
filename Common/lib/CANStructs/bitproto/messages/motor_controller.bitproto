@@ -1,0 +1,60 @@
+proto motor_controller
+
+option c.name_prefix = "Bitproto"
+
+message MotorControllerFrameRequest {
+    bool frame0 = 1;
+    bool frame1 = 2;
+    bool frame2 = 3;
+}
+
+message MotorControllerFrame0 {
+    uint10 battery_voltage = 1;
+    uint9 battery_current = 2;
+    bool battery_current_direction = 3;
+    uint10 motor_current = 4;
+    uint5 fet_temperature = 5;
+    uint12 motor_rotating_speed = 6;
+    uint10 pwm_duty = 7;
+    uint7 advanced_lead_angle = 8;
+}
+
+message MotorControllerFrame1 {
+    bool power_eco = 1;
+    bool control_mode = 2;
+    uint10 acceleration_vr_position = 3;
+    uint10 regeneration_vr_position = 4;
+    uint4 digi_sw_number = 5;
+    uint10 target_value = 6;
+    uint2 motor_status = 7;
+    bool drive_regen = 8;
+}
+
+message MotorControllerFrame2 {
+    bool analog_sensor_error = 1;
+    bool motor_current_sensor_u_error = 2;
+    bool motor_current_sensor_w_error = 3;
+    bool fet_thermistor_error = 4;
+    uint1 padding0 = 5;
+    bool battery_voltage_sensor_error = 6;
+    bool battery_current_sensor_error = 7;
+    bool battery_current_sensor_adjust_error = 8;
+    bool motor_current_sensor_adjust_error = 9;
+    bool accelerator_position_error = 10;
+    uint1 padding1 = 11;
+    bool controller_voltage_sensor_error = 12;
+    uint2 padding2 = 13;
+    bool power_system_error = 14;
+    bool overcurrent_error = 15;
+    uint1 padding3 = 16;
+    bool overvoltage_error = 17;
+    uint1 padding4 = 18;
+    bool overcurrent_limit = 19;
+    uint2 padding5 = 20;
+    bool motor_system_error = 21;
+    bool motor_lock = 22;
+    bool hall_sensor_short = 23;
+    bool hall_sensor_open = 24;
+    uint4 padding6 = 25;
+    uint2 overheat_level = 26;
+}
