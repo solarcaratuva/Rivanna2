@@ -19,7 +19,7 @@ typedef struct PackInformation : CANStruct, BitprotoPackInformation {
         DecodeBitprotoPackInformation(this, message->data);
     }
 
-    uint32_t get_message_ID() { return PackInformation_Message_ID; }
+    uint16_t get_message_ID() { return PackInformation_Message_ID; }
 
     bool has_error() {
         return internal_communications_fault || internal_conversion_fault ||
@@ -78,7 +78,7 @@ typedef struct CellVoltage : CANStruct, BitprotoCellVoltage {
         DecodeBitprotoCellVoltage(this, message->data);
     }
 
-    uint32_t get_message_ID() { return CellVoltage_Message_ID; }
+    uint16_t get_message_ID() { return CellVoltage_Message_ID; }
 
     void print() {
         PRINT("CellVoltage\n low_cell_voltage: %u\n low_cell_voltage_id: %u\n "
@@ -102,7 +102,7 @@ typedef struct CellTemperature : CANStruct, BitprotoCellTemperature {
         DecodeBitprotoCellTemperature(this, message->data);
     }
 
-    uint32_t get_message_ID() { return CellTemperature_Message_ID; }
+    uint16_t get_message_ID() { return CellTemperature_Message_ID; }
 
     void print() {
         PRINT("CellTemperature: \n low_temperature: %u\n low_thermistor_id: "

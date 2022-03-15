@@ -14,7 +14,7 @@ typedef struct SolarCurrent : CANStruct, BitprotoSolarCurrent {
         DecodeBitprotoSolarCurrent(this, message->data);
     }
 
-    uint32_t get_message_ID() { return SolarCurrent_MESSAGE_ID; }
+    uint16_t get_message_ID() { return SolarCurrent_MESSAGE_ID; }
 
     void print() { PRINT("SolarCurret\n total_currentL %u\n", total_current); }
 
@@ -29,7 +29,7 @@ typedef struct SolarVoltage : CANStruct, BitprotoSolarVoltage {
         DecodeBitprotoSolarVoltage(this, message->data);
     }
 
-    uint32_t get_message_ID() { return SolarVoltage_MESSAGE_ID; }
+    uint16_t get_message_ID() { return SolarVoltage_MESSAGE_ID; }
 
     void print() {
         PRINT("SolarVoltage\n panel1_voltage: %u\n panel2_voltage: %u\n "
@@ -48,7 +48,7 @@ typedef struct SolarTemp : CANStruct, BitprotoSolarTemp {
         DecodeBitprotoSolarTemp(this, message->data);
     }
 
-    uint32_t get_message_ID() { return SolarTemp_MESSAGE_ID; }
+    uint16_t get_message_ID() { return SolarTemp_MESSAGE_ID; }
 
     void print() {
         PRINT("SolarTemp\n panel1_temp: %u\n panel2_temp: %u\n panel3_temp: "
@@ -66,7 +66,7 @@ typedef struct SolarPhoto : CANStruct, BitprotoSolarPhoto {
         DecodeBitprotoSolarPhoto(this, message->data);
     }
 
-    uint32_t get_message_ID() { return SolarPhoto_MESSAGE_ID; }
+    uint16_t get_message_ID() { return SolarPhoto_MESSAGE_ID; }
     void print() {
         PRINT("SolarPhoto\n panel1_photo: %u\n panel2_photo: %u\n "
               "panel3_photo: %u\n panel4_photo: %u\n",
