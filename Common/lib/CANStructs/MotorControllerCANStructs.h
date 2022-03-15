@@ -25,7 +25,7 @@ typedef struct MotorControllerFrameRequest : CANStruct, BitprotoMotorControllerF
         PRINT("FrameRequest\n frame0: %d\n frame1: %d\n frame2: %d\n", frame0,
               frame1, frame2);
     }
-} MotorControllerFrameRequest;
+} FrameRequest;
 
 /**
  * Diagnostic information from the motor controller.

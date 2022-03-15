@@ -33,22 +33,29 @@ int main() {
         PRINT("main thread loop \r\n");
 #endif // TESTING
 
-        SolarCurrent current(input_reader.readTotalCurrent());
+        SolarCurrent current;
+        current.total_current = input_reader.readTotalCurrent();
         vehicle_can_interface.send(&current);
 
-        SolarVoltage voltage(
-            input_reader.readPanel1Voltage(), input_reader.readPanel2Voltage(),
-            input_reader.readPanel3Voltage(), input_reader.readPanel4Voltage());
+        SolarVoltage voltage;
+        voltage.panel1_voltage = input_reader.readPanel1Voltage();
+        voltage.panel2_voltage = input_reader.readPanel2Voltage();
+        voltage.panel3_voltage = input_reader.readPanel3Voltage();
+        voltage.panel4_voltage = input_reader.readPanel4Voltage();
         vehicle_can_interface.send(&voltage);
 
-        SolarTemp temp(
-            input_reader.readPanel1Temp(), input_reader.readPanel2Temp(),
-            input_reader.readPanel3Temp(), input_reader.readPanel4Temp());
+        SolarTemp temp;
+        temp.panel1_temp = input_reader.readPanel1Temp();
+        temp.panel2_temp = input_reader.readPanel2Temp();
+        temp.panel3_temp = input_reader.readPanel3Temp();
+        temp.panel4_temp = input_reader.readPanel4Temp();
         vehicle_can_interface.send(&temp);
 
-        SolarPhoto photo(
-            input_reader.readPanel1Photo(), input_reader.readPanel2Photo(),
-            input_reader.readPanel3Photo(), input_reader.readPanel4Photo());
+        SolarPhoto photo;
+        photo.panel1_photo = input_reader.readPanel1Photo();
+        photo.panel2_photo = input_reader.readPanel2Photo();
+        photo.panel3_photo = input_reader.readPanel3Photo();
+        photo.panel4_photo = input_reader.readPanel4Photo();
         vehicle_can_interface.send(&photo);
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
