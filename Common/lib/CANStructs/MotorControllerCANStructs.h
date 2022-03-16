@@ -21,7 +21,7 @@ typedef struct MotorControllerFrameRequest
         DecodeBitprotoMotorControllerFrameRequest(this, message->data);
     }
 
-    uint16_t get_message_ID() {
+    uint32_t get_message_ID() {
         return MOTOR_CONTROLLER_FrameRequest_MESSAGE_ID;
     }
 
@@ -45,7 +45,7 @@ typedef struct MotorControllerFrame0 : CANStruct,
         DecodeBitprotoMotorControllerFrame0(this, message->data);
     }
 
-    uint16_t get_message_ID() { return Frame0_MESSAGE_ID; }
+    uint32_t get_message_ID() { return Frame0_MESSAGE_ID; }
 
     void print() {
         PRINT("Frame0\n battery_voltage: %u\n battery_current: %u\n "
@@ -71,7 +71,7 @@ typedef struct Frame1 : CANStruct, BitprotoMotorControllerFrame1 {
         DecodeBitprotoMotorControllerFrame1(this, message->data);
     }
 
-    uint16_t get_message_ID() { return Frame1_MESSAGE_ID; }
+    uint32_t get_message_ID() { return Frame1_MESSAGE_ID; }
 
     void print() {
         PRINT("Frame1\n power_eco: %d\n control_mode: %d\n "
@@ -98,7 +98,7 @@ typedef struct Frame2 : CANStruct, BitprotoMotorControllerFrame2 {
         DecodeBitprotoMotorControllerFrame2(this, message->data);
     }
 
-    uint16_t get_message_ID() { return Frame2_MESSAGE_ID; }
+    uint32_t get_message_ID() { return Frame2_MESSAGE_ID; }
 
     void print() {
         PRINT(

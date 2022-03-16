@@ -14,7 +14,7 @@ typedef struct ECUMotorCommands : CANStruct, BitprotoECUMotorCommands {
         DecodeBitprotoECUMotorCommands(this, message->data);
     }
 
-    uint16_t get_message_ID() { return ECUMotorCommands_MESSAGE_ID; }
+    uint32_t get_message_ID() { return ECUMotorCommands_MESSAGE_ID; }
 
     void print() {
         PRINT("ECUMotorCommands\n Throttle: %u\n Regen: %u\n Forward_Enable: "
@@ -34,7 +34,7 @@ typedef struct ECUPowerAuxCommands : CANStruct, BitprotoECUPowerAuxCommands {
         DecodeBitprotoECUPowerAuxCommands(this, message->data);
     }
 
-    uint16_t get_message_ID() { return ECUPowerAuxCommands_MESSAGE_ID; }
+    uint32_t get_message_ID() { return ECUPowerAuxCommands_MESSAGE_ID; }
 
     void print() {
         PRINT("ECUPOWERAUXCOMMANDS\n Hazards: %d\n Brake_Lights: %d\n "

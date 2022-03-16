@@ -14,7 +14,7 @@ typedef struct PowerAuxErrorStruct : CANStruct, BitprotoPowerAuxErrorStruct {
         DecodeBitprotoPowerAuxErrorStruct(this, message->data);
     }
 
-    uint16_t get_message_ID() { return PowerAuxErrorStruct_MESSAGE_ID; }
+    uint32_t get_message_ID() { return PowerAuxErrorStruct_MESSAGE_ID; }
 
     void print() {
         PRINT("PowerAuxErrorStruct\n Fan Error: %d\n Brake Light Error: %d\n "
