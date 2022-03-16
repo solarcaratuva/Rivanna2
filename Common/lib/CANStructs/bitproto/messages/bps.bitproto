@@ -1,0 +1,48 @@
+proto bps
+
+option c.name_prefix = "Bitproto"
+
+message PackInformation {
+    uint16 pack_voltage = 1;
+    uint16 pack_current = 2;
+    uint8 pack_soc = 3;
+
+    bool internal_communications_fault = 4;
+    bool internal_conversion_fault = 5;
+    bool weak_cell_fault = 6;
+    bool low_cell_voltage_fault = 7;
+    bool open_wiring_fault = 8;
+    bool current_sensor_fault = 9;
+    bool pack_voltage_sensor_fault = 10;
+    bool weak_pack_fault = 11;
+    bool voltage_redundancy_fault = 12;
+    bool fan_monitor_fault = 13;
+    bool thermistor_fault = 14;
+    bool CANBUS_communications_fault = 15;
+    bool always_on_supply_fault = 16;
+    bool high_voltage_isolation_fault = 17;
+    bool power_supply_12v_fault = 18;
+    bool charge_limit_enforcement_fault = 19;
+    bool discharge_limit_enforcement_fault = 20;
+    bool charger_safety_relay_fault = 21;
+    bool internal_memory_fault = 22;
+    bool internal_thermistor_fault = 23;
+    bool internal_logic_fault = 24;
+
+    bool discharge_relay = 25;
+    bool charge_relay = 26;
+}
+
+message CellVoltage {
+    uint16 low_cell_voltage = 1;
+    uint8 low_cell_voltage_id = 2;
+    uint16 high_cell_voltage = 3;
+    uint8 high_cell_voltage_id = 4;
+}
+
+message CellTemperature {
+    uint8 low_temperature = 1;
+    uint8 low_thermistor_id = 2;
+    uint8 high_temperature = 3;
+    uint8 high_thermistor_id = 4;
+}

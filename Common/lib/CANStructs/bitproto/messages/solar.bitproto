@@ -1,0 +1,28 @@
+proto solar
+
+option c.name_prefix = "Bitproto"
+
+message SolarCurrent {
+    uint16 total_current = 1;
+}
+
+message SolarVoltage {
+    uint16 panel1_voltage = 1;
+    uint16 panel2_voltage = 2;
+    uint16 panel3_voltage = 3;
+    uint16 panel4_voltage = 4;
+}
+
+message SolarTemp {
+    uint16 panel1_temp = 1;
+    uint16 panel2_temp = 2;
+    uint16 panel3_temp = 3;
+    uint16 panel4_temp = 4;
+}
+
+message SolarPhoto {
+    uint16 panel1_photo = 1;
+    uint16 panel2_photo = 2;
+    uint16 panel3_photo = 3;
+    uint16 panel4_photo = 4;
+}
