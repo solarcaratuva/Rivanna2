@@ -1,0 +1,3 @@
+[submodule "Common/lib/CANStructs/bitproto/messages"]
+	path = Common/lib/CANStructs/bitproto/messages
+	url = git@github.com:solarcaratuva/CAN-messages.git
