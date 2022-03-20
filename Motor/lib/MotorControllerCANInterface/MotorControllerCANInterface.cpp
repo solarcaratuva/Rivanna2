@@ -9,7 +9,10 @@ MotorControllerCANInterface::MotorControllerCANInterface(PinName rd, PinName td,
 void MotorControllerCANInterface::request_frames(bool frame0, bool frame1,
                                                  bool frame2) {
     CANMessage message;
-    FrameRequest request(frame0, frame1, frame2);
+    FrameRequest request;
+    request.frame0 = frame0;
+    request.frame1 = frame1;
+    request.frame2 = frame2;
     request.serialize(&message);
     message.id = request.get_message_ID();
     message.format = CANFormat::CANExtended;

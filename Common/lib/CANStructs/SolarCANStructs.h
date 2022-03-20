@@ -1,20 +1,18 @@
 #ifndef SOLAR_CAN_STRUCTS_H
 #define SOLAR_CAN_STRUCTS_H
 
-#include "CANSerializer.h"
 #include "CANStruct.h"
 #include "Printing.h"
+#include "bitproto/structs/solar_bp.h"
 
-typedef struct SolarCurrent : CANStruct {
-    /**
-     * 1mA/LSB
-     */
-    uint16_t total_current;
+typedef struct SolarCurrent : CANStruct, BitprotoSolarCurrent {
+    void serialize(CANMessage *message) {
+        EncodeBitprotoSolarCurrent(this, message->data);
+    }
 
-    SolarCurrent() {}
-    SolarCurrent(uint16_t total_current) : total_current(total_current) {}
-
-    SERIALIZATION_METHODS((total_current, 16))
+    void deserialize(CANMessage *message) {
+        DecodeBitprotoSolarCurrent(this, message->data);
+    }
 
     uint32_t get_message_ID() { return SolarCurrent_MESSAGE_ID; }
 
@@ -22,34 +20,17 @@ typedef struct SolarCurrent : CANStruct {
 
 } SolarCurrent;
 
-typedef struct SolarVoltage : CANStruct {
-    /**
-     * 1mV/LSB
-     */
-    uint16_t panel1_voltage;
-    /**
-     * 1mV/LSB
-     */
-    uint16_t panel2_voltage;
-    /**
-     * 1mV/LSB
-     */
-    uint16_t panel3_voltage;
-    /**
-     * 1mV/LSB
-     */
-    uint16_t panel4_voltage;
+typedef struct SolarVoltage : CANStruct, BitprotoSolarVoltage {
+    void serialize(CANMessage *message) {
+        EncodeBitprotoSolarVoltage(this, message->data);
+    }
 
-    SolarVoltage() {}
-    SolarVoltage(uint16_t panel1_voltage, uint16_t panel2_voltage,
-                 uint16_t panel3_voltage, uint16_t panel4_voltage)
-        : panel1_voltage(panel1_voltage), panel2_voltage(panel2_voltage),
-          panel3_voltage(panel3_voltage), panel4_voltage(panel4_voltage) {}
-
-    SERIALIZATION_METHODS((panel1_voltage, 16), (panel2_voltage, 16),
-                          (panel3_voltage, 16), (panel4_voltage, 16))
+    void deserialize(CANMessage *message) {
+        DecodeBitprotoSolarVoltage(this, message->data);
+    }
 
     uint32_t get_message_ID() { return SolarVoltage_MESSAGE_ID; }
+
     void print() {
         PRINT("SolarVoltage\n panel1_voltage: %u\n panel2_voltage: %u\n "
               "panel3_voltage: %u\n panel4_voltage: %u\n",
@@ -58,32 +39,14 @@ typedef struct SolarVoltage : CANStruct {
 
 } SolarVoltage;
 
-typedef struct SolarTemp : CANStruct {
-    /**
-     * 1°C/LSB
-     */
-    uint16_t panel1_temp;
-    /**
-     * 1°C/LSB
-     */
-    uint16_t panel2_temp;
-    /**
-     * 1°C/LSB
-     */
-    uint16_t panel3_temp;
-    /**
-     * 1°C/LSB
-     */
-    uint16_t panel4_temp;
+typedef struct SolarTemp : CANStruct, BitprotoSolarTemp {
+    void serialize(CANMessage *message) {
+        EncodeBitprotoSolarTemp(this, message->data);
+    }
 
-    SolarTemp() {}
-    SolarTemp(uint16_t panel1_temp, uint16_t panel2_temp, uint16_t panel3_temp,
-              uint16_t panel4_temp)
-        : panel1_temp(panel1_temp), panel2_temp(panel2_temp),
-          panel3_temp(panel3_temp), panel4_temp(panel4_temp) {}
-
-    SERIALIZATION_METHODS((panel1_temp, 16), (panel2_temp, 16),
-                          (panel3_temp, 16), (panel4_temp, 16))
+    void deserialize(CANMessage *message) {
+        DecodeBitprotoSolarTemp(this, message->data);
+    }
 
     uint32_t get_message_ID() { return SolarTemp_MESSAGE_ID; }
 
@@ -94,20 +57,14 @@ typedef struct SolarTemp : CANStruct {
     }
 } SolarTemp;
 
-typedef struct SolarPhoto : CANStruct {
-    uint16_t panel1_photo;
-    uint16_t panel2_photo;
-    uint16_t panel3_photo;
-    uint16_t panel4_photo;
+typedef struct SolarPhoto : CANStruct, BitprotoSolarPhoto {
+    void serialize(CANMessage *message) {
+        EncodeBitprotoSolarPhoto(this, message->data);
+    }
 
-    SolarPhoto() {}
-    SolarPhoto(uint16_t panel1_photo, uint16_t panel2_photo,
-               uint16_t panel3_photo, uint16_t panel4_photo)
-        : panel1_photo(panel1_photo), panel2_photo(panel2_photo),
-          panel3_photo(panel3_photo), panel4_photo(panel4_photo) {}
-
-    SERIALIZATION_METHODS((panel1_photo, 16), (panel2_photo, 16),
-                          (panel3_photo, 16), (panel4_photo, 16))
+    void deserialize(CANMessage *message) {
+        DecodeBitprotoSolarPhoto(this, message->data);
+    }
 
     uint32_t get_message_ID() { return SolarPhoto_MESSAGE_ID; }
     void print() {
