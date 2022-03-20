@@ -92,9 +92,9 @@ void peripheral_error_handler() {
             (left_turn_error.read_u16() < 1000 && leftTurnSignal.read());
         msg.right_turn_error =
             (right_turn_error.read_u16() < 1000 && rightTurnSignal.read());
-        #ifdef DEBUG
-            msg.print();
-        #endif
+#ifdef DEBUG
+        msg.print();
+#endif
         if (msg.has_error()) {
             vehicle_can_interface.send(&msg);
         }

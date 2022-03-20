@@ -9,10 +9,11 @@
 /** Generic buffer structure
  */
 typedef struct buffer_s {
-    void    *buffer; /**< the pointer to a buffer */
-    size_t   length; /**< the buffer length */
-    size_t   pos;    /**< actual buffer position */
-    uint8_t  width;  /**< The buffer unit width (8, 16, 32, 64), used for proper *buffer casting */
+    void *buffer;  /**< the pointer to a buffer */
+    size_t length; /**< the buffer length */
+    size_t pos;    /**< actual buffer position */
+    uint8_t width; /**< The buffer unit width (8, 16, 32, 64), used for proper
+                      *buffer casting */
 } buffer_t;
 
 #endif

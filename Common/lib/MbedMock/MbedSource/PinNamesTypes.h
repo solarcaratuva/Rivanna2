@@ -16,17 +16,17 @@ extern "C" {
 // } PinDirection;
 
 typedef enum {
-    PullNone          = 0,
-    PullUp            = 1,
-    PullDown          = 2,
-    OpenDrainPullUp   = 3,
-    OpenDrainNoPull   = 4,
+    PullNone = 0,
+    PullUp = 1,
+    PullDown = 2,
+    OpenDrainPullUp = 3,
+    OpenDrainNoPull = 4,
     OpenDrainPullDown = 5,
-    PushPullNoPull    = PullNone,
-    PushPullPullUp    = PullUp,
-    PushPullPullDown  = PullDown,
-    OpenDrain         = OpenDrainPullUp,
-    PullDefault       = PullNone
+    PushPullNoPull = PullNone,
+    PushPullPullUp = PullUp,
+    PushPullPullDown = PullDown,
+    OpenDrain = OpenDrainPullUp,
+    PullDefault = PullNone
 } PinMode;
 
 #ifdef __cplusplus

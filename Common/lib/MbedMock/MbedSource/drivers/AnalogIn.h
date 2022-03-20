@@ -54,57 +54,68 @@ namespace mbed {
  */
 class AnalogIn {
 
-public:
-
+  public:
     /** Create an AnalogIn, connected to the specified pin
      *
      * @param pinmap reference to structure which holds static pinmap.
-     * @param vref (optional) Reference voltage of this AnalogIn instance (defaults to target.default-adc-vref).
+     * @param vref (optional) Reference voltage of this AnalogIn instance
+     * (defaults to target.default-adc-vref).
      *
-     * @note An input voltage at or above the given vref value will produce a 1.0 result when `read` is called
+     * @note An input voltage at or above the given vref value will produce
+     * a 1.0 result when `read` is called
      */
     // AnalogIn(const PinMap &pinmap, float vref = 0.0f);
-    // AnalogIn(const PinMap &&, float vref = 0.0f) = delete; // prevent passing of temporary objects
+    // AnalogIn(const PinMap &&, float vref = 0.0f) = delete; // prevent passing
+    // of temporary objects
 
     /** Create an AnalogIn, connected to the specified pin
      *
      * @param pin AnalogIn pin to connect to
-     * @param vref (optional) Reference voltage of this AnalogIn instance (defaults to target.default-adc-vref).
+     * @param vref (optional) Reference voltage of this AnalogIn instance
+     * (defaults to target.default-adc-vref).
      *
-     * @note An input voltage at or above the given vref value will produce a 1.0 result when `read` is called
+     * @note An input voltage at or above the given vref value will produce
+     * a 1.0 result when `read` is called
      */
     AnalogIn(PinName pin, float vref = 0.0f);
 
     /** Read the input voltage, represented as a float in the range [0.0, 1.0]
      *
-     * @returns A floating-point value representing the current input voltage, measured as a percentage
+     * @returns A floating-point value representing the current input voltage,
+     * measured as a percentage
      */
     virtual float read() = 0;
 
-    /** Read the input voltage, represented as an unsigned short in the range [0x0, 0xFFFF]
+    /** Read the input voltage, represented as an unsigned short in the range
+     * [0x0, 0xFFFF]
      *
      * @returns
-     *   16-bit unsigned short representing the current input voltage, normalized to a 16-bit value
+     *   16-bit unsigned short representing the current input voltage,
+     * normalized to a 16-bit value
      */
     virtual unsigned short read_u16() = 0;
 
     /**
      * Read the input voltage in volts. The output depends on the target board's
-     * ADC reference voltage (typically equal to supply voltage). The ADC reference voltage
-     * sets the maximum voltage the ADC can quantify (ie: ADC output == ADC_MAX_VALUE when Vin == Vref)
+     * ADC reference voltage (typically equal to supply voltage). The ADC
+     * reference voltage sets the maximum voltage the ADC can quantify (ie: ADC
+     * output == ADC_MAX_VALUE when Vin == Vref)
      *
-     * The target's default ADC reference voltage is determined by the configuration
-     * option target.default-adc_vref. The reference voltage for a particular input
-     * can be manually specified by either the constructor or `AnalogIn::set_reference_voltage`.
+     * The target's default ADC reference voltage is determined by the
+     * configuration option target.default-adc_vref. The reference voltage for a
+     * particular input can be manually specified by either the constructor or
+     * `AnalogIn::set_reference_voltage`.
      *
-     * @returns A floating-point value representing the current input voltage, measured in volts.
+     * @returns A floating-point value representing the current input voltage,
+     * measured in volts.
      */
     virtual float read_voltage() = 0;
 
     /**
      * Sets this AnalogIn instance's reference voltage.
      *
-     * The AnalogIn's reference voltage is used to scale the output when calling AnalogIn::read_volts
+     * The AnalogIn's reference voltage is used to scale the output when calling
+     * AnalogIn::read_volts
      *
      * @param[in] vref New ADC reference voltage for this AnalogIn instance.
      */
@@ -113,13 +124,15 @@ public:
     /**
      * Gets this AnalogIn instance's reference voltage.
      *
-     * @returns A floating-point value representing this AnalogIn's reference voltage, measured in volts.
+     * @returns A floating-point value representing this AnalogIn's reference
+     * voltage, measured in volts.
      */
     virtual float get_reference_voltage() const = 0;
 
     /** An operator shorthand for read()
      *
-     * The float() operator can be used as a shorthand for read() to simplify common code sequences
+     * The float() operator can be used as a shorthand for read() to simplify
+     * common code sequences
      *
      * Example:
      * @code
@@ -130,8 +143,7 @@ public:
      * if(volume > 0.25) { ... }
      * @endcode
      */
-    operator float()
-    {
+    operator float() {
         // Underlying call is thread safe
         return read();
     }

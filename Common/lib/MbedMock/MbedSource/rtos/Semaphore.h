@@ -3,8 +3,8 @@
 #ifndef SEMAPHORE_H
 #define SEMAPHORE_H
 
-#include <stdint.h>
 #include <chrono>
+#include <stdint.h>
 // #include "../rtos/mbed_rtos_types.h"
 #include "../rtos/internal/mbed_rtos1_types.h"
 // #include "../rtos/internal/mbed_rtos_storage.h"
@@ -21,16 +21,19 @@ namespace rtos {
  * @{
  */
 
-/** The Semaphore class is used to manage and protect access to a set of shared resources.
+/** The Semaphore class is used to manage and protect access to a set of shared
+ * resources.
  *
  * @note
- * Memory considerations: The semaphore control structures will be created on current thread's stack, both for the mbed OS
- * and underlying RTOS objects (static or dynamic RTOS memory pools are not being used).
+ * Memory considerations: The semaphore control structures will be created on
+ * current thread's stack, both for the mbed OS and underlying RTOS objects
+ * (static or dynamic RTOS memory pools are not being used).
  */
 class Semaphore {
-public:
+  public:
     /** Create and Initialize a Semaphore object used for managing resources.
-      @param count      number of available resources; maximum index value is (count-1). (default: 0).
+      @param count      number of available resources; maximum index value is
+      (count-1). (default: 0).
 
       @note You cannot call this function from ISR context.
     */
@@ -62,42 +65,50 @@ public:
       @param   millisec  timeout value.
       @return true if a resource was acquired, false otherwise.
 
-      @note You may call this function from ISR context if the millisec parameter is set to 0.
-      @deprecated Pass a chrono duration, not an integer millisecond count. For example use `5s` rather than `5000`.
+      @note You may call this function from ISR context if the millisec
+      parameter is set to 0.
+      @deprecated Pass a chrono duration, not an integer millisecond count. For
+      example use `5s` rather than `5000`.
     */
-    // MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono duration, not an integer millisecond count. For example use `5s` rather than `5000`.")
+    // MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono duration, not an
+    // integer millisecond count. For example use `5s` rather than `5000`.")
     virtual bool try_acquire_for(uint32_t millisec) = 0;
 
     /** Wait until a Semaphore resource becomes available.
        @param   rel_time  timeout value.
        @return true if a resource was acquired, false otherwise.
 
-       @note You may call this function from ISR context if the rel_time parameter is set to 0.
+       @note You may call this function from ISR context if the rel_time
+       parameter is set to 0.
      */
     virtual bool try_acquire_for(Kernel::Clock::duration_u32 rel_time) = 0;
 
     /** Wait until a Semaphore resource becomes available.
-      @param   millisec  absolute timeout time, referenced to Kernel::get_ms_count()
+      @param   millisec  absolute timeout time, referenced to
+      Kernel::get_ms_count()
       @return true if a resource was acquired, false otherwise.
       @note the underlying RTOS may have a limit to the maximum wait time
-            due to internal 32-bit computations, but this is guaranteed to work if the
-            wait is <= 0x7fffffff milliseconds (~24 days). If the limit is exceeded,
-            the acquire attempt will time out earlier than specified.
+            due to internal 32-bit computations, but this is guaranteed to work
+      if the wait is <= 0x7fffffff milliseconds (~24 days). If the limit is
+      exceeded, the acquire attempt will time out earlier than specified.
 
       @note You cannot call this function from ISR context.
-      @deprecated Pass a chrono time_point, not an integer millisecond count. For example use
-                  `Kernel::Clock::now() + 5s` rather than `Kernel::get_ms_count() + 5000`.
+      @deprecated Pass a chrono time_point, not an integer millisecond count.
+      For example use `Kernel::Clock::now() + 5s` rather than
+      `Kernel::get_ms_count() + 5000`.
     */
-    // MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono time_point, not an integer millisecond count. For example use `Kernel::Clock::now() + 5s` rather than `Kernel::get_ms_count() + 5000`.")
+    // MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono time_point, not an
+    // integer millisecond count. For example use `Kernel::Clock::now() + 5s`
+    // rather than `Kernel::get_ms_count() + 5000`.")
     virtual bool try_acquire_until(uint64_t millisec) = 0;
 
     /** Wait until a Semaphore resource becomes available.
       @param   millisec  absolute timeout time, referenced to Kernel::Clock
       @return true if a resource was acquired, false otherwise.
       @note the underlying RTOS may have a limit to the maximum wait time
-            due to internal 32-bit computations, but this is guaranteed to work if the
-            wait is <= 0x7fffffff milliseconds (~24 days). If the limit is exceeded,
-            the acquire attempt will time out earlier than specified.
+            due to internal 32-bit computations, but this is guaranteed to work
+      if the wait is <= 0x7fffffff milliseconds (~24 days). If the limit is
+      exceeded, the acquire attempt will time out earlier than specified.
 
       @note You cannot call this function from ISR context.
     */
@@ -119,21 +130,21 @@ public:
      */
     ~Semaphore() {}
 
-// private:
-//     virtual void constructor(int32_t count, uint16_t max_count) = 0;
+    // private:
+    //     virtual void constructor(int32_t count, uint16_t max_count) = 0;
 
-// #if MBED_CONF_RTOS_PRESENT
-//     virtual int32_t _wait(uint32_t millisec) = 0;
+    // #if MBED_CONF_RTOS_PRESENT
+    //     virtual int32_t _wait(uint32_t millisec) = 0;
 
-//     osSemaphoreId_t               _id;
-//     mbed_rtos_storage_semaphore_t _obj_mem;
-// #else
-//     static bool semaphore_available(void *);
-//     int32_t _count;
-//     uint16_t _max_count;
-// #endif
+    //     osSemaphoreId_t               _id;
+    //     mbed_rtos_storage_semaphore_t _obj_mem;
+    // #else
+    //     static bool semaphore_available(void *);
+    //     int32_t _count;
+    //     uint16_t _max_count;
+    // #endif
 };
 /** @}*/
 /** @}*/
-}
+} // namespace rtos
 #endif

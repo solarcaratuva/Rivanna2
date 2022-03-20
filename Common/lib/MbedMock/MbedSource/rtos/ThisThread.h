@@ -82,137 +82,181 @@ uint32_t flags_clear(uint32_t flags);
 */
 uint32_t flags_get();
 
-/** Wait for all of the specified Thread Flags to become signaled for the current thread.
+/** Wait for all of the specified Thread Flags to become signaled for the
+  current thread.
   @param   flags     specifies the flags to wait for
-  @param   clear     whether to clear the specified flags after waiting for them. (default: true)
+  @param   clear     whether to clear the specified flags after waiting for
+  them. (default: true)
   @return  actual thread flags before clearing, which will satisfy the wait
   @note You cannot call this function from ISR context.
   @see Thread::flags_set
 */
 uint32_t flags_wait_all(uint32_t flags, bool clear = true);
 
-/** Wait for any of the specified Thread Flags to become signaled for the current thread.
+/** Wait for any of the specified Thread Flags to become signaled for the
+  current thread.
   @param   flags     specifies the flags to wait for
-  @param   clear     whether to clear the specified flags after waiting for them. (default: true)
+  @param   clear     whether to clear the specified flags after waiting for
+  them. (default: true)
   @return  actual thread flags before clearing, which will satisfy the wait
   @note You cannot call this function from ISR context.
   @see Thread::flags_set
 */
 uint32_t flags_wait_any(uint32_t flags, bool clear = true);
 
-/** Wait for all of the specified Thread Flags to become signaled for the current thread.
+/** Wait for all of the specified Thread Flags to become signaled for the
+  current thread.
   @param   flags     specifies the flags to wait for
   @param   millisec  timeout value.
-  @param   clear     whether to clear the specified flags after waiting for them. (default: true)
+  @param   clear     whether to clear the specified flags after waiting for
+  them. (default: true)
   @return  actual thread flags before clearing, which may not satisfy the wait
   @note You cannot call this function from ISR context.
   @see Thread::flags_set
-  @deprecated Pass a chrono duration, not an integer millisecond count. For example use `5s` rather than `5000`.
+  @deprecated Pass a chrono duration, not an integer millisecond count. For
+  example use `5s` rather than `5000`.
 */
-// MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono duration, not an integer millisecond count. For example use `5s` rather than `5000`.")
-uint32_t flags_wait_all_for(uint32_t flags, uint32_t millisec, bool clear = true);
+// MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono duration, not an
+// integer millisecond count. For example use `5s` rather than `5000`.")
+uint32_t flags_wait_all_for(uint32_t flags, uint32_t millisec,
+                            bool clear = true);
 
-/** Wait for all of the specified Thread Flags to become signaled for the current thread.
+/** Wait for all of the specified Thread Flags to become signaled for the
+  current thread.
   @param   flags     specifies the flags to wait for
   @param   rel_time  timeout value.
-  @param   clear     whether to clear the specified flags after waiting for them. (default: true)
+  @param   clear     whether to clear the specified flags after waiting for
+  them. (default: true)
   @return  actual thread flags before clearing, which may not satisfy the wait
   @note You cannot call this function from ISR context.
   @see Thread::flags_set
 */
-uint32_t flags_wait_all_for(uint32_t flags, Kernel::Clock::duration_u32 rel_time, bool clear = true);
+uint32_t flags_wait_all_for(uint32_t flags,
+                            Kernel::Clock::duration_u32 rel_time,
+                            bool clear = true);
 
-/** Wait for all of the specified Thread Flags to become signaled for the current thread.
+/** Wait for all of the specified Thread Flags to become signaled for the
+  current thread.
   @param   flags     specifies the flags to wait for
   @param   millisec  absolute timeout time, referenced to Kernel::get_ms_count()
-  @param   clear     whether to clear the specified flags after waiting for them. (default: true)
+  @param   clear     whether to clear the specified flags after waiting for
+  them. (default: true)
   @return  actual thread flags before clearing, which may not satisfy the wait
   @note You cannot call this function from ISR context.
   @note the underlying RTOS may have a limit to the maximum wait time
-        due to internal 32-bit computations, but this is guaranteed to work if the
-        wait is <= 0x7fffffff milliseconds (~24 days). If the limit is exceeded,
+        due to internal 32-bit computations, but this is guaranteed to work if
+  the wait is <= 0x7fffffff milliseconds (~24 days). If the limit is exceeded,
         the wait will time out earlier than specified.
   @see Thread::flags_set
-  @deprecated Pass a chrono time_point, not an integer millisecond count. For example use `Kernel::Clock::now() + 5s`
-              rather than `Kernel::get_ms_count() + 5000`.
+  @deprecated Pass a chrono time_point, not an integer millisecond count. For
+  example use `Kernel::Clock::now() + 5s` rather than `Kernel::get_ms_count() +
+  5000`.
 */
-// MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono time_point, not an integer millisecond count. For example use `Kernel::Clock::now() + 5s` rather than `Kernel::get_ms_count() + 5000`.")
-uint32_t flags_wait_all_until(uint32_t flags, uint64_t millisec, bool clear = true);
+// MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono time_point, not an
+// integer millisecond count. For example use `Kernel::Clock::now() + 5s` rather
+// than `Kernel::get_ms_count() + 5000`.")
+uint32_t flags_wait_all_until(uint32_t flags, uint64_t millisec,
+                              bool clear = true);
 
-/** Wait for all of the specified Thread Flags to become signaled for the current thread.
+/** Wait for all of the specified Thread Flags to become signaled for the
+  current thread.
   @param   flags     specifies the flags to wait for
   @param   abs_time  absolute timeout time, referenced to Kernel::Clock
-  @param   clear     whether to clear the specified flags after waiting for them. (default: true)
+  @param   clear     whether to clear the specified flags after waiting for
+  them. (default: true)
   @return  actual thread flags before clearing, which may not satisfy the wait
   @note You cannot call this function from ISR context.
   @note the underlying RTOS may have a limit to the maximum wait time
-        due to internal 32-bit computations, but this is guaranteed to work if the
-        wait is <= 0x7fffffff milliseconds (~24 days). If the limit is exceeded,
+        due to internal 32-bit computations, but this is guaranteed to work if
+  the wait is <= 0x7fffffff milliseconds (~24 days). If the limit is exceeded,
         the wait will time out earlier than specified.
   @see Thread::flags_set
 */
-uint32_t flags_wait_all_until(uint32_t flags, Kernel::Clock::time_point abs_time, bool clear = true);
+uint32_t flags_wait_all_until(uint32_t flags,
+                              Kernel::Clock::time_point abs_time,
+                              bool clear = true);
 
-/** Wait for any of the specified Thread Flags to become signaled for the current thread.
+/** Wait for any of the specified Thread Flags to become signaled for the
+  current thread.
   @param   flags     specifies the flags to wait for
   @param   millisec  timeout value.
-  @param   clear     whether to clear the specified flags after waiting for them. (default: true)
+  @param   clear     whether to clear the specified flags after waiting for
+  them. (default: true)
   @return  actual thread flags before clearing, which may not satisfy the wait
   @note You cannot call this function from ISR context.
   @see Thread::flags_set
-  @deprecated Pass a chrono duration, not an integer millisecond count. For example use `5s` rather than `5000`.
+  @deprecated Pass a chrono duration, not an integer millisecond count. For
+  example use `5s` rather than `5000`.
 */
-// MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono duration, not an integer millisecond count. For example use `5s` rather than `5000`.")
-uint32_t flags_wait_any_for(uint32_t flags, uint32_t millisec, bool clear = true);
+// MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono duration, not an
+// integer millisecond count. For example use `5s` rather than `5000`.")
+uint32_t flags_wait_any_for(uint32_t flags, uint32_t millisec,
+                            bool clear = true);
 
-/** Wait for any of the specified Thread Flags to become signaled for the current thread.
+/** Wait for any of the specified Thread Flags to become signaled for the
+  current thread.
   @param   flags     specifies the flags to wait for
   @param   rel_time  timeout value.
-  @param   clear     whether to clear the specified flags after waiting for them. (default: true)
+  @param   clear     whether to clear the specified flags after waiting for
+  them. (default: true)
   @return  actual thread flags before clearing, which may not satisfy the wait
   @note You cannot call this function from ISR context.
   @see Thread::flags_set
 */
-uint32_t flags_wait_any_for(uint32_t flags, Kernel::Clock::duration_u32 rel_time, bool clear = true);
+uint32_t flags_wait_any_for(uint32_t flags,
+                            Kernel::Clock::duration_u32 rel_time,
+                            bool clear = true);
 
-/** Wait for any of the specified Thread Flags to become signaled for the current thread.
+/** Wait for any of the specified Thread Flags to become signaled for the
+  current thread.
   @param   flags     specifies the flags to wait for
   @param   millisec  absolute timeout time, referenced to Kernel::get_ms_count()
-  @param   clear     whether to clear the specified flags after waiting for them. (default: true)
+  @param   clear     whether to clear the specified flags after waiting for
+  them. (default: true)
   @return  actual thread flags before clearing, which may not satisfy the wait
   @note You cannot call this function from ISR context.
   @note the underlying RTOS may have a limit to the maximum wait time
-        due to internal 32-bit computations, but this is guaranteed to work if the
-          wait is <= 0x7fffffff milliseconds (~24 days). If the limit is exceeded,
+        due to internal 32-bit computations, but this is guaranteed to work if
+  the wait is <= 0x7fffffff milliseconds (~24 days). If the limit is exceeded,
           the wait will time out earlier than specified.
   @see Thread::flags_set
-  @deprecated Pass a chrono time_point, not an integer millisecond count. For example use `Kernel::Clock::now() + 5s`
-              rather than `Kernel::get_ms_count() + 5000`.
+  @deprecated Pass a chrono time_point, not an integer millisecond count. For
+  example use `Kernel::Clock::now() + 5s` rather than `Kernel::get_ms_count() +
+  5000`.
 */
-// MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono time_point, not an integer millisecond count. For example use `Kernel::Clock::now() + 5s` rather than `Kernel::get_ms_count() + 5000`.")
-uint32_t flags_wait_any_until(uint32_t flags, uint64_t millisec, bool clear = true);
+// MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono time_point, not an
+// integer millisecond count. For example use `Kernel::Clock::now() + 5s` rather
+// than `Kernel::get_ms_count() + 5000`.")
+uint32_t flags_wait_any_until(uint32_t flags, uint64_t millisec,
+                              bool clear = true);
 
-/** Wait for any of the specified Thread Flags to become signaled for the current thread.
+/** Wait for any of the specified Thread Flags to become signaled for the
+  current thread.
   @param   flags     specifies the flags to wait for
   @param   abs_time  absolute timeout time, referenced to Kernel::Clock
-  @param   clear     whether to clear the specified flags after waiting for them. (default: true)
+  @param   clear     whether to clear the specified flags after waiting for
+  them. (default: true)
   @return  actual thread flags before clearing, which may not satisfy the wait
   @note You cannot call this function from ISR context.
   @note the underlying RTOS may have a limit to the maximum wait time
-        due to internal 32-bit computations, but this is guaranteed to work if the
-          wait is <= 0x7fffffff milliseconds (~24 days). If the limit is exceeded,
+        due to internal 32-bit computations, but this is guaranteed to work if
+  the wait is <= 0x7fffffff milliseconds (~24 days). If the limit is exceeded,
           the wait will time out earlier than specified.
   @see Thread::flags_set
 */
-uint32_t flags_wait_any_until(uint32_t flags, Kernel::Clock::time_point abs_time, bool clear = true);
+uint32_t flags_wait_any_until(uint32_t flags,
+                              Kernel::Clock::time_point abs_time,
+                              bool clear = true);
 
 /** Sleep for a specified time period in millisec:
   @param   millisec  time delay value
   @note You cannot call this function from ISR context.
   @note The equivalent functionality is accessible in C via thread_sleep_for.
-  @deprecated Pass a chrono duration, not an integer millisecond count. For example use `5s` rather than `5000`.
+  @deprecated Pass a chrono duration, not an integer millisecond count. For
+  example use `5s` rather than `5000`.
 */
-// MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono duration, not an integer millisecond count. For example use `5s` rather than `5000`.")
+// MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono duration, not an
+// integer millisecond count. For example use `5s` rather than `5000`.")
 void sleep_for(uint32_t millisec);
 
 /** Sleep for a specified time period:
@@ -222,7 +266,6 @@ void sleep_for(uint32_t millisec);
 */
 void sleep_for(Kernel::Clock::duration_u32 rel_time);
 
-
 /** Sleep until a specified time in millisec
   The specified time is according to Kernel::get_ms_count().
   @param   millisec absolute time in millisec
@@ -230,10 +273,13 @@ void sleep_for(Kernel::Clock::duration_u32 rel_time);
   @note if millisec is equal to or lower than the current tick count, this
         returns immediately.
   @note The equivalent functionality is accessible in C via thread_sleep_until.
-  @deprecated Pass a chrono time_point, not an integer millisecond count. For example use
-              `Kernel::Clock::now() + 5s` rather than `Kernel::get_ms_count() + 5000`.
+  @deprecated Pass a chrono time_point, not an integer millisecond count. For
+  example use `Kernel::Clock::now() + 5s` rather than `Kernel::get_ms_count() +
+  5000`.
 */
-// MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono time_point, not an integer millisecond count. For example use `Kernel::Clock::now() + 5s` rather than `Kernel::get_ms_count() + 5000`.")
+// MBED_DEPRECATED_SINCE("mbed-os-6.0.0", "Pass a chrono time_point, not an
+// integer millisecond count. For example use `Kernel::Clock::now() + 5s` rather
+// than `Kernel::get_ms_count() + 5000`.")
 void sleep_until(uint64_t millisec);
 
 /** Sleep until a specified time in millisec
@@ -254,21 +300,22 @@ void sleep_until(Kernel::Clock::time_point abs_time);
 void yield();
 
 /** Get the thread id of the current running thread.
-  @return  thread ID for reference by other functions or nullptr in case of error or in ISR context.
+  @return  thread ID for reference by other functions or nullptr in case of
+  error or in ISR context.
   @note You may call this function from ISR context.
 */
 osThreadId_t get_id();
 
 /** Get the thread name of the current running thread.
-  @return  thread name pointer or nullptr if thread has no name or in case of error.
+  @return  thread name pointer or nullptr if thread has no name or in case of
+  error.
   @note You cannot call this function from ISR context.
 */
 const char *get_name();
 
-};
+}; // namespace ThisThread
 /** @}*/
 /** @}*/
-
 
 namespace internal {
 /** \addtogroup rtos-internal-api */
@@ -284,7 +331,7 @@ struct flags_check_capture {
 
 bool non_rtos_check_flags(void *handle);
 
-}
+} // namespace internal
 /** @}*/
-}
+} // namespace rtos
 #endif

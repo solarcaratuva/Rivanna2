@@ -58,40 +58,46 @@ namespace mbed {
  * @endcode
  */
 class TickerBase /*: public TimerEvent, private NonCopyable<TickerBase>*/ {
-public:
-    /** Attach a function to be called by the Ticker, specifying the interval in seconds
+  public:
+    /** Attach a function to be called by the Ticker, specifying the interval in
+     * seconds
      *
-     *  The method forwards its arguments to attach_us() rather than copying them which
-     *  may not be trivial depending on the callback copied.
-     *  The function is forcibly inlined to not use floating-point operations. This is
-     *  possible given attach_us() expects an integer value for the callback interval.
+     *  The method forwards its arguments to attach_us() rather than copying
+     * them which may not be trivial depending on the callback copied. The
+     * function is forcibly inlined to not use floating-point operations. This
+     * is possible given attach_us() expects an integer value for the callback
+     * interval.
      *  @param func pointer to the function to be called
      *  @param t the time between calls in seconds
-     *  @deprecated Pass a chrono duration, not a float second count. For example use `10ms` rather than `0.01f`.
+     *  @deprecated Pass a chrono duration, not a float second count. For
+     * example use `10ms` rather than `0.01f`.
      */
     virtual void attach(void (*func)(void), float t) = 0;
 
-    /** Attach a function to be called by the Ticker, specifying the interval in microseconds
+    /** Attach a function to be called by the Ticker, specifying the interval in
+     * microseconds
      *
      *  @param func pointer to the function to be called
      *  @param t the time between calls in micro-seconds
      *
-     *  @note setting @a t to a value shorter than it takes to process the ticker callback
-     *  causes the system to hang. Ticker callback is called constantly with no time
-     *  for threads scheduling.
-     *  @deprecated Pass a chrono duration, not an integer microsecond count. For example use `10ms` rather than `10000`.
+     *  @note setting @a t to a value shorter than it takes to process the
+     * ticker callback causes the system to hang. Ticker callback is called
+     * constantly with no time for threads scheduling.
+     *  @deprecated Pass a chrono duration, not an integer microsecond count.
+     * For example use `10ms` rather than `10000`.
      *
      */
     virtual void attach_us(Callback<void()> func, us_timestamp_t t) = 0;
 
-    /** Attach a function to be called by the Ticker, specifying the interval in microseconds
+    /** Attach a function to be called by the Ticker, specifying the interval in
+     * microseconds
      *
      *  @param func pointer to the function to be called
      *  @param t the time between calls in micro-seconds
      *
-     *  @note setting @a t to a value shorter than it takes to process the ticker callback
-     *  causes the system to hang. Ticker callback is called constantly with no time
-     *  for threads scheduling.
+     *  @note setting @a t to a value shorter than it takes to process the
+     * ticker callback causes the system to hang. Ticker callback is called
+     * constantly with no time for threads scheduling.
      *
      */
     virtual void attach(Callback<void()> func, std::chrono::microseconds t) = 0;
@@ -102,7 +108,7 @@ public:
 };
 
 class Ticker : public TickerBase {
-public:
+  public:
     Ticker();
 };
 /** @}*/

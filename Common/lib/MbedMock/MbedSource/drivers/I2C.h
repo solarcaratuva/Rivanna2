@@ -1,4 +1,4 @@
-//Adapted from mbed source
+// Adapted from mbed source
 
 #ifndef MBED_I2C_H
 #define MBED_I2C_H
@@ -67,18 +67,10 @@ namespace mbed {
  */
 class I2C {
 
-public:
-    enum RxStatus {
-        NoData,
-        MasterGeneralCall,
-        MasterWrite,
-        MasterRead
-    };
+  public:
+    enum RxStatus { NoData, MasterGeneralCall, MasterWrite, MasterRead };
 
-    enum Acknowledge {
-        NoACK = 0,
-        ACK   = 1
-    };
+    enum Acknowledge { NoACK = 0, ACK = 1 };
 
     /** Create an I2C Master interface, connected to the specified pins
      *
@@ -115,7 +107,8 @@ public:
      *       0 on success (ack),
      *       nonzero on failure (nack)
      */
-    virtual int read(int address, char *data, int length, bool repeated = false) = 0;
+    virtual int read(int address, char *data, int length,
+                     bool repeated = false) = 0;
 
     /** Read a single byte from the I2C bus
      *
@@ -141,7 +134,8 @@ public:
      *       0 on success (ack),
      *       nonzero on failure (nack)
      */
-    virtual int write(int address, const char *data, int length, bool repeated = false) = 0;
+    virtual int write(int address, const char *data, int length,
+                      bool repeated = false) = 0;
 
     /** Write single byte out on the I2C bus
      *
@@ -188,9 +182,14 @@ public:
      * @param repeated Repeated start, true - do not send stop at end
      *        default value is false.
      *
-     * @returns Zero if the transfer has started, or -1 if I2C peripheral is busy
+     * @returns Zero if the transfer has started, or -1 if I2C peripheral is
+     * busy
      */
-    int transfer(int address, const char *tx_buffer, int tx_length, char *rx_buffer, int rx_length, const event_callback_t &callback, int event = I2C_EVENT_TRANSFER_COMPLETE, bool repeated = false);
+    int transfer(int address, const char *tx_buffer, int tx_length,
+                 char *rx_buffer, int rx_length,
+                 const event_callback_t &callback,
+                 int event = I2C_EVENT_TRANSFER_COMPLETE,
+                 bool repeated = false);
 
     /** Abort the ongoing I2C transfer
      */
@@ -212,31 +211,31 @@ public:
 // #endif
 #endif
 
-// #if !defined(DOXYGEN_ONLY)
-// protected:
-//     void aquire();
+    // #if !defined(DOXYGEN_ONLY)
+    // protected:
+    //     void aquire();
 
-//     i2c_t _i2c;
-//     static I2C  *_owner;
-//     int    _hz;
-//     static SingletonPtr<PlatformMutex> _mutex;
-//     PinName _sda;
-//     PinName _scl;
+    //     i2c_t _i2c;
+    //     static I2C  *_owner;
+    //     int    _hz;
+    //     static SingletonPtr<PlatformMutex> _mutex;
+    //     PinName _sda;
+    //     PinName _scl;
 
-// private:
-//     /** Recover I2C bus, when stuck with SDA low
-//      *  @note : Initialization of I2C bus is required after this API.
-//      *
-//      *  @param sda I2C data line pin
-//      *  @param scl I2C clock line pin
-//      *
-//      * @returns
-//      *    '0' - Successfully recovered
-//      *    'I2C_ERROR_BUS_BUSY' - In case of failure
-//      *
-//      */
-//     int recover(PinName sda, PinName scl);
-// #endif
+    // private:
+    //     /** Recover I2C bus, when stuck with SDA low
+    //      *  @note : Initialization of I2C bus is required after this API.
+    //      *
+    //      *  @param sda I2C data line pin
+    //      *  @param scl I2C clock line pin
+    //      *
+    //      * @returns
+    //      *    '0' - Successfully recovered
+    //      *    'I2C_ERROR_BUS_BUSY' - In case of failure
+    //      *
+    //      */
+    //     int recover(PinName sda, PinName scl);
+    // #endif
 };
 
 /** @}*/

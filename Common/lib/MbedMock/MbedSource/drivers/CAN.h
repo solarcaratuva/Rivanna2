@@ -30,15 +30,14 @@ namespace mbed {
  */
 class CANMessage : public CAN_Message {
 
-public:
+  public:
     /** Creates empty CAN message.
      */
-    CANMessage() : CAN_Message()
-    {
-        len    = 8U;
-        type   = CANData;
+    CANMessage() : CAN_Message() {
+        len = 8U;
+        type = CANData;
         format = CANStandard;
-        id     = 0U;
+        id = 0U;
         memset(data, 0, 8);
     }
 
@@ -47,33 +46,37 @@ public:
      *  @param _id      Message ID
      *  @param _data    Mesaage Data
      *  @param _len     Message Data length
-     *  @param _type    Type of Data: Use enum CANType for valid parameter values
-     *  @param _format  Data Format: Use enum CANFormat for valid parameter values
+     *  @param _type    Type of Data: Use enum CANType for valid parameter
+     * values
+     *  @param _format  Data Format: Use enum CANFormat for valid parameter
+     * values
      */
-    CANMessage(unsigned int _id, const unsigned char *_data, unsigned char _len = 8, CANType _type = CANData, CANFormat _format = CANStandard)
-    {
-        len    = (_len > 8) ? 8 : _len;
-        type   = _type;
+    CANMessage(unsigned int _id, const unsigned char *_data,
+               unsigned char _len = 8, CANType _type = CANData,
+               CANFormat _format = CANStandard) {
+        len = (_len > 8) ? 8 : _len;
+        type = _type;
         format = _format;
-        id     = _id;
+        id = _id;
         memcpy(data, _data, len);
     }
-
 
     /** Creates CAN message with specific content.
      *
      *  @param _id      Message ID
      *  @param _data    Mesaage Data
      *  @param _len     Message Data length
-     *  @param _type    Type of Data: Use enum CANType for valid parameter values
-     *  @param _format  Data Format: Use enum CANFormat for valid parameter values
+     *  @param _type    Type of Data: Use enum CANType for valid parameter
+     * values
+     *  @param _format  Data Format: Use enum CANFormat for valid parameter
+     * values
      */
-    CANMessage(unsigned int _id, const char *_data, unsigned char _len = 8, CANType _type = CANData, CANFormat _format = CANStandard)
-    {
-        len    = (_len > 8) ? 8 : _len;
-        type   = _type;
+    CANMessage(unsigned int _id, const char *_data, unsigned char _len = 8,
+               CANType _type = CANData, CANFormat _format = CANStandard) {
+        len = (_len > 8) ? 8 : _len;
+        type = _type;
         format = _format;
-        id     = _id;
+        id = _id;
         memcpy(data, _data, len);
     }
 
@@ -82,18 +85,16 @@ public:
      *  @param _id      Message ID
      *  @param _format  Data Format: Use enum CANType for valid parameter values
      */
-    CANMessage(unsigned int _id, CANFormat _format = CANStandard)
-    {
-        len    = 0;
-        type   = CANRemote;
+    CANMessage(unsigned int _id, CANFormat _format = CANStandard) {
+        len = 0;
+        type = CANRemote;
         format = _format;
-        id     = _id;
+        id = _id;
         memset(data, 0, 8);
     }
-    
+
     // Added to be able to compare CANMessages for unit testing
-    bool operator==(const CANMessage& other) const
-    {
+    bool operator==(const CANMessage &other) const {
         return memcmp(this, &other, sizeof(CAN_Message)) == 0;
     }
 };
@@ -110,7 +111,7 @@ public:
  */
 class CAN {
 
-public:
+  public:
     /** Creates a CAN interface connected to specific pins.
      *
      *  @param rd read from transmitter
@@ -156,30 +157,31 @@ public:
     CAN(PinName rd, PinName td);
 
     /** Initialize CAN interface and set the frequency
-      *
-      * @param rd the read pin
-      * @param td the transmit pin
-      * @param hz the bus frequency in hertz
-      */
+     *
+     * @param rd the read pin
+     * @param td the transmit pin
+     * @param hz the bus frequency in hertz
+     */
     CAN(PinName rd, PinName td, int hz);
 
     /** Initialize CAN interface
-      *
-      * @param pinmap reference to structure which holds static pinmap
-      * @param td the transmit pin
-      * @param hz the bus frequency in hertz
-      */
+     *
+     * @param pinmap reference to structure which holds static pinmap
+     * @param td the transmit pin
+     * @param hz the bus frequency in hertz
+     */
     CAN(const can_pinmap_t &pinmap);
     CAN(const can_pinmap_t &&) = delete; // prevent passing of temporary objects
 
     /** Initialize CAN interface and set the frequency
-      *
-      * @param pinmap reference to structure which holds static pinmap
-      * @param td the transmit pin
-      * @param hz the bus frequency in hertz
-      */
+     *
+     * @param pinmap reference to structure which holds static pinmap
+     * @param td the transmit pin
+     * @param hz the bus frequency in hertz
+     */
     CAN(const can_pinmap_t &pinmap, int hz);
-    CAN(const can_pinmap_t &&, int) = delete; // prevent passing of temporary objects
+    CAN(const can_pinmap_t &&,
+        int) = delete; // prevent passing of temporary objects
 
     virtual ~CAN() {}
 
@@ -226,18 +228,12 @@ public:
      */
     virtual void monitor(bool silent) = 0;
 
-    enum Mode {
-        Reset = 0,
-        Normal,
-        Silent,
-        LocalTest,
-        GlobalTest,
-        SilentTest
-    };
+    enum Mode { Reset = 0, Normal, Silent, LocalTest, GlobalTest, SilentTest };
 
     /** Change CAN operation to the specified mode
      *
-     *  @param mode The new operation mode (CAN::Normal, CAN::Silent, CAN::LocalTest, CAN::GlobalTest, CAN::SilentTest)
+     *  @param mode The new operation mode (CAN::Normal, CAN::Silent,
+     * CAN::LocalTest, CAN::GlobalTest, CAN::SilentTest)
      *
      *  @returns
      *    0 if mode change failed or unsupported,
@@ -256,7 +252,8 @@ public:
      *    0 if filter change failed or unsupported,
      *    new filter handle if successful
      */
-    virtual int filter(unsigned int id, unsigned int mask, CANFormat format = CANAny, int handle = 0) = 0;
+    virtual int filter(unsigned int id, unsigned int mask,
+                       CANFormat format = CANAny, int handle = 0) = 0;
 
     /**  Detects read errors - Used to detect read overflow errors.
      *
@@ -290,7 +287,11 @@ public:
      *  This function locks the deep sleep while a callback is attached
      *
      *  @param func A pointer to a void function, or 0 to set as none
-     *  @param type Which CAN interrupt to attach the member function to (CAN::RxIrq for message received, CAN::TxIrq for transmitted or aborted, CAN::EwIrq for error warning, CAN::DoIrq for data overrun, CAN::WuIrq for wake-up, CAN::EpIrq for error passive, CAN::AlIrq for arbitration lost, CAN::BeIrq for bus error)
+     *  @param type Which CAN interrupt to attach the member function to
+     * (CAN::RxIrq for message received, CAN::TxIrq for transmitted or aborted,
+     * CAN::EwIrq for error warning, CAN::DoIrq for data overrun, CAN::WuIrq for
+     * wake-up, CAN::EpIrq for error passive, CAN::AlIrq for arbitration lost,
+     * CAN::BeIrq for bus error)
      */
     virtual void attach(Callback<void()> func, IrqType type = RxIrq) = 0;
 
@@ -303,4 +304,4 @@ public:
 
 #endif
 
-#endif    // MBED_CAN_H
+#endif // MBED_CAN_H

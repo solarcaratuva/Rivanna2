@@ -29,7 +29,6 @@ typedef enum {
     IRQ_READY
 } CanIrqType;
 
-
 typedef enum {
     MODE_RESET,
     MODE_NORMAL,
@@ -51,25 +50,26 @@ typedef void (*can_irq_handler)(uint32_t id, CanIrqType type);
 
 typedef struct can_s can_t;
 
-void          can_init(can_t *obj, PinName rd, PinName td);
-void          can_init_direct(can_t *obj, const can_pinmap_t *pinmap);
-void          can_init_freq(can_t *obj, PinName rd, PinName td, int hz);
-void          can_init_freq_direct(can_t *obj, const can_pinmap_t *pinmap, int hz);
-void          can_free(can_t *obj);
-int           can_frequency(can_t *obj, int hz);
+void can_init(can_t *obj, PinName rd, PinName td);
+void can_init_direct(can_t *obj, const can_pinmap_t *pinmap);
+void can_init_freq(can_t *obj, PinName rd, PinName td, int hz);
+void can_init_freq_direct(can_t *obj, const can_pinmap_t *pinmap, int hz);
+void can_free(can_t *obj);
+int can_frequency(can_t *obj, int hz);
 
-void          can_irq_init(can_t *obj, can_irq_handler handler, uint32_t id);
-void          can_irq_free(can_t *obj);
-void          can_irq_set(can_t *obj, CanIrqType irq, uint32_t enable);
+void can_irq_init(can_t *obj, can_irq_handler handler, uint32_t id);
+void can_irq_free(can_t *obj);
+void can_irq_set(can_t *obj, CanIrqType irq, uint32_t enable);
 
-int           can_write(can_t *obj, CAN_Message, int cc);
-int           can_read(can_t *obj, CAN_Message *msg, int handle);
-int           can_mode(can_t *obj, CanMode mode);
-int           can_filter(can_t *obj, uint32_t id, uint32_t mask, CANFormat format, int32_t handle);
-void          can_reset(can_t *obj);
+int can_write(can_t *obj, CAN_Message, int cc);
+int can_read(can_t *obj, CAN_Message *msg, int handle);
+int can_mode(can_t *obj, CanMode mode);
+int can_filter(can_t *obj, uint32_t id, uint32_t mask, CANFormat format,
+               int32_t handle);
+void can_reset(can_t *obj);
 unsigned char can_rderror(can_t *obj);
 unsigned char can_tderror(can_t *obj);
-void          can_monitor(can_t *obj, int silent);
+void can_monitor(can_t *obj, int silent);
 
 /** Get the pins that support CAN RD
  *
@@ -93,7 +93,7 @@ void          can_monitor(can_t *obj, int silent);
 }
 #endif
 
-#endif    // MBED_CAN_API_H
+#endif // MBED_CAN_API_H
 
 #endif
 

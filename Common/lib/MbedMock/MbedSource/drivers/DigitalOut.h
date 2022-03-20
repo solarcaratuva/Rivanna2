@@ -35,7 +35,7 @@ namespace mbed {
  */
 class DigitalOut {
 
-public:
+  public:
     /** Create a DigitalOut connected to the specified pin
      *
      *  @param pin DigitalOut pin to connect to
@@ -80,8 +80,7 @@ public:
      *      led = button;   // Equivalent to led.write(button.read())
      * @endcode
      */
-    DigitalOut &operator= (int value)
-    {
+    DigitalOut &operator=(int value) {
         // Underlying write is thread safe
         write(value);
         return *this;
@@ -91,8 +90,7 @@ public:
      * state from the DigitalOut argument.
      * \sa DigitalOut::write()
      */
-    DigitalOut &operator= (DigitalOut &rhs)
-    {
+    DigitalOut &operator=(DigitalOut &rhs) {
         // core_util_critical_section_enter();
         write(rhs.read());
         // core_util_critical_section_exit();
@@ -107,8 +105,7 @@ public:
      *      led = button;   // Equivalent to led.write(button.read())
      * @endcode
      */
-    operator int()
-    {
+    operator int() {
         // Underlying call is thread safe
         return read();
     }

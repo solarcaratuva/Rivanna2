@@ -33,12 +33,13 @@ extern "C" {
 /* Minimal definitions for bare metal form of RTOS */
 
 // Timeout value.
-#define osWaitForever         0xFFFFFFFFU ///< Wait forever timeout value.
+#define osWaitForever  0xFFFFFFFFU ///< Wait forever timeout value.
 
 // Flags options (\ref osThreadFlagsWait and \ref osEventFlagsWait).
-#define osFlagsWaitAny        0x00000000U ///< Wait for any flag (default).
-#define osFlagsWaitAll        0x00000001U ///< Wait for all flags.
-#define osFlagsNoClear        0x00000002U ///< Do not clear flags which have been specified to wait for.
+#define osFlagsWaitAny 0x00000000U ///< Wait for any flag (default).
+#define osFlagsWaitAll 0x00000001U ///< Wait for all flags.
+#define osFlagsNoClear                                                         \
+    0x00000002U ///< Do not clear flags which have been specified to wait for.
 
 // Flags errors (returned by osThreadFlagsXxxx and osEventFlagsXxxx).
 #define osFlagsError          0x80000000U ///< Error indicator.
@@ -50,24 +51,28 @@ extern "C" {
 
 // Status code values returned by CMSIS-RTOS functions.
 typedef enum {
-    osOK                    =  0,         ///< Operation completed successfully.
-    osError                 = -1,         ///< Unspecified RTOS error: run-time error but no other error message fits.
-    osErrorTimeout          = -2,         ///< Operation not completed within the timeout period.
-    osErrorResource         = -3,         ///< Resource not available.
-    osErrorParameter        = -4,         ///< Parameter error.
-    osErrorNoMemory         = -5,         ///< System is out of memory: it was impossible to allocate or reserve memory for the operation.
-    osErrorISR              = -6,         ///< Not allowed in ISR context: the function cannot be called from interrupt service routines.
-    osStatusReserved        = 0x7FFFFFFF  ///< Prevents enum down-size compiler optimization.
+    osOK = 0,     ///< Operation completed successfully.
+    osError = -1, ///< Unspecified RTOS error: run-time error but no other error
+                  ///< message fits.
+    osErrorTimeout = -2, ///< Operation not completed within the timeout period.
+    osErrorResource = -3,  ///< Resource not available.
+    osErrorParameter = -4, ///< Parameter error.
+    osErrorNoMemory = -5,  ///< System is out of memory: it was impossible to
+                           ///< allocate or reserve memory for the operation.
+    osErrorISR = -6, ///< Not allowed in ISR context: the function cannot be
+                     ///< called from interrupt service routines.
+    osStatusReserved =
+        0x7FFFFFFF ///< Prevents enum down-size compiler optimization.
 } osStatus_t;
-
 
 // \details Thread ID identifies the thread.
 typedef void *osThreadId_t;
 
 // Set the specified Thread Flags of a thread.
-// \param[in]     thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
-// \param[in]     flags         specifies the flags of the thread that shall be set.
-// \return thread flags after setting or error code if highest bit set.
+// \param[in]     thread_id     thread ID obtained by \ref osThreadNew or \ref
+// osThreadGetId. \param[in]     flags         specifies the flags of the thread
+// that shall be set. \return thread flags after setting or error code if
+// highest bit set.
 uint32_t osThreadFlagsSet(osThreadId_t thread_id, uint32_t flags);
 
 /** @}*/
@@ -77,6 +82,5 @@ uint32_t osThreadFlagsSet(osThreadId_t thread_id, uint32_t flags);
 #endif
 
 // #endif
-
 
 #endif /* RTOS_TYPES_H_ */

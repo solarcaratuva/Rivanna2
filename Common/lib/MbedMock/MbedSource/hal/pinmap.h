@@ -34,7 +34,7 @@ void pin_mode(PinName pin, PinMode mode);
 uint32_t pinmap_peripheral(PinName pin, const PinMap *map);
 uint32_t pinmap_function(PinName pin, const PinMap *map);
 uint32_t pinmap_merge(uint32_t a, uint32_t b);
-void     pinmap_pinout(PinName pin, const PinMap *map);
+void pinmap_pinout(PinName pin, const PinMap *map);
 uint32_t pinmap_find_peripheral(PinName pin, const PinMap *map);
 uint32_t pinmap_find_function(PinName pin, const PinMap *map);
 
@@ -75,12 +75,9 @@ uint32_t pinmap_find_function(PinName pin, const PinMap *map);
  *         &sclk,
  *         &ssel
  *     };
- *     if (pinmap_find_peripheral_pins(pins_ff, pins_avoid, per, maps, pins, sizeof(maps) / sizeof(maps[0]))) {
- *         printf("Found SPI pins to test instance %i with:\n"
- *                "  mosi=%s\n"
- *                "  miso=%s\n"
- *                "  sclk=%s\n"
- *                "  ssel=%s\n", per,
+ *     if (pinmap_find_peripheral_pins(pins_ff, pins_avoid, per, maps, pins,
+ * sizeof(maps) / sizeof(maps[0]))) { printf("Found SPI pins to test instance %i
+ * with:\n" "  mosi=%s\n" "  miso=%s\n" "  sclk=%s\n" "  ssel=%s\n", per,
  *                pinmap_ff_default_pin_to_string(mosi),
  *                pinmap_ff_default_pin_to_string(miso),
  *                pinmap_ff_default_pin_to_string(sclk),
@@ -97,12 +94,16 @@ uint32_t pinmap_find_function(PinName pin, const PinMap *map);
  * @param per Peripheral to which the pins belong
  * @param maps An array of pin maps to select from
  * @param pins An array of pins to find. Pins already set to a value will be
- *             left unchanged. Only pins initialized to NC will be updated by this function
+ *             left unchanged. Only pins initialized to NC will be updated by
+ * this function
  * @param count The size of maps and pins
  * @return true if a suitable combination of pins was found and
  *         written to the pins array, otherwise false
  */
-bool pinmap_find_peripheral_pins(const PinList *whitelist, const PinList *blacklist, int per, const PinMap *const *maps, PinName **pins, uint32_t count);
+bool pinmap_find_peripheral_pins(const PinList *whitelist,
+                                 const PinList *blacklist, int per,
+                                 const PinMap *const *maps, PinName **pins,
+                                 uint32_t count);
 
 /**
  * Check if the pin is in the list
@@ -205,12 +206,14 @@ const char *pinmap_ff_arduino_pin_to_string(PinName pin);
 
 #ifdef MBED_CONF_TARGET_DEFAULT_FORM_FACTOR
 
-#define PINMAP_DEFAULT_PINS_(name)              pinmap_ff_ ## name ## _pins
-#define PINMAP_DEFAULT_PIN_TO_STRING_(name)     pinmap_ff_ ## name ## _pin_to_string
-#define PINMAP_DEFAULT_PINS(name)               PINMAP_DEFAULT_PINS_(name)
-#define PINMAP_DEFAULT_PIN_TO_STRING(name)      PINMAP_DEFAULT_PIN_TO_STRING_(name)
-#define pinmap_ff_default_pins                  PINMAP_DEFAULT_PINS(MBED_CONF_TARGET_DEFAULT_FORM_FACTOR)
-#define pinmap_ff_default_pin_to_string         PINMAP_DEFAULT_PIN_TO_STRING(MBED_CONF_TARGET_DEFAULT_FORM_FACTOR)
+#define PINMAP_DEFAULT_PINS_(name)          pinmap_ff_##name##_pins
+#define PINMAP_DEFAULT_PIN_TO_STRING_(name) pinmap_ff_##name##_pin_to_string
+#define PINMAP_DEFAULT_PINS(name)           PINMAP_DEFAULT_PINS_(name)
+#define PINMAP_DEFAULT_PIN_TO_STRING(name)  PINMAP_DEFAULT_PIN_TO_STRING_(name)
+#define pinmap_ff_default_pins                                                 \
+    PINMAP_DEFAULT_PINS(MBED_CONF_TARGET_DEFAULT_FORM_FACTOR)
+#define pinmap_ff_default_pin_to_string                                        \
+    PINMAP_DEFAULT_PIN_TO_STRING(MBED_CONF_TARGET_DEFAULT_FORM_FACTOR)
 
 /**
  * Get the pin list of the default form factor

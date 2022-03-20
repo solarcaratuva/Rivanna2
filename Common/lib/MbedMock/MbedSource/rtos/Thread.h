@@ -23,16 +23,16 @@
 #ifndef THREAD_H
 #define THREAD_H
 
-#include <stdint.h>
-#include "../rtos/mbed_rtos_types.h"
 #include "../rtos/internal/mbed_rtos1_types.h"
+#include "../rtos/mbed_rtos_types.h"
+#include <stdint.h>
 // #include "../rtos/internal/mbed_rtos_storage.h"
-#include "../rtos/internal/cmsis_os.h"
 #include "../platform/Callback.h"
+#include "../rtos/internal/cmsis_os.h"
 //#include "platform/mbed_toolchain.h"
 //#include "platform/NonCopyable.h"
-#include "../rtos/Semaphore.h"
 #include "../rtos/Mutex.h"
+#include "../rtos/Semaphore.h"
 
 #if MBED_CONF_RTOS_PRESENT || defined(DOXYGEN_ONLY) || defined(UNITTEST)
 
@@ -45,7 +45,8 @@ namespace rtos {
  * @{
  */
 
-/** The Thread class allow defining, creating, and controlling thread functions in the system.
+/** The Thread class allow defining, creating, and controlling thread functions
+ * in the system.
  *
  *  Example:
  *  @code
@@ -74,29 +75,39 @@ namespace rtos {
  *  @endcode
  *
  * @note
- * Memory considerations: The thread control structures will be created on current thread's stack, both for the mbed OS
- * and underlying RTOS objects (static or dynamic RTOS memory pools are not being used).
- * Additionally the stack memory for this thread will be allocated on the heap, if it wasn't supplied to the constructor.
+ * Memory considerations: The thread control structures will be created on
+ * current thread's stack, both for the mbed OS and underlying RTOS objects
+ * (static or dynamic RTOS memory pools are not being used). Additionally the
+ * stack memory for this thread will be allocated on the heap, if it wasn't
+ * supplied to the constructor.
  *
  * @note
- * MBED_TZ_DEFAULT_ACCESS (default:0) flag can be used to change the default access of all user threads in non-secure mode.
- * MBED_TZ_DEFAULT_ACCESS set to 1, means all non-secure user threads have access to call secure functions.
- * MBED_TZ_DEFAULT_ACCESS set to 0, means none of the non-secure user thread have access to call secure functions,
- * to give access to particular thread used overloaded constructor with `tz_module` as argument during thread creation.
+ * MBED_TZ_DEFAULT_ACCESS (default:0) flag can be used to change the default
+ * access of all user threads in non-secure mode. MBED_TZ_DEFAULT_ACCESS set to
+ * 1, means all non-secure user threads have access to call secure functions.
+ * MBED_TZ_DEFAULT_ACCESS set to 0, means none of the non-secure user thread
+ * have access to call secure functions, to give access to particular thread
+ * used overloaded constructor with `tz_module` as argument during thread
+ * creation.
  *
- * MBED_TZ_DEFAULT_ACCESS is target specific define, should be set in targets.json file for Cortex-M23/M33 devices.
+ * MBED_TZ_DEFAULT_ACCESS is target specific define, should be set in
+ * targets.json file for Cortex-M23/M33 devices.
  *
  * @note
  * Bare metal profile: This class is not supported.
  */
 
 class Thread { //: private mbed::NonCopyable<Thread> {
-public:
+  public:
     /** Allocate a new thread without starting execution
-      @param   priority       initial priority of the thread function. (default: osPriorityNormal).
-      @param   stack_size     stack size (in bytes) requirements for the thread function. (default: OS_STACK_SIZE).
-      @param   stack_mem      pointer to the stack area to be used by this thread (default: nullptr).
-      @param   name           name to be used for this thread. It has to stay allocated for the lifetime of the thread (default: nullptr)
+      @param   priority       initial priority of the thread function. (default:
+      osPriorityNormal).
+      @param   stack_size     stack size (in bytes) requirements for the thread
+      function. (default: OS_STACK_SIZE).
+      @param   stack_mem      pointer to the stack area to be used by this
+      thread (default: nullptr).
+      @param   name           name to be used for this thread. It has to stay
+      allocated for the lifetime of the thread (default: nullptr)
 
       @note Default value of tz_module will be MBED_TZ_DEFAULT_ACCESS
       @note You cannot call this function from ISR context.
@@ -110,14 +121,23 @@ public:
     // }
 
     // /** Allocate a new thread without starting execution
-    //   @param   tz_module      trustzone thread identifier (osThreadAttr_t::tz_module)
-    //                           Context of RTOS threads in non-secure state must be saved when calling secure functions.
-    //                           tz_module ID is used to allocate context memory for threads, and it can be safely set to zero for
-    //                           threads not using secure calls at all. See "TrustZone RTOS Context Management" for more details.
-    //   @param   priority       initial priority of the thread function. (default: osPriorityNormal).
-    //   @param   stack_size     stack size (in bytes) requirements for the thread function. (default: OS_STACK_SIZE).
-    //   @param   stack_mem      pointer to the stack area to be used by this thread (default: nullptr).
-    //   @param   name           name to be used for this thread. It has to stay allocated for the lifetime of the thread (default: nullptr)
+    //   @param   tz_module      trustzone thread identifier
+    //   (osThreadAttr_t::tz_module)
+    //                           Context of RTOS threads in non-secure state
+    //                           must be saved when calling secure functions.
+    //                           tz_module ID is used to allocate context memory
+    //                           for threads, and it can be safely set to zero
+    //                           for threads not using secure calls at all. See
+    //                           "TrustZone RTOS Context Management" for more
+    //                           details.
+    //   @param   priority       initial priority of the thread function.
+    //   (default: osPriorityNormal).
+    //   @param   stack_size     stack size (in bytes) requirements for the
+    //   thread function. (default: OS_STACK_SIZE).
+    //   @param   stack_mem      pointer to the stack area to be used by this
+    //   thread (default: nullptr).
+    //   @param   name           name to be used for this thread. It has to stay
+    //   allocated for the lifetime of the thread (default: nullptr)
 
     //   @note You cannot call this function from ISR context.
     // */
@@ -128,7 +148,6 @@ public:
     // {
     //     constructor(tz_module, priority, stack_size, stack_mem, name);
     // }
-
 
     /** Starts a thread executing the specified function.
       @param   task           function to be executed by this thread.
@@ -170,7 +189,8 @@ public:
 
     /** Set the specified Thread Flags for the thread.
       @param   flags  specifies the flags of the thread that should be set.
-      @return  thread flags after setting or osFlagsError in case of incorrect parameters.
+      @return  thread flags after setting or osFlagsError in case of incorrect
+      parameters.
 
       @note You may call this function from ISR context.
     */
@@ -178,25 +198,27 @@ public:
 
     /** State of the Thread */
     enum State {
-        Inactive,           /**< NOT USED */
-        Ready,              /**< Ready to run */
-        Running,            /**< Running */
-        WaitingDelay,       /**< Waiting for a delay to occur */
-        WaitingJoin,        /**< Waiting for thread to join. Only happens when using RTX directly. */
-        WaitingThreadFlag,  /**< Waiting for a thread flag to be set */
-        WaitingEventFlag,   /**< Waiting for a event flag to be set */
-        WaitingMutex,       /**< Waiting for a mutex event to occur */
-        WaitingSemaphore,   /**< Waiting for a semaphore event to occur */
-        WaitingMemoryPool,  /**< Waiting for a memory pool */
-        WaitingMessageGet,  /**< Waiting for message to arrive */
-        WaitingMessagePut,  /**< Waiting for message to be send */
-        WaitingInterval,    /**< NOT USED */
-        WaitingOr,          /**< NOT USED */
-        WaitingAnd,         /**< NOT USED */
-        WaitingMailbox,     /**< NOT USED (Mail is implemented as MemoryPool and Queue) */
+        Inactive,     /**< NOT USED */
+        Ready,        /**< Ready to run */
+        Running,      /**< Running */
+        WaitingDelay, /**< Waiting for a delay to occur */
+        WaitingJoin,  /**< Waiting for thread to join. Only happens when using
+                         RTX directly. */
+        WaitingThreadFlag, /**< Waiting for a thread flag to be set */
+        WaitingEventFlag,  /**< Waiting for a event flag to be set */
+        WaitingMutex,      /**< Waiting for a mutex event to occur */
+        WaitingSemaphore,  /**< Waiting for a semaphore event to occur */
+        WaitingMemoryPool, /**< Waiting for a memory pool */
+        WaitingMessageGet, /**< Waiting for message to arrive */
+        WaitingMessagePut, /**< Waiting for message to be send */
+        WaitingInterval,   /**< NOT USED */
+        WaitingOr,         /**< NOT USED */
+        WaitingAnd,        /**< NOT USED */
+        WaitingMailbox,    /**< NOT USED (Mail is implemented as MemoryPool and
+                              Queue) */
 
         /* Not in sync with RTX below here */
-        Deleted,            /**< The task has been deleted or not started */
+        Deleted, /**< The task has been deleted or not started */
     };
 
     /** State of this Thread
@@ -254,32 +276,32 @@ public:
      */
     virtual ~Thread() {}
 
-// private:
-//     // Required to share definitions without
-//     // delegated constructors
-//     void constructor(osPriority priority = osPriorityNormal,
-//                      uint32_t stack_size = OS_STACK_SIZE,
-//                      unsigned char *stack_mem = nullptr,
-//                      const char *name = nullptr);
-//     void constructor(uint32_t tz_module,
-//                      osPriority priority = osPriorityNormal,
-//                      uint32_t stack_size = OS_STACK_SIZE,
-//                      unsigned char *stack_mem = nullptr,
-//                      const char *name = nullptr);
-//     static void _thunk(void *thread_ptr);
+    // private:
+    //     // Required to share definitions without
+    //     // delegated constructors
+    //     void constructor(osPriority priority = osPriorityNormal,
+    //                      uint32_t stack_size = OS_STACK_SIZE,
+    //                      unsigned char *stack_mem = nullptr,
+    //                      const char *name = nullptr);
+    //     void constructor(uint32_t tz_module,
+    //                      osPriority priority = osPriorityNormal,
+    //                      uint32_t stack_size = OS_STACK_SIZE,
+    //                      unsigned char *stack_mem = nullptr,
+    //                      const char *name = nullptr);
+    //     static void _thunk(void *thread_ptr);
 
-//     mbed::Callback<void()>     _task;
-//     osThreadId_t               _tid;
-//     osThreadAttr_t             _attr;
-//     bool                       _dynamic_stack;
-//     bool                       _finished;
-//     Semaphore                  _join_sem;
-//     mutable Mutex              _mutex;
-//     mbed_rtos_storage_thread_t _obj_mem;
+    //     mbed::Callback<void()>     _task;
+    //     osThreadId_t               _tid;
+    //     osThreadAttr_t             _attr;
+    //     bool                       _dynamic_stack;
+    //     bool                       _finished;
+    //     Semaphore                  _join_sem;
+    //     mutable Mutex              _mutex;
+    //     mbed_rtos_storage_thread_t _obj_mem;
 };
 /** @}*/
 /** @}*/
-}
+} // namespace rtos
 #endif
 
 #endif

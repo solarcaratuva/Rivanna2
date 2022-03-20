@@ -40,7 +40,7 @@ namespace mbed {
  */
 class DigitalIn {
 
-public:
+  public:
     /** Create a DigitalIn connected to the specified pin
      *
      *  @param pin DigitalIn pin to connect to
@@ -84,8 +84,7 @@ public:
      *      led = button;   // Equivalent to led.write(button.read())
      * @endcode
      */
-    virtual operator int()
-    {
+    virtual operator int() {
         // Underlying read is thread safe
         return read();
     }

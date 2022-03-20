@@ -26,16 +26,15 @@
 
 // #include "./internal/mbed_rtos_storage.h"
 // #include "./Kernel.h"
-#include "./Thread.h"
-#include "./ThisThread.h"
 #include "./Mutex.h"
 #include "./Semaphore.h"
+#include "./ThisThread.h"
+#include "./Thread.h"
 // #include "./Mail.h"
 // #include "./MemoryPool.h"
 // #include "./Queue.h"
 // #include "./EventFlags.h"
 // #include "./ConditionVariable.h"
-
 
 /** \defgroup rtos-public-api RTOS
  * \ingroup mbed-os-public

@@ -33,11 +33,11 @@
 // #include "platform/mbed_critical.h"
 // #include "platform/internal/mbed_os_timer.h"
 
+using rtos::Kernel::Clock;
+using rtos::Kernel::wait_for_u32_forever;
+using rtos::Kernel::wait_for_u32_max;
 using std::milli;
 using std::chrono::duration;
-using rtos::Kernel::Clock;
-using rtos::Kernel::wait_for_u32_max;
-using rtos::Kernel::wait_for_u32_forever;
 
 // #if !MBED_CONF_RTOS_PRESENT
 // /* If the RTOS is not present, we call mbed_thread.cpp to do the work */
@@ -46,8 +46,10 @@ using rtos::Kernel::wait_for_u32_forever;
 
 // static uint32_t thread_flags;
 
-// /* For the flags to be useful, need a way of setting them, but there's only the main
-//  * thread, and that has no Thread object, so Thread class is not provided. Implement
+// /* For the flags to be useful, need a way of setting them, but there's only
+// the main
+//  * thread, and that has no Thread object, so Thread class is not provided.
+//  Implement
 //  * one CMSIS-RTOS function to provide access.
 //  */
 // extern "C"
@@ -59,36 +61,71 @@ using rtos::Kernel::wait_for_u32_forever;
 
 namespace rtos {
 
-uint32_t ThisThread::flags_clear(uint32_t flags) {return 0;}
+uint32_t ThisThread::flags_clear(uint32_t flags) { return 0; }
 
-uint32_t ThisThread::flags_get() {return 0;}
+uint32_t ThisThread::flags_get() { return 0; }
 
+static uint32_t flags_wait_for(uint32_t flags, Clock::duration_u32 rel_time,
+                               bool clear, uint32_t options) {
+    return 0;
+}
 
-static uint32_t flags_wait_for(uint32_t flags, Clock::duration_u32 rel_time, bool clear, uint32_t options) {return 0;}
+static uint32_t flags_wait(uint32_t flags, bool clear, uint32_t options) {
+    return 0;
+}
 
-static uint32_t flags_wait(uint32_t flags, bool clear, uint32_t options) {return 0;}
+static uint32_t flags_wait_until(uint32_t flags, Clock::time_point abs_time,
+                                 bool clear, uint32_t options) {
+    return 0;
+}
 
-static uint32_t flags_wait_until(uint32_t flags, Clock::time_point abs_time, bool clear, uint32_t options) {return 0;}
+uint32_t ThisThread::flags_wait_all(uint32_t flags, bool clear) { return 0; }
 
-uint32_t ThisThread::flags_wait_all(uint32_t flags, bool clear) {return 0;}
+uint32_t ThisThread::flags_wait_all_for(uint32_t flags, uint32_t millisec,
+                                        bool clear) {
+    return 0;
+}
 
-uint32_t ThisThread::flags_wait_all_for(uint32_t flags, uint32_t millisec, bool clear) {return 0;}
+uint32_t ThisThread::flags_wait_all_for(uint32_t flags,
+                                        Clock::duration_u32 rel_time,
+                                        bool clear) {
+    return 0;
+}
 
-uint32_t ThisThread::flags_wait_all_for(uint32_t flags, Clock::duration_u32 rel_time, bool clear) {return 0;}
+uint32_t ThisThread::flags_wait_all_until(uint32_t flags, uint64_t millisec,
+                                          bool clear) {
+    return 0;
+}
 
-uint32_t ThisThread::flags_wait_all_until(uint32_t flags, uint64_t millisec, bool clear) {return 0;}
+uint32_t ThisThread::flags_wait_all_until(uint32_t flags,
+                                          Clock::time_point abs_time,
+                                          bool clear) {
+    return 0;
+}
 
-uint32_t ThisThread::flags_wait_all_until(uint32_t flags, Clock::time_point abs_time, bool clear) {return 0;}
+uint32_t ThisThread::flags_wait_any(uint32_t flags, bool clear) { return 0; }
 
-uint32_t ThisThread::flags_wait_any(uint32_t flags, bool clear) {return 0;}
+uint32_t ThisThread::flags_wait_any_for(uint32_t flags, uint32_t millisec,
+                                        bool clear) {
+    return 0;
+}
 
-uint32_t ThisThread::flags_wait_any_for(uint32_t flags, uint32_t millisec, bool clear) {return 0;}
+uint32_t ThisThread::flags_wait_any_for(uint32_t flags,
+                                        Clock::duration_u32 rel_time,
+                                        bool clear) {
+    return 0;
+}
 
-uint32_t ThisThread::flags_wait_any_for(uint32_t flags, Clock::duration_u32 rel_time, bool clear) {return 0;}
+uint32_t ThisThread::flags_wait_any_until(uint32_t flags, uint64_t millisec,
+                                          bool clear) {
+    return 0;
+}
 
-uint32_t ThisThread::flags_wait_any_until(uint32_t flags, uint64_t millisec, bool clear) {return 0;}
-
-uint32_t ThisThread::flags_wait_any_until(uint32_t flags, Clock::time_point abs_time, bool clear) {return 0;}
+uint32_t ThisThread::flags_wait_any_until(uint32_t flags,
+                                          Clock::time_point abs_time,
+                                          bool clear) {
+    return 0;
+}
 
 void ThisThread::sleep_for(uint32_t millisec) {}
 
@@ -100,8 +137,8 @@ void ThisThread::sleep_until(Clock::time_point abs_time) {}
 
 void ThisThread::yield() {}
 
-osThreadId_t ThisThread::get_id() {return 0;}
+osThreadId_t ThisThread::get_id() { return 0; }
 
-const char *ThisThread::get_name() {return 0;}
+const char *ThisThread::get_name() { return 0; }
 
-}
+} // namespace rtos

@@ -14,12 +14,8 @@ extern "C" {
  * \enum    CANFormat
  *
  * \brief   Values that represent CAN Format
-**/
-enum CANFormat {
-    CANStandard = 0,
-    CANExtended = 1,
-    CANAny = 2
-};
+ **/
+enum CANFormat { CANStandard = 0, CANExtended = 1, CANAny = 2 };
 typedef enum CANFormat CANFormat;
 
 /**
@@ -27,11 +23,8 @@ typedef enum CANFormat CANFormat;
  * \enum    CANType
  *
  * \brief   Values that represent CAN Type
-**/
-enum CANType {
-    CANData   = 0,
-    CANRemote = 1
-};
+ **/
+enum CANType { CANData = 0, CANRemote = 1 };
 typedef enum CANType CANType;
 
 /**
@@ -40,13 +33,13 @@ typedef enum CANType CANType;
  *
  * \brief   Holder for single CAN message.
  *
-**/
+ **/
 struct CAN_Message {
-    unsigned int   id;                 // 29 bit identifier
-    unsigned char  data[8];            // Data field
-    unsigned char  len;                // Length of data field in bytes
-    CANFormat      format;             // Format ::CANFormat
-    CANType        type;               // Type ::CANType
+    unsigned int id;       // 29 bit identifier
+    unsigned char data[8]; // Data field
+    unsigned char len;     // Length of data field in bytes
+    CANFormat format;      // Format ::CANFormat
+    CANType type;          // Type ::CANType
 };
 typedef struct CAN_Message CAN_Message;
 
