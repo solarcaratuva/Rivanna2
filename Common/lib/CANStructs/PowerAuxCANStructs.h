@@ -35,7 +35,7 @@ typedef struct PowerAuxErrorStruct : CANStruct {
 
     void print() {
         PRINT("PowerAuxErrorStruct\n Fan Error: %d\n Brake Light Error: %d\n "
-              "Headlight Error: %d\n BMS Strobe Error: %d\n, Left Turn Error: "
+              "Headlight Error: %d\n BMS Strobe Error: %d\n Left Turn Error: "
               "%d\n Right Turn Error: %d\n",
               fan_error, brake_light_error, headlight_error, bms_strobe_error,
               left_turn_error, right_turn_error);
