@@ -70,28 +70,28 @@ void signalBPSStrobe() {
     }
 }
 
-AnalogIn fan_error(FanTach);
-AnalogIn brake_light_error(BRAKE_LIGHT_CURRENT);
-AnalogIn headlight_error(DRL_CURRENT);
-AnalogIn bms_strobe_error(BMS_STROBE_CURRENT);
-AnalogIn left_turn_error(LEFT_TURN_CURRENT);
-AnalogIn right_turn_error(RIGHT_TURN_CURRENT);
+AnalogIn fan_tach(FanTach);
+AnalogIn brake_light_current(BRAKE_LIGHT_CURRENT);
+AnalogIn headlight_current(DRL_CURRENT);
+AnalogIn bms_strobe_current(BMS_STROBE_CURRENT);
+AnalogIn left_turn_current(LEFT_TURN_CURRENT);
+AnalogIn right_turn_current(RIGHT_TURN_CURRENT);
 Thread peripheral_error_thread;
 
 void peripheral_error_handler() {
     PowerAuxErrorStruct msg;
     while (true) {
         msg.bms_strobe_error =
-            (bms_strobe_error.read_u16() < 1000 && bpsFaultIndicator);
+            (bms_strobe_current.read_u16() < 1000 && bpsFaultIndicator);
         msg.brake_light_error =
-            (brake_light_error.read_u16() < 1000 && brake_lights.read());
-        msg.fan_error = (fan_error.read_u16() < 1000);
+            (brake_light_current.read_u16() < 1000 && brake_lights.read());
+        msg.fan_error = (fan_tach.read_u16() < 1000);
         msg.headlight_error =
-            (headlight_error.read_u16() < 1000 && headlights.read());
+            (headlight_current.read_u16() < 1000 && headlights.read());
         msg.left_turn_error =
-            (left_turn_error.read_u16() < 1000 && leftTurnSignal.read());
+            (left_turn_current.read_u16() < 1000 && leftTurnSignal.read());
         msg.right_turn_error =
-            (right_turn_error.read_u16() < 1000 && rightTurnSignal.read());
+            (right_turn_current.read_u16() < 1000 && rightTurnSignal.read());
 #ifdef DEBUG
         msg.print();
 #endif
