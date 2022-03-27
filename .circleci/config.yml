@@ -14,11 +14,11 @@ jobs:
       - restore_cache:
           keys:
             # when lock file changes, use increasingly general patterns to restore cache
-            - platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}-{{ checksum ".circleci/config.yml" }}
-            - platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
-            - platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-
-            - platformio-v10-{{ .Branch }}-
-            - platformio-v10-
+            - v2-platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}-{{ checksum ".circleci/config.yml" }}
+            - v2-platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}
+            - v2-platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-
+            - v2-platformio-v10-{{ .Branch }}-
+            - v2-platformio-v10-
       - run:
           name: Set up
           command: |
@@ -54,10 +54,10 @@ jobs:
       #       lcov --capture --base-directory . --directory . --no-external --exclude "*/Common/lib/FakeIt/*" --exclude "*/Common/lib/MbedMock/*" --exclude "*/test/*" --output-file .coverage/input/coverage.info
       - save_cache:
           paths:
-            - ~/.local/share/virtualenvs # this path depends on where pipenv creates a virtualenv
+            # - ~/.local/share/virtualenvs # Disabled because caching this causes issues when Python minor version updates occur
             - ~/.platformio/cache
-            - .coverage
-          key: platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}-{{ checksum ".circleci/config.yml" }}
+            # - .coverage
+          key: v2-platformio-v10-{{ .Branch }}-{{ checksum "Pipfile" }}-{{ checksum "platformio.ini" }}-{{ checksum ".circleci/config.yml" }}
       # - store_artifacts:
       #     path: .coverage/output
       # - coveralls/upload:
