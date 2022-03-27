@@ -17,16 +17,16 @@ typedef struct PowerAuxErrorStruct : CANStruct, BitprotoPowerAuxErrorStruct {
     uint32_t get_message_ID() { return PowerAuxErrorStruct_MESSAGE_ID; }
 
     bool has_error() {
-        return fan_error || brake_light_error || headlight_error ||
-               bms_strobe_error || left_turn_error || right_turn_error;
+        return fan_current || brake_light_current || headlight_current ||
+               bms_strobe_current || left_turn_current || right_turn_current;
     }
 
     void print() {
-        PRINT("PowerAuxErrorStruct\n Fan Error: %d\n Brake Light Error: %d\n "
-              "Headlight Error: %d\n BMS Strobe Error: %d\n Left Turn Error: "
-              "%d\n Right Turn Error: %d\n",
-              fan_error, brake_light_error, headlight_error, bms_strobe_error,
-              left_turn_error, right_turn_error);
+        PRINT("PowerAuxErrorStruct\n Fan Current: %d\n Brake Light Current: %d\n "
+              "Headlight Current: %d\n BMS Strobe Current: %d\n Left Turn Current: "
+              "%d\n Right Turn Current: %d\n",
+              fan_current, brake_light_current, headlight_current, bms_strobe_current,
+              left_turn_current, right_turn_current);
     }
 } PowerAuxErrorStruct;
 
