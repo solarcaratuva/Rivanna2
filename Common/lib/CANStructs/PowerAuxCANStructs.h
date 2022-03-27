@@ -22,11 +22,13 @@ typedef struct PowerAuxErrorStruct : CANStruct, BitprotoPowerAuxErrorStruct {
     }
 
     void print() {
-        PRINT("PowerAuxErrorStruct\n Fan Current: %d\n Brake Light Current: %d\n "
-              "Headlight Current: %d\n BMS Strobe Current: %d\n Left Turn Current: "
-              "%d\n Right Turn Current: %d\n",
-              fan_current, brake_light_current, headlight_current, bms_strobe_current,
-              left_turn_current, right_turn_current);
+        PRINT(
+            "PowerAuxErrorStruct\n Fan Current: %d\n Brake Light Current: %d\n "
+            "Headlight Current: %d\n BMS Strobe Current: %d\n Left Turn "
+            "Current: "
+            "%d\n Right Turn Current: %d\n",
+            fan_current, brake_light_current, headlight_current,
+            bms_strobe_current, left_turn_current, right_turn_current);
     }
 } PowerAuxErrorStruct;
 
