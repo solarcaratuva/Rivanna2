@@ -1,6 +1,7 @@
 #include "MainCANInterface.h"
 
-MainCANInterface::MainCANInterface(PinName rd, PinName td, PinName standby_pin) : CANInterface(rd, td, standby_pin) {
+MainCANInterface::MainCANInterface(PinName rd, PinName td, PinName standby_pin)
+    : CANInterface(rd, td, standby_pin) {
     can.frequency(250000);
 }
 
