@@ -22,8 +22,7 @@
  */
 class MainCANInterface : public CANInterface {
   public:
-    MainCANInterface(PinName rd, PinName td, PinName standby_pin)
-        : CANInterface(rd, td, standby_pin) {}
+    MainCANInterface(PinName rd, PinName td, PinName standby_pin);
 
     int send(CANStruct *can_struct);
 

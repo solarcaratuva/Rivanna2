@@ -1,5 +1,10 @@
 #include "MainCANInterface.h"
 
+MainCANInterface::MainCANInterface(PinName rd, PinName td, PinName standby_pin)
+    : CANInterface(rd, td, standby_pin) {
+    can.frequency(250000);
+}
+
 int MainCANInterface::send(CANStruct *can_struct) {
     CANMessage message;
     can_struct->serialize(&message);
