@@ -81,10 +81,11 @@ typedef struct BPSCellVoltage : CANStruct, BitprotoBPSCellVoltage {
     uint32_t get_message_ID() { return BPSCellVoltage_Message_ID; }
 
     void print() {
-        PRINT("BPSCellVoltage\n low_cell_voltage: %u\n low_cell_voltage_id: %u\n "
-              "high_cell_voltage: %u\n high_cell_voltage_id: %u\n",
-              low_cell_voltage, low_cell_voltage_id, high_cell_voltage,
-              high_cell_voltage_id);
+        PRINT(
+            "BPSCellVoltage\n low_cell_voltage: %u\n low_cell_voltage_id: %u\n "
+            "high_cell_voltage: %u\n high_cell_voltage_id: %u\n",
+            low_cell_voltage, low_cell_voltage_id, high_cell_voltage,
+            high_cell_voltage_id);
     }
 } BPSCellVoltage;
 

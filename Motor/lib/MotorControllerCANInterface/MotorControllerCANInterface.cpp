@@ -6,7 +6,8 @@ MotorControllerCANInterface::MotorControllerCANInterface(PinName rd, PinName td,
     can.frequency(125000);
 }
 
-void MotorControllerCANInterface::request_frames(bool power_status_frame, bool drive_status_frame,
+void MotorControllerCANInterface::request_frames(bool power_status_frame,
+                                                 bool drive_status_frame,
                                                  bool errors_frame) {
     CANMessage message;
     FrameRequest request;
@@ -23,15 +24,18 @@ void MotorControllerCANInterface::rx_handler() {
     while (true) {
         CANMessage message;
         while (can.read(message)) {
-            if (message.id == MOTOR_CONTROLLER_MotorControllerPowerStatus_MESSAGE_ID) {
+            if (message.id ==
+                MOTOR_CONTROLLER_MotorControllerPowerStatus_MESSAGE_ID) {
                 MotorControllerPowerStatus can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            } else if (message.id == MOTOR_CONTROLLER_MotorControllerDriveStatus_MESSAGE_ID) {
+            } else if (message.id ==
+                       MOTOR_CONTROLLER_MotorControllerDriveStatus_MESSAGE_ID) {
                 MotorControllerDriveStatus can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            } else if (message.id == MOTOR_CONTROLLER_MotorControllerError_MESSAGE_ID) {
+            } else if (message.id ==
+                       MOTOR_CONTROLLER_MotorControllerError_MESSAGE_ID) {
                 MotorControllerError can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);

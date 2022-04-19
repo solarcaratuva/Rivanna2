@@ -26,8 +26,9 @@ typedef struct MotorControllerFrameRequest
     }
 
     void print() {
-        PRINT("FrameRequest\n power_status_frame: %d\n drive_status_frame: %d\n errors_frame: %d\n", power_status_frame,
-              drive_status_frame, errors_frame);
+        PRINT("FrameRequest\n power_status_frame: %d\n drive_status_frame: "
+              "%d\n errors_frame: %d\n",
+              power_status_frame, drive_status_frame, errors_frame);
     }
 } FrameRequest;
 
@@ -36,7 +37,7 @@ typedef struct MotorControllerFrameRequest
  * Defined on page 5 of the Motor CAN bus documentation.
  */
 typedef struct MotorControllerPowerStatus : CANStruct,
-                                       BitprotoMotorControllerPowerStatus {
+                                            BitprotoMotorControllerPowerStatus {
     void serialize(CANMessage *message) {
         EncodeBitprotoMotorControllerPowerStatus(this, message->data);
     }
@@ -48,7 +49,8 @@ typedef struct MotorControllerPowerStatus : CANStruct,
     uint32_t get_message_ID() { return MotorControllerPowerStatus_MESSAGE_ID; }
 
     void print() {
-        PRINT("MotorControllerPowerStatus\n battery_voltage: %u\n battery_current: %u\n "
+        PRINT("MotorControllerPowerStatus\n battery_voltage: %u\n "
+              "battery_current: %u\n "
               "battery_current_direction: %d\n motor_current: %u\n "
               "fet_temperature: %u\n motor_rotating_speed: %u\n pwm_duty: %u\n "
               "advanced_lead_angle: %u\n",
@@ -62,7 +64,8 @@ typedef struct MotorControllerPowerStatus : CANStruct,
  * Input information from the motor controller.
  * Defined on page 5 of the Motor CAN bus documentation.
  */
-typedef struct MotorControllerDriveStatus : CANStruct, BitprotoMotorControllerDriveStatus {
+typedef struct MotorControllerDriveStatus : CANStruct,
+                                            BitprotoMotorControllerDriveStatus {
     void serialize(CANMessage *message) {
         EncodeBitprotoMotorControllerDriveStatus(this, message->data);
     }
@@ -102,7 +105,8 @@ typedef struct MotorControllerError : CANStruct, BitprotoMotorControllerError {
 
     void print() {
         PRINT(
-            "MotorControllerError\n analog_sensor_error: %d\n motor_current_sensor_u_error: "
+            "MotorControllerError\n analog_sensor_error: %d\n "
+            "motor_current_sensor_u_error: "
             "%d\n motor_current_sensor_w_error: %d\n fet_thermistor_error: "
             "%d\n padding0: %d\n battery_voltage_sensor_error: %d\n "
             "battery_current_sensor_error: %d\n "
