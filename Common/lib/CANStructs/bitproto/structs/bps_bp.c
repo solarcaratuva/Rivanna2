@@ -3,7 +3,7 @@
 #include "bitproto.h"
 #include "bps_bp.h"
 
-void BpFieldDescriptorsInitBitprotoPackInformation(struct BitprotoPackInformation *m, struct BpMessageFieldDescriptor *fds) {
+void BpFieldDescriptorsInitBitprotoBPSPackInformation(struct BitprotoBPSPackInformation *m, struct BpMessageFieldDescriptor *fds) {
     fds[0] = BpMessageFieldDescriptor((void *)&(m->pack_voltage), BpUint(16, sizeof(uint16_t)), "pack_voltage");
     fds[1] = BpMessageFieldDescriptor((void *)&(m->pack_current), BpUint(16, sizeof(uint16_t)), "pack_current");
     fds[2] = BpMessageFieldDescriptor((void *)&(m->pack_soc), BpUint(8, sizeof(uint8_t)), "pack_soc");
@@ -32,118 +32,118 @@ void BpFieldDescriptorsInitBitprotoPackInformation(struct BitprotoPackInformatio
     fds[25] = BpMessageFieldDescriptor((void *)&(m->charge_relay), BpBool(), "charge_relay");
 }
 
-void BpXXXProcessBitprotoPackInformation(void *data, struct BpProcessorContext *ctx) {
-    struct BitprotoPackInformation *m = (struct BitprotoPackInformation *)(data);
+void BpXXXProcessBitprotoBPSPackInformation(void *data, struct BpProcessorContext *ctx) {
+    struct BitprotoBPSPackInformation *m = (struct BitprotoBPSPackInformation *)(data);
     struct BpMessageFieldDescriptor field_descriptors[26];
-    BpFieldDescriptorsInitBitprotoPackInformation(m, field_descriptors);
+    BpFieldDescriptorsInitBitprotoBPSPackInformation(m, field_descriptors);
     struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 26, 63, field_descriptors);
     BpEndecodeMessage(&descriptor, ctx, data);
 }
 
-void BpXXXJsonFormatBitprotoPackInformation(void *data, struct BpJsonFormatContext *ctx) {
-    struct BitprotoPackInformation *m = (struct BitprotoPackInformation *)(data);
+void BpXXXJsonFormatBitprotoBPSPackInformation(void *data, struct BpJsonFormatContext *ctx) {
+    struct BitprotoBPSPackInformation *m = (struct BitprotoBPSPackInformation *)(data);
     struct BpMessageFieldDescriptor field_descriptors[26];
-    BpFieldDescriptorsInitBitprotoPackInformation(m, field_descriptors);
+    BpFieldDescriptorsInitBitprotoBPSPackInformation(m, field_descriptors);
     struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 26, 63, field_descriptors);
     BpJsonFormatMessage(&descriptor, ctx, data);
 }
 
-int EncodeBitprotoPackInformation(struct BitprotoPackInformation *m, unsigned char *s) {
+int EncodeBitprotoBPSPackInformation(struct BitprotoBPSPackInformation *m, unsigned char *s) {
     struct BpProcessorContext ctx = BpProcessorContext(true, s);
-    BpXXXProcessBitprotoPackInformation((void *)m, &ctx);
+    BpXXXProcessBitprotoBPSPackInformation((void *)m, &ctx);
     return 0;
 }
 
-int DecodeBitprotoPackInformation(struct BitprotoPackInformation *m, unsigned char *s) {
+int DecodeBitprotoBPSPackInformation(struct BitprotoBPSPackInformation *m, unsigned char *s) {
     struct BpProcessorContext ctx = BpProcessorContext(false, s);
-    BpXXXProcessBitprotoPackInformation((void *)m, &ctx);
+    BpXXXProcessBitprotoBPSPackInformation((void *)m, &ctx);
     return 0;
 }
 
-int JsonBitprotoPackInformation(struct BitprotoPackInformation *m, char *s) {
+int JsonBitprotoBPSPackInformation(struct BitprotoBPSPackInformation *m, char *s) {
     struct BpJsonFormatContext ctx = BpJsonFormatContext(s);
-    BpXXXJsonFormatBitprotoPackInformation((void *)m, &ctx);
+    BpXXXJsonFormatBitprotoBPSPackInformation((void *)m, &ctx);
     return ctx.n;
 }
 
-void BpFieldDescriptorsInitBitprotoCellVoltage(struct BitprotoCellVoltage *m, struct BpMessageFieldDescriptor *fds) {
+void BpFieldDescriptorsInitBitprotoBPSCellVoltage(struct BitprotoBPSCellVoltage *m, struct BpMessageFieldDescriptor *fds) {
     fds[0] = BpMessageFieldDescriptor((void *)&(m->low_cell_voltage), BpUint(16, sizeof(uint16_t)), "low_cell_voltage");
     fds[1] = BpMessageFieldDescriptor((void *)&(m->low_cell_voltage_id), BpUint(8, sizeof(uint8_t)), "low_cell_voltage_id");
     fds[2] = BpMessageFieldDescriptor((void *)&(m->high_cell_voltage), BpUint(16, sizeof(uint16_t)), "high_cell_voltage");
     fds[3] = BpMessageFieldDescriptor((void *)&(m->high_cell_voltage_id), BpUint(8, sizeof(uint8_t)), "high_cell_voltage_id");
 }
 
-void BpXXXProcessBitprotoCellVoltage(void *data, struct BpProcessorContext *ctx) {
-    struct BitprotoCellVoltage *m = (struct BitprotoCellVoltage *)(data);
+void BpXXXProcessBitprotoBPSCellVoltage(void *data, struct BpProcessorContext *ctx) {
+    struct BitprotoBPSCellVoltage *m = (struct BitprotoBPSCellVoltage *)(data);
     struct BpMessageFieldDescriptor field_descriptors[4];
-    BpFieldDescriptorsInitBitprotoCellVoltage(m, field_descriptors);
+    BpFieldDescriptorsInitBitprotoBPSCellVoltage(m, field_descriptors);
     struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 4, 48, field_descriptors);
     BpEndecodeMessage(&descriptor, ctx, data);
 }
 
-void BpXXXJsonFormatBitprotoCellVoltage(void *data, struct BpJsonFormatContext *ctx) {
-    struct BitprotoCellVoltage *m = (struct BitprotoCellVoltage *)(data);
+void BpXXXJsonFormatBitprotoBPSCellVoltage(void *data, struct BpJsonFormatContext *ctx) {
+    struct BitprotoBPSCellVoltage *m = (struct BitprotoBPSCellVoltage *)(data);
     struct BpMessageFieldDescriptor field_descriptors[4];
-    BpFieldDescriptorsInitBitprotoCellVoltage(m, field_descriptors);
+    BpFieldDescriptorsInitBitprotoBPSCellVoltage(m, field_descriptors);
     struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 4, 48, field_descriptors);
     BpJsonFormatMessage(&descriptor, ctx, data);
 }
 
-int EncodeBitprotoCellVoltage(struct BitprotoCellVoltage *m, unsigned char *s) {
+int EncodeBitprotoBPSCellVoltage(struct BitprotoBPSCellVoltage *m, unsigned char *s) {
     struct BpProcessorContext ctx = BpProcessorContext(true, s);
-    BpXXXProcessBitprotoCellVoltage((void *)m, &ctx);
+    BpXXXProcessBitprotoBPSCellVoltage((void *)m, &ctx);
     return 0;
 }
 
-int DecodeBitprotoCellVoltage(struct BitprotoCellVoltage *m, unsigned char *s) {
+int DecodeBitprotoBPSCellVoltage(struct BitprotoBPSCellVoltage *m, unsigned char *s) {
     struct BpProcessorContext ctx = BpProcessorContext(false, s);
-    BpXXXProcessBitprotoCellVoltage((void *)m, &ctx);
+    BpXXXProcessBitprotoBPSCellVoltage((void *)m, &ctx);
     return 0;
 }
 
-int JsonBitprotoCellVoltage(struct BitprotoCellVoltage *m, char *s) {
+int JsonBitprotoBPSCellVoltage(struct BitprotoBPSCellVoltage *m, char *s) {
     struct BpJsonFormatContext ctx = BpJsonFormatContext(s);
-    BpXXXJsonFormatBitprotoCellVoltage((void *)m, &ctx);
+    BpXXXJsonFormatBitprotoBPSCellVoltage((void *)m, &ctx);
     return ctx.n;
 }
 
-void BpFieldDescriptorsInitBitprotoCellTemperature(struct BitprotoCellTemperature *m, struct BpMessageFieldDescriptor *fds) {
+void BpFieldDescriptorsInitBitprotoBPSCellTemperature(struct BitprotoBPSCellTemperature *m, struct BpMessageFieldDescriptor *fds) {
     fds[0] = BpMessageFieldDescriptor((void *)&(m->low_temperature), BpUint(8, sizeof(uint8_t)), "low_temperature");
     fds[1] = BpMessageFieldDescriptor((void *)&(m->low_thermistor_id), BpUint(8, sizeof(uint8_t)), "low_thermistor_id");
     fds[2] = BpMessageFieldDescriptor((void *)&(m->high_temperature), BpUint(8, sizeof(uint8_t)), "high_temperature");
     fds[3] = BpMessageFieldDescriptor((void *)&(m->high_thermistor_id), BpUint(8, sizeof(uint8_t)), "high_thermistor_id");
 }
 
-void BpXXXProcessBitprotoCellTemperature(void *data, struct BpProcessorContext *ctx) {
-    struct BitprotoCellTemperature *m = (struct BitprotoCellTemperature *)(data);
+void BpXXXProcessBitprotoBPSCellTemperature(void *data, struct BpProcessorContext *ctx) {
+    struct BitprotoBPSCellTemperature *m = (struct BitprotoBPSCellTemperature *)(data);
     struct BpMessageFieldDescriptor field_descriptors[4];
-    BpFieldDescriptorsInitBitprotoCellTemperature(m, field_descriptors);
+    BpFieldDescriptorsInitBitprotoBPSCellTemperature(m, field_descriptors);
     struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 4, 32, field_descriptors);
     BpEndecodeMessage(&descriptor, ctx, data);
 }
 
-void BpXXXJsonFormatBitprotoCellTemperature(void *data, struct BpJsonFormatContext *ctx) {
-    struct BitprotoCellTemperature *m = (struct BitprotoCellTemperature *)(data);
+void BpXXXJsonFormatBitprotoBPSCellTemperature(void *data, struct BpJsonFormatContext *ctx) {
+    struct BitprotoBPSCellTemperature *m = (struct BitprotoBPSCellTemperature *)(data);
     struct BpMessageFieldDescriptor field_descriptors[4];
-    BpFieldDescriptorsInitBitprotoCellTemperature(m, field_descriptors);
+    BpFieldDescriptorsInitBitprotoBPSCellTemperature(m, field_descriptors);
     struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 4, 32, field_descriptors);
     BpJsonFormatMessage(&descriptor, ctx, data);
 }
 
-int EncodeBitprotoCellTemperature(struct BitprotoCellTemperature *m, unsigned char *s) {
+int EncodeBitprotoBPSCellTemperature(struct BitprotoBPSCellTemperature *m, unsigned char *s) {
     struct BpProcessorContext ctx = BpProcessorContext(true, s);
-    BpXXXProcessBitprotoCellTemperature((void *)m, &ctx);
+    BpXXXProcessBitprotoBPSCellTemperature((void *)m, &ctx);
     return 0;
 }
 
-int DecodeBitprotoCellTemperature(struct BitprotoCellTemperature *m, unsigned char *s) {
+int DecodeBitprotoBPSCellTemperature(struct BitprotoBPSCellTemperature *m, unsigned char *s) {
     struct BpProcessorContext ctx = BpProcessorContext(false, s);
-    BpXXXProcessBitprotoCellTemperature((void *)m, &ctx);
+    BpXXXProcessBitprotoBPSCellTemperature((void *)m, &ctx);
     return 0;
 }
 
-int JsonBitprotoCellTemperature(struct BitprotoCellTemperature *m, char *s) {
+int JsonBitprotoBPSCellTemperature(struct BitprotoBPSCellTemperature *m, char *s) {
     struct BpJsonFormatContext ctx = BpJsonFormatContext(s);
-    BpXXXJsonFormatBitprotoCellTemperature((void *)m, &ctx);
+    BpXXXJsonFormatBitprotoBPSCellTemperature((void *)m, &ctx);
     return ctx.n;
 }

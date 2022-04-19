@@ -4,9 +4,9 @@
 #include "motor_controller_bp.h"
 
 void BpFieldDescriptorsInitBitprotoMotorControllerFrameRequest(struct BitprotoMotorControllerFrameRequest *m, struct BpMessageFieldDescriptor *fds) {
-    fds[0] = BpMessageFieldDescriptor((void *)&(m->frame0), BpBool(), "frame0");
-    fds[1] = BpMessageFieldDescriptor((void *)&(m->frame1), BpBool(), "frame1");
-    fds[2] = BpMessageFieldDescriptor((void *)&(m->frame2), BpBool(), "frame2");
+    fds[0] = BpMessageFieldDescriptor((void *)&(m->power_status_frame), BpBool(), "power_status_frame");
+    fds[1] = BpMessageFieldDescriptor((void *)&(m->drive_status_frame), BpBool(), "drive_status_frame");
+    fds[2] = BpMessageFieldDescriptor((void *)&(m->errors_frame), BpBool(), "errors_frame");
 }
 
 void BpXXXProcessBitprotoMotorControllerFrameRequest(void *data, struct BpProcessorContext *ctx) {
@@ -43,7 +43,7 @@ int JsonBitprotoMotorControllerFrameRequest(struct BitprotoMotorControllerFrameR
     return ctx.n;
 }
 
-void BpFieldDescriptorsInitBitprotoMotorControllerFrame0(struct BitprotoMotorControllerFrame0 *m, struct BpMessageFieldDescriptor *fds) {
+void BpFieldDescriptorsInitBitprotoMotorControllerPowerStatus(struct BitprotoMotorControllerPowerStatus *m, struct BpMessageFieldDescriptor *fds) {
     fds[0] = BpMessageFieldDescriptor((void *)&(m->battery_voltage), BpUint(10, sizeof(uint16_t)), "battery_voltage");
     fds[1] = BpMessageFieldDescriptor((void *)&(m->battery_current), BpUint(9, sizeof(uint16_t)), "battery_current");
     fds[2] = BpMessageFieldDescriptor((void *)&(m->battery_current_direction), BpBool(), "battery_current_direction");
@@ -54,41 +54,41 @@ void BpFieldDescriptorsInitBitprotoMotorControllerFrame0(struct BitprotoMotorCon
     fds[7] = BpMessageFieldDescriptor((void *)&(m->advanced_lead_angle), BpUint(7, sizeof(uint8_t)), "advanced_lead_angle");
 }
 
-void BpXXXProcessBitprotoMotorControllerFrame0(void *data, struct BpProcessorContext *ctx) {
-    struct BitprotoMotorControllerFrame0 *m = (struct BitprotoMotorControllerFrame0 *)(data);
+void BpXXXProcessBitprotoMotorControllerPowerStatus(void *data, struct BpProcessorContext *ctx) {
+    struct BitprotoMotorControllerPowerStatus *m = (struct BitprotoMotorControllerPowerStatus *)(data);
     struct BpMessageFieldDescriptor field_descriptors[8];
-    BpFieldDescriptorsInitBitprotoMotorControllerFrame0(m, field_descriptors);
+    BpFieldDescriptorsInitBitprotoMotorControllerPowerStatus(m, field_descriptors);
     struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 8, 64, field_descriptors);
     BpEndecodeMessage(&descriptor, ctx, data);
 }
 
-void BpXXXJsonFormatBitprotoMotorControllerFrame0(void *data, struct BpJsonFormatContext *ctx) {
-    struct BitprotoMotorControllerFrame0 *m = (struct BitprotoMotorControllerFrame0 *)(data);
+void BpXXXJsonFormatBitprotoMotorControllerPowerStatus(void *data, struct BpJsonFormatContext *ctx) {
+    struct BitprotoMotorControllerPowerStatus *m = (struct BitprotoMotorControllerPowerStatus *)(data);
     struct BpMessageFieldDescriptor field_descriptors[8];
-    BpFieldDescriptorsInitBitprotoMotorControllerFrame0(m, field_descriptors);
+    BpFieldDescriptorsInitBitprotoMotorControllerPowerStatus(m, field_descriptors);
     struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 8, 64, field_descriptors);
     BpJsonFormatMessage(&descriptor, ctx, data);
 }
 
-int EncodeBitprotoMotorControllerFrame0(struct BitprotoMotorControllerFrame0 *m, unsigned char *s) {
+int EncodeBitprotoMotorControllerPowerStatus(struct BitprotoMotorControllerPowerStatus *m, unsigned char *s) {
     struct BpProcessorContext ctx = BpProcessorContext(true, s);
-    BpXXXProcessBitprotoMotorControllerFrame0((void *)m, &ctx);
+    BpXXXProcessBitprotoMotorControllerPowerStatus((void *)m, &ctx);
     return 0;
 }
 
-int DecodeBitprotoMotorControllerFrame0(struct BitprotoMotorControllerFrame0 *m, unsigned char *s) {
+int DecodeBitprotoMotorControllerPowerStatus(struct BitprotoMotorControllerPowerStatus *m, unsigned char *s) {
     struct BpProcessorContext ctx = BpProcessorContext(false, s);
-    BpXXXProcessBitprotoMotorControllerFrame0((void *)m, &ctx);
+    BpXXXProcessBitprotoMotorControllerPowerStatus((void *)m, &ctx);
     return 0;
 }
 
-int JsonBitprotoMotorControllerFrame0(struct BitprotoMotorControllerFrame0 *m, char *s) {
+int JsonBitprotoMotorControllerPowerStatus(struct BitprotoMotorControllerPowerStatus *m, char *s) {
     struct BpJsonFormatContext ctx = BpJsonFormatContext(s);
-    BpXXXJsonFormatBitprotoMotorControllerFrame0((void *)m, &ctx);
+    BpXXXJsonFormatBitprotoMotorControllerPowerStatus((void *)m, &ctx);
     return ctx.n;
 }
 
-void BpFieldDescriptorsInitBitprotoMotorControllerFrame1(struct BitprotoMotorControllerFrame1 *m, struct BpMessageFieldDescriptor *fds) {
+void BpFieldDescriptorsInitBitprotoMotorControllerDriveStatus(struct BitprotoMotorControllerDriveStatus *m, struct BpMessageFieldDescriptor *fds) {
     fds[0] = BpMessageFieldDescriptor((void *)&(m->power_eco), BpBool(), "power_eco");
     fds[1] = BpMessageFieldDescriptor((void *)&(m->control_mode), BpBool(), "control_mode");
     fds[2] = BpMessageFieldDescriptor((void *)&(m->acceleration_vr_position), BpUint(10, sizeof(uint16_t)), "acceleration_vr_position");
@@ -99,41 +99,41 @@ void BpFieldDescriptorsInitBitprotoMotorControllerFrame1(struct BitprotoMotorCon
     fds[7] = BpMessageFieldDescriptor((void *)&(m->drive_regen), BpBool(), "drive_regen");
 }
 
-void BpXXXProcessBitprotoMotorControllerFrame1(void *data, struct BpProcessorContext *ctx) {
-    struct BitprotoMotorControllerFrame1 *m = (struct BitprotoMotorControllerFrame1 *)(data);
+void BpXXXProcessBitprotoMotorControllerDriveStatus(void *data, struct BpProcessorContext *ctx) {
+    struct BitprotoMotorControllerDriveStatus *m = (struct BitprotoMotorControllerDriveStatus *)(data);
     struct BpMessageFieldDescriptor field_descriptors[8];
-    BpFieldDescriptorsInitBitprotoMotorControllerFrame1(m, field_descriptors);
+    BpFieldDescriptorsInitBitprotoMotorControllerDriveStatus(m, field_descriptors);
     struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 8, 39, field_descriptors);
     BpEndecodeMessage(&descriptor, ctx, data);
 }
 
-void BpXXXJsonFormatBitprotoMotorControllerFrame1(void *data, struct BpJsonFormatContext *ctx) {
-    struct BitprotoMotorControllerFrame1 *m = (struct BitprotoMotorControllerFrame1 *)(data);
+void BpXXXJsonFormatBitprotoMotorControllerDriveStatus(void *data, struct BpJsonFormatContext *ctx) {
+    struct BitprotoMotorControllerDriveStatus *m = (struct BitprotoMotorControllerDriveStatus *)(data);
     struct BpMessageFieldDescriptor field_descriptors[8];
-    BpFieldDescriptorsInitBitprotoMotorControllerFrame1(m, field_descriptors);
+    BpFieldDescriptorsInitBitprotoMotorControllerDriveStatus(m, field_descriptors);
     struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 8, 39, field_descriptors);
     BpJsonFormatMessage(&descriptor, ctx, data);
 }
 
-int EncodeBitprotoMotorControllerFrame1(struct BitprotoMotorControllerFrame1 *m, unsigned char *s) {
+int EncodeBitprotoMotorControllerDriveStatus(struct BitprotoMotorControllerDriveStatus *m, unsigned char *s) {
     struct BpProcessorContext ctx = BpProcessorContext(true, s);
-    BpXXXProcessBitprotoMotorControllerFrame1((void *)m, &ctx);
+    BpXXXProcessBitprotoMotorControllerDriveStatus((void *)m, &ctx);
     return 0;
 }
 
-int DecodeBitprotoMotorControllerFrame1(struct BitprotoMotorControllerFrame1 *m, unsigned char *s) {
+int DecodeBitprotoMotorControllerDriveStatus(struct BitprotoMotorControllerDriveStatus *m, unsigned char *s) {
     struct BpProcessorContext ctx = BpProcessorContext(false, s);
-    BpXXXProcessBitprotoMotorControllerFrame1((void *)m, &ctx);
+    BpXXXProcessBitprotoMotorControllerDriveStatus((void *)m, &ctx);
     return 0;
 }
 
-int JsonBitprotoMotorControllerFrame1(struct BitprotoMotorControllerFrame1 *m, char *s) {
+int JsonBitprotoMotorControllerDriveStatus(struct BitprotoMotorControllerDriveStatus *m, char *s) {
     struct BpJsonFormatContext ctx = BpJsonFormatContext(s);
-    BpXXXJsonFormatBitprotoMotorControllerFrame1((void *)m, &ctx);
+    BpXXXJsonFormatBitprotoMotorControllerDriveStatus((void *)m, &ctx);
     return ctx.n;
 }
 
-void BpFieldDescriptorsInitBitprotoMotorControllerFrame2(struct BitprotoMotorControllerFrame2 *m, struct BpMessageFieldDescriptor *fds) {
+void BpFieldDescriptorsInitBitprotoMotorControllerError(struct BitprotoMotorControllerError *m, struct BpMessageFieldDescriptor *fds) {
     fds[0] = BpMessageFieldDescriptor((void *)&(m->analog_sensor_error), BpBool(), "analog_sensor_error");
     fds[1] = BpMessageFieldDescriptor((void *)&(m->motor_current_sensor_u_error), BpBool(), "motor_current_sensor_u_error");
     fds[2] = BpMessageFieldDescriptor((void *)&(m->motor_current_sensor_w_error), BpBool(), "motor_current_sensor_w_error");
@@ -162,36 +162,36 @@ void BpFieldDescriptorsInitBitprotoMotorControllerFrame2(struct BitprotoMotorCon
     fds[25] = BpMessageFieldDescriptor((void *)&(m->overheat_level), BpUint(2, sizeof(uint8_t)), "overheat_level");
 }
 
-void BpXXXProcessBitprotoMotorControllerFrame2(void *data, struct BpProcessorContext *ctx) {
-    struct BitprotoMotorControllerFrame2 *m = (struct BitprotoMotorControllerFrame2 *)(data);
+void BpXXXProcessBitprotoMotorControllerError(void *data, struct BpProcessorContext *ctx) {
+    struct BitprotoMotorControllerError *m = (struct BitprotoMotorControllerError *)(data);
     struct BpMessageFieldDescriptor field_descriptors[26];
-    BpFieldDescriptorsInitBitprotoMotorControllerFrame2(m, field_descriptors);
+    BpFieldDescriptorsInitBitprotoMotorControllerError(m, field_descriptors);
     struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 26, 32, field_descriptors);
     BpEndecodeMessage(&descriptor, ctx, data);
 }
 
-void BpXXXJsonFormatBitprotoMotorControllerFrame2(void *data, struct BpJsonFormatContext *ctx) {
-    struct BitprotoMotorControllerFrame2 *m = (struct BitprotoMotorControllerFrame2 *)(data);
+void BpXXXJsonFormatBitprotoMotorControllerError(void *data, struct BpJsonFormatContext *ctx) {
+    struct BitprotoMotorControllerError *m = (struct BitprotoMotorControllerError *)(data);
     struct BpMessageFieldDescriptor field_descriptors[26];
-    BpFieldDescriptorsInitBitprotoMotorControllerFrame2(m, field_descriptors);
+    BpFieldDescriptorsInitBitprotoMotorControllerError(m, field_descriptors);
     struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 26, 32, field_descriptors);
     BpJsonFormatMessage(&descriptor, ctx, data);
 }
 
-int EncodeBitprotoMotorControllerFrame2(struct BitprotoMotorControllerFrame2 *m, unsigned char *s) {
+int EncodeBitprotoMotorControllerError(struct BitprotoMotorControllerError *m, unsigned char *s) {
     struct BpProcessorContext ctx = BpProcessorContext(true, s);
-    BpXXXProcessBitprotoMotorControllerFrame2((void *)m, &ctx);
+    BpXXXProcessBitprotoMotorControllerError((void *)m, &ctx);
     return 0;
 }
 
-int DecodeBitprotoMotorControllerFrame2(struct BitprotoMotorControllerFrame2 *m, unsigned char *s) {
+int DecodeBitprotoMotorControllerError(struct BitprotoMotorControllerError *m, unsigned char *s) {
     struct BpProcessorContext ctx = BpProcessorContext(false, s);
-    BpXXXProcessBitprotoMotorControllerFrame2((void *)m, &ctx);
+    BpXXXProcessBitprotoMotorControllerError((void *)m, &ctx);
     return 0;
 }
 
-int JsonBitprotoMotorControllerFrame2(struct BitprotoMotorControllerFrame2 *m, char *s) {
+int JsonBitprotoMotorControllerError(struct BitprotoMotorControllerError *m, char *s) {
     struct BpJsonFormatContext ctx = BpJsonFormatContext(s);
-    BpXXXJsonFormatBitprotoMotorControllerFrame2((void *)m, &ctx);
+    BpXXXJsonFormatBitprotoMotorControllerError((void *)m, &ctx);
     return ctx.n;
 }

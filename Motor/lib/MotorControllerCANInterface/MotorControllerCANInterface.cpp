@@ -6,13 +6,13 @@ MotorControllerCANInterface::MotorControllerCANInterface(PinName rd, PinName td,
     can.frequency(125000);
 }
 
-void MotorControllerCANInterface::request_frames(bool frame0, bool frame1,
-                                                 bool frame2) {
+void MotorControllerCANInterface::request_frames(bool power_status_frame, bool drive_status_frame,
+                                                 bool errors_frame) {
     CANMessage message;
     FrameRequest request;
-    request.frame0 = frame0;
-    request.frame1 = frame1;
-    request.frame2 = frame2;
+    request.power_status_frame = power_status_frame;
+    request.drive_status_frame = drive_status_frame;
+    request.errors_frame = errors_frame;
     request.serialize(&message);
     message.id = request.get_message_ID();
     message.format = CANFormat::CANExtended;
@@ -23,17 +23,16 @@ void MotorControllerCANInterface::rx_handler() {
     while (true) {
         CANMessage message;
         while (can.read(message)) {
-            if (message.id == MOTOR_CONTROLLER_Frame0_MESSAGE_ID) {
-                Frame0 can_struct;
+            if (message.id == MOTOR_CONTROLLER_MotorControllerPowerStatus_MESSAGE_ID) {
+                MotorControllerPowerStatus can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            } else if (message.id == MOTOR_CONTROLLER_Frame1_MESSAGE_ID) {
-                Frame1 can_struct;
+            } else if (message.id == MOTOR_CONTROLLER_MotorControllerDriveStatus_MESSAGE_ID) {
+                MotorControllerDriveStatus can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            }
-            if (message.id == MOTOR_CONTROLLER_Frame2_MESSAGE_ID) {
-                Frame2 can_struct;
+            } else if (message.id == MOTOR_CONTROLLER_MotorControllerError_MESSAGE_ID) {
+                MotorControllerError can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
             }

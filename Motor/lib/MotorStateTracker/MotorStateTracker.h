@@ -6,18 +6,18 @@
 
 class MotorStateTracker {
   public:
-    void setFrame0(Frame0 new_frame);
-    void setFrame1(Frame1 new_frame);
-    void setFrame2(Frame2 new_frame);
+    void setMotorControllerPowerStatus(MotorControllerPowerStatus new_frame);
+    void setMotorControllerDriveStatus(MotorControllerDriveStatus new_frame);
+    void setMotorControllerError(MotorControllerError new_frame);
 
-    Frame0 getFrame0(void);
-    Frame1 getFrame1(void);
-    Frame2 getFrame2(void);
+    MotorControllerPowerStatus getMotorControllerPowerStatus(void);
+    MotorControllerDriveStatus getMotorControllerDriveStatus(void);
+    MotorControllerError getMotorControllerError(void);
 
   private:
-    Frame0 frame0;
-    Frame1 frame1;
-    Frame2 frame2;
+    MotorControllerPowerStatus frame0;
+    MotorControllerDriveStatus frame1;
+    MotorControllerError frame2;
 };
 
 #endif

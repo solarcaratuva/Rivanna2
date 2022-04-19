@@ -79,7 +79,7 @@ AnalogIn right_turn_current(RIGHT_TURN_CURRENT);
 Thread peripheral_error_thread;
 
 void peripheral_error_handler() {
-    PowerAuxErrorStruct msg;
+    PowerAuxError msg;
     while (true) {
         msg.bms_strobe_error =
             (bms_strobe_current.read_u16() < 1000 && bpsFaultIndicator);
@@ -132,31 +132,31 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
     flashHazards = can_struct->hazards;
 }
 
-void PowerAuxBPSCANInterface::handle(PackInformation *can_struct) {
+void PowerAuxBPSCANInterface::handle(BPSPackInformation *can_struct) {
     vehicle_can_interface.send(can_struct);
 #ifdef DEBUG
     can_struct->print();
 #endif
     bpsFaultIndicator = can_struct->has_error();
 
-    PRINT("Received PackInformation struct: pack_voltage=%u\n",
+    PRINT("Received BPSPackInformation struct: pack_voltage=%u\n",
           can_struct->pack_voltage);
 }
 
-void PowerAuxBPSCANInterface::handle(CellVoltage *can_struct) {
+void PowerAuxBPSCANInterface::handle(BPSCellVoltage *can_struct) {
     vehicle_can_interface.send(can_struct);
 #ifdef DEBUG
     can_struct->print();
 #endif
-    PRINT("Received CellVoltage struct: low_cell_voltage=%u\n",
+    PRINT("Received BPSCellVoltage struct: low_cell_voltage=%u\n",
           can_struct->low_cell_voltage);
 }
 
-void PowerAuxBPSCANInterface::handle(CellTemperature *can_struct) {
+void PowerAuxBPSCANInterface::handle(BPSCellTemperature *can_struct) {
     vehicle_can_interface.send(can_struct);
 #ifdef DEBUG
     can_struct->print();
 #endif
-    PRINT("Received CellTemperature struct: low_temperature=%u\n",
+    PRINT("Received BPSCellTemperature struct: low_temperature=%u\n",
           can_struct->low_temperature);
 }
