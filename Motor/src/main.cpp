@@ -46,12 +46,13 @@ int main() {
         // PRINT("Motor State\r\n");
         // PRINT("-------------------\r\n");
         // PRINT("Battery Voltage: %d\r\n",
-        // motor_state_tracker.getFrame0().battery_voltage); PRINT("Motor
-        // Rotating Speed: %d\r\n",
-        // motor_state_tracker.getFrame0().motor_rotating_speed); PRINT("Power
-        // Eco: %d\r\n", motor_state_tracker.getFrame1().power_eco);
+        // motor_state_tracker.getMotorControllerPowerStatus().battery_voltage);
+        // PRINT("Motor Rotating Speed: %d\r\n",
+        // motor_state_tracker.getMotorControllerPowerStatus().motor_rotating_speed);
+        // PRINT("Power Eco: %d\r\n",
+        // motor_state_tracker.getMotorControllerDriveStatus().power_eco);
         // PRINT("Motor Status: %d/r/n",
-        // motor_state_tracker.getFrame1().motor_status);
+        // motor_state_tracker.getMotorControllerDriveStatus().motor_status);
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }
 }
@@ -70,28 +71,30 @@ void MotorCANInterface::handle(ECUMotorCommands *can_struct) {
     //     can_struct->motor_on);
 }
 
-void MotorControllerCANInterface::handle(Frame0 *can_struct) {
+void MotorControllerCANInterface::handle(
+    MotorControllerPowerStatus *can_struct) {
 #ifdef DEBUG
     can_struct->print();
 #endif
     vehicle_can_interface.send(can_struct);
-    motor_state_tracker.setFrame0(*can_struct);
+    motor_state_tracker.setMotorControllerPowerStatus(*can_struct);
 }
 
-void MotorControllerCANInterface::handle(Frame1 *can_struct) {
+void MotorControllerCANInterface::handle(
+    MotorControllerDriveStatus *can_struct) {
 #ifdef DEBUG
     can_struct->print();
 #endif
     vehicle_can_interface.send(can_struct);
-    motor_state_tracker.setFrame1(*can_struct);
+    motor_state_tracker.setMotorControllerDriveStatus(*can_struct);
 }
 
-void MotorControllerCANInterface::handle(Frame2 *can_struct) {
+void MotorControllerCANInterface::handle(MotorControllerError *can_struct) {
 #ifdef DEBUG
     can_struct->print();
 #endif
     vehicle_can_interface.send(can_struct);
-    motor_state_tracker.setFrame2(*can_struct);
+    motor_state_tracker.setMotorControllerError(*can_struct);
 }
 
 //

@@ -16,10 +16,10 @@
 extern "C" {
 #endif
 
-// Number of bytes to encode struct BitprotoPackInformation
-#define BYTES_LENGTH_BITPROTO_PACK_INFORMATION 8
+// Number of bytes to encode struct BitprotoBPSPackInformation
+#define BYTES_LENGTH_BITPROTO_BPS_PACK_INFORMATION 8
 
-struct BitprotoPackInformation {
+struct BitprotoBPSPackInformation {
     uint16_t pack_voltage; // 16bit
     uint16_t pack_current; // 16bit
     uint8_t pack_soc; // 8bit
@@ -48,55 +48,55 @@ struct BitprotoPackInformation {
     bool charge_relay; // 1bit
 };
 
-// Number of bytes to encode struct BitprotoCellVoltage
-#define BYTES_LENGTH_BITPROTO_CELL_VOLTAGE 6
+// Number of bytes to encode struct BitprotoBPSCellVoltage
+#define BYTES_LENGTH_BITPROTO_BPS_CELL_VOLTAGE 6
 
-struct BitprotoCellVoltage {
+struct BitprotoBPSCellVoltage {
     uint16_t low_cell_voltage; // 16bit
     uint8_t low_cell_voltage_id; // 8bit
     uint16_t high_cell_voltage; // 16bit
     uint8_t high_cell_voltage_id; // 8bit
 };
 
-// Number of bytes to encode struct BitprotoCellTemperature
-#define BYTES_LENGTH_BITPROTO_CELL_TEMPERATURE 4
+// Number of bytes to encode struct BitprotoBPSCellTemperature
+#define BYTES_LENGTH_BITPROTO_BPS_CELL_TEMPERATURE 4
 
-struct BitprotoCellTemperature {
+struct BitprotoBPSCellTemperature {
     uint8_t low_temperature; // 8bit
     uint8_t low_thermistor_id; // 8bit
     uint8_t high_temperature; // 8bit
     uint8_t high_thermistor_id; // 8bit
 };
 
-// Encode struct BitprotoPackInformation to given buffer s.
-int EncodeBitprotoPackInformation(struct BitprotoPackInformation *m, unsigned char *s);
-// Decode struct BitprotoPackInformation from given buffer s.
-int DecodeBitprotoPackInformation(struct BitprotoPackInformation *m, unsigned char *s);
-// Format struct BitprotoPackInformation to a json format string.
-int JsonBitprotoPackInformation(struct BitprotoPackInformation *m, char *s);
+// Encode struct BitprotoBPSPackInformation to given buffer s.
+int EncodeBitprotoBPSPackInformation(struct BitprotoBPSPackInformation *m, unsigned char *s);
+// Decode struct BitprotoBPSPackInformation from given buffer s.
+int DecodeBitprotoBPSPackInformation(struct BitprotoBPSPackInformation *m, unsigned char *s);
+// Format struct BitprotoBPSPackInformation to a json format string.
+int JsonBitprotoBPSPackInformation(struct BitprotoBPSPackInformation *m, char *s);
 
-// Encode struct BitprotoCellVoltage to given buffer s.
-int EncodeBitprotoCellVoltage(struct BitprotoCellVoltage *m, unsigned char *s);
-// Decode struct BitprotoCellVoltage from given buffer s.
-int DecodeBitprotoCellVoltage(struct BitprotoCellVoltage *m, unsigned char *s);
-// Format struct BitprotoCellVoltage to a json format string.
-int JsonBitprotoCellVoltage(struct BitprotoCellVoltage *m, char *s);
+// Encode struct BitprotoBPSCellVoltage to given buffer s.
+int EncodeBitprotoBPSCellVoltage(struct BitprotoBPSCellVoltage *m, unsigned char *s);
+// Decode struct BitprotoBPSCellVoltage from given buffer s.
+int DecodeBitprotoBPSCellVoltage(struct BitprotoBPSCellVoltage *m, unsigned char *s);
+// Format struct BitprotoBPSCellVoltage to a json format string.
+int JsonBitprotoBPSCellVoltage(struct BitprotoBPSCellVoltage *m, char *s);
 
-// Encode struct BitprotoCellTemperature to given buffer s.
-int EncodeBitprotoCellTemperature(struct BitprotoCellTemperature *m, unsigned char *s);
-// Decode struct BitprotoCellTemperature from given buffer s.
-int DecodeBitprotoCellTemperature(struct BitprotoCellTemperature *m, unsigned char *s);
-// Format struct BitprotoCellTemperature to a json format string.
-int JsonBitprotoCellTemperature(struct BitprotoCellTemperature *m, char *s);
+// Encode struct BitprotoBPSCellTemperature to given buffer s.
+int EncodeBitprotoBPSCellTemperature(struct BitprotoBPSCellTemperature *m, unsigned char *s);
+// Decode struct BitprotoBPSCellTemperature from given buffer s.
+int DecodeBitprotoBPSCellTemperature(struct BitprotoBPSCellTemperature *m, unsigned char *s);
+// Format struct BitprotoBPSCellTemperature to a json format string.
+int JsonBitprotoBPSCellTemperature(struct BitprotoBPSCellTemperature *m, char *s);
 
-void BpXXXProcessBitprotoPackInformation(void *data, struct BpProcessorContext *ctx);
-void BpXXXJsonFormatBitprotoPackInformation(void *data, struct BpJsonFormatContext *ctx);
+void BpXXXProcessBitprotoBPSPackInformation(void *data, struct BpProcessorContext *ctx);
+void BpXXXJsonFormatBitprotoBPSPackInformation(void *data, struct BpJsonFormatContext *ctx);
 
-void BpXXXProcessBitprotoCellVoltage(void *data, struct BpProcessorContext *ctx);
-void BpXXXJsonFormatBitprotoCellVoltage(void *data, struct BpJsonFormatContext *ctx);
+void BpXXXProcessBitprotoBPSCellVoltage(void *data, struct BpProcessorContext *ctx);
+void BpXXXJsonFormatBitprotoBPSCellVoltage(void *data, struct BpJsonFormatContext *ctx);
 
-void BpXXXProcessBitprotoCellTemperature(void *data, struct BpProcessorContext *ctx);
-void BpXXXJsonFormatBitprotoCellTemperature(void *data, struct BpJsonFormatContext *ctx);
+void BpXXXProcessBitprotoBPSCellTemperature(void *data, struct BpProcessorContext *ctx);
+void BpXXXJsonFormatBitprotoBPSCellTemperature(void *data, struct BpJsonFormatContext *ctx);
 
 #if defined(__cplusplus)
 }

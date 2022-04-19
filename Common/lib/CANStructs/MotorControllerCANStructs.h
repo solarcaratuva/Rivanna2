@@ -22,33 +22,36 @@ typedef struct MotorControllerFrameRequest
     }
 
     uint32_t get_message_ID() {
-        return MOTOR_CONTROLLER_FrameRequest_MESSAGE_ID;
+        return MOTOR_CONTROLLER_MotorControllerFrameRequest_MESSAGE_ID;
     }
 
     void print() {
-        PRINT("FrameRequest\n frame0: %d\n frame1: %d\n frame2: %d\n", frame0,
-              frame1, frame2);
+        PRINT("MotorControllerFrameRequest\n power_status_frame: %d\n "
+              "drive_status_frame: "
+              "%d\n errors_frame: %d\n",
+              power_status_frame, drive_status_frame, errors_frame);
     }
-} FrameRequest;
+} MotorControllerFrameRequest;
 
 /**
  * Diagnostic information from the motor controller.
  * Defined on page 5 of the Motor CAN bus documentation.
  */
-typedef struct MotorControllerFrame0 : CANStruct,
-                                       BitprotoMotorControllerFrame0 {
+typedef struct MotorControllerPowerStatus : CANStruct,
+                                            BitprotoMotorControllerPowerStatus {
     void serialize(CANMessage *message) {
-        EncodeBitprotoMotorControllerFrame0(this, message->data);
+        EncodeBitprotoMotorControllerPowerStatus(this, message->data);
     }
 
     void deserialize(CANMessage *message) {
-        DecodeBitprotoMotorControllerFrame0(this, message->data);
+        DecodeBitprotoMotorControllerPowerStatus(this, message->data);
     }
 
-    uint32_t get_message_ID() { return Frame0_MESSAGE_ID; }
+    uint32_t get_message_ID() { return MotorControllerPowerStatus_MESSAGE_ID; }
 
     void print() {
-        PRINT("Frame0\n battery_voltage: %u\n battery_current: %u\n "
+        PRINT("MotorControllerPowerStatus\n battery_voltage: %u\n "
+              "battery_current: %u\n "
               "battery_current_direction: %d\n motor_current: %u\n "
               "fet_temperature: %u\n motor_rotating_speed: %u\n pwm_duty: %u\n "
               "advanced_lead_angle: %u\n",
@@ -56,32 +59,33 @@ typedef struct MotorControllerFrame0 : CANStruct,
               motor_current, fet_temperature, motor_rotating_speed, pwm_duty,
               advanced_lead_angle);
     }
-} Frame0;
+} MotorControllerPowerStatus;
 
 /**
  * Input information from the motor controller.
  * Defined on page 5 of the Motor CAN bus documentation.
  */
-typedef struct Frame1 : CANStruct, BitprotoMotorControllerFrame1 {
+typedef struct MotorControllerDriveStatus : CANStruct,
+                                            BitprotoMotorControllerDriveStatus {
     void serialize(CANMessage *message) {
-        EncodeBitprotoMotorControllerFrame1(this, message->data);
+        EncodeBitprotoMotorControllerDriveStatus(this, message->data);
     }
 
     void deserialize(CANMessage *message) {
-        DecodeBitprotoMotorControllerFrame1(this, message->data);
+        DecodeBitprotoMotorControllerDriveStatus(this, message->data);
     }
 
-    uint32_t get_message_ID() { return Frame1_MESSAGE_ID; }
+    uint32_t get_message_ID() { return MotorControllerDriveStatus_MESSAGE_ID; }
 
     void print() {
-        PRINT("Frame1\n power_eco: %d\n control_mode: %d\n "
+        PRINT("MotorControllerDriveStatus\n power_eco: %d\n control_mode: %d\n "
               "acceleration_vr_position: %u\n regeneration_vr_position: %u\n "
               "digi_sw_number: %u\n target_value: %u\n motor_status: %u\n",
               power_eco, control_mode, acceleration_vr_position,
               regeneration_vr_position, digi_sw_number, target_value,
               motor_status, drive_regen);
     }
-} Frame1;
+} MotorControllerDriveStatus;
 
 /**
  * Errors from the motor controller.
@@ -89,20 +93,21 @@ typedef struct Frame1 : CANStruct, BitprotoMotorControllerFrame1 {
  * CAN bus documentation. NOTE: This frame has not been tested, there may be
  * transcription or padding errors.
  */
-typedef struct Frame2 : CANStruct, BitprotoMotorControllerFrame2 {
+typedef struct MotorControllerError : CANStruct, BitprotoMotorControllerError {
     void serialize(CANMessage *message) {
-        EncodeBitprotoMotorControllerFrame2(this, message->data);
+        EncodeBitprotoMotorControllerError(this, message->data);
     }
 
     void deserialize(CANMessage *message) {
-        DecodeBitprotoMotorControllerFrame2(this, message->data);
+        DecodeBitprotoMotorControllerError(this, message->data);
     }
 
-    uint32_t get_message_ID() { return Frame2_MESSAGE_ID; }
+    uint32_t get_message_ID() { return MotorControllerError_MESSAGE_ID; }
 
     void print() {
         PRINT(
-            "Frame2\n analog_sensor_error: %d\n motor_current_sensor_u_error: "
+            "MotorControllerError\n analog_sensor_error: %d\n "
+            "motor_current_sensor_u_error: "
             "%d\n motor_current_sensor_w_error: %d\n fet_thermistor_error: "
             "%d\n padding0: %d\n battery_voltage_sensor_error: %d\n "
             "battery_current_sensor_error: %d\n "
@@ -126,6 +131,6 @@ typedef struct Frame2 : CANStruct, BitprotoMotorControllerFrame2 {
             motor_lock, hall_sensor_short, hall_sensor_open, padding6,
             overheat_level);
     }
-} Frame2;
+} MotorControllerError;
 
 #endif

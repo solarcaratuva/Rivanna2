@@ -3,7 +3,7 @@
 #include "bitproto.h"
 #include "power_aux_bp.h"
 
-void BpFieldDescriptorsInitBitprotoPowerAuxErrorStruct(struct BitprotoPowerAuxErrorStruct *m, struct BpMessageFieldDescriptor *fds) {
+void BpFieldDescriptorsInitBitprotoPowerAuxError(struct BitprotoPowerAuxError *m, struct BpMessageFieldDescriptor *fds) {
     fds[0] = BpMessageFieldDescriptor((void *)&(m->fan_error), BpBool(), "fan_error");
     fds[1] = BpMessageFieldDescriptor((void *)&(m->brake_light_error), BpBool(), "brake_light_error");
     fds[2] = BpMessageFieldDescriptor((void *)&(m->headlight_error), BpBool(), "headlight_error");
@@ -12,36 +12,36 @@ void BpFieldDescriptorsInitBitprotoPowerAuxErrorStruct(struct BitprotoPowerAuxEr
     fds[5] = BpMessageFieldDescriptor((void *)&(m->right_turn_error), BpBool(), "right_turn_error");
 }
 
-void BpXXXProcessBitprotoPowerAuxErrorStruct(void *data, struct BpProcessorContext *ctx) {
-    struct BitprotoPowerAuxErrorStruct *m = (struct BitprotoPowerAuxErrorStruct *)(data);
+void BpXXXProcessBitprotoPowerAuxError(void *data, struct BpProcessorContext *ctx) {
+    struct BitprotoPowerAuxError *m = (struct BitprotoPowerAuxError *)(data);
     struct BpMessageFieldDescriptor field_descriptors[6];
-    BpFieldDescriptorsInitBitprotoPowerAuxErrorStruct(m, field_descriptors);
+    BpFieldDescriptorsInitBitprotoPowerAuxError(m, field_descriptors);
     struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 6, 6, field_descriptors);
     BpEndecodeMessage(&descriptor, ctx, data);
 }
 
-void BpXXXJsonFormatBitprotoPowerAuxErrorStruct(void *data, struct BpJsonFormatContext *ctx) {
-    struct BitprotoPowerAuxErrorStruct *m = (struct BitprotoPowerAuxErrorStruct *)(data);
+void BpXXXJsonFormatBitprotoPowerAuxError(void *data, struct BpJsonFormatContext *ctx) {
+    struct BitprotoPowerAuxError *m = (struct BitprotoPowerAuxError *)(data);
     struct BpMessageFieldDescriptor field_descriptors[6];
-    BpFieldDescriptorsInitBitprotoPowerAuxErrorStruct(m, field_descriptors);
+    BpFieldDescriptorsInitBitprotoPowerAuxError(m, field_descriptors);
     struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 6, 6, field_descriptors);
     BpJsonFormatMessage(&descriptor, ctx, data);
 }
 
-int EncodeBitprotoPowerAuxErrorStruct(struct BitprotoPowerAuxErrorStruct *m, unsigned char *s) {
+int EncodeBitprotoPowerAuxError(struct BitprotoPowerAuxError *m, unsigned char *s) {
     struct BpProcessorContext ctx = BpProcessorContext(true, s);
-    BpXXXProcessBitprotoPowerAuxErrorStruct((void *)m, &ctx);
+    BpXXXProcessBitprotoPowerAuxError((void *)m, &ctx);
     return 0;
 }
 
-int DecodeBitprotoPowerAuxErrorStruct(struct BitprotoPowerAuxErrorStruct *m, unsigned char *s) {
+int DecodeBitprotoPowerAuxError(struct BitprotoPowerAuxError *m, unsigned char *s) {
     struct BpProcessorContext ctx = BpProcessorContext(false, s);
-    BpXXXProcessBitprotoPowerAuxErrorStruct((void *)m, &ctx);
+    BpXXXProcessBitprotoPowerAuxError((void *)m, &ctx);
     return 0;
 }
 
-int JsonBitprotoPowerAuxErrorStruct(struct BitprotoPowerAuxErrorStruct *m, char *s) {
+int JsonBitprotoPowerAuxError(struct BitprotoPowerAuxError *m, char *s) {
     struct BpJsonFormatContext ctx = BpJsonFormatContext(s);
-    BpXXXJsonFormatBitprotoPowerAuxErrorStruct((void *)m, &ctx);
+    BpXXXJsonFormatBitprotoPowerAuxError((void *)m, &ctx);
     return ctx.n;
 }

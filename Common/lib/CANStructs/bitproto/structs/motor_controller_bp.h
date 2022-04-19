@@ -20,15 +20,15 @@ extern "C" {
 #define BYTES_LENGTH_BITPROTO_MOTOR_CONTROLLER_FRAME_REQUEST 1
 
 struct BitprotoMotorControllerFrameRequest {
-    bool frame0; // 1bit
-    bool frame1; // 1bit
-    bool frame2; // 1bit
+    bool power_status_frame; // 1bit
+    bool drive_status_frame; // 1bit
+    bool errors_frame; // 1bit
 };
 
-// Number of bytes to encode struct BitprotoMotorControllerFrame0
-#define BYTES_LENGTH_BITPROTO_MOTOR_CONTROLLER_FRAME0 8
+// Number of bytes to encode struct BitprotoMotorControllerPowerStatus
+#define BYTES_LENGTH_BITPROTO_MOTOR_CONTROLLER_POWER_STATUS 8
 
-struct BitprotoMotorControllerFrame0 {
+struct BitprotoMotorControllerPowerStatus {
     uint16_t battery_voltage; // 10bit
     uint16_t battery_current; // 9bit
     bool battery_current_direction; // 1bit
@@ -39,10 +39,10 @@ struct BitprotoMotorControllerFrame0 {
     uint8_t advanced_lead_angle; // 7bit
 };
 
-// Number of bytes to encode struct BitprotoMotorControllerFrame1
-#define BYTES_LENGTH_BITPROTO_MOTOR_CONTROLLER_FRAME1 5
+// Number of bytes to encode struct BitprotoMotorControllerDriveStatus
+#define BYTES_LENGTH_BITPROTO_MOTOR_CONTROLLER_DRIVE_STATUS 5
 
-struct BitprotoMotorControllerFrame1 {
+struct BitprotoMotorControllerDriveStatus {
     bool power_eco; // 1bit
     bool control_mode; // 1bit
     uint16_t acceleration_vr_position; // 10bit
@@ -53,10 +53,10 @@ struct BitprotoMotorControllerFrame1 {
     bool drive_regen; // 1bit
 };
 
-// Number of bytes to encode struct BitprotoMotorControllerFrame2
-#define BYTES_LENGTH_BITPROTO_MOTOR_CONTROLLER_FRAME2 4
+// Number of bytes to encode struct BitprotoMotorControllerError
+#define BYTES_LENGTH_BITPROTO_MOTOR_CONTROLLER_ERROR 4
 
-struct BitprotoMotorControllerFrame2 {
+struct BitprotoMotorControllerError {
     bool analog_sensor_error; // 1bit
     bool motor_current_sensor_u_error; // 1bit
     bool motor_current_sensor_w_error; // 1bit
@@ -92,38 +92,38 @@ int DecodeBitprotoMotorControllerFrameRequest(struct BitprotoMotorControllerFram
 // Format struct BitprotoMotorControllerFrameRequest to a json format string.
 int JsonBitprotoMotorControllerFrameRequest(struct BitprotoMotorControllerFrameRequest *m, char *s);
 
-// Encode struct BitprotoMotorControllerFrame0 to given buffer s.
-int EncodeBitprotoMotorControllerFrame0(struct BitprotoMotorControllerFrame0 *m, unsigned char *s);
-// Decode struct BitprotoMotorControllerFrame0 from given buffer s.
-int DecodeBitprotoMotorControllerFrame0(struct BitprotoMotorControllerFrame0 *m, unsigned char *s);
-// Format struct BitprotoMotorControllerFrame0 to a json format string.
-int JsonBitprotoMotorControllerFrame0(struct BitprotoMotorControllerFrame0 *m, char *s);
+// Encode struct BitprotoMotorControllerPowerStatus to given buffer s.
+int EncodeBitprotoMotorControllerPowerStatus(struct BitprotoMotorControllerPowerStatus *m, unsigned char *s);
+// Decode struct BitprotoMotorControllerPowerStatus from given buffer s.
+int DecodeBitprotoMotorControllerPowerStatus(struct BitprotoMotorControllerPowerStatus *m, unsigned char *s);
+// Format struct BitprotoMotorControllerPowerStatus to a json format string.
+int JsonBitprotoMotorControllerPowerStatus(struct BitprotoMotorControllerPowerStatus *m, char *s);
 
-// Encode struct BitprotoMotorControllerFrame1 to given buffer s.
-int EncodeBitprotoMotorControllerFrame1(struct BitprotoMotorControllerFrame1 *m, unsigned char *s);
-// Decode struct BitprotoMotorControllerFrame1 from given buffer s.
-int DecodeBitprotoMotorControllerFrame1(struct BitprotoMotorControllerFrame1 *m, unsigned char *s);
-// Format struct BitprotoMotorControllerFrame1 to a json format string.
-int JsonBitprotoMotorControllerFrame1(struct BitprotoMotorControllerFrame1 *m, char *s);
+// Encode struct BitprotoMotorControllerDriveStatus to given buffer s.
+int EncodeBitprotoMotorControllerDriveStatus(struct BitprotoMotorControllerDriveStatus *m, unsigned char *s);
+// Decode struct BitprotoMotorControllerDriveStatus from given buffer s.
+int DecodeBitprotoMotorControllerDriveStatus(struct BitprotoMotorControllerDriveStatus *m, unsigned char *s);
+// Format struct BitprotoMotorControllerDriveStatus to a json format string.
+int JsonBitprotoMotorControllerDriveStatus(struct BitprotoMotorControllerDriveStatus *m, char *s);
 
-// Encode struct BitprotoMotorControllerFrame2 to given buffer s.
-int EncodeBitprotoMotorControllerFrame2(struct BitprotoMotorControllerFrame2 *m, unsigned char *s);
-// Decode struct BitprotoMotorControllerFrame2 from given buffer s.
-int DecodeBitprotoMotorControllerFrame2(struct BitprotoMotorControllerFrame2 *m, unsigned char *s);
-// Format struct BitprotoMotorControllerFrame2 to a json format string.
-int JsonBitprotoMotorControllerFrame2(struct BitprotoMotorControllerFrame2 *m, char *s);
+// Encode struct BitprotoMotorControllerError to given buffer s.
+int EncodeBitprotoMotorControllerError(struct BitprotoMotorControllerError *m, unsigned char *s);
+// Decode struct BitprotoMotorControllerError from given buffer s.
+int DecodeBitprotoMotorControllerError(struct BitprotoMotorControllerError *m, unsigned char *s);
+// Format struct BitprotoMotorControllerError to a json format string.
+int JsonBitprotoMotorControllerError(struct BitprotoMotorControllerError *m, char *s);
 
 void BpXXXProcessBitprotoMotorControllerFrameRequest(void *data, struct BpProcessorContext *ctx);
 void BpXXXJsonFormatBitprotoMotorControllerFrameRequest(void *data, struct BpJsonFormatContext *ctx);
 
-void BpXXXProcessBitprotoMotorControllerFrame0(void *data, struct BpProcessorContext *ctx);
-void BpXXXJsonFormatBitprotoMotorControllerFrame0(void *data, struct BpJsonFormatContext *ctx);
+void BpXXXProcessBitprotoMotorControllerPowerStatus(void *data, struct BpProcessorContext *ctx);
+void BpXXXJsonFormatBitprotoMotorControllerPowerStatus(void *data, struct BpJsonFormatContext *ctx);
 
-void BpXXXProcessBitprotoMotorControllerFrame1(void *data, struct BpProcessorContext *ctx);
-void BpXXXJsonFormatBitprotoMotorControllerFrame1(void *data, struct BpJsonFormatContext *ctx);
+void BpXXXProcessBitprotoMotorControllerDriveStatus(void *data, struct BpProcessorContext *ctx);
+void BpXXXJsonFormatBitprotoMotorControllerDriveStatus(void *data, struct BpJsonFormatContext *ctx);
 
-void BpXXXProcessBitprotoMotorControllerFrame2(void *data, struct BpProcessorContext *ctx);
-void BpXXXJsonFormatBitprotoMotorControllerFrame2(void *data, struct BpJsonFormatContext *ctx);
+void BpXXXProcessBitprotoMotorControllerError(void *data, struct BpProcessorContext *ctx);
+void BpXXXJsonFormatBitprotoMotorControllerError(void *data, struct BpJsonFormatContext *ctx);
 
 #if defined(__cplusplus)
 }

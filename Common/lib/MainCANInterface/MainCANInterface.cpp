@@ -24,8 +24,8 @@ void MainCANInterface::rx_handler() {
                 ECUPowerAuxCommands can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            } else if (message.id == PowerAuxErrorStruct_MESSAGE_ID) {
-                PowerAuxErrorStruct can_struct;
+            } else if (message.id == PowerAuxError_MESSAGE_ID) {
+                PowerAuxError can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
             } else if (message.id == SolarCurrent_MESSAGE_ID) {
@@ -44,28 +44,28 @@ void MainCANInterface::rx_handler() {
                 SolarPhoto can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            } else if (message.id == Frame0_MESSAGE_ID) {
-                Frame0 can_struct;
+            } else if (message.id == MotorControllerPowerStatus_MESSAGE_ID) {
+                MotorControllerPowerStatus can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            } else if (message.id == Frame1_MESSAGE_ID) {
-                Frame1 can_struct;
+            } else if (message.id == MotorControllerDriveStatus_MESSAGE_ID) {
+                MotorControllerDriveStatus can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            } else if (message.id == Frame2_MESSAGE_ID) {
-                Frame2 can_struct;
+            } else if (message.id == MotorControllerError_MESSAGE_ID) {
+                MotorControllerError can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            } else if (message.id == PackInformation_Message_ID) {
-                PackInformation can_struct;
+            } else if (message.id == BPSPackInformation_Message_ID) {
+                BPSPackInformation can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            } else if (message.id == CellVoltage_Message_ID) {
-                CellVoltage can_struct;
+            } else if (message.id == BPSCellVoltage_Message_ID) {
+                BPSCellVoltage can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            } else if (message.id == CellTemperature_Message_ID) {
-                CellTemperature can_struct;
+            } else if (message.id == BPSCellTemperature_Message_ID) {
+                BPSCellTemperature can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
             }

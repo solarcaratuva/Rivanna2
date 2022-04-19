@@ -28,17 +28,17 @@ class MainCANInterface : public CANInterface {
 
     virtual void handle(ECUMotorCommands *can_struct) {}
     virtual void handle(ECUPowerAuxCommands *can_struct) {}
-    virtual void handle(PowerAuxErrorStruct *can_struct) {}
+    virtual void handle(PowerAuxError *can_struct) {}
     virtual void handle(SolarCurrent *can_struct) {}
     virtual void handle(SolarVoltage *can_struct) {}
     virtual void handle(SolarTemp *can_struct) {}
     virtual void handle(SolarPhoto *can_struct) {}
-    virtual void handle(Frame0 *can_struct) {}
-    virtual void handle(Frame1 *can_struct) {}
-    virtual void handle(Frame2 *can_struct) {}
-    virtual void handle(PackInformation *can_struct) {}
-    virtual void handle(CellVoltage *can_struct) {}
-    virtual void handle(CellTemperature *can_struct) {}
+    virtual void handle(MotorControllerPowerStatus *can_struct) {}
+    virtual void handle(MotorControllerDriveStatus *can_struct) {}
+    virtual void handle(MotorControllerError *can_struct) {}
+    virtual void handle(BPSPackInformation *can_struct) {}
+    virtual void handle(BPSCellVoltage *can_struct) {}
+    virtual void handle(BPSCellTemperature *can_struct) {}
 
   private:
     void rx_handler() override;

@@ -16,10 +16,10 @@
 extern "C" {
 #endif
 
-// Number of bytes to encode struct BitprotoPowerAuxErrorStruct
-#define BYTES_LENGTH_BITPROTO_POWER_AUX_ERROR_STRUCT 1
+// Number of bytes to encode struct BitprotoPowerAuxError
+#define BYTES_LENGTH_BITPROTO_POWER_AUX_ERROR 1
 
-struct BitprotoPowerAuxErrorStruct {
+struct BitprotoPowerAuxError {
     bool fan_error; // 1bit
     bool brake_light_error; // 1bit
     bool headlight_error; // 1bit
@@ -28,15 +28,15 @@ struct BitprotoPowerAuxErrorStruct {
     bool right_turn_error; // 1bit
 };
 
-// Encode struct BitprotoPowerAuxErrorStruct to given buffer s.
-int EncodeBitprotoPowerAuxErrorStruct(struct BitprotoPowerAuxErrorStruct *m, unsigned char *s);
-// Decode struct BitprotoPowerAuxErrorStruct from given buffer s.
-int DecodeBitprotoPowerAuxErrorStruct(struct BitprotoPowerAuxErrorStruct *m, unsigned char *s);
-// Format struct BitprotoPowerAuxErrorStruct to a json format string.
-int JsonBitprotoPowerAuxErrorStruct(struct BitprotoPowerAuxErrorStruct *m, char *s);
+// Encode struct BitprotoPowerAuxError to given buffer s.
+int EncodeBitprotoPowerAuxError(struct BitprotoPowerAuxError *m, unsigned char *s);
+// Decode struct BitprotoPowerAuxError from given buffer s.
+int DecodeBitprotoPowerAuxError(struct BitprotoPowerAuxError *m, unsigned char *s);
+// Format struct BitprotoPowerAuxError to a json format string.
+int JsonBitprotoPowerAuxError(struct BitprotoPowerAuxError *m, char *s);
 
-void BpXXXProcessBitprotoPowerAuxErrorStruct(void *data, struct BpProcessorContext *ctx);
-void BpXXXJsonFormatBitprotoPowerAuxErrorStruct(void *data, struct BpJsonFormatContext *ctx);
+void BpXXXProcessBitprotoPowerAuxError(void *data, struct BpProcessorContext *ctx);
+void BpXXXJsonFormatBitprotoPowerAuxError(void *data, struct BpJsonFormatContext *ctx);
 
 #if defined(__cplusplus)
 }

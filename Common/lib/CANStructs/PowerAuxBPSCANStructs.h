@@ -10,16 +10,16 @@
  * NOTE: This struct has not been tested thoroughly, there may be transcription
  * or padding errors.
  */
-typedef struct PackInformation : CANStruct, BitprotoPackInformation {
+typedef struct BPSPackInformation : CANStruct, BitprotoBPSPackInformation {
     void serialize(CANMessage *message) {
-        EncodeBitprotoPackInformation(this, message->data);
+        EncodeBitprotoBPSPackInformation(this, message->data);
     }
 
     void deserialize(CANMessage *message) {
-        DecodeBitprotoPackInformation(this, message->data);
+        DecodeBitprotoBPSPackInformation(this, message->data);
     }
 
-    uint32_t get_message_ID() { return PackInformation_Message_ID; }
+    uint32_t get_message_ID() { return BPSPackInformation_Message_ID; }
 
     bool has_error() {
         return internal_communications_fault || internal_conversion_fault ||
@@ -36,7 +36,7 @@ typedef struct PackInformation : CANStruct, BitprotoPackInformation {
     }
 
     void print() {
-        PRINT("PackInformation\n pack_voltage: %u\n pack_current:  %u\n "
+        PRINT("BPSPackInformation\n pack_voltage: %u\n pack_current:  %u\n "
               "pack_sock: %u\n internal_communications_fault: %d\n "
               "internal_conversion_fault: %d\n weak_cell_fault: %d\n "
               "low_cell_voltage_fault: %d\n open_wiring_fault: %d\n "
@@ -62,54 +62,55 @@ typedef struct PackInformation : CANStruct, BitprotoPackInformation {
               internal_thermistor_fault, internal_logic_fault, discharge_relay,
               charge_relay);
     }
-} PackInformation;
+} BPSPackInformation;
 
 /**
  * Extreme (low and high only) cell voltage data.
  * NOTE: This struct has not been tested thoroughly, there may be transcription
  * or padding errors.
  */
-typedef struct CellVoltage : CANStruct, BitprotoCellVoltage {
+typedef struct BPSCellVoltage : CANStruct, BitprotoBPSCellVoltage {
     void serialize(CANMessage *message) {
-        EncodeBitprotoCellVoltage(this, message->data);
+        EncodeBitprotoBPSCellVoltage(this, message->data);
     }
 
     void deserialize(CANMessage *message) {
-        DecodeBitprotoCellVoltage(this, message->data);
+        DecodeBitprotoBPSCellVoltage(this, message->data);
     }
 
-    uint32_t get_message_ID() { return CellVoltage_Message_ID; }
+    uint32_t get_message_ID() { return BPSCellVoltage_Message_ID; }
 
     void print() {
-        PRINT("CellVoltage\n low_cell_voltage: %u\n low_cell_voltage_id: %u\n "
-              "high_cell_voltage: %u\n high_cell_voltage_id: %u\n",
-              low_cell_voltage, low_cell_voltage_id, high_cell_voltage,
-              high_cell_voltage_id);
+        PRINT(
+            "BPSCellVoltage\n low_cell_voltage: %u\n low_cell_voltage_id: %u\n "
+            "high_cell_voltage: %u\n high_cell_voltage_id: %u\n",
+            low_cell_voltage, low_cell_voltage_id, high_cell_voltage,
+            high_cell_voltage_id);
     }
-} CellVoltage;
+} BPSCellVoltage;
 
 /**
  * Extreme (low and high only) cell temperature data.
  * NOTE: This struct has not been tested thoroughly, there may be transcription
  * or padding errors.
  */
-typedef struct CellTemperature : CANStruct, BitprotoCellTemperature {
+typedef struct BPSCellTemperature : CANStruct, BitprotoBPSCellTemperature {
     void serialize(CANMessage *message) {
-        EncodeBitprotoCellTemperature(this, message->data);
+        EncodeBitprotoBPSCellTemperature(this, message->data);
     }
 
     void deserialize(CANMessage *message) {
-        DecodeBitprotoCellTemperature(this, message->data);
+        DecodeBitprotoBPSCellTemperature(this, message->data);
     }
 
-    uint32_t get_message_ID() { return CellTemperature_Message_ID; }
+    uint32_t get_message_ID() { return BPSCellTemperature_Message_ID; }
 
     void print() {
-        PRINT("CellTemperature: \n low_temperature: %u\n low_thermistor_id: "
+        PRINT("BPSCellTemperature: \n low_temperature: %u\n low_thermistor_id: "
               "%u\n high_temperature: %u\n high_thermistor_id: %u\n",
               low_temperature, low_thermistor_id, high_temperature,
               high_thermistor_id);
     }
-} CellTemperature;
+} BPSCellTemperature;
 
 #endif
