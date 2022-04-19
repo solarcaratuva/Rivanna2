@@ -10,7 +10,7 @@ void MotorControllerCANInterface::request_frames(bool power_status_frame,
                                                  bool drive_status_frame,
                                                  bool errors_frame) {
     CANMessage message;
-    FrameRequest request;
+    MotorControllerFrameRequest request;
     request.power_status_frame = power_status_frame;
     request.drive_status_frame = drive_status_frame;
     request.errors_frame = errors_frame;

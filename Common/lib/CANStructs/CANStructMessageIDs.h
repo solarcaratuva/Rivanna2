@@ -36,7 +36,7 @@
 // Motor Controller CAN bus message IDs
 // These IDs use the CAN extended format
 
-#define MOTOR_CONTROLLER_FrameRequest_MESSAGE_ID 0x08F89540
+#define MOTOR_CONTROLLER_MotorControllerFrameRequest_MESSAGE_ID 0x08F89540
 #define MOTOR_CONTROLLER_MotorControllerPowerStatus_MESSAGE_ID 0x08850225
 #define MOTOR_CONTROLLER_MotorControllerDriveStatus_MESSAGE_ID 0x08950225
 #define MOTOR_CONTROLLER_MotorControllerError_MESSAGE_ID       0x08A50225

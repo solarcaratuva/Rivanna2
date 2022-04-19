@@ -22,15 +22,15 @@ typedef struct MotorControllerFrameRequest
     }
 
     uint32_t get_message_ID() {
-        return MOTOR_CONTROLLER_FrameRequest_MESSAGE_ID;
+        return MOTOR_CONTROLLER_MotorControllerFrameRequest_MESSAGE_ID;
     }
 
     void print() {
-        PRINT("FrameRequest\n power_status_frame: %d\n drive_status_frame: "
+        PRINT("MotorControllerFrameRequest\n power_status_frame: %d\n drive_status_frame: "
               "%d\n errors_frame: %d\n",
               power_status_frame, drive_status_frame, errors_frame);
     }
-} FrameRequest;
+} MotorControllerFrameRequest;
 
 /**
  * Diagnostic information from the motor controller.
