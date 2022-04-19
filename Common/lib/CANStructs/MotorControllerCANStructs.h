@@ -26,7 +26,8 @@ typedef struct MotorControllerFrameRequest
     }
 
     void print() {
-        PRINT("MotorControllerFrameRequest\n power_status_frame: %d\n drive_status_frame: "
+        PRINT("MotorControllerFrameRequest\n power_status_frame: %d\n "
+              "drive_status_frame: "
               "%d\n errors_frame: %d\n",
               power_status_frame, drive_status_frame, errors_frame);
     }
