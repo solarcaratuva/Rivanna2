@@ -11,7 +11,7 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
       - name: "Run clang-format"
-        uses: solarcaratuva/clang-format-action-1@2b570d380402fb8fef553bea2ed3e42780249dd7
+        uses: solarcaratuva/clang-format-action-1@f24f0b678d96ba34d523d90ed5f07a058c8a05d3
         with:
           commit: "remotes/origin/master"
       - name: "Commit and push changes"
