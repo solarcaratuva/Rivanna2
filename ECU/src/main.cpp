@@ -11,24 +11,23 @@
 // #define DEBUG   // only define if DEBUG
 
 #define MAIN_LOOP_PERIOD       1s
-#define CAN_PERIOD             1s
 #define MOTOR_THREAD_PERIOD    1s
 #define POWERAUX_THREAD_PERIOD 1s
 
-// Can Interface //
+// Can Interface
 ECUCANInterface vehicle_can_interface(CAN_RX, CAN_TX, CAN_STBY);
 
-// Input Reader //
+// Input Reader
 ECUInputReader input_reader;
 
-// CAN Messages //
+// CAN Messages
 ECUMotorCommands to_motor;
 ECUPowerAuxCommands to_poweraux;
 
-// Cruise Control Logic //
+// Cruise Control Logic
 uint8_t current_speed;
 
-// Message Sending Threads //
+// Message Sending Threads
 Thread motor_thread;
 Thread poweraux_thread;
 
@@ -46,7 +45,6 @@ void motor_message_handler() {
         to_motor.motor_on = input_reader.readMotorOn();
 
         // Send message
-
         PRINT("Motor Message Send Status: %d\r\n",
               vehicle_can_interface.send(&to_motor));
 
@@ -86,9 +84,6 @@ int main() {
 #ifdef TESTING
         PRINT("main thread loop \r\n");
 #endif // TESTING
-
-        // PowerAuxExampleStruct a(1, 2, 3, 4);
-        // vehicle_can_interface.send(&a);
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }

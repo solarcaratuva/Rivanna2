@@ -10,7 +10,6 @@
 // #define DEBUG   // only define if DEBUG
 
 #define MAIN_LOOP_PERIOD   1s
-#define CAN_PERIOD         1s
 #define ERROR_CHECK_PERIOD 1s
 #define FLASH_PERIOD     10ms
 

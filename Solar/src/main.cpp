@@ -11,7 +11,6 @@
 // #define DEBUG   // only define if DEBUG
 
 #define MAIN_LOOP_PERIOD 1s
-#define CAN_PERIOD       1s
 
 SolarCANInterface vehicle_can_interface(CAN_RX, CAN_TX, CAN_STBY);
 
