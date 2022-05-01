@@ -7,7 +7,7 @@
 class MotorControllerCANInterface : public CANInterface {
   public:
     MotorControllerCANInterface(PinName rd, PinName td, PinName standby_pin);
-    void request_frames(bool frame0, bool frame1, bool frame2);
+    void request_frames(bool power_status_frame, bool drive_status_frame, bool errors_frame);
     void handle(MotorControllerPowerStatus *can_struct);
     void handle(MotorControllerDriveStatus *can_struct);
     void handle(MotorControllerError *can_struct);

@@ -6,13 +6,11 @@
 #include "STMUniqueID.h"
 #include "pindef.h"
 #include <mbed.h>
-#include <rtos.h>
 
 #define TESTING          // only defined if using test functions
 // #define DEBUG   // only define if debugging
 
 #define MAIN_LOOP_PERIOD 1s
-#define CAN_PERIOD       1s
 
 BufferedSerial device(USBTX, USBRX);
 
@@ -43,16 +41,6 @@ int main() {
         PRINT("main thread loop \r\n");
 #endif // TESTING
 
-        // PRINT("Motor State\r\n");
-        // PRINT("-------------------\r\n");
-        // PRINT("Battery Voltage: %d\r\n",
-        // motor_state_tracker.getMotorControllerPowerStatus().battery_voltage);
-        // PRINT("Motor Rotating Speed: %d\r\n",
-        // motor_state_tracker.getMotorControllerPowerStatus().motor_rotating_speed);
-        // PRINT("Power Eco: %d\r\n",
-        // motor_state_tracker.getMotorControllerDriveStatus().power_eco);
-        // PRINT("Motor Status: %d/r/n",
-        // motor_state_tracker.getMotorControllerDriveStatus().motor_status);
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }
 }
@@ -64,11 +52,6 @@ void MotorCANInterface::handle(ECUMotorCommands *can_struct) {
                                  // gear change when velocity is non-zero
     motor_interface.sendThrottle(can_struct->throttle);
     motor_interface.sendRegen(can_struct->regen);
-    // PRINT("Received ECUMotorCommands: throttle=%u, regen=%u, forward_en=%d,
-    // cruise_control_en=%d, cruise_control_speed=%u, motor_on=%d\r\n",
-    //     can_struct->throttle, can_struct->regen, can_struct->forward_en,
-    //     can_struct->cruise_control_en, can_struct->cruise_control_speed,
-    //     can_struct->motor_on);
 }
 
 void MotorControllerCANInterface::handle(

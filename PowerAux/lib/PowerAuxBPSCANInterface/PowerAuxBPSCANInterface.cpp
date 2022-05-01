@@ -18,8 +18,7 @@ void PowerAuxBPSCANInterface::rx_handler() {
                 BPSCellVoltage can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            }
-            if (message.id == POWER_AUX_BPS_CAN_BPSCellTemperature) {
+            } else if (message.id == POWER_AUX_BPS_CAN_BPSCellTemperature) {
                 BPSCellTemperature can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);

@@ -4,13 +4,11 @@
 #include "STMUniqueID.h"
 #include "pindef.h"
 #include <mbed.h>
-#include <rtos.h>
 
 #define TESTING          // only defined if using test functions
 // #define DEBUG   // only define if DEBUG
 
 #define MAIN_LOOP_PERIOD   1s
-#define CAN_PERIOD         1s
 #define ERROR_CHECK_PERIOD 1s
 #define FLASH_PERIOD     10ms
 
