@@ -15,6 +15,7 @@ typedef struct MotorControllerFrameRequest
       BitprotoMotorControllerFrameRequest {
     void serialize(CANMessage *message) {
         EncodeBitprotoMotorControllerFrameRequest(this, message->data);
+        message->len = BYTES_LENGTH_BITPROTO_MOTOR_CONTROLLER_FRAME_REQUEST;
     }
 
     void deserialize(CANMessage *message) {
@@ -41,6 +42,7 @@ typedef struct MotorControllerPowerStatus : CANStruct,
                                             BitprotoMotorControllerPowerStatus {
     void serialize(CANMessage *message) {
         EncodeBitprotoMotorControllerPowerStatus(this, message->data);
+        message->len = BYTES_LENGTH_BITPROTO_MOTOR_CONTROLLER_POWER_STATUS;
     }
 
     void deserialize(CANMessage *message) {
@@ -69,6 +71,7 @@ typedef struct MotorControllerDriveStatus : CANStruct,
                                             BitprotoMotorControllerDriveStatus {
     void serialize(CANMessage *message) {
         EncodeBitprotoMotorControllerDriveStatus(this, message->data);
+        message->len = BYTES_LENGTH_BITPROTO_MOTOR_CONTROLLER_DRIVE_STATUS;
     }
 
     void deserialize(CANMessage *message) {
@@ -96,6 +99,7 @@ typedef struct MotorControllerDriveStatus : CANStruct,
 typedef struct MotorControllerError : CANStruct, BitprotoMotorControllerError {
     void serialize(CANMessage *message) {
         EncodeBitprotoMotorControllerError(this, message->data);
+        message->len = BYTES_LENGTH_BITPROTO_MOTOR_CONTROLLER_ERROR;
     }
 
     void deserialize(CANMessage *message) {
