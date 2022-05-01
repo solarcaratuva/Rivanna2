@@ -7,44 +7,23 @@ void BpFieldDescriptorsInitBitprotoBPSPackInformation(struct BitprotoBPSPackInfo
     fds[0] = BpMessageFieldDescriptor((void *)&(m->pack_voltage), BpUint(16, sizeof(uint16_t)), "pack_voltage");
     fds[1] = BpMessageFieldDescriptor((void *)&(m->pack_current), BpUint(16, sizeof(uint16_t)), "pack_current");
     fds[2] = BpMessageFieldDescriptor((void *)&(m->pack_soc), BpUint(8, sizeof(uint8_t)), "pack_soc");
-    fds[3] = BpMessageFieldDescriptor((void *)&(m->internal_communications_fault), BpBool(), "internal_communications_fault");
-    fds[4] = BpMessageFieldDescriptor((void *)&(m->internal_conversion_fault), BpBool(), "internal_conversion_fault");
-    fds[5] = BpMessageFieldDescriptor((void *)&(m->weak_cell_fault), BpBool(), "weak_cell_fault");
-    fds[6] = BpMessageFieldDescriptor((void *)&(m->low_cell_voltage_fault), BpBool(), "low_cell_voltage_fault");
-    fds[7] = BpMessageFieldDescriptor((void *)&(m->open_wiring_fault), BpBool(), "open_wiring_fault");
-    fds[8] = BpMessageFieldDescriptor((void *)&(m->current_sensor_fault), BpBool(), "current_sensor_fault");
-    fds[9] = BpMessageFieldDescriptor((void *)&(m->pack_voltage_sensor_fault), BpBool(), "pack_voltage_sensor_fault");
-    fds[10] = BpMessageFieldDescriptor((void *)&(m->weak_pack_fault), BpBool(), "weak_pack_fault");
-    fds[11] = BpMessageFieldDescriptor((void *)&(m->voltage_redundancy_fault), BpBool(), "voltage_redundancy_fault");
-    fds[12] = BpMessageFieldDescriptor((void *)&(m->fan_monitor_fault), BpBool(), "fan_monitor_fault");
-    fds[13] = BpMessageFieldDescriptor((void *)&(m->thermistor_fault), BpBool(), "thermistor_fault");
-    fds[14] = BpMessageFieldDescriptor((void *)&(m->CANBUS_communications_fault), BpBool(), "CANBUS_communications_fault");
-    fds[15] = BpMessageFieldDescriptor((void *)&(m->always_on_supply_fault), BpBool(), "always_on_supply_fault");
-    fds[16] = BpMessageFieldDescriptor((void *)&(m->high_voltage_isolation_fault), BpBool(), "high_voltage_isolation_fault");
-    fds[17] = BpMessageFieldDescriptor((void *)&(m->power_supply_12v_fault), BpBool(), "power_supply_12v_fault");
-    fds[18] = BpMessageFieldDescriptor((void *)&(m->charge_limit_enforcement_fault), BpBool(), "charge_limit_enforcement_fault");
-    fds[19] = BpMessageFieldDescriptor((void *)&(m->discharge_limit_enforcement_fault), BpBool(), "discharge_limit_enforcement_fault");
-    fds[20] = BpMessageFieldDescriptor((void *)&(m->charger_safety_relay_fault), BpBool(), "charger_safety_relay_fault");
-    fds[21] = BpMessageFieldDescriptor((void *)&(m->internal_memory_fault), BpBool(), "internal_memory_fault");
-    fds[22] = BpMessageFieldDescriptor((void *)&(m->internal_thermistor_fault), BpBool(), "internal_thermistor_fault");
-    fds[23] = BpMessageFieldDescriptor((void *)&(m->internal_logic_fault), BpBool(), "internal_logic_fault");
-    fds[24] = BpMessageFieldDescriptor((void *)&(m->discharge_relay), BpBool(), "discharge_relay");
-    fds[25] = BpMessageFieldDescriptor((void *)&(m->charge_relay), BpBool(), "charge_relay");
+    fds[3] = BpMessageFieldDescriptor((void *)&(m->discharge_relay), BpBool(), "discharge_relay");
+    fds[4] = BpMessageFieldDescriptor((void *)&(m->charge_relay), BpBool(), "charge_relay");
 }
 
 void BpXXXProcessBitprotoBPSPackInformation(void *data, struct BpProcessorContext *ctx) {
     struct BitprotoBPSPackInformation *m = (struct BitprotoBPSPackInformation *)(data);
-    struct BpMessageFieldDescriptor field_descriptors[26];
+    struct BpMessageFieldDescriptor field_descriptors[5];
     BpFieldDescriptorsInitBitprotoBPSPackInformation(m, field_descriptors);
-    struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 26, 63, field_descriptors);
+    struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 5, 42, field_descriptors);
     BpEndecodeMessage(&descriptor, ctx, data);
 }
 
 void BpXXXJsonFormatBitprotoBPSPackInformation(void *data, struct BpJsonFormatContext *ctx) {
     struct BitprotoBPSPackInformation *m = (struct BitprotoBPSPackInformation *)(data);
-    struct BpMessageFieldDescriptor field_descriptors[26];
+    struct BpMessageFieldDescriptor field_descriptors[5];
     BpFieldDescriptorsInitBitprotoBPSPackInformation(m, field_descriptors);
-    struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 26, 63, field_descriptors);
+    struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 5, 42, field_descriptors);
     BpJsonFormatMessage(&descriptor, ctx, data);
 }
 
@@ -63,6 +42,64 @@ int DecodeBitprotoBPSPackInformation(struct BitprotoBPSPackInformation *m, unsig
 int JsonBitprotoBPSPackInformation(struct BitprotoBPSPackInformation *m, char *s) {
     struct BpJsonFormatContext ctx = BpJsonFormatContext(s);
     BpXXXJsonFormatBitprotoBPSPackInformation((void *)m, &ctx);
+    return ctx.n;
+}
+
+void BpFieldDescriptorsInitBitprotoBPSError(struct BitprotoBPSError *m, struct BpMessageFieldDescriptor *fds) {
+    fds[0] = BpMessageFieldDescriptor((void *)&(m->internal_communications_fault), BpBool(), "internal_communications_fault");
+    fds[1] = BpMessageFieldDescriptor((void *)&(m->internal_conversion_fault), BpBool(), "internal_conversion_fault");
+    fds[2] = BpMessageFieldDescriptor((void *)&(m->weak_cell_fault), BpBool(), "weak_cell_fault");
+    fds[3] = BpMessageFieldDescriptor((void *)&(m->low_cell_voltage_fault), BpBool(), "low_cell_voltage_fault");
+    fds[4] = BpMessageFieldDescriptor((void *)&(m->open_wiring_fault), BpBool(), "open_wiring_fault");
+    fds[5] = BpMessageFieldDescriptor((void *)&(m->current_sensor_fault), BpBool(), "current_sensor_fault");
+    fds[6] = BpMessageFieldDescriptor((void *)&(m->pack_voltage_sensor_fault), BpBool(), "pack_voltage_sensor_fault");
+    fds[7] = BpMessageFieldDescriptor((void *)&(m->weak_pack_fault), BpBool(), "weak_pack_fault");
+    fds[8] = BpMessageFieldDescriptor((void *)&(m->voltage_redundancy_fault), BpBool(), "voltage_redundancy_fault");
+    fds[9] = BpMessageFieldDescriptor((void *)&(m->fan_monitor_fault), BpBool(), "fan_monitor_fault");
+    fds[10] = BpMessageFieldDescriptor((void *)&(m->thermistor_fault), BpBool(), "thermistor_fault");
+    fds[11] = BpMessageFieldDescriptor((void *)&(m->CANBUS_communications_fault), BpBool(), "CANBUS_communications_fault");
+    fds[12] = BpMessageFieldDescriptor((void *)&(m->always_on_supply_fault), BpBool(), "always_on_supply_fault");
+    fds[13] = BpMessageFieldDescriptor((void *)&(m->high_voltage_isolation_fault), BpBool(), "high_voltage_isolation_fault");
+    fds[14] = BpMessageFieldDescriptor((void *)&(m->power_supply_12v_fault), BpBool(), "power_supply_12v_fault");
+    fds[15] = BpMessageFieldDescriptor((void *)&(m->charge_limit_enforcement_fault), BpBool(), "charge_limit_enforcement_fault");
+    fds[16] = BpMessageFieldDescriptor((void *)&(m->discharge_limit_enforcement_fault), BpBool(), "discharge_limit_enforcement_fault");
+    fds[17] = BpMessageFieldDescriptor((void *)&(m->charger_safety_relay_fault), BpBool(), "charger_safety_relay_fault");
+    fds[18] = BpMessageFieldDescriptor((void *)&(m->internal_memory_fault), BpBool(), "internal_memory_fault");
+    fds[19] = BpMessageFieldDescriptor((void *)&(m->internal_thermistor_fault), BpBool(), "internal_thermistor_fault");
+    fds[20] = BpMessageFieldDescriptor((void *)&(m->internal_logic_fault), BpBool(), "internal_logic_fault");
+}
+
+void BpXXXProcessBitprotoBPSError(void *data, struct BpProcessorContext *ctx) {
+    struct BitprotoBPSError *m = (struct BitprotoBPSError *)(data);
+    struct BpMessageFieldDescriptor field_descriptors[21];
+    BpFieldDescriptorsInitBitprotoBPSError(m, field_descriptors);
+    struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 21, 21, field_descriptors);
+    BpEndecodeMessage(&descriptor, ctx, data);
+}
+
+void BpXXXJsonFormatBitprotoBPSError(void *data, struct BpJsonFormatContext *ctx) {
+    struct BitprotoBPSError *m = (struct BitprotoBPSError *)(data);
+    struct BpMessageFieldDescriptor field_descriptors[21];
+    BpFieldDescriptorsInitBitprotoBPSError(m, field_descriptors);
+    struct BpMessageDescriptor descriptor = BpMessageDescriptor(false, 21, 21, field_descriptors);
+    BpJsonFormatMessage(&descriptor, ctx, data);
+}
+
+int EncodeBitprotoBPSError(struct BitprotoBPSError *m, unsigned char *s) {
+    struct BpProcessorContext ctx = BpProcessorContext(true, s);
+    BpXXXProcessBitprotoBPSError((void *)m, &ctx);
+    return 0;
+}
+
+int DecodeBitprotoBPSError(struct BitprotoBPSError *m, unsigned char *s) {
+    struct BpProcessorContext ctx = BpProcessorContext(false, s);
+    BpXXXProcessBitprotoBPSError((void *)m, &ctx);
+    return 0;
+}
+
+int JsonBitprotoBPSError(struct BitprotoBPSError *m, char *s) {
+    struct BpJsonFormatContext ctx = BpJsonFormatContext(s);
+    BpXXXJsonFormatBitprotoBPSError((void *)m, &ctx);
     return ctx.n;
 }
 

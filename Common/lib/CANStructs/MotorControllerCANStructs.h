@@ -22,7 +22,7 @@ typedef struct MotorControllerFrameRequest
     }
 
     uint32_t get_message_ID() {
-        return MOTOR_CONTROLLER_MotorControllerFrameRequest_MESSAGE_ID;
+        return MotorControllerFrameRequest_AUX_BUS_MESSAGE_ID;
     }
 
     void print() {

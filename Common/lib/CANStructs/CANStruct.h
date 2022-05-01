@@ -10,7 +10,9 @@
 struct CANStruct {
     virtual void serialize(CANMessage *message);
     virtual void deserialize(CANMessage *message);
-    // TODO: Change to uint16_t
+    /**
+     * Gets the message ID for sending on the appropriate bus.
+     */
     virtual uint32_t get_message_ID();
     virtual void print();
 };

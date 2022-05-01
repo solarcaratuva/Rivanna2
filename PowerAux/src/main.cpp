@@ -136,10 +136,16 @@ void PowerAuxBPSCANInterface::handle(BPSPackInformation *can_struct) {
 #ifdef DEBUG
     can_struct->print();
 #endif
-    bpsFaultIndicator = can_struct->has_error();
-
     PRINT("Received BPSPackInformation struct: pack_voltage=%u\n",
           can_struct->pack_voltage);
+}
+
+void PowerAuxBPSCANInterface::handle(BPSError *can_struct) {
+    vehicle_can_interface.send(can_struct);
+#ifdef DEBUG
+    can_struct->print();
+#endif
+    bpsFaultIndicator = can_struct->has_error();
 }
 
 void PowerAuxBPSCANInterface::handle(BPSCellVoltage *can_struct) {

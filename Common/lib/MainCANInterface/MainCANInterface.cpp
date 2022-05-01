@@ -56,15 +56,15 @@ void MainCANInterface::rx_handler() {
                 MotorControllerError can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            } else if (message.id == BPSPackInformation_Message_ID) {
+            } else if (message.id == BPSPackInformation_MESSAGE_ID) {
                 BPSPackInformation can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            } else if (message.id == BPSCellVoltage_Message_ID) {
+            } else if (message.id == BPSCellVoltage_MESSAGE_ID) {
                 BPSCellVoltage can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            } else if (message.id == BPSCellTemperature_Message_ID) {
+            } else if (message.id == BPSCellTemperature_MESSAGE_ID) {
                 BPSCellTemperature can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);

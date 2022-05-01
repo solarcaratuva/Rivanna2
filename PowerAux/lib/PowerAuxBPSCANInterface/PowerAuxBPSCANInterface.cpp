@@ -10,15 +10,19 @@ void PowerAuxBPSCANInterface::rx_handler() {
     while (true) {
         CANMessage message;
         while (can.read(message)) {
-            if (message.id == POWER_AUX_BPS_CAN_BPSPackInformation) {
+            if (message.id == BPSPackInformation_MESSAGE_ID) {
                 BPSPackInformation can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            } else if (message.id == POWER_AUX_BPS_CAN_BPSCellVoltage) {
+            } else if (message.id == BPSError_MESSAGE_ID) {
+                BPSError can_struct;
+                can_struct.deserialize(&message);
+                handle(&can_struct);
+            } else if (message.id == BPSCellVoltage_MESSAGE_ID) {
                 BPSCellVoltage can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            } else if (message.id == POWER_AUX_BPS_CAN_BPSCellTemperature) {
+            } else if (message.id == BPSCellTemperature_MESSAGE_ID) {
                 BPSCellTemperature can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);

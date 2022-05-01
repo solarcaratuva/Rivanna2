@@ -8,6 +8,7 @@ class PowerAuxBPSCANInterface : public CANInterface {
   public:
     PowerAuxBPSCANInterface(PinName rd, PinName td, PinName standby_pin);
     void handle(BPSPackInformation *can_struct);
+    void handle(BPSError *can_struct);
     void handle(BPSCellVoltage *can_struct);
     void handle(BPSCellTemperature *can_struct);
 
