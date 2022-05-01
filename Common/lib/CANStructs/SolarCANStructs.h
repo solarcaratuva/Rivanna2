@@ -8,6 +8,7 @@
 typedef struct SolarCurrent : CANStruct, BitprotoSolarCurrent {
     void serialize(CANMessage *message) {
         EncodeBitprotoSolarCurrent(this, message->data);
+        message->len = BYTES_LENGTH_BITPROTO_SOLAR_CURRENT;
     }
 
     void deserialize(CANMessage *message) {
@@ -23,6 +24,7 @@ typedef struct SolarCurrent : CANStruct, BitprotoSolarCurrent {
 typedef struct SolarVoltage : CANStruct, BitprotoSolarVoltage {
     void serialize(CANMessage *message) {
         EncodeBitprotoSolarVoltage(this, message->data);
+        message->len = BYTES_LENGTH_BITPROTO_SOLAR_VOLTAGE;
     }
 
     void deserialize(CANMessage *message) {
@@ -42,6 +44,7 @@ typedef struct SolarVoltage : CANStruct, BitprotoSolarVoltage {
 typedef struct SolarTemp : CANStruct, BitprotoSolarTemp {
     void serialize(CANMessage *message) {
         EncodeBitprotoSolarTemp(this, message->data);
+        message->len = BYTES_LENGTH_BITPROTO_SOLAR_TEMP;
     }
 
     void deserialize(CANMessage *message) {
@@ -60,6 +63,7 @@ typedef struct SolarTemp : CANStruct, BitprotoSolarTemp {
 typedef struct SolarPhoto : CANStruct, BitprotoSolarPhoto {
     void serialize(CANMessage *message) {
         EncodeBitprotoSolarPhoto(this, message->data);
+        message->len = BYTES_LENGTH_BITPROTO_SOLAR_PHOTO;
     }
 
     void deserialize(CANMessage *message) {

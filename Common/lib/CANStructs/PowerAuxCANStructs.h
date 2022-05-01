@@ -8,6 +8,7 @@
 typedef struct PowerAuxError : CANStruct, BitprotoPowerAuxError {
     void serialize(CANMessage *message) {
         EncodeBitprotoPowerAuxError(this, message->data);
+        message->len = BYTES_LENGTH_BITPROTO_POWER_AUX_ERROR;
     }
 
     void deserialize(CANMessage *message) {
