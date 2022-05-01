@@ -5,6 +5,7 @@
 #include "mcp3008.h"
 #include "pindef.h"
 #include <mbed.h>
+#include <rtos.h>
 
 #define TESTING          // only defined if using test functions
 // #define DEBUG   // only define if DEBUG
