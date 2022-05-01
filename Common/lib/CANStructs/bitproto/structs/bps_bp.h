@@ -17,12 +17,20 @@ extern "C" {
 #endif
 
 // Number of bytes to encode struct BitprotoBPSPackInformation
-#define BYTES_LENGTH_BITPROTO_BPS_PACK_INFORMATION 8
+#define BYTES_LENGTH_BITPROTO_BPS_PACK_INFORMATION 6
 
 struct BitprotoBPSPackInformation {
     uint16_t pack_voltage; // 16bit
     uint16_t pack_current; // 16bit
     uint8_t pack_soc; // 8bit
+    bool discharge_relay; // 1bit
+    bool charge_relay; // 1bit
+};
+
+// Number of bytes to encode struct BitprotoBPSError
+#define BYTES_LENGTH_BITPROTO_BPS_ERROR 3
+
+struct BitprotoBPSError {
     bool internal_communications_fault; // 1bit
     bool internal_conversion_fault; // 1bit
     bool weak_cell_fault; // 1bit
@@ -44,8 +52,6 @@ struct BitprotoBPSPackInformation {
     bool internal_memory_fault; // 1bit
     bool internal_thermistor_fault; // 1bit
     bool internal_logic_fault; // 1bit
-    bool discharge_relay; // 1bit
-    bool charge_relay; // 1bit
 };
 
 // Number of bytes to encode struct BitprotoBPSCellVoltage
@@ -75,6 +81,13 @@ int DecodeBitprotoBPSPackInformation(struct BitprotoBPSPackInformation *m, unsig
 // Format struct BitprotoBPSPackInformation to a json format string.
 int JsonBitprotoBPSPackInformation(struct BitprotoBPSPackInformation *m, char *s);
 
+// Encode struct BitprotoBPSError to given buffer s.
+int EncodeBitprotoBPSError(struct BitprotoBPSError *m, unsigned char *s);
+// Decode struct BitprotoBPSError from given buffer s.
+int DecodeBitprotoBPSError(struct BitprotoBPSError *m, unsigned char *s);
+// Format struct BitprotoBPSError to a json format string.
+int JsonBitprotoBPSError(struct BitprotoBPSError *m, char *s);
+
 // Encode struct BitprotoBPSCellVoltage to given buffer s.
 int EncodeBitprotoBPSCellVoltage(struct BitprotoBPSCellVoltage *m, unsigned char *s);
 // Decode struct BitprotoBPSCellVoltage from given buffer s.
@@ -91,6 +104,9 @@ int JsonBitprotoBPSCellTemperature(struct BitprotoBPSCellTemperature *m, char *s
 
 void BpXXXProcessBitprotoBPSPackInformation(void *data, struct BpProcessorContext *ctx);
 void BpXXXJsonFormatBitprotoBPSPackInformation(void *data, struct BpJsonFormatContext *ctx);
+
+void BpXXXProcessBitprotoBPSError(void *data, struct BpProcessorContext *ctx);
+void BpXXXJsonFormatBitprotoBPSError(void *data, struct BpJsonFormatContext *ctx);
 
 void BpXXXProcessBitprotoBPSCellVoltage(void *data, struct BpProcessorContext *ctx);
 void BpXXXJsonFormatBitprotoBPSCellVoltage(void *data, struct BpJsonFormatContext *ctx);

@@ -24,18 +24,16 @@ void MotorControllerCANInterface::rx_handler() {
     while (true) {
         CANMessage message;
         while (can.read(message)) {
-            if (message.id ==
-                MOTOR_CONTROLLER_MotorControllerPowerStatus_MESSAGE_ID) {
+            if (message.id == MotorControllerPowerStatus_AUX_BUS_MESSAGE_ID) {
                 MotorControllerPowerStatus can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
             } else if (message.id ==
-                       MOTOR_CONTROLLER_MotorControllerDriveStatus_MESSAGE_ID) {
+                       MotorControllerDriveStatus_AUX_BUS_MESSAGE_ID) {
                 MotorControllerDriveStatus can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
-            } else if (message.id ==
-                       MOTOR_CONTROLLER_MotorControllerError_MESSAGE_ID) {
+            } else if (message.id == MotorControllerError_AUX_BUS_MESSAGE_ID) {
                 MotorControllerError can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
