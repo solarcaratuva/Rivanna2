@@ -74,7 +74,7 @@ bool ECUInputReader::readBatteryContact() { return battery_contact; }
 bool ECUInputReader::readIgnition() { return ignition; }
 
 uint8_t ECUInputReader::readThrottle() {
-    return (int)(throttle.read() * 200.0);
+    return (int)((throttle.read() - 0.13) / 0.49 * 100);
 }
 
 uint8_t ECUInputReader::readRegen() { return (int)(regen.read() * 200.0); }
