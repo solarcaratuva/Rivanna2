@@ -39,7 +39,7 @@ typedef struct BPSPackInformation : CANStruct, BitprotoBPSPackInformation {
 typedef struct BPSError : CANStruct, BitprotoBPSError {
     void serialize(CANMessage *message) {
         EncodeBitprotoBPSError(this, message->data);
-        message->len = BYTES_LENGTH_BITPROTO_BPS_PACK_INFORMATION;
+        message->len = BYTES_LENGTH_BITPROTO_BPS_ERROR;
     }
 
     void deserialize(CANMessage *message) {
