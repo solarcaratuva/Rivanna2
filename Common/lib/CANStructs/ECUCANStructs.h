@@ -8,6 +8,7 @@
 typedef struct ECUMotorCommands : CANStruct, BitprotoECUMotorCommands {
     void serialize(CANMessage *message) {
         EncodeBitprotoECUMotorCommands(this, message->data);
+        message->len = BYTES_LENGTH_BITPROTO_ECU_MOTOR_COMMANDS;
     }
 
     void deserialize(CANMessage *message) {

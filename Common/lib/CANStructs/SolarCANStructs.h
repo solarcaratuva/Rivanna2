@@ -8,6 +8,7 @@
 typedef struct SolarCurrent : CANStruct, BitprotoSolarCurrent {
     void serialize(CANMessage *message) {
         EncodeBitprotoSolarCurrent(this, message->data);
+        message->len = BYTES_LENGTH_BITPROTO_SOLAR_CURRENT;
     }
 
     void deserialize(CANMessage *message) {

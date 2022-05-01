@@ -13,6 +13,7 @@
 typedef struct BPSPackInformation : CANStruct, BitprotoBPSPackInformation {
     void serialize(CANMessage *message) {
         EncodeBitprotoBPSPackInformation(this, message->data);
+        message->len = BYTES_LENGTH_BITPROTO_BPS_PACK_INFORMATION;
     }
 
     void deserialize(CANMessage *message) {

@@ -15,6 +15,7 @@ typedef struct MotorControllerFrameRequest
       BitprotoMotorControllerFrameRequest {
     void serialize(CANMessage *message) {
         EncodeBitprotoMotorControllerFrameRequest(this, message->data);
+        message->len = BYTES_LENGTH_BITPROTO_MOTOR_CONTROLLER_FRAME_REQUEST;
     }
 
     void deserialize(CANMessage *message) {
