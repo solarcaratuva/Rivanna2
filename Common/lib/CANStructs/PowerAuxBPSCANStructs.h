@@ -39,6 +39,7 @@ typedef struct BPSPackInformation : CANStruct, BitprotoBPSPackInformation {
 typedef struct BPSError : CANStruct, BitprotoBPSError {
     void serialize(CANMessage *message) {
         EncodeBitprotoBPSError(this, message->data);
+        message->len = BYTES_LENGTH_BITPROTO_BPS_PACK_INFORMATION;
     }
 
     void deserialize(CANMessage *message) {
@@ -94,6 +95,7 @@ typedef struct BPSError : CANStruct, BitprotoBPSError {
 typedef struct BPSCellVoltage : CANStruct, BitprotoBPSCellVoltage {
     void serialize(CANMessage *message) {
         EncodeBitprotoBPSCellVoltage(this, message->data);
+        message->len = BYTES_LENGTH_BITPROTO_BPS_CELL_VOLTAGE;
     }
 
     void deserialize(CANMessage *message) {
@@ -119,6 +121,7 @@ typedef struct BPSCellVoltage : CANStruct, BitprotoBPSCellVoltage {
 typedef struct BPSCellTemperature : CANStruct, BitprotoBPSCellTemperature {
     void serialize(CANMessage *message) {
         EncodeBitprotoBPSCellTemperature(this, message->data);
+        message->len = BYTES_LENGTH_BITPROTO_BPS_CELL_TEMPERATURE;
     }
 
     void deserialize(CANMessage *message) {
