@@ -11,7 +11,7 @@
 
 #define MAIN_LOOP_PERIOD   1s
 #define ERROR_CHECK_PERIOD 1s
-#define FLASH_PERIOD     10ms
+#define FLASH_PERIOD       500ms
 
 PowerAuxCANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX,
                                            MAIN_CAN_STBY);
@@ -28,23 +28,16 @@ DigitalOut rightTurnSignal(RIGHT_TURN_EN);
 
 void signalFlashHandler() {
     while (true) {
+
         if (flashHazards) {
             leftTurnSignal = !leftTurnSignal;
             rightTurnSignal = !rightTurnSignal;
-        } else {
-            leftTurnSignal = false;
-            rightTurnSignal = false;
-        }
-
-        if (flashLSignal & !flashHazards) {
+        } else if (flashLSignal & !flashHazards) {
             leftTurnSignal = !leftTurnSignal;
-        } else {
-            leftTurnSignal = false;
-        }
-
-        if (flashRSignal & !flashHazards) {
+        } else if (flashRSignal & !flashHazards) {
             rightTurnSignal = !rightTurnSignal;
         } else {
+            leftTurnSignal = false;
             rightTurnSignal = false;
         }
 
