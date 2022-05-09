@@ -46,6 +46,10 @@ void signalFlashHandler() {
 
             ThisThread::sleep_for(FLASH_PERIOD);
         }
+        else {
+            leftTurnSignal = false;
+            rightTurnSignal = false;
+        }
     }
 }
 
