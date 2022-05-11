@@ -1,8 +1,8 @@
 #ifndef BPS_CAN_INTERFACE_H
 #define BPS_CAN_INTERFACE_H
 
-#include "CANInterface.h"
 #include "BPSCANStructs.h"
+#include "CANInterface.h"
 
 class BPSCANInterface : public CANInterface {
   public:

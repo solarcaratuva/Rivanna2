@@ -15,8 +15,7 @@
 
 PowerAuxCANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX,
                                            MAIN_CAN_STBY);
-BPSCANInterface bps_can_interface(BMS_CAN1_RX, BMS_CAN1_TX,
-                                          BMS_CAN1_STBY);
+BPSCANInterface bps_can_interface(BMS_CAN1_RX, BMS_CAN1_TX, BMS_CAN1_STBY);
 
 bool flashHazards, flashLSignal, flashRSignal;
 Thread signalFlashThread;

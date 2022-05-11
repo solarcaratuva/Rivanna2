@@ -51,7 +51,7 @@ typedef struct MotorControllerPowerStatus : CANStruct,
         DecodeBitprotoMotorControllerPowerStatus(this, message->data);
     }
 
-    uint32_t get_message_ID() { 
+    uint32_t get_message_ID() {
         // We only call get_message_ID for sending on the main CAN bus, so we
         // use the ID intended for the main bus
         return MotorControllerPowerStatus_MESSAGE_ID;
@@ -84,7 +84,7 @@ typedef struct MotorControllerDriveStatus : CANStruct,
         DecodeBitprotoMotorControllerDriveStatus(this, message->data);
     }
 
-    uint32_t get_message_ID() { 
+    uint32_t get_message_ID() {
         // We only call get_message_ID for sending on the main CAN bus, so we
         // use the ID intended for the main bus
         return MotorControllerDriveStatus_MESSAGE_ID;
