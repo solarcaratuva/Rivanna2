@@ -31,14 +31,11 @@ void signalFlashHandler() {
             if (flashHazards) {
                 leftTurnSignal = !leftTurnSignal;
                 rightTurnSignal = !rightTurnSignal;
-            }
-            else if (flashLSignal & !flashHazards) {
+            } else if (flashLSignal & !flashHazards) {
                 leftTurnSignal = !leftTurnSignal;
-            }
-            else if (flashRSignal & !flashHazards) {
+            } else if (flashRSignal & !flashHazards) {
                 rightTurnSignal = !rightTurnSignal;
-            }
-            else {
+            } else {
                 leftTurnSignal = false;
                 rightTurnSignal = false;
             }
