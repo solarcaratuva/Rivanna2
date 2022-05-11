@@ -3,8 +3,6 @@
 
 #include "CANInterface.h"
 #include "CANStructs.h"
-#include "MotorControllerCANStructs.h"
-#include "PowerAuxBPSCANStructs.h"
 
 /**
  * CANInterface for use with the main CAN bus.

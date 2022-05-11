@@ -60,6 +60,10 @@ void MainCANInterface::rx_handler() {
                 BPSPackInformation can_struct;
                 can_struct.deserialize(&message);
                 handle(&can_struct);
+            } else if (message.id == BPSError_MESSAGE_ID) {
+                BPSError can_struct;
+                can_struct.deserialize(&message);
+                handle(&can_struct);
             } else if (message.id == BPSCellVoltage_MESSAGE_ID) {
                 BPSCellVoltage can_struct;
                 can_struct.deserialize(&message);
