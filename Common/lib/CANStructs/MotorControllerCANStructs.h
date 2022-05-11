@@ -23,6 +23,8 @@ typedef struct MotorControllerFrameRequest
     }
 
     uint32_t get_message_ID() {
+        // Since we're sending this on the motor controller CAN bus, we need to
+        // use the 29-bit ID
         return MotorControllerFrameRequest_AUX_BUS_MESSAGE_ID;
     }
 
@@ -49,7 +51,11 @@ typedef struct MotorControllerPowerStatus : CANStruct,
         DecodeBitprotoMotorControllerPowerStatus(this, message->data);
     }
 
-    uint32_t get_message_ID() { return MotorControllerPowerStatus_MESSAGE_ID; }
+    uint32_t get_message_ID() { 
+        // We only call get_message_ID for sending on the main CAN bus, so we
+        // use the ID intended for the main bus
+        return MotorControllerPowerStatus_MESSAGE_ID;
+    }
 
     void print() {
         PRINT("MotorControllerPowerStatus\n battery_voltage: %u\n "
@@ -78,7 +84,11 @@ typedef struct MotorControllerDriveStatus : CANStruct,
         DecodeBitprotoMotorControllerDriveStatus(this, message->data);
     }
 
-    uint32_t get_message_ID() { return MotorControllerDriveStatus_MESSAGE_ID; }
+    uint32_t get_message_ID() { 
+        // We only call get_message_ID for sending on the main CAN bus, so we
+        // use the ID intended for the main bus
+        return MotorControllerDriveStatus_MESSAGE_ID;
+    }
 
     void print() {
         PRINT("MotorControllerDriveStatus\n power_eco: %d\n control_mode: %d\n "
@@ -106,7 +116,11 @@ typedef struct MotorControllerError : CANStruct, BitprotoMotorControllerError {
         DecodeBitprotoMotorControllerError(this, message->data);
     }
 
-    uint32_t get_message_ID() { return MotorControllerError_MESSAGE_ID; }
+    uint32_t get_message_ID() {
+        // We only call get_message_ID for sending on the main CAN bus, so we
+        // use the ID intended for the main bus
+        return MotorControllerError_MESSAGE_ID;
+    }
 
     void print() {
         PRINT(
