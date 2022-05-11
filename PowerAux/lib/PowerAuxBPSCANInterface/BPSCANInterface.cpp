@@ -1,12 +1,11 @@
-#include "PowerAuxBPSCANInterface.h"
+#include "BPSCANInterface.h"
 
-PowerAuxBPSCANInterface::PowerAuxBPSCANInterface(PinName rd, PinName td,
-                                                 PinName standby_pin)
+BPSCANInterface::BPSCANInterface(PinName rd, PinName td, PinName standby_pin)
     : CANInterface(rd, td, standby_pin) {
     can.frequency(250000);
 }
 
-void PowerAuxBPSCANInterface::rx_handler() {
+void BPSCANInterface::rx_handler() {
     while (true) {
         CANMessage message;
         while (can.read(message)) {

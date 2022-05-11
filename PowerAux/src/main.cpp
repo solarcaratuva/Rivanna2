@@ -1,4 +1,4 @@
-#include "PowerAuxBPSCANInterface.h"
+#include "BPSCANInterface.h"
 #include "PowerAuxCANInterface.h"
 #include "Printing.h"
 #include "STMUniqueID.h"
@@ -15,8 +15,7 @@
 
 PowerAuxCANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX,
                                            MAIN_CAN_STBY);
-PowerAuxBPSCANInterface bps_can_interface(BMS_CAN1_RX, BMS_CAN1_TX,
-                                          BMS_CAN1_STBY);
+BPSCANInterface bps_can_interface(BMS_CAN1_RX, BMS_CAN1_TX, BMS_CAN1_STBY);
 
 bool flashHazards, flashLSignal, flashRSignal = false;
 Thread signalFlashThread;
@@ -28,6 +27,7 @@ DigitalOut rightTurnSignal(RIGHT_TURN_EN);
 
 void signalFlashHandler() {
     while (true) {
+
         if (flashHazards) {
             leftTurnSignal = !leftTurnSignal;
             rightTurnSignal = !rightTurnSignal;
@@ -122,7 +122,7 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
     flashHazards = can_struct->hazards;
 }
 
-void PowerAuxBPSCANInterface::handle(BPSPackInformation *can_struct) {
+void BPSCANInterface::handle(BPSPackInformation *can_struct) {
     vehicle_can_interface.send(can_struct);
 #ifdef DEBUG
     can_struct->print();
@@ -131,7 +131,7 @@ void PowerAuxBPSCANInterface::handle(BPSPackInformation *can_struct) {
           can_struct->pack_voltage);
 }
 
-void PowerAuxBPSCANInterface::handle(BPSError *can_struct) {
+void BPSCANInterface::handle(BPSError *can_struct) {
     vehicle_can_interface.send(can_struct);
 #ifdef DEBUG
     can_struct->print();
@@ -139,7 +139,7 @@ void PowerAuxBPSCANInterface::handle(BPSError *can_struct) {
     bpsFaultIndicator = can_struct->has_error();
 }
 
-void PowerAuxBPSCANInterface::handle(BPSCellVoltage *can_struct) {
+void BPSCANInterface::handle(BPSCellVoltage *can_struct) {
     vehicle_can_interface.send(can_struct);
 #ifdef DEBUG
     can_struct->print();
@@ -148,7 +148,7 @@ void PowerAuxBPSCANInterface::handle(BPSCellVoltage *can_struct) {
           can_struct->low_cell_voltage);
 }
 
-void PowerAuxBPSCANInterface::handle(BPSCellTemperature *can_struct) {
+void BPSCANInterface::handle(BPSCellTemperature *can_struct) {
     vehicle_can_interface.send(can_struct);
 #ifdef DEBUG
     can_struct->print();

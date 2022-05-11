@@ -1,5 +1,5 @@
-#ifndef POWER_AUX_BPS_CAN_STRUCTS_H
-#define POWER_AUX_BPS_CAN_STRUCTS_H
+#ifndef BPS_CAN_STRUCTS_H
+#define BPS_CAN_STRUCTS_H
 
 #include "CANStruct.h"
 #include "Printing.h"
