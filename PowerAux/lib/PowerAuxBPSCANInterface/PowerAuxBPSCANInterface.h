@@ -2,7 +2,7 @@
 #define POWER_AUX_BPS_CAN_INTERFACE_H
 
 #include "CANInterface.h"
-#include "PowerAuxBPSCANStructs.h"
+#include "BPSCANStructs.h"
 
 class PowerAuxBPSCANInterface : public CANInterface {
   public:

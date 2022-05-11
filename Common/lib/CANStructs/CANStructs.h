@@ -3,7 +3,7 @@
 
 #include "ECUCANStructs.h"
 #include "MotorControllerCANStructs.h"
-#include "PowerAuxBPSCANStructs.h"
+#include "BPSCANStructs.h"
 #include "PowerAuxCANStructs.h"
 #include "SolarCANStructs.h"
 
