@@ -7,18 +7,18 @@
 #include <rtos.h>
 
 #define TESTING          // only defined if using test functions
-// #define DEBUG   // only define if DEBUG
+#define DEBUG   // only define if DEBUG
 
 #define MAIN_LOOP_PERIOD   1s
 #define ERROR_CHECK_PERIOD 1s
-#define FLASH_PERIOD     10ms
+#define FLASH_PERIOD     500ms
 
 PowerAuxCANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX,
                                            MAIN_CAN_STBY);
 PowerAuxBPSCANInterface bps_can_interface(BMS_CAN1_RX, BMS_CAN1_TX,
                                           BMS_CAN1_STBY);
 
-bool flashHazards, flashLSignal, flashRSignal;
+bool flashHazards, flashLSignal, flashRSignal = false;
 Thread signalFlashThread;
 
 DigitalOut brake_lights(BRAKE_LIGHT_EN);
@@ -31,22 +31,13 @@ void signalFlashHandler() {
         if (flashHazards) {
             leftTurnSignal = !leftTurnSignal;
             rightTurnSignal = !rightTurnSignal;
-        } else {
-            leftTurnSignal = false;
-            rightTurnSignal = false;
-        }
-
-        if (flashLSignal & !flashHazards) {
+        } else if (flashLSignal) {
             leftTurnSignal = !leftTurnSignal;
-        } else {
-            leftTurnSignal = false;
-        }
-
-        if (flashRSignal & !flashHazards) {
+        } else if (flashRSignal) {
             rightTurnSignal = !rightTurnSignal;
-        } else {
-            rightTurnSignal = false;
-        }
+        } 
+        if (!flashHazards && !flashLSignal) leftTurnSignal = false;
+        if (!flashHazards && !flashRSignal) rightTurnSignal = false;
 
         ThisThread::sleep_for(FLASH_PERIOD);
     }
