@@ -29,6 +29,13 @@ typedef struct BPSPackInformation : CANStruct, BitprotoBPSPackInformation {
               pack_voltage, pack_current, pack_soc, discharge_relay,
               charge_relay);
     }
+
+    std::string to_string() {
+        char buffer[1024];
+        int bytes = JsonBitprotoBPSPackInformation(this, buffer);
+        buffer[bytes] = '\0';
+        return std::string(buffer);
+    }
 } BPSPackInformation;
 
 /**
@@ -85,6 +92,13 @@ typedef struct BPSError : CANStruct, BitprotoBPSError {
               charger_safety_relay_fault, internal_memory_fault,
               internal_thermistor_fault, internal_logic_fault);
     }
+
+    std::string to_string() {
+        char buffer[1024];
+        int bytes = JsonBitprotoBPSError(this, buffer);
+        buffer[bytes] = '\0';
+        return std::string(buffer);
+    }
 } BPSError;
 
 /**
@@ -111,6 +125,13 @@ typedef struct BPSCellVoltage : CANStruct, BitprotoBPSCellVoltage {
             low_cell_voltage, low_cell_voltage_id, high_cell_voltage,
             high_cell_voltage_id);
     }
+
+    std::string to_string() {
+        char buffer[1024];
+        int bytes = JsonBitprotoBPSCellVoltage(this, buffer);
+        buffer[bytes] = '\0';
+        return std::string(buffer);
+    }
 } BPSCellVoltage;
 
 /**
@@ -135,6 +156,13 @@ typedef struct BPSCellTemperature : CANStruct, BitprotoBPSCellTemperature {
               "%u\n high_temperature: %u\n high_thermistor_id: %u\n",
               low_temperature, low_thermistor_id, high_temperature,
               high_thermistor_id);
+    }
+
+    std::string to_string() {
+        char buffer[1024];
+        int bytes = JsonBitprotoBPSCellTemperature(this, buffer);
+        buffer[bytes] = '\0';
+        return std::string(buffer);
     }
 } BPSCellTemperature;
 

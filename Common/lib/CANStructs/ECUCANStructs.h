@@ -24,6 +24,13 @@ typedef struct ECUMotorCommands : CANStruct, BitprotoECUMotorCommands {
               throttle, regen, forward_en, reverse_en, cruise_control_en,
               cruise_control_speed, motor_on);
     }
+
+    std::string to_string() {
+        char buffer[1024];
+        int bytes = JsonBitprotoECUMotorCommands(this, buffer);
+        buffer[bytes] = '\0';
+        return std::string(buffer);
+    }
 } ECUMotorCommands;
 
 typedef struct ECUPowerAuxCommands : CANStruct, BitprotoECUPowerAuxCommands {
@@ -43,6 +50,13 @@ typedef struct ECUPowerAuxCommands : CANStruct, BitprotoECUPowerAuxCommands {
               "Headlights: %d\n Left_Turn_Signal: %d\n Right_Turn_Signal: %d\n",
               hazards, brake_lights, headlights, left_turn_signal,
               right_turn_signal);
+    }
+
+    std::string to_string() {
+        char buffer[1024];
+        int bytes = JsonBitprotoECUPowerAuxCommands(this, buffer);
+        buffer[bytes] = '\0';
+        return std::string(buffer);
     }
 } ECUPowerAuxCommands;
 

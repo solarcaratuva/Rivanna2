@@ -34,6 +34,13 @@ typedef struct MotorControllerFrameRequest
               "%d\n errors_frame: %d\n",
               power_status_frame, drive_status_frame, errors_frame);
     }
+
+    std::string to_string() {
+        char buffer[1024];
+        int bytes = JsonBitprotoMotorControllerFrameRequest(this, buffer);
+        buffer[bytes] = '\0';
+        return std::string(buffer);
+    }
 } MotorControllerFrameRequest;
 
 /**
@@ -67,6 +74,13 @@ typedef struct MotorControllerPowerStatus : CANStruct,
               motor_current, fet_temperature, motor_rotating_speed, pwm_duty,
               advanced_lead_angle);
     }
+
+    std::string to_string() {
+        char buffer[1024];
+        int bytes = JsonBitprotoMotorControllerPowerStatus(this, buffer);
+        buffer[bytes] = '\0';
+        return std::string(buffer);
+    }
 } MotorControllerPowerStatus;
 
 /**
@@ -97,6 +111,13 @@ typedef struct MotorControllerDriveStatus : CANStruct,
               power_eco, control_mode, acceleration_vr_position,
               regeneration_vr_position, digi_sw_number, target_value,
               motor_status, drive_regen);
+    }
+
+    std::string to_string() {
+        char buffer[1024];
+        int bytes = JsonBitprotoMotorControllerDriveStatus(this, buffer);
+        buffer[bytes] = '\0';
+        return std::string(buffer);
     }
 } MotorControllerDriveStatus;
 
@@ -148,6 +169,13 @@ typedef struct MotorControllerError : CANStruct, BitprotoMotorControllerError {
             padding4, overcurrent_limit, padding5, motor_system_error,
             motor_lock, hall_sensor_short, hall_sensor_open, padding6,
             overheat_level);
+    }
+
+    std::string to_string() {
+        char buffer[1024];
+        int bytes = JsonBitprotoMotorControllerError(this, buffer);
+        buffer[bytes] = '\0';
+        return std::string(buffer);
     }
 } MotorControllerError;
 

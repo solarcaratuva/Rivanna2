@@ -3,6 +3,7 @@
 
 #include "CANStructMessageIDs.h"
 #include <mbed.h>
+#include <string>
 
 /**
  * Serializable object to be sent over a CAN bus.
@@ -15,6 +16,7 @@ struct CANStruct {
      */
     virtual uint32_t get_message_ID();
     virtual void print();
+    virtual std::string to_string();
 };
 
 #endif

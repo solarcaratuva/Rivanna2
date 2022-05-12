@@ -29,6 +29,13 @@ typedef struct PowerAuxError : CANStruct, BitprotoPowerAuxError {
               fan_error, brake_light_error, headlight_error, bms_strobe_error,
               left_turn_error, right_turn_error);
     }
+
+    std::string to_string() {
+        char buffer[1024];
+        int bytes = JsonBitprotoPowerAuxError(this, buffer);
+        buffer[bytes] = '\0';
+        return std::string(buffer);
+    }
 } PowerAuxError;
 
 #endif
