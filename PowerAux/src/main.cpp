@@ -7,11 +7,11 @@
 #include <rtos.h>
 
 #define TESTING          // only defined if using test functions
-#define DEBUG   // only define if DEBUG
+#define DEBUG              // only define if DEBUG
 
 #define MAIN_LOOP_PERIOD   1s
 #define ERROR_CHECK_PERIOD 1s
-#define FLASH_PERIOD     500ms
+#define FLASH_PERIOD       500ms
 
 PowerAuxCANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX,
                                            MAIN_CAN_STBY);
