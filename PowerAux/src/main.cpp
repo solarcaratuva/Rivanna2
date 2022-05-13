@@ -27,19 +27,24 @@ DigitalOut rightTurnSignal(RIGHT_TURN_EN);
 
 void signalFlashHandler() {
     while (true) {
+        if (flashHazards || flashLSignal || flashRSignal) {
+            if (flashHazards) {
+                leftTurnSignal = !leftTurnSignal;
+                rightTurnSignal = !rightTurnSignal;
+            } else if (flashLSignal & !flashHazards) {
+                leftTurnSignal = !leftTurnSignal;
+            } else if (flashRSignal & !flashHazards) {
+                rightTurnSignal = !rightTurnSignal;
+            } else {
+                leftTurnSignal = false;
+                rightTurnSignal = false;
+            }
 
-        if (flashHazards) {
-            leftTurnSignal = !leftTurnSignal;
-            rightTurnSignal = !rightTurnSignal;
-        } else if (flashLSignal) {
-            leftTurnSignal = !leftTurnSignal;
-        } else if (flashRSignal) {
-            rightTurnSignal = !rightTurnSignal;
-        } 
-        if (!flashHazards && !flashLSignal) leftTurnSignal = false;
-        if (!flashHazards && !flashRSignal) rightTurnSignal = false;
-
-        ThisThread::sleep_for(FLASH_PERIOD);
+            ThisThread::sleep_for(FLASH_PERIOD);
+        } else {
+            leftTurnSignal = false;
+            rightTurnSignal = false;
+        }
     }
 }
 
