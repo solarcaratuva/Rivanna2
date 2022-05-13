@@ -7,7 +7,7 @@
 #include <rtos.h>
 
 #define TESTING          // only defined if using test functions
-// #define DEBUG   // only define if DEBUG
+#define DEBUG              // only define if DEBUG
 
 #define MAIN_LOOP_PERIOD   1s
 #define ERROR_CHECK_PERIOD 1s
@@ -17,7 +17,7 @@ PowerAuxCANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX,
                                            MAIN_CAN_STBY);
 BPSCANInterface bps_can_interface(BMS_CAN1_RX, BMS_CAN1_TX, BMS_CAN1_STBY);
 
-bool flashHazards, flashLSignal, flashRSignal;
+bool flashHazards, flashLSignal, flashRSignal = false;
 Thread signalFlashThread;
 
 DigitalOut brake_lights(BRAKE_LIGHT_EN);
