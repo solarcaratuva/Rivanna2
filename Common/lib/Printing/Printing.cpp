@@ -1,27 +1,23 @@
 #include "Printing.h"
 #include <stdarg.h>
 #include <stdlib.h>
-
-using namespace std;
+#include <mbed.h>
 
 // Used to make printing thread safe
 Mutex printing_mutex;
 
 void print_thread_safe(const char *s, ...) {
-#ifdef PRINTING
     printing_mutex.lock();
     va_list args;
     va_start(args, s);
     vprintf(s, args);
     va_end(args);
     printing_mutex.unlock();
-#endif // PRINTING
 }
 
 // Input: an integer representing a float with decimals digits past decimal
 // multiplied by 10^decimals Output: print num as a float
 void printIntegerAsFloat(int num, int decimals) {
-#ifdef PRINTING
     printing_mutex.lock();
     int left = num;
     int right = num;
@@ -53,14 +49,11 @@ void printIntegerAsFloat(int num, int decimals) {
 
     printf("%d", right);
     printing_mutex.unlock();
-
-#endif // PRINTING
 }
 
 // Input: a float
 // Output: print num as a float
 void printFloat(float num, int decimals) {
-#ifdef PRINTING
     float n = num;
     int d = decimals;
 
@@ -75,6 +68,4 @@ void printFloat(float num, int decimals) {
         mult *= 10;
 
     printIntegerAsFloat((int)(n * mult), d);
-
-#endif // PRINTING
 }
