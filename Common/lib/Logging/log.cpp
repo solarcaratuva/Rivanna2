@@ -61,7 +61,7 @@ static void stdout_callback(log_Event *ev) {
 }
 
 
-const char* log_level_string(int level) {
+const char* log_at_level_string(int level) {
   return level_strings[level];
 }
 

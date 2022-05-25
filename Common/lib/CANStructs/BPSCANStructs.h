@@ -23,7 +23,7 @@ typedef struct BPSPackInformation : CANStruct, BitprotoBPSPackInformation {
     uint32_t get_message_ID() { return BPSPackInformation_MESSAGE_ID; }
 
     void log(int level) {
-        log_level(level, "BPSPackInformation\n pack_voltage: %u\n pack_current:  %u\n "
+        log_at_level(level, "BPSPackInformation\n pack_voltage: %u\n pack_current:  %u\n "
               "pack_soc: %u\n"
               "discharge_relay: %d\n charge_relay: %d",
               pack_voltage, pack_current, pack_soc, discharge_relay,
@@ -63,7 +63,7 @@ typedef struct BPSError : CANStruct, BitprotoBPSError {
     }
 
     void log(int level) {
-        log_level(level, "BPSError\n internal_communications_fault: %d\n "
+        log_at_level(level, "BPSError\n internal_communications_fault: %d\n "
               "internal_conversion_fault: %d\n weak_cell_fault: %d\n "
               "low_cell_voltage_fault: %d\n open_wiring_fault: %d\n "
               "current_sensor_fault: %d\n pack_voltage_sensor_fault: %d\n "
@@ -105,7 +105,7 @@ typedef struct BPSCellVoltage : CANStruct, BitprotoBPSCellVoltage {
     uint32_t get_message_ID() { return BPSCellVoltage_MESSAGE_ID; }
 
     void log(int level) {
-        log_level(level, 
+        log_at_level(level, 
             "BPSCellVoltage\n low_cell_voltage: %u\n low_cell_voltage_id: %u\n "
             "high_cell_voltage: %u\n high_cell_voltage_id: %u",
             low_cell_voltage, low_cell_voltage_id, high_cell_voltage,
@@ -131,7 +131,7 @@ typedef struct BPSCellTemperature : CANStruct, BitprotoBPSCellTemperature {
     uint32_t get_message_ID() { return BPSCellTemperature_MESSAGE_ID; }
 
     void log(int level) {
-        log_level(level, "BPSCellTemperature: \n low_temperature: %u\n low_thermistor_id: "
+        log_at_level(level, "BPSCellTemperature: \n low_temperature: %u\n low_thermistor_id: "
               "%u\n high_temperature: %u\n high_thermistor_id: %u\n",
               low_temperature, low_thermistor_id, high_temperature,
               high_thermistor_id);
