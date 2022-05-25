@@ -13,6 +13,10 @@
 #include <stdbool.h>
 #include <time.h>
 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 #define LOG_VERSION "0.1.0"
 
 typedef struct {
@@ -45,5 +49,9 @@ int log_add_callback(log_LogFn fn, void *udata, int level);
 int log_add_fp(FILE *fp, int level);
 
 void log_log(int level, const char *file, int line, const char *fmt, ...);
+
+#if defined(__cplusplus)
+}
+#endif
 
 #endif
