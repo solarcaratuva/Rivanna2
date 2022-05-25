@@ -2,13 +2,12 @@
 #include "PowerAuxCANInterface.h"
 #include "Printing.h"
 #include "STMUniqueID.h"
+#include "log.h"
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>
 
-#define TESTING          // only defined if using test functions
-#define DEBUG              // only define if DEBUG
-
+#define LOG_LEVEL          LOG_ERROR
 #define MAIN_LOOP_PERIOD   1s
 #define ERROR_CHECK_PERIOD 1s
 #define FLASH_PERIOD       500ms
@@ -98,27 +97,24 @@ void peripheral_error_handler() {
 }
 
 int main() {
-#ifdef TESTING
-    PRINT("start main() \r\n");
-#endif // TESTING
+    log_set_level(LOG_LEVEL);
+    log_debug("Start main()");
 
     signalFlashThread.start(signalFlashHandler);
     signalBPSThread.start(signalBPSStrobe);
     peripheral_error_thread.start(peripheral_error_handler);
-    while (1) {
+
+    while (true) {
         check_power_aux_board();
-#ifdef TESTING
-        PRINT("main thread loop \r\n");
-#endif // TESTING
+        log_debug("Main thread loop");
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }
 }
 
 void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
-#ifdef DEBUG
-    can_struct->print();
-#endif
+    can_struct->log(LOG_INFO);
+
     brake_lights = can_struct->brake_lights;
     headlights = can_struct->headlights;
 
@@ -128,36 +124,22 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
 }
 
 void BPSCANInterface::handle(BPSPackInformation *can_struct) {
+    can_struct->log(LOG_INFO);
     vehicle_can_interface.send(can_struct);
-#ifdef DEBUG
-    can_struct->print();
-#endif
-    PRINT("Received BPSPackInformation struct: pack_voltage=%u\n",
-          can_struct->pack_voltage);
 }
 
 void BPSCANInterface::handle(BPSError *can_struct) {
+    can_struct->log(LOG_INFO);
     vehicle_can_interface.send(can_struct);
-#ifdef DEBUG
-    can_struct->print();
-#endif
     bpsFaultIndicator = can_struct->has_error();
 }
 
 void BPSCANInterface::handle(BPSCellVoltage *can_struct) {
+    can_struct->log(LOG_INFO);
     vehicle_can_interface.send(can_struct);
-#ifdef DEBUG
-    can_struct->print();
-#endif
-    PRINT("Received BPSCellVoltage struct: low_cell_voltage=%u\n",
-          can_struct->low_cell_voltage);
 }
 
 void BPSCANInterface::handle(BPSCellTemperature *can_struct) {
+    can_struct->log(LOG_INFO);
     vehicle_can_interface.send(can_struct);
-#ifdef DEBUG
-    can_struct->print();
-#endif
-    PRINT("Received BPSCellTemperature struct: low_temperature=%u\n",
-          can_struct->low_temperature);
 }

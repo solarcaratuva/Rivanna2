@@ -4,13 +4,12 @@
 #include "MotorStateTracker.h"
 #include "Printing.h"
 #include "STMUniqueID.h"
+#include "log.h"
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>
 
-#define TESTING          // only defined if using test functions
-// #define DEBUG   // only define if debugging
-
+#define LOG_LEVEL        LOG_ERROR
 #define MAIN_LOOP_PERIOD 1s
 
 BufferedSerial device(USBTX, USBRX);
@@ -32,22 +31,19 @@ MotorInterface motor_interface(throttle, regen, gear, ignition);
 MotorStateTracker motor_state_tracker;
 
 int main() {
-#ifdef TESTING
-    PRINT("start main() \r\n");
-#endif // TESTING
+    log_set_level(LOG_LEVEL);
+    log_debug("Start main()");
 
-    while (1) {
+    while (true) {
         check_motor_board();
-#ifdef TESTING
-        PRINT("main thread loop \r\n");
-#endif // TESTING
+        log_debug("Main thread loop");
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }
 }
 
 void MotorCANInterface::handle(ECUMotorCommands *can_struct) {
-    can_struct->print();
+    can_struct->log(LOG_INFO);
     motor_interface.sendIgnition(can_struct->motor_on);
     motor_interface.sendDirection(
         can_struct->forward_en); // TODO: verify motor controller will not allow
@@ -58,28 +54,20 @@ void MotorCANInterface::handle(ECUMotorCommands *can_struct) {
 
 void MotorControllerCANInterface::handle(
     MotorControllerPowerStatus *can_struct) {
-#ifdef DEBUG
-    can_struct->print();
-#endif
+    can_struct->log(LOG_INFO);
     vehicle_can_interface.send(can_struct);
     motor_state_tracker.setMotorControllerPowerStatus(*can_struct);
 }
 
 void MotorControllerCANInterface::handle(
     MotorControllerDriveStatus *can_struct) {
-#ifdef DEBUG
-    can_struct->print();
-#endif
+    can_struct->log(LOG_INFO);
     vehicle_can_interface.send(can_struct);
     motor_state_tracker.setMotorControllerDriveStatus(*can_struct);
 }
 
 void MotorControllerCANInterface::handle(MotorControllerError *can_struct) {
-#ifdef DEBUG
-    can_struct->print();
-#endif
+    can_struct->log(LOG_INFO);
     vehicle_can_interface.send(can_struct);
     motor_state_tracker.setMotorControllerError(*can_struct);
 }
-
-//

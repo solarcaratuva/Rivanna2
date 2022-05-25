@@ -1,11 +1,10 @@
 {
-    "target_overrides": {
-      "*": {
-        "target.c_lib": "small",
-        "target.printf_lib": "minimal-printf",
-        "platform.minimal-printf-enable-floating-point": true,
-        "platform.minimal-printf-set-floating-point-max-decimals": 5,
-        "platform.stdio-minimal-console-only": true
-      }
+  "target_overrides": {
+    "*": {
+      "target.c_lib": "small",
+      "target.printf_lib": "minimal-printf",
+      "platform.stdio-baud-rate": 921600,
+      "platform.stdio-buffered-serial": 1
     }
+  }
 }

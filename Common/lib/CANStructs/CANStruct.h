@@ -14,7 +14,7 @@ struct CANStruct {
      * Gets the message ID for sending on the appropriate bus.
      */
     virtual uint32_t get_message_ID();
-    virtual void print();
+    virtual void log(int level);
 };
 
 #endif

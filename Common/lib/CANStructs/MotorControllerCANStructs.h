@@ -2,8 +2,8 @@
 #define MOTOR_CONTROLLER_CAN_STRUCTS_H
 
 #include "CANStruct.h"
-#include "Printing.h"
 #include "bitproto/structs/motor_controller_bp.h"
+#include "log.h"
 
 /**
  * Struct for requesting information from the motor controller.
@@ -28,11 +28,13 @@ typedef struct MotorControllerFrameRequest
         return MotorControllerFrameRequest_AUX_BUS_MESSAGE_ID;
     }
 
-    void print() {
-        PRINT("MotorControllerFrameRequest\n power_status_frame: %d\n "
-              "drive_status_frame: "
-              "%d\n errors_frame: %d\n",
-              power_status_frame, drive_status_frame, errors_frame);
+    void log(int level) {
+        char buffer[2048] = {0};
+        const char *start = "MotorControllerFrameRequest: ";
+        strcat(buffer, start);
+        JsonBitprotoMotorControllerFrameRequest(this, buffer + strlen(start));
+
+        log_at_level(level, buffer);
     }
 } MotorControllerFrameRequest;
 
@@ -57,15 +59,13 @@ typedef struct MotorControllerPowerStatus : CANStruct,
         return MotorControllerPowerStatus_MESSAGE_ID;
     }
 
-    void print() {
-        PRINT("MotorControllerPowerStatus\n battery_voltage: %u\n "
-              "battery_current: %u\n "
-              "battery_current_direction: %d\n motor_current: %u\n "
-              "fet_temperature: %u\n motor_rotating_speed: %u\n pwm_duty: %u\n "
-              "advanced_lead_angle: %u\n",
-              battery_voltage, battery_current, battery_current_direction,
-              motor_current, fet_temperature, motor_rotating_speed, pwm_duty,
-              advanced_lead_angle);
+    void log(int level) {
+        char buffer[2048] = {0};
+        const char *start = "MotorControllerPowerStatus: ";
+        strcat(buffer, start);
+        JsonBitprotoMotorControllerPowerStatus(this, buffer + strlen(start));
+
+        log_at_level(level, buffer);
     }
 } MotorControllerPowerStatus;
 
@@ -90,13 +90,13 @@ typedef struct MotorControllerDriveStatus : CANStruct,
         return MotorControllerDriveStatus_MESSAGE_ID;
     }
 
-    void print() {
-        PRINT("MotorControllerDriveStatus\n power_eco: %d\n control_mode: %d\n "
-              "acceleration_vr_position: %u\n regeneration_vr_position: %u\n "
-              "digi_sw_number: %u\n target_value: %u\n motor_status: %u\n",
-              power_eco, control_mode, acceleration_vr_position,
-              regeneration_vr_position, digi_sw_number, target_value,
-              motor_status, drive_regen);
+    void log(int level) {
+        char buffer[2048] = {0};
+        const char *start = "MotorControllerDriveStatus: ";
+        strcat(buffer, start);
+        JsonBitprotoMotorControllerDriveStatus(this, buffer + strlen(start));
+
+        log_at_level(level, buffer);
     }
 } MotorControllerDriveStatus;
 
@@ -122,32 +122,13 @@ typedef struct MotorControllerError : CANStruct, BitprotoMotorControllerError {
         return MotorControllerError_MESSAGE_ID;
     }
 
-    void print() {
-        PRINT(
-            "MotorControllerError\n analog_sensor_error: %d\n "
-            "motor_current_sensor_u_error: "
-            "%d\n motor_current_sensor_w_error: %d\n fet_thermistor_error: "
-            "%d\n padding0: %d\n battery_voltage_sensor_error: %d\n "
-            "battery_current_sensor_error: %d\n "
-            "battery_current_sensor_adjust_erro: %d\n "
-            "motor_current_sensor_adjust_error: %d\n "
-            "accelerator_position_error: %d\n accelerator_position_error: %d\n "
-            "padding1: %d\n controller_voltage_sensor_error: %d\n padding2: "
-            "%u\n power_system_error: %d\n overcurrent_error: %d\n padding3: "
-            "%d\n padding4: %d\n overcurrent_limit: %d\n overvoltage_error: "
-            "%d\n padding5: %u\n motor_sysem_error: d%\n motor_lock: d%\n "
-            "hall_sensor_short: d%\n hall_sensor_open: d%\n padding6: u%\n "
-            "overheat_level: u%\n",
-            analog_sensor_error, motor_current_sensor_u_error,
-            motor_current_sensor_w_error, fet_thermistor_error, padding0,
-            battery_voltage_sensor_error, battery_current_sensor_error,
-            battery_current_sensor_adjust_error,
-            motor_current_sensor_adjust_error, accelerator_position_error,
-            padding1, controller_voltage_sensor_error, padding2,
-            power_system_error, overcurrent_error, padding3, overvoltage_error,
-            padding4, overcurrent_limit, padding5, motor_system_error,
-            motor_lock, hall_sensor_short, hall_sensor_open, padding6,
-            overheat_level);
+    void log(int level) {
+        char buffer[2048] = {0};
+        const char *start = "MotorControllerError: ";
+        strcat(buffer, start);
+        JsonBitprotoMotorControllerError(this, buffer + strlen(start));
+
+        log_at_level(level, buffer);
     }
 } MotorControllerError;
 

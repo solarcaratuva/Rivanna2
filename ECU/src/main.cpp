@@ -3,13 +3,12 @@
 #include "ECUInputReader.h"
 #include "Printing.h"
 #include "STMUniqueID.h"
+#include "log.h"
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>
 
-#define TESTING                // only defined if using test functions
-// #define DEBUG   // only define if DEBUG
-
+#define LOG_LEVEL              LOG_ERROR
 #define MAIN_LOOP_PERIOD       1s
 #define MOTOR_THREAD_PERIOD    10ms
 #define POWERAUX_THREAD_PERIOD 10ms
@@ -45,8 +44,7 @@ void motor_message_handler() {
         to_motor.motor_on = input_reader.readMotorOn();
 
         // Send message
-        PRINT("Motor Message Send Status: %d\r\n",
-              vehicle_can_interface.send(&to_motor));
+        vehicle_can_interface.send(&to_motor);
 
         // Sleep
         ThisThread::sleep_for(MOTOR_THREAD_PERIOD);
@@ -63,8 +61,7 @@ void poweraux_message_handler() {
         to_poweraux.right_turn_signal = input_reader.readRightTurnSignal();
 
         // Send message
-        PRINT("PowerAux Message Send Status: %d\r\n",
-              vehicle_can_interface.send(&to_poweraux));
+        vehicle_can_interface.send(&to_poweraux);
 
         // Sleep
         ThisThread::sleep_for(POWERAUX_THREAD_PERIOD);
@@ -72,18 +69,15 @@ void poweraux_message_handler() {
 }
 
 int main() {
-#ifdef TESTING
-    PRINT("start main() \r\n");
-#endif // TESTING
+    log_set_level(LOG_LEVEL);
+    log_debug("Start main()");
 
     motor_thread.start(motor_message_handler);
     poweraux_thread.start(poweraux_message_handler);
 
     while (true) {
         check_ecu_board();
-#ifdef TESTING
-        PRINT("main thread loop \r\n");
-#endif // TESTING
+        log_debug("Main thread loop");
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }
