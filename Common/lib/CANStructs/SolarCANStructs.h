@@ -17,7 +17,12 @@ typedef struct SolarCurrent : CANStruct, BitprotoSolarCurrent {
     uint32_t get_message_ID() { return SolarCurrent_MESSAGE_ID; }
 
     void log(int level) {
-        log_at_level(level, "SolarCurret\n total_currentL %u\n", total_current);
+        char buffer[2048] = {0};
+        const char *start = "SolarCurrent: ";
+        strcat(buffer, start);
+        JsonBitprotoSolarCurrent(this, buffer + strlen(start));
+
+        log_at_level(level, buffer);
     }
 } SolarCurrent;
 
@@ -34,11 +39,12 @@ typedef struct SolarVoltage : CANStruct, BitprotoSolarVoltage {
     uint32_t get_message_ID() { return SolarVoltage_MESSAGE_ID; }
 
     void log(int level) {
-        log_at_level(level,
-                     "SolarVoltage\n panel1_voltage: %u\n panel2_voltage: %u\n "
-                     "panel3_voltage: %u\n panel4_voltage: %u\n",
-                     panel1_voltage, panel2_voltage, panel3_voltage,
-                     panel4_voltage);
+        char buffer[2048] = {0};
+        const char *start = "SolarVoltage: ";
+        strcat(buffer, start);
+        JsonBitprotoSolarVoltage(this, buffer + strlen(start));
+
+        log_at_level(level, buffer);
     }
 } SolarVoltage;
 
@@ -55,11 +61,12 @@ typedef struct SolarTemp : CANStruct, BitprotoSolarTemp {
     uint32_t get_message_ID() { return SolarTemp_MESSAGE_ID; }
 
     void log(int level) {
-        log_at_level(
-            level,
-            "SolarTemp\n panel1_temp: %u\n panel2_temp: %u\n panel3_temp: "
-            "%u\n panel4_temp: %u\n",
-            panel1_temp, panel2_temp, panel3_temp, panel4_temp);
+        char buffer[2048] = {0};
+        const char *start = "SolarTemp: ";
+        strcat(buffer, start);
+        JsonBitprotoSolarTemp(this, buffer + strlen(start));
+
+        log_at_level(level, buffer);
     }
 } SolarTemp;
 
@@ -76,10 +83,12 @@ typedef struct SolarPhoto : CANStruct, BitprotoSolarPhoto {
     uint32_t get_message_ID() { return SolarPhoto_MESSAGE_ID; }
 
     void log(int level) {
-        log_at_level(level,
-                     "SolarPhoto\n panel1_photo: %u\n panel2_photo: %u\n "
-                     "panel3_photo: %u\n panel4_photo: %u\n",
-                     panel1_photo, panel2_photo, panel3_photo, panel4_photo);
+        char buffer[2048] = {0};
+        const char *start = "SolarPhoto: ";
+        strcat(buffer, start);
+        JsonBitprotoSolarPhoto(this, buffer + strlen(start));
+
+        log_at_level(level, buffer);
     }
 } SolarPhoto;
 
