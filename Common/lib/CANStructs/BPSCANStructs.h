@@ -2,8 +2,8 @@
 #define BPS_CAN_STRUCTS_H
 
 #include "CANStruct.h"
-#include "Printing.h"
 #include "bitproto/structs/bps_bp.h"
+#include "log.h"
 
 /**
  * General BPS information.
@@ -22,19 +22,12 @@ typedef struct BPSPackInformation : CANStruct, BitprotoBPSPackInformation {
 
     uint32_t get_message_ID() { return BPSPackInformation_MESSAGE_ID; }
 
-    void print() {
-        PRINT("BPSPackInformation\n pack_voltage: %u\n pack_current:  %u\n "
+    void log(int level) {
+        log_level(level, "BPSPackInformation\n pack_voltage: %u\n pack_current:  %u\n "
               "pack_soc: %u\n"
-              "discharge_relay: %d\n charge_relay: %d\n",
+              "discharge_relay: %d\n charge_relay: %d",
               pack_voltage, pack_current, pack_soc, discharge_relay,
               charge_relay);
-    }
-
-    std::string to_string() {
-        char buffer[1024];
-        int bytes = JsonBitprotoBPSPackInformation(this, buffer);
-        buffer[bytes] = '\0';
-        return std::string(buffer);
     }
 } BPSPackInformation;
 
@@ -69,8 +62,8 @@ typedef struct BPSError : CANStruct, BitprotoBPSError {
                internal_thermistor_fault || internal_logic_fault;
     }
 
-    void print() {
-        PRINT("BPSError\n internal_communications_fault: %d\n "
+    void log(int level) {
+        log_level(level, "BPSError\n internal_communications_fault: %d\n "
               "internal_conversion_fault: %d\n weak_cell_fault: %d\n "
               "low_cell_voltage_fault: %d\n open_wiring_fault: %d\n "
               "current_sensor_fault: %d\n pack_voltage_sensor_fault: %d\n "
@@ -81,7 +74,7 @@ typedef struct BPSError : CANStruct, BitprotoBPSError {
               "charge_limit_enforcement_fault: %d\n "
               "discharge_limit_enforcement_fault:  %d\n "
               "charger_safety_relay_fault:  %d\n internal_memory_fault: %d\n "
-              "internal_thermistor_fault: %d/n internal_logic_fault: %d\n",
+              "internal_thermistor_fault: %d/n internal_logic_fault: %d",
               internal_communications_fault, internal_conversion_fault,
               weak_cell_fault, low_cell_voltage_fault, open_wiring_fault,
               current_sensor_fault, pack_voltage_sensor_fault, weak_pack_fault,
@@ -91,13 +84,6 @@ typedef struct BPSError : CANStruct, BitprotoBPSError {
               charge_limit_enforcement_fault, discharge_limit_enforcement_fault,
               charger_safety_relay_fault, internal_memory_fault,
               internal_thermistor_fault, internal_logic_fault);
-    }
-
-    std::string to_string() {
-        char buffer[1024];
-        int bytes = JsonBitprotoBPSError(this, buffer);
-        buffer[bytes] = '\0';
-        return std::string(buffer);
     }
 } BPSError;
 
@@ -118,19 +104,12 @@ typedef struct BPSCellVoltage : CANStruct, BitprotoBPSCellVoltage {
 
     uint32_t get_message_ID() { return BPSCellVoltage_MESSAGE_ID; }
 
-    void print() {
-        PRINT(
+    void log(int level) {
+        log_level(level, 
             "BPSCellVoltage\n low_cell_voltage: %u\n low_cell_voltage_id: %u\n "
-            "high_cell_voltage: %u\n high_cell_voltage_id: %u\n",
+            "high_cell_voltage: %u\n high_cell_voltage_id: %u",
             low_cell_voltage, low_cell_voltage_id, high_cell_voltage,
             high_cell_voltage_id);
-    }
-
-    std::string to_string() {
-        char buffer[1024];
-        int bytes = JsonBitprotoBPSCellVoltage(this, buffer);
-        buffer[bytes] = '\0';
-        return std::string(buffer);
     }
 } BPSCellVoltage;
 
@@ -151,18 +130,11 @@ typedef struct BPSCellTemperature : CANStruct, BitprotoBPSCellTemperature {
 
     uint32_t get_message_ID() { return BPSCellTemperature_MESSAGE_ID; }
 
-    void print() {
-        PRINT("BPSCellTemperature: \n low_temperature: %u\n low_thermistor_id: "
+    void log(int level) {
+        log_level(level, "BPSCellTemperature: \n low_temperature: %u\n low_thermistor_id: "
               "%u\n high_temperature: %u\n high_thermistor_id: %u\n",
               low_temperature, low_thermistor_id, high_temperature,
               high_thermistor_id);
-    }
-
-    std::string to_string() {
-        char buffer[1024];
-        int bytes = JsonBitprotoBPSCellTemperature(this, buffer);
-        buffer[bytes] = '\0';
-        return std::string(buffer);
     }
 } BPSCellTemperature;
 

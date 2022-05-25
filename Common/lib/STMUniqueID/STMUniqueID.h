@@ -2,6 +2,7 @@
 #define STM_UNIQUE_ID_H
 
 #include "Printing.h"
+#include "log.h"
 
 #define STM_UNIQUE_ID_BASE_ADDRESS 0x1FFF7590
 
@@ -31,7 +32,7 @@ void check_ecu_board() {
     read_unique_id(&id);
     if (id.part0 != 0x1B002F || id.part1 != 0x32535007 ||
         id.part2 != 0x20333657) {
-        PRINT("WARNING: ECU code uploaded to incorrect board\r\n");
+        log_fatal("WARNING: ECU code uploaded to incorrect board");
     }
 }
 
@@ -40,7 +41,7 @@ void check_motor_board() {
     read_unique_id(&id);
     if (id.part0 != 0x2D002F || id.part1 != 0x32535007 ||
         id.part2 != 0x20333657) {
-        PRINT("WARNING: Motor code uploaded to incorrect board\r\n");
+        log_fatal("WARNING: Motor code uploaded to incorrect board");
     }
 }
 
@@ -49,7 +50,7 @@ void check_power_aux_board() {
     read_unique_id(&id);
     if (id.part0 != 0x3C0031 || id.part1 != 0x32535007 ||
         id.part2 != 0x20333657) {
-        PRINT("WARNING: PowerAux code uploaded to incorrect board\r\n");
+        log_fatal("WARNING: PowerAux code uploaded to incorrect board");
     }
 }
 
@@ -58,7 +59,7 @@ void check_solar_board() {
     read_unique_id(&id);
     if (id.part0 != 0x500031 || id.part1 != 0x32535007 ||
         id.part2 != 0x20333657) {
-        PRINT("WARNING: Solar code uploaded to incorrect board\r\n");
+        log_fatal("WARNING: Solar code uploaded to incorrect board");
     }
 }
 

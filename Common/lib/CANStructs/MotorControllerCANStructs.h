@@ -2,8 +2,8 @@
 #define MOTOR_CONTROLLER_CAN_STRUCTS_H
 
 #include "CANStruct.h"
-#include "Printing.h"
 #include "bitproto/structs/motor_controller_bp.h"
+#include "log.h"
 
 /**
  * Struct for requesting information from the motor controller.
@@ -28,18 +28,11 @@ typedef struct MotorControllerFrameRequest
         return MotorControllerFrameRequest_AUX_BUS_MESSAGE_ID;
     }
 
-    void print() {
-        PRINT("MotorControllerFrameRequest\n power_status_frame: %d\n "
+    void log(int level) {
+        log_level(level, "MotorControllerFrameRequest\n power_status_frame: %d\n "
               "drive_status_frame: "
               "%d\n errors_frame: %d\n",
               power_status_frame, drive_status_frame, errors_frame);
-    }
-
-    std::string to_string() {
-        char buffer[1024];
-        int bytes = JsonBitprotoMotorControllerFrameRequest(this, buffer);
-        buffer[bytes] = '\0';
-        return std::string(buffer);
     }
 } MotorControllerFrameRequest;
 
@@ -64,8 +57,8 @@ typedef struct MotorControllerPowerStatus : CANStruct,
         return MotorControllerPowerStatus_MESSAGE_ID;
     }
 
-    void print() {
-        PRINT("MotorControllerPowerStatus\n battery_voltage: %u\n "
+    void log(int level) {
+        log_level(level, "MotorControllerPowerStatus\n battery_voltage: %u\n "
               "battery_current: %u\n "
               "battery_current_direction: %d\n motor_current: %u\n "
               "fet_temperature: %u\n motor_rotating_speed: %u\n pwm_duty: %u\n "
@@ -73,13 +66,6 @@ typedef struct MotorControllerPowerStatus : CANStruct,
               battery_voltage, battery_current, battery_current_direction,
               motor_current, fet_temperature, motor_rotating_speed, pwm_duty,
               advanced_lead_angle);
-    }
-
-    std::string to_string() {
-        char buffer[1024];
-        int bytes = JsonBitprotoMotorControllerPowerStatus(this, buffer);
-        buffer[bytes] = '\0';
-        return std::string(buffer);
     }
 } MotorControllerPowerStatus;
 
@@ -104,20 +90,13 @@ typedef struct MotorControllerDriveStatus : CANStruct,
         return MotorControllerDriveStatus_MESSAGE_ID;
     }
 
-    void print() {
-        PRINT("MotorControllerDriveStatus\n power_eco: %d\n control_mode: %d\n "
+    void log(int level) {
+        log_level(level, "MotorControllerDriveStatus\n power_eco: %d\n control_mode: %d\n "
               "acceleration_vr_position: %u\n regeneration_vr_position: %u\n "
               "digi_sw_number: %u\n target_value: %u\n motor_status: %u\n",
               power_eco, control_mode, acceleration_vr_position,
               regeneration_vr_position, digi_sw_number, target_value,
               motor_status, drive_regen);
-    }
-
-    std::string to_string() {
-        char buffer[1024];
-        int bytes = JsonBitprotoMotorControllerDriveStatus(this, buffer);
-        buffer[bytes] = '\0';
-        return std::string(buffer);
     }
 } MotorControllerDriveStatus;
 
@@ -143,8 +122,8 @@ typedef struct MotorControllerError : CANStruct, BitprotoMotorControllerError {
         return MotorControllerError_MESSAGE_ID;
     }
 
-    void print() {
-        PRINT(
+    void log(int level) {
+        log_level(level,
             "MotorControllerError\n analog_sensor_error: %d\n "
             "motor_current_sensor_u_error: "
             "%d\n motor_current_sensor_w_error: %d\n fet_thermistor_error: "
@@ -169,13 +148,6 @@ typedef struct MotorControllerError : CANStruct, BitprotoMotorControllerError {
             padding4, overcurrent_limit, padding5, motor_system_error,
             motor_lock, hall_sensor_short, hall_sensor_open, padding6,
             overheat_level);
-    }
-
-    std::string to_string() {
-        char buffer[1024];
-        int bytes = JsonBitprotoMotorControllerError(this, buffer);
-        buffer[bytes] = '\0';
-        return std::string(buffer);
     }
 } MotorControllerError;
 

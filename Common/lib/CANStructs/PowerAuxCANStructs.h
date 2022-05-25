@@ -2,7 +2,6 @@
 #define POWER_AUX_CAN_STRUCTS_H
 
 #include "CANStruct.h"
-#include "Printing.h"
 #include "bitproto/structs/power_aux_bp.h"
 
 typedef struct PowerAuxError : CANStruct, BitprotoPowerAuxError {
@@ -22,19 +21,12 @@ typedef struct PowerAuxError : CANStruct, BitprotoPowerAuxError {
                bms_strobe_error || left_turn_error || right_turn_error;
     }
 
-    void print() {
-        PRINT("PowerAuxError\n Fan Error: %d\n Brake Light Error: %d\n "
+    void log(int level) {
+        log_level(level, "PowerAuxError\n Fan Error: %d\n Brake Light Error: %d\n "
               "Headlight Error: %d\n BMS Strobe Error: %d\n Left Turn Error: "
               "%d\n Right Turn Error: %d\n",
               fan_error, brake_light_error, headlight_error, bms_strobe_error,
               left_turn_error, right_turn_error);
-    }
-
-    std::string to_string() {
-        char buffer[1024];
-        int bytes = JsonBitprotoPowerAuxError(this, buffer);
-        buffer[bytes] = '\0';
-        return std::string(buffer);
     }
 } PowerAuxError;
 

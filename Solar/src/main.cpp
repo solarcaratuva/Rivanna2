@@ -6,10 +6,9 @@
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>
+#include "log.h"
 
-#define TESTING          // only defined if using test functions
-// #define DEBUG   // only define if DEBUG
-
+#define LOG_LEVEL LOG_ERROR
 #define MAIN_LOOP_PERIOD 1s
 
 SolarCANInterface vehicle_can_interface(CAN_RX, CAN_TX, CAN_STBY);
@@ -23,14 +22,12 @@ MCP3008 adc2_interface(&adc2, ADC2_CS);
 SolarInputReader input_reader(adc1_interface, adc2_interface);
 
 int main() {
-#ifdef TESTING
-    PRINT("start main() \r\n");
-#endif // TESTING
-    while (1) {
+    log_set_level(LOG_LEVEL);
+    log_debug("Start main()");
+
+    while (true) {
         check_solar_board();
-#ifdef TESTING
-        PRINT("main thread loop \r\n");
-#endif // TESTING
+        log_debug("Main thread loop");
 
         SolarCurrent current;
         current.total_current = input_reader.readTotalCurrent();
