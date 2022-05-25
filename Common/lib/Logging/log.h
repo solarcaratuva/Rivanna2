@@ -13,10 +13,6 @@
 #include <stdbool.h>
 #include <time.h>
 
-#if defined(__cplusplus)
-extern "C" {
-#endif
-
 #define LOG_VERSION "0.1.0"
 
 typedef struct {
@@ -24,13 +20,13 @@ typedef struct {
   const char *fmt;
   const char *file;
   struct tm *time;
-  void *udata;
+  FILE *udata;
   int line;
   int level;
 } log_Event;
 
 typedef void (*log_LogFn)(log_Event *ev);
-typedef void (*log_LockFn)(bool lock, void *udata);
+typedef void (*log_LockFn)(bool lock, FILE *udata);
 
 enum { LOG_TRACE, LOG_DEBUG, LOG_INFO, LOG_WARN, LOG_ERROR, LOG_FATAL };
 
@@ -43,16 +39,9 @@ enum { LOG_TRACE, LOG_DEBUG, LOG_INFO, LOG_WARN, LOG_ERROR, LOG_FATAL };
 #define log_level(level, ...) log_log(level, __FILE__, __LINE__, __VA_ARGS__)
 
 const char* log_level_string(int level);
-void log_set_lock(log_LockFn fn, void *udata);
 void log_set_level(int level);
 void log_set_quiet(bool enable);
-int log_add_callback(log_LogFn fn, void *udata, int level);
-int log_add_fp(FILE *fp, int level);
 
 void log_log(int level, const char *file, int line, const char *fmt, ...);
-
-#if defined(__cplusplus)
-}
-#endif
 
 #endif
