@@ -29,10 +29,11 @@ typedef struct MotorControllerFrameRequest
     }
 
     void log(int level) {
-        log_at_level(level, "MotorControllerFrameRequest\n power_status_frame: %d\n "
-              "drive_status_frame: "
-              "%d\n errors_frame: %d\n",
-              power_status_frame, drive_status_frame, errors_frame);
+        log_at_level(level,
+                     "MotorControllerFrameRequest\n power_status_frame: %d\n "
+                     "drive_status_frame: "
+                     "%d\n errors_frame: %d\n",
+                     power_status_frame, drive_status_frame, errors_frame);
     }
 } MotorControllerFrameRequest;
 
@@ -58,14 +59,16 @@ typedef struct MotorControllerPowerStatus : CANStruct,
     }
 
     void log(int level) {
-        log_at_level(level, "MotorControllerPowerStatus\n battery_voltage: %u\n "
-              "battery_current: %u\n "
-              "battery_current_direction: %d\n motor_current: %u\n "
-              "fet_temperature: %u\n motor_rotating_speed: %u\n pwm_duty: %u\n "
-              "advanced_lead_angle: %u\n",
-              battery_voltage, battery_current, battery_current_direction,
-              motor_current, fet_temperature, motor_rotating_speed, pwm_duty,
-              advanced_lead_angle);
+        log_at_level(
+            level,
+            "MotorControllerPowerStatus\n battery_voltage: %u\n "
+            "battery_current: %u\n "
+            "battery_current_direction: %d\n motor_current: %u\n "
+            "fet_temperature: %u\n motor_rotating_speed: %u\n pwm_duty: %u\n "
+            "advanced_lead_angle: %u\n",
+            battery_voltage, battery_current, battery_current_direction,
+            motor_current, fet_temperature, motor_rotating_speed, pwm_duty,
+            advanced_lead_angle);
     }
 } MotorControllerPowerStatus;
 
@@ -91,12 +94,14 @@ typedef struct MotorControllerDriveStatus : CANStruct,
     }
 
     void log(int level) {
-        log_at_level(level, "MotorControllerDriveStatus\n power_eco: %d\n control_mode: %d\n "
-              "acceleration_vr_position: %u\n regeneration_vr_position: %u\n "
-              "digi_sw_number: %u\n target_value: %u\n motor_status: %u\n",
-              power_eco, control_mode, acceleration_vr_position,
-              regeneration_vr_position, digi_sw_number, target_value,
-              motor_status, drive_regen);
+        log_at_level(
+            level,
+            "MotorControllerDriveStatus\n power_eco: %d\n control_mode: %d\n "
+            "acceleration_vr_position: %u\n regeneration_vr_position: %u\n "
+            "digi_sw_number: %u\n target_value: %u\n motor_status: %u\n",
+            power_eco, control_mode, acceleration_vr_position,
+            regeneration_vr_position, digi_sw_number, target_value,
+            motor_status, drive_regen);
     }
 } MotorControllerDriveStatus;
 
@@ -123,7 +128,8 @@ typedef struct MotorControllerError : CANStruct, BitprotoMotorControllerError {
     }
 
     void log(int level) {
-        log_at_level(level,
+        log_at_level(
+            level,
             "MotorControllerError\n analog_sensor_error: %d\n "
             "motor_current_sensor_u_error: "
             "%d\n motor_current_sensor_w_error: %d\n fet_thermistor_error: "

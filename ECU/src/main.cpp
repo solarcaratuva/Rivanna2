@@ -3,12 +3,12 @@
 #include "ECUInputReader.h"
 #include "Printing.h"
 #include "STMUniqueID.h"
+#include "log.h"
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>
-#include "log.h"
 
-#define LOG_LEVEL LOG_ERROR
+#define LOG_LEVEL              LOG_ERROR
 #define MAIN_LOOP_PERIOD       1s
 #define MOTOR_THREAD_PERIOD    10ms
 #define POWERAUX_THREAD_PERIOD 10ms

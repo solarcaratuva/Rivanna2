@@ -1,7 +1,7 @@
 #include "Printing.h"
+#include <mbed.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#include <mbed.h>
 
 // Used to make printing thread safe
 Mutex printing_mutex;

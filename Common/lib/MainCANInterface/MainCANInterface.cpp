@@ -12,7 +12,9 @@ int MainCANInterface::send(CANStruct *can_struct) {
     message.id = can_struct->get_message_ID();
     int result = can.write(message);
     if (result != 1) {
-        log_error("Failed to send CAN message with ID %#03X Length %d Data %#18X", message.id, message.len, message.data);
+        log_error(
+            "Failed to send CAN message with ID %#03X Length %d Data %#18X",
+            message.id, message.len, message.data);
     }
     return result;
 }

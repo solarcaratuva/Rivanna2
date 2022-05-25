@@ -2,13 +2,13 @@
 #include "STMUniqueID.h"
 #include "SolarCANInterface.h"
 #include "SolarInputReader.h"
+#include "log.h"
 #include "mcp3008.h"
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>
-#include "log.h"
 
-#define LOG_LEVEL LOG_ERROR
+#define LOG_LEVEL        LOG_ERROR
 #define MAIN_LOOP_PERIOD 1s
 
 SolarCANInterface vehicle_can_interface(CAN_RX, CAN_TX, CAN_STBY);
