@@ -1,5 +1,6 @@
 #include "MainCANInterface.h"
 #include "log.h"
+#include "Printing.h"
 
 MainCANInterface::MainCANInterface(PinName rd, PinName td, PinName standby_pin)
     : CANInterface(rd, td, standby_pin) {
@@ -13,8 +14,7 @@ int MainCANInterface::send(CANStruct *can_struct) {
     int result = can.write(message);
     if (result != 1) {
         log_error(
-            "Failed to send CAN message with ID %#03X Length %d Data %#18X",
-            message.id, message.len, message.data);
+            "Failed to send CAN message with ID 0x%03X", message.id);
     }
     return result;
 }
