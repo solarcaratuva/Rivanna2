@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 platformio = "*"
-bitproto = "*"
+cantools = "*"
 
 [requires]
 python_version = "3.9"
