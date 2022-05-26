@@ -6,12 +6,14 @@
 
 typedef struct ECUMotorCommands : CANStruct, rivanna2_ecu_motor_commands_t {
     void serialize(CANMessage *message) {
-        rivanna2_ecu_motor_commands_pack(message->data, this, RIVANNA2_ECU_MOTOR_COMMANDS_LENGTH);
+        rivanna2_ecu_motor_commands_pack(message->data, this,
+                                         RIVANNA2_ECU_MOTOR_COMMANDS_LENGTH);
         message->len = RIVANNA2_ECU_MOTOR_COMMANDS_LENGTH;
     }
 
     void deserialize(CANMessage *message) {
-        rivanna2_ecu_motor_commands_unpack(this, message->data, RIVANNA2_ECU_MOTOR_COMMANDS_LENGTH);
+        rivanna2_ecu_motor_commands_unpack(this, message->data,
+                                           RIVANNA2_ECU_MOTOR_COMMANDS_LENGTH);
     }
 
     uint32_t get_message_ID() { return ECUMotorCommands_MESSAGE_ID; }
@@ -27,14 +29,17 @@ typedef struct ECUMotorCommands : CANStruct, rivanna2_ecu_motor_commands_t {
     }
 } ECUMotorCommands;
 
-typedef struct ECUPowerAuxCommands : CANStruct, rivanna2_ecu_power_aux_commands_t {
+typedef struct ECUPowerAuxCommands : CANStruct,
+                                     rivanna2_ecu_power_aux_commands_t {
     void serialize(CANMessage *message) {
-        rivanna2_ecu_power_aux_commands_pack(message->data, this, RIVANNA2_ECU_MOTOR_COMMANDS_LENGTH);
+        rivanna2_ecu_power_aux_commands_pack(
+            message->data, this, RIVANNA2_ECU_MOTOR_COMMANDS_LENGTH);
         message->len = RIVANNA2_ECU_MOTOR_COMMANDS_LENGTH;
     }
 
     void deserialize(CANMessage *message) {
-        rivanna2_ecu_power_aux_commands_unpack(this, message->data, RIVANNA2_ECU_MOTOR_COMMANDS_LENGTH);
+        rivanna2_ecu_power_aux_commands_unpack(
+            this, message->data, RIVANNA2_ECU_MOTOR_COMMANDS_LENGTH);
     }
 
     uint32_t get_message_ID() { return ECUPowerAuxCommands_MESSAGE_ID; }

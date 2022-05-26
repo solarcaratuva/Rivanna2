@@ -6,12 +6,14 @@
 
 typedef struct PowerAuxError : CANStruct, rivanna2_power_aux_error_t {
     void serialize(CANMessage *message) {
-        rivanna2_power_aux_error_pack(message->data, this, RIVANNA2_POWER_AUX_ERROR_LENGTH);
+        rivanna2_power_aux_error_pack(message->data, this,
+                                      RIVANNA2_POWER_AUX_ERROR_LENGTH);
         message->len = RIVANNA2_POWER_AUX_ERROR_LENGTH;
     }
 
     void deserialize(CANMessage *message) {
-        rivanna2_power_aux_error_unpack(this, message->data, RIVANNA2_POWER_AUX_ERROR_LENGTH);
+        rivanna2_power_aux_error_unpack(this, message->data,
+                                        RIVANNA2_POWER_AUX_ERROR_LENGTH);
     }
 
     uint32_t get_message_ID() { return PowerAuxError_MESSAGE_ID; }

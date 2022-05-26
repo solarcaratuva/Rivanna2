@@ -12,12 +12,14 @@
  */
 typedef struct BPSPackInformation : CANStruct, bps_bps_pack_information_t {
     void serialize(CANMessage *message) {
-        bps_bps_pack_information_pack(message->data, this, BPS_BPS_PACK_INFORMATION_LENGTH);
+        bps_bps_pack_information_pack(message->data, this,
+                                      BPS_BPS_PACK_INFORMATION_LENGTH);
         message->len = BPS_BPS_PACK_INFORMATION_LENGTH;
     }
 
     void deserialize(CANMessage *message) {
-        bps_bps_pack_information_unpack(this, message->data, BPS_BPS_PACK_INFORMATION_LENGTH);
+        bps_bps_pack_information_unpack(this, message->data,
+                                        BPS_BPS_PACK_INFORMATION_LENGTH);
     }
 
     uint32_t get_message_ID() { return BPSPackInformation_MESSAGE_ID; }
@@ -98,12 +100,14 @@ typedef struct BPSError : CANStruct, bps_bps_error_t {
  */
 typedef struct BPSCellVoltage : CANStruct, bps_bps_cell_voltage_t {
     void serialize(CANMessage *message) {
-        bps_bps_cell_voltage_pack(message->data, this, BPS_BPS_CELL_VOLTAGE_LENGTH);
+        bps_bps_cell_voltage_pack(message->data, this,
+                                  BPS_BPS_CELL_VOLTAGE_LENGTH);
         message->len = BPS_BPS_CELL_VOLTAGE_LENGTH;
     }
 
     void deserialize(CANMessage *message) {
-        bps_bps_cell_voltage_unpack(this, message->data, BPS_BPS_CELL_VOLTAGE_LENGTH);
+        bps_bps_cell_voltage_unpack(this, message->data,
+                                    BPS_BPS_CELL_VOLTAGE_LENGTH);
     }
 
     uint32_t get_message_ID() { return BPSCellVoltage_MESSAGE_ID; }
@@ -125,12 +129,14 @@ typedef struct BPSCellVoltage : CANStruct, bps_bps_cell_voltage_t {
  */
 typedef struct BPSCellTemperature : CANStruct, bps_bps_cell_temperature_t {
     void serialize(CANMessage *message) {
-        bps_bps_cell_temperature_pack(message->data, this, BPS_BPS_CELL_TEMPERATURE_LENGTH);
+        bps_bps_cell_temperature_pack(message->data, this,
+                                      BPS_BPS_CELL_TEMPERATURE_LENGTH);
         message->len = BPS_BPS_CELL_TEMPERATURE_LENGTH;
     }
 
     void deserialize(CANMessage *message) {
-        bps_bps_cell_temperature_unpack(this, message->data, BPS_BPS_CELL_TEMPERATURE_LENGTH);
+        bps_bps_cell_temperature_unpack(this, message->data,
+                                        BPS_BPS_CELL_TEMPERATURE_LENGTH);
     }
 
     uint32_t get_message_ID() { return BPSCellTemperature_MESSAGE_ID; }

@@ -32,59 +32,39 @@
 
 #include "rivanna2.h"
 
-static inline uint8_t pack_left_shift_u8(
-    uint8_t value,
-    uint8_t shift,
-    uint8_t mask)
-{
+static inline uint8_t pack_left_shift_u8(uint8_t value, uint8_t shift,
+                                         uint8_t mask) {
     return (uint8_t)((uint8_t)(value << shift) & mask);
 }
 
-static inline uint8_t pack_left_shift_u16(
-    uint16_t value,
-    uint8_t shift,
-    uint8_t mask)
-{
+static inline uint8_t pack_left_shift_u16(uint16_t value, uint8_t shift,
+                                          uint8_t mask) {
     return (uint8_t)((uint8_t)(value << shift) & mask);
 }
 
-static inline uint8_t pack_right_shift_u16(
-    uint16_t value,
-    uint8_t shift,
-    uint8_t mask)
-{
+static inline uint8_t pack_right_shift_u16(uint16_t value, uint8_t shift,
+                                           uint8_t mask) {
     return (uint8_t)((uint8_t)(value >> shift) & mask);
 }
 
-static inline uint16_t unpack_left_shift_u16(
-    uint8_t value,
-    uint8_t shift,
-    uint8_t mask)
-{
+static inline uint16_t unpack_left_shift_u16(uint8_t value, uint8_t shift,
+                                             uint8_t mask) {
     return (uint16_t)((uint16_t)(value & mask) << shift);
 }
 
-static inline uint8_t unpack_right_shift_u8(
-    uint8_t value,
-    uint8_t shift,
-    uint8_t mask)
-{
+static inline uint8_t unpack_right_shift_u8(uint8_t value, uint8_t shift,
+                                            uint8_t mask) {
     return (uint8_t)((uint8_t)(value & mask) >> shift);
 }
 
-static inline uint16_t unpack_right_shift_u16(
-    uint8_t value,
-    uint8_t shift,
-    uint8_t mask)
-{
+static inline uint16_t unpack_right_shift_u16(uint8_t value, uint8_t shift,
+                                              uint8_t mask) {
     return (uint16_t)((uint16_t)(value & mask) >> shift);
 }
 
 int rivanna2_power_aux_error_pack(
-    uint8_t *dst_p,
-    const struct rivanna2_power_aux_error_t *src_p,
-    size_t size)
-{
+    uint8_t *dst_p, const struct rivanna2_power_aux_error_t *src_p,
+    size_t size) {
     if (size < 8u) {
         return (-EINVAL);
     }
@@ -101,11 +81,8 @@ int rivanna2_power_aux_error_pack(
     return (8);
 }
 
-int rivanna2_power_aux_error_unpack(
-    struct rivanna2_power_aux_error_t *dst_p,
-    const uint8_t *src_p,
-    size_t size)
-{
+int rivanna2_power_aux_error_unpack(struct rivanna2_power_aux_error_t *dst_p,
+                                    const uint8_t *src_p, size_t size) {
     if (size < 8u) {
         return (-EINVAL);
     }
@@ -120,101 +97,81 @@ int rivanna2_power_aux_error_unpack(
     return (0);
 }
 
-uint8_t rivanna2_power_aux_error_fan_error_encode(double value)
-{
+uint8_t rivanna2_power_aux_error_fan_error_encode(double value) {
     return (uint8_t)(value);
 }
 
-double rivanna2_power_aux_error_fan_error_decode(uint8_t value)
-{
+double rivanna2_power_aux_error_fan_error_decode(uint8_t value) {
     return ((double)value);
 }
 
-bool rivanna2_power_aux_error_fan_error_is_in_range(uint8_t value)
-{
+bool rivanna2_power_aux_error_fan_error_is_in_range(uint8_t value) {
     return (value <= 1u);
 }
 
-uint8_t rivanna2_power_aux_error_brake_light_error_encode(double value)
-{
+uint8_t rivanna2_power_aux_error_brake_light_error_encode(double value) {
     return (uint8_t)(value);
 }
 
-double rivanna2_power_aux_error_brake_light_error_decode(uint8_t value)
-{
+double rivanna2_power_aux_error_brake_light_error_decode(uint8_t value) {
     return ((double)value);
 }
 
-bool rivanna2_power_aux_error_brake_light_error_is_in_range(uint8_t value)
-{
+bool rivanna2_power_aux_error_brake_light_error_is_in_range(uint8_t value) {
     return (value <= 1u);
 }
 
-uint8_t rivanna2_power_aux_error_headlight_error_encode(double value)
-{
+uint8_t rivanna2_power_aux_error_headlight_error_encode(double value) {
     return (uint8_t)(value);
 }
 
-double rivanna2_power_aux_error_headlight_error_decode(uint8_t value)
-{
+double rivanna2_power_aux_error_headlight_error_decode(uint8_t value) {
     return ((double)value);
 }
 
-bool rivanna2_power_aux_error_headlight_error_is_in_range(uint8_t value)
-{
+bool rivanna2_power_aux_error_headlight_error_is_in_range(uint8_t value) {
     return (value <= 1u);
 }
 
-uint8_t rivanna2_power_aux_error_bms_strobe_error_encode(double value)
-{
+uint8_t rivanna2_power_aux_error_bms_strobe_error_encode(double value) {
     return (uint8_t)(value);
 }
 
-double rivanna2_power_aux_error_bms_strobe_error_decode(uint8_t value)
-{
+double rivanna2_power_aux_error_bms_strobe_error_decode(uint8_t value) {
     return ((double)value);
 }
 
-bool rivanna2_power_aux_error_bms_strobe_error_is_in_range(uint8_t value)
-{
+bool rivanna2_power_aux_error_bms_strobe_error_is_in_range(uint8_t value) {
     return (value <= 1u);
 }
 
-uint8_t rivanna2_power_aux_error_left_turn_error_encode(double value)
-{
+uint8_t rivanna2_power_aux_error_left_turn_error_encode(double value) {
     return (uint8_t)(value);
 }
 
-double rivanna2_power_aux_error_left_turn_error_decode(uint8_t value)
-{
+double rivanna2_power_aux_error_left_turn_error_decode(uint8_t value) {
     return ((double)value);
 }
 
-bool rivanna2_power_aux_error_left_turn_error_is_in_range(uint8_t value)
-{
+bool rivanna2_power_aux_error_left_turn_error_is_in_range(uint8_t value) {
     return (value <= 1u);
 }
 
-uint8_t rivanna2_power_aux_error_right_turn_error_encode(double value)
-{
+uint8_t rivanna2_power_aux_error_right_turn_error_encode(double value) {
     return (uint8_t)(value);
 }
 
-double rivanna2_power_aux_error_right_turn_error_decode(uint8_t value)
-{
+double rivanna2_power_aux_error_right_turn_error_decode(uint8_t value) {
     return ((double)value);
 }
 
-bool rivanna2_power_aux_error_right_turn_error_is_in_range(uint8_t value)
-{
+bool rivanna2_power_aux_error_right_turn_error_is_in_range(uint8_t value) {
     return (value <= 1u);
 }
 
 int rivanna2_ecu_motor_commands_pack(
-    uint8_t *dst_p,
-    const struct rivanna2_ecu_motor_commands_t *src_p,
-    size_t size)
-{
+    uint8_t *dst_p, const struct rivanna2_ecu_motor_commands_t *src_p,
+    size_t size) {
     if (size < 4u) {
         return (-EINVAL);
     }
@@ -233,10 +190,8 @@ int rivanna2_ecu_motor_commands_pack(
 }
 
 int rivanna2_ecu_motor_commands_unpack(
-    struct rivanna2_ecu_motor_commands_t *dst_p,
-    const uint8_t *src_p,
-    size_t size)
-{
+    struct rivanna2_ecu_motor_commands_t *dst_p, const uint8_t *src_p,
+    size_t size) {
     if (size < 4u) {
         return (-EINVAL);
     }
@@ -252,122 +207,100 @@ int rivanna2_ecu_motor_commands_unpack(
     return (0);
 }
 
-uint8_t rivanna2_ecu_motor_commands_throttle_encode(double value)
-{
+uint8_t rivanna2_ecu_motor_commands_throttle_encode(double value) {
     return (uint8_t)(value);
 }
 
-double rivanna2_ecu_motor_commands_throttle_decode(uint8_t value)
-{
+double rivanna2_ecu_motor_commands_throttle_decode(uint8_t value) {
     return ((double)value);
 }
 
-bool rivanna2_ecu_motor_commands_throttle_is_in_range(uint8_t value)
-{
+bool rivanna2_ecu_motor_commands_throttle_is_in_range(uint8_t value) {
     (void)value;
 
     return (true);
 }
 
-uint8_t rivanna2_ecu_motor_commands_regen_encode(double value)
-{
+uint8_t rivanna2_ecu_motor_commands_regen_encode(double value) {
     return (uint8_t)(value);
 }
 
-double rivanna2_ecu_motor_commands_regen_decode(uint8_t value)
-{
+double rivanna2_ecu_motor_commands_regen_decode(uint8_t value) {
     return ((double)value);
 }
 
-bool rivanna2_ecu_motor_commands_regen_is_in_range(uint8_t value)
-{
+bool rivanna2_ecu_motor_commands_regen_is_in_range(uint8_t value) {
     (void)value;
 
     return (true);
 }
 
-uint8_t rivanna2_ecu_motor_commands_cruise_control_speed_encode(double value)
-{
+uint8_t rivanna2_ecu_motor_commands_cruise_control_speed_encode(double value) {
     return (uint8_t)(value);
 }
 
-double rivanna2_ecu_motor_commands_cruise_control_speed_decode(uint8_t value)
-{
+double rivanna2_ecu_motor_commands_cruise_control_speed_decode(uint8_t value) {
     return ((double)value);
 }
 
-bool rivanna2_ecu_motor_commands_cruise_control_speed_is_in_range(uint8_t value)
-{
+bool rivanna2_ecu_motor_commands_cruise_control_speed_is_in_range(
+    uint8_t value) {
     (void)value;
 
     return (true);
 }
 
-uint8_t rivanna2_ecu_motor_commands_cruise_control_en_encode(double value)
-{
+uint8_t rivanna2_ecu_motor_commands_cruise_control_en_encode(double value) {
     return (uint8_t)(value);
 }
 
-double rivanna2_ecu_motor_commands_cruise_control_en_decode(uint8_t value)
-{
+double rivanna2_ecu_motor_commands_cruise_control_en_decode(uint8_t value) {
     return ((double)value);
 }
 
-bool rivanna2_ecu_motor_commands_cruise_control_en_is_in_range(uint8_t value)
-{
+bool rivanna2_ecu_motor_commands_cruise_control_en_is_in_range(uint8_t value) {
     return (value <= 1u);
 }
 
-uint8_t rivanna2_ecu_motor_commands_forward_en_encode(double value)
-{
+uint8_t rivanna2_ecu_motor_commands_forward_en_encode(double value) {
     return (uint8_t)(value);
 }
 
-double rivanna2_ecu_motor_commands_forward_en_decode(uint8_t value)
-{
+double rivanna2_ecu_motor_commands_forward_en_decode(uint8_t value) {
     return ((double)value);
 }
 
-bool rivanna2_ecu_motor_commands_forward_en_is_in_range(uint8_t value)
-{
+bool rivanna2_ecu_motor_commands_forward_en_is_in_range(uint8_t value) {
     return (value <= 1u);
 }
 
-uint8_t rivanna2_ecu_motor_commands_reverse_en_encode(double value)
-{
+uint8_t rivanna2_ecu_motor_commands_reverse_en_encode(double value) {
     return (uint8_t)(value);
 }
 
-double rivanna2_ecu_motor_commands_reverse_en_decode(uint8_t value)
-{
+double rivanna2_ecu_motor_commands_reverse_en_decode(uint8_t value) {
     return ((double)value);
 }
 
-bool rivanna2_ecu_motor_commands_reverse_en_is_in_range(uint8_t value)
-{
+bool rivanna2_ecu_motor_commands_reverse_en_is_in_range(uint8_t value) {
     return (value <= 1u);
 }
 
-uint8_t rivanna2_ecu_motor_commands_motor_on_encode(double value)
-{
+uint8_t rivanna2_ecu_motor_commands_motor_on_encode(double value) {
     return (uint8_t)(value);
 }
 
-double rivanna2_ecu_motor_commands_motor_on_decode(uint8_t value)
-{
+double rivanna2_ecu_motor_commands_motor_on_decode(uint8_t value) {
     return ((double)value);
 }
 
-bool rivanna2_ecu_motor_commands_motor_on_is_in_range(uint8_t value)
-{
+bool rivanna2_ecu_motor_commands_motor_on_is_in_range(uint8_t value) {
     return (value <= 1u);
 }
 
 int rivanna2_ecu_power_aux_commands_pack(
-    uint8_t *dst_p,
-    const struct rivanna2_ecu_power_aux_commands_t *src_p,
-    size_t size)
-{
+    uint8_t *dst_p, const struct rivanna2_ecu_power_aux_commands_t *src_p,
+    size_t size) {
     if (size < 1u) {
         return (-EINVAL);
     }
@@ -384,10 +317,8 @@ int rivanna2_ecu_power_aux_commands_pack(
 }
 
 int rivanna2_ecu_power_aux_commands_unpack(
-    struct rivanna2_ecu_power_aux_commands_t *dst_p,
-    const uint8_t *src_p,
-    size_t size)
-{
+    struct rivanna2_ecu_power_aux_commands_t *dst_p, const uint8_t *src_p,
+    size_t size) {
     if (size < 1u) {
         return (-EINVAL);
     }
@@ -401,86 +332,71 @@ int rivanna2_ecu_power_aux_commands_unpack(
     return (0);
 }
 
-uint8_t rivanna2_ecu_power_aux_commands_hazards_encode(double value)
-{
+uint8_t rivanna2_ecu_power_aux_commands_hazards_encode(double value) {
     return (uint8_t)(value);
 }
 
-double rivanna2_ecu_power_aux_commands_hazards_decode(uint8_t value)
-{
+double rivanna2_ecu_power_aux_commands_hazards_decode(uint8_t value) {
     return ((double)value);
 }
 
-bool rivanna2_ecu_power_aux_commands_hazards_is_in_range(uint8_t value)
-{
+bool rivanna2_ecu_power_aux_commands_hazards_is_in_range(uint8_t value) {
     return (value <= 1u);
 }
 
-uint8_t rivanna2_ecu_power_aux_commands_brake_lights_encode(double value)
-{
+uint8_t rivanna2_ecu_power_aux_commands_brake_lights_encode(double value) {
     return (uint8_t)(value);
 }
 
-double rivanna2_ecu_power_aux_commands_brake_lights_decode(uint8_t value)
-{
+double rivanna2_ecu_power_aux_commands_brake_lights_decode(uint8_t value) {
     return ((double)value);
 }
 
-bool rivanna2_ecu_power_aux_commands_brake_lights_is_in_range(uint8_t value)
-{
+bool rivanna2_ecu_power_aux_commands_brake_lights_is_in_range(uint8_t value) {
     return (value <= 1u);
 }
 
-uint8_t rivanna2_ecu_power_aux_commands_headlights_encode(double value)
-{
+uint8_t rivanna2_ecu_power_aux_commands_headlights_encode(double value) {
     return (uint8_t)(value);
 }
 
-double rivanna2_ecu_power_aux_commands_headlights_decode(uint8_t value)
-{
+double rivanna2_ecu_power_aux_commands_headlights_decode(uint8_t value) {
     return ((double)value);
 }
 
-bool rivanna2_ecu_power_aux_commands_headlights_is_in_range(uint8_t value)
-{
+bool rivanna2_ecu_power_aux_commands_headlights_is_in_range(uint8_t value) {
     return (value <= 1u);
 }
 
-uint8_t rivanna2_ecu_power_aux_commands_left_turn_signal_encode(double value)
-{
+uint8_t rivanna2_ecu_power_aux_commands_left_turn_signal_encode(double value) {
     return (uint8_t)(value);
 }
 
-double rivanna2_ecu_power_aux_commands_left_turn_signal_decode(uint8_t value)
-{
+double rivanna2_ecu_power_aux_commands_left_turn_signal_decode(uint8_t value) {
     return ((double)value);
 }
 
-bool rivanna2_ecu_power_aux_commands_left_turn_signal_is_in_range(uint8_t value)
-{
+bool rivanna2_ecu_power_aux_commands_left_turn_signal_is_in_range(
+    uint8_t value) {
     return (value <= 1u);
 }
 
-uint8_t rivanna2_ecu_power_aux_commands_right_turn_signal_encode(double value)
-{
+uint8_t rivanna2_ecu_power_aux_commands_right_turn_signal_encode(double value) {
     return (uint8_t)(value);
 }
 
-double rivanna2_ecu_power_aux_commands_right_turn_signal_decode(uint8_t value)
-{
+double rivanna2_ecu_power_aux_commands_right_turn_signal_decode(uint8_t value) {
     return ((double)value);
 }
 
-bool rivanna2_ecu_power_aux_commands_right_turn_signal_is_in_range(uint8_t value)
-{
+bool rivanna2_ecu_power_aux_commands_right_turn_signal_is_in_range(
+    uint8_t value) {
     return (value <= 1u);
 }
 
-int rivanna2_solar_current_pack(
-    uint8_t *dst_p,
-    const struct rivanna2_solar_current_t *src_p,
-    size_t size)
-{
+int rivanna2_solar_current_pack(uint8_t *dst_p,
+                                const struct rivanna2_solar_current_t *src_p,
+                                size_t size) {
     if (size < 2u) {
         return (-EINVAL);
     }
@@ -493,11 +409,8 @@ int rivanna2_solar_current_pack(
     return (2);
 }
 
-int rivanna2_solar_current_unpack(
-    struct rivanna2_solar_current_t *dst_p,
-    const uint8_t *src_p,
-    size_t size)
-{
+int rivanna2_solar_current_unpack(struct rivanna2_solar_current_t *dst_p,
+                                  const uint8_t *src_p, size_t size) {
     if (size < 2u) {
         return (-EINVAL);
     }
@@ -508,28 +421,23 @@ int rivanna2_solar_current_unpack(
     return (0);
 }
 
-uint16_t rivanna2_solar_current_total_current_encode(double value)
-{
+uint16_t rivanna2_solar_current_total_current_encode(double value) {
     return (uint16_t)(value);
 }
 
-double rivanna2_solar_current_total_current_decode(uint16_t value)
-{
+double rivanna2_solar_current_total_current_decode(uint16_t value) {
     return ((double)value);
 }
 
-bool rivanna2_solar_current_total_current_is_in_range(uint16_t value)
-{
+bool rivanna2_solar_current_total_current_is_in_range(uint16_t value) {
     (void)value;
 
     return (true);
 }
 
-int rivanna2_solar_voltage_pack(
-    uint8_t *dst_p,
-    const struct rivanna2_solar_voltage_t *src_p,
-    size_t size)
-{
+int rivanna2_solar_voltage_pack(uint8_t *dst_p,
+                                const struct rivanna2_solar_voltage_t *src_p,
+                                size_t size) {
     if (size < 8u) {
         return (-EINVAL);
     }
@@ -548,11 +456,8 @@ int rivanna2_solar_voltage_pack(
     return (8);
 }
 
-int rivanna2_solar_voltage_unpack(
-    struct rivanna2_solar_voltage_t *dst_p,
-    const uint8_t *src_p,
-    size_t size)
-{
+int rivanna2_solar_voltage_unpack(struct rivanna2_solar_voltage_t *dst_p,
+                                  const uint8_t *src_p, size_t size) {
     if (size < 8u) {
         return (-EINVAL);
     }
@@ -569,79 +474,65 @@ int rivanna2_solar_voltage_unpack(
     return (0);
 }
 
-uint16_t rivanna2_solar_voltage_panel1_voltage_encode(double value)
-{
+uint16_t rivanna2_solar_voltage_panel1_voltage_encode(double value) {
     return (uint16_t)(value);
 }
 
-double rivanna2_solar_voltage_panel1_voltage_decode(uint16_t value)
-{
+double rivanna2_solar_voltage_panel1_voltage_decode(uint16_t value) {
     return ((double)value);
 }
 
-bool rivanna2_solar_voltage_panel1_voltage_is_in_range(uint16_t value)
-{
+bool rivanna2_solar_voltage_panel1_voltage_is_in_range(uint16_t value) {
     (void)value;
 
     return (true);
 }
 
-uint16_t rivanna2_solar_voltage_panel2_voltage_encode(double value)
-{
+uint16_t rivanna2_solar_voltage_panel2_voltage_encode(double value) {
     return (uint16_t)(value);
 }
 
-double rivanna2_solar_voltage_panel2_voltage_decode(uint16_t value)
-{
+double rivanna2_solar_voltage_panel2_voltage_decode(uint16_t value) {
     return ((double)value);
 }
 
-bool rivanna2_solar_voltage_panel2_voltage_is_in_range(uint16_t value)
-{
+bool rivanna2_solar_voltage_panel2_voltage_is_in_range(uint16_t value) {
     (void)value;
 
     return (true);
 }
 
-uint16_t rivanna2_solar_voltage_panel3_voltage_encode(double value)
-{
+uint16_t rivanna2_solar_voltage_panel3_voltage_encode(double value) {
     return (uint16_t)(value);
 }
 
-double rivanna2_solar_voltage_panel3_voltage_decode(uint16_t value)
-{
+double rivanna2_solar_voltage_panel3_voltage_decode(uint16_t value) {
     return ((double)value);
 }
 
-bool rivanna2_solar_voltage_panel3_voltage_is_in_range(uint16_t value)
-{
+bool rivanna2_solar_voltage_panel3_voltage_is_in_range(uint16_t value) {
     (void)value;
 
     return (true);
 }
 
-uint16_t rivanna2_solar_voltage_panel4_voltage_encode(double value)
-{
+uint16_t rivanna2_solar_voltage_panel4_voltage_encode(double value) {
     return (uint16_t)(value);
 }
 
-double rivanna2_solar_voltage_panel4_voltage_decode(uint16_t value)
-{
+double rivanna2_solar_voltage_panel4_voltage_decode(uint16_t value) {
     return ((double)value);
 }
 
-bool rivanna2_solar_voltage_panel4_voltage_is_in_range(uint16_t value)
-{
+bool rivanna2_solar_voltage_panel4_voltage_is_in_range(uint16_t value) {
     (void)value;
 
     return (true);
 }
 
-int rivanna2_solar_temp_pack(
-    uint8_t *dst_p,
-    const struct rivanna2_solar_temp_t *src_p,
-    size_t size)
-{
+int rivanna2_solar_temp_pack(uint8_t *dst_p,
+                             const struct rivanna2_solar_temp_t *src_p,
+                             size_t size) {
     if (size < 8u) {
         return (-EINVAL);
     }
@@ -660,11 +551,8 @@ int rivanna2_solar_temp_pack(
     return (8);
 }
 
-int rivanna2_solar_temp_unpack(
-    struct rivanna2_solar_temp_t *dst_p,
-    const uint8_t *src_p,
-    size_t size)
-{
+int rivanna2_solar_temp_unpack(struct rivanna2_solar_temp_t *dst_p,
+                               const uint8_t *src_p, size_t size) {
     if (size < 8u) {
         return (-EINVAL);
     }
@@ -681,79 +569,65 @@ int rivanna2_solar_temp_unpack(
     return (0);
 }
 
-uint16_t rivanna2_solar_temp_panel1_temp_encode(double value)
-{
+uint16_t rivanna2_solar_temp_panel1_temp_encode(double value) {
     return (uint16_t)(value);
 }
 
-double rivanna2_solar_temp_panel1_temp_decode(uint16_t value)
-{
+double rivanna2_solar_temp_panel1_temp_decode(uint16_t value) {
     return ((double)value);
 }
 
-bool rivanna2_solar_temp_panel1_temp_is_in_range(uint16_t value)
-{
+bool rivanna2_solar_temp_panel1_temp_is_in_range(uint16_t value) {
     (void)value;
 
     return (true);
 }
 
-uint16_t rivanna2_solar_temp_panel2_temp_encode(double value)
-{
+uint16_t rivanna2_solar_temp_panel2_temp_encode(double value) {
     return (uint16_t)(value);
 }
 
-double rivanna2_solar_temp_panel2_temp_decode(uint16_t value)
-{
+double rivanna2_solar_temp_panel2_temp_decode(uint16_t value) {
     return ((double)value);
 }
 
-bool rivanna2_solar_temp_panel2_temp_is_in_range(uint16_t value)
-{
+bool rivanna2_solar_temp_panel2_temp_is_in_range(uint16_t value) {
     (void)value;
 
     return (true);
 }
 
-uint16_t rivanna2_solar_temp_panel3_temp_encode(double value)
-{
+uint16_t rivanna2_solar_temp_panel3_temp_encode(double value) {
     return (uint16_t)(value);
 }
 
-double rivanna2_solar_temp_panel3_temp_decode(uint16_t value)
-{
+double rivanna2_solar_temp_panel3_temp_decode(uint16_t value) {
     return ((double)value);
 }
 
-bool rivanna2_solar_temp_panel3_temp_is_in_range(uint16_t value)
-{
+bool rivanna2_solar_temp_panel3_temp_is_in_range(uint16_t value) {
     (void)value;
 
     return (true);
 }
 
-uint16_t rivanna2_solar_temp_panel4_temp_encode(double value)
-{
+uint16_t rivanna2_solar_temp_panel4_temp_encode(double value) {
     return (uint16_t)(value);
 }
 
-double rivanna2_solar_temp_panel4_temp_decode(uint16_t value)
-{
+double rivanna2_solar_temp_panel4_temp_decode(uint16_t value) {
     return ((double)value);
 }
 
-bool rivanna2_solar_temp_panel4_temp_is_in_range(uint16_t value)
-{
+bool rivanna2_solar_temp_panel4_temp_is_in_range(uint16_t value) {
     (void)value;
 
     return (true);
 }
 
-int rivanna2_solar_photo_pack(
-    uint8_t *dst_p,
-    const struct rivanna2_solar_photo_t *src_p,
-    size_t size)
-{
+int rivanna2_solar_photo_pack(uint8_t *dst_p,
+                              const struct rivanna2_solar_photo_t *src_p,
+                              size_t size) {
     if (size < 8u) {
         return (-EINVAL);
     }
@@ -772,11 +646,8 @@ int rivanna2_solar_photo_pack(
     return (8);
 }
 
-int rivanna2_solar_photo_unpack(
-    struct rivanna2_solar_photo_t *dst_p,
-    const uint8_t *src_p,
-    size_t size)
-{
+int rivanna2_solar_photo_unpack(struct rivanna2_solar_photo_t *dst_p,
+                                const uint8_t *src_p, size_t size) {
     if (size < 8u) {
         return (-EINVAL);
     }
@@ -793,69 +664,57 @@ int rivanna2_solar_photo_unpack(
     return (0);
 }
 
-uint16_t rivanna2_solar_photo_panel1_photo_encode(double value)
-{
+uint16_t rivanna2_solar_photo_panel1_photo_encode(double value) {
     return (uint16_t)(value);
 }
 
-double rivanna2_solar_photo_panel1_photo_decode(uint16_t value)
-{
+double rivanna2_solar_photo_panel1_photo_decode(uint16_t value) {
     return ((double)value);
 }
 
-bool rivanna2_solar_photo_panel1_photo_is_in_range(uint16_t value)
-{
+bool rivanna2_solar_photo_panel1_photo_is_in_range(uint16_t value) {
     (void)value;
 
     return (true);
 }
 
-uint16_t rivanna2_solar_photo_panel2_photo_encode(double value)
-{
+uint16_t rivanna2_solar_photo_panel2_photo_encode(double value) {
     return (uint16_t)(value);
 }
 
-double rivanna2_solar_photo_panel2_photo_decode(uint16_t value)
-{
+double rivanna2_solar_photo_panel2_photo_decode(uint16_t value) {
     return ((double)value);
 }
 
-bool rivanna2_solar_photo_panel2_photo_is_in_range(uint16_t value)
-{
+bool rivanna2_solar_photo_panel2_photo_is_in_range(uint16_t value) {
     (void)value;
 
     return (true);
 }
 
-uint16_t rivanna2_solar_photo_panel3_photo_encode(double value)
-{
+uint16_t rivanna2_solar_photo_panel3_photo_encode(double value) {
     return (uint16_t)(value);
 }
 
-double rivanna2_solar_photo_panel3_photo_decode(uint16_t value)
-{
+double rivanna2_solar_photo_panel3_photo_decode(uint16_t value) {
     return ((double)value);
 }
 
-bool rivanna2_solar_photo_panel3_photo_is_in_range(uint16_t value)
-{
+bool rivanna2_solar_photo_panel3_photo_is_in_range(uint16_t value) {
     (void)value;
 
     return (true);
 }
 
-uint16_t rivanna2_solar_photo_panel4_photo_encode(double value)
-{
+uint16_t rivanna2_solar_photo_panel4_photo_encode(double value) {
     return (uint16_t)(value);
 }
 
-double rivanna2_solar_photo_panel4_photo_decode(uint16_t value)
-{
+double rivanna2_solar_photo_panel4_photo_decode(uint16_t value) {
     return ((double)value);
 }
 
-bool rivanna2_solar_photo_panel4_photo_is_in_range(uint16_t value)
-{
+bool rivanna2_solar_photo_panel4_photo_is_in_range(uint16_t value) {
     (void)value;
 
     return (true);
