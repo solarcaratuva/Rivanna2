@@ -2,7 +2,7 @@
 #define MOTOR_CONTROLLER_CAN_STRUCTS_H
 
 #include "CANStruct.h"
-#include "bitproto/structs/motor_controller_bp.h"
+#include "dbc/structs/motor_controller.h"
 #include "log.h"
 
 /**
@@ -12,14 +12,18 @@
  */
 typedef struct MotorControllerFrameRequest
     : CANStruct,
-      BitprotoMotorControllerFrameRequest {
+      motor_controller_motor_controller_frame_request_t {
     void serialize(CANMessage *message) {
-        EncodeBitprotoMotorControllerFrameRequest(this, message->data);
-        message->len = BYTES_LENGTH_BITPROTO_MOTOR_CONTROLLER_FRAME_REQUEST;
+        motor_controller_motor_controller_frame_request_pack(
+            message->data, this,
+            MOTOR_CONTROLLER_MOTOR_CONTROLLER_FRAME_REQUEST_LENGTH);
+        message->len = MOTOR_CONTROLLER_MOTOR_CONTROLLER_FRAME_REQUEST_LENGTH;
     }
 
     void deserialize(CANMessage *message) {
-        DecodeBitprotoMotorControllerFrameRequest(this, message->data);
+        motor_controller_motor_controller_frame_request_unpack(
+            this, message->data,
+            MOTOR_CONTROLLER_MOTOR_CONTROLLER_FRAME_REQUEST_LENGTH);
     }
 
     uint32_t get_message_ID() {
@@ -29,12 +33,11 @@ typedef struct MotorControllerFrameRequest
     }
 
     void log(int level) {
-        char buffer[2048] = {0};
-        const char *start = "MotorControllerFrameRequest: ";
-        strcat(buffer, start);
-        JsonBitprotoMotorControllerFrameRequest(this, buffer + strlen(start));
-
-        log_at_level(level, buffer);
+        log_at_level(level,
+                     "MotorControllerFrameRequest\n power_status_frame: %d\n "
+                     "drive_status_frame: "
+                     "%d\n error_frame: %d\n",
+                     power_status_frame, drive_status_frame, error_frame);
     }
 } MotorControllerFrameRequest;
 
@@ -42,15 +45,20 @@ typedef struct MotorControllerFrameRequest
  * Diagnostic information from the motor controller.
  * Defined on page 5 of the Motor CAN bus documentation.
  */
-typedef struct MotorControllerPowerStatus : CANStruct,
-                                            BitprotoMotorControllerPowerStatus {
+typedef struct MotorControllerPowerStatus
+    : CANStruct,
+      motor_controller_motor_controller_power_status_t {
     void serialize(CANMessage *message) {
-        EncodeBitprotoMotorControllerPowerStatus(this, message->data);
-        message->len = BYTES_LENGTH_BITPROTO_MOTOR_CONTROLLER_POWER_STATUS;
+        motor_controller_motor_controller_power_status_pack(
+            message->data, this,
+            MOTOR_CONTROLLER_MOTOR_CONTROLLER_POWER_STATUS_LENGTH);
+        message->len = MOTOR_CONTROLLER_MOTOR_CONTROLLER_POWER_STATUS_LENGTH;
     }
 
     void deserialize(CANMessage *message) {
-        DecodeBitprotoMotorControllerPowerStatus(this, message->data);
+        motor_controller_motor_controller_power_status_unpack(
+            this, message->data,
+            MOTOR_CONTROLLER_MOTOR_CONTROLLER_POWER_STATUS_LENGTH);
     }
 
     uint32_t get_message_ID() {
@@ -60,12 +68,15 @@ typedef struct MotorControllerPowerStatus : CANStruct,
     }
 
     void log(int level) {
-        char buffer[2048] = {0};
-        const char *start = "MotorControllerPowerStatus: ";
-        strcat(buffer, start);
-        JsonBitprotoMotorControllerPowerStatus(this, buffer + strlen(start));
-
-        log_at_level(level, buffer);
+        log_at_level(level,
+                     "MotorControllerPowerStatus\n battery_voltage: %u\n "
+                     "battery_current: %u\n "
+                     "battery_current_direction: %d\n motor_current: %u\n "
+                     "fet_temperature: %u\n motor_speed: %u\n pwm_duty: %u\n "
+                     "lead_angle: %u\n",
+                     battery_voltage, battery_current,
+                     battery_current_direction, motor_current, fet_temperature,
+                     motor_speed, pwm_duty, lead_angle);
     }
 } MotorControllerPowerStatus;
 
@@ -73,15 +84,20 @@ typedef struct MotorControllerPowerStatus : CANStruct,
  * Input information from the motor controller.
  * Defined on page 5 of the Motor CAN bus documentation.
  */
-typedef struct MotorControllerDriveStatus : CANStruct,
-                                            BitprotoMotorControllerDriveStatus {
+typedef struct MotorControllerDriveStatus
+    : CANStruct,
+      motor_controller_motor_controller_drive_status_t {
     void serialize(CANMessage *message) {
-        EncodeBitprotoMotorControllerDriveStatus(this, message->data);
-        message->len = BYTES_LENGTH_BITPROTO_MOTOR_CONTROLLER_DRIVE_STATUS;
+        motor_controller_motor_controller_drive_status_pack(
+            message->data, this,
+            MOTOR_CONTROLLER_MOTOR_CONTROLLER_DRIVE_STATUS_LENGTH);
+        message->len = MOTOR_CONTROLLER_MOTOR_CONTROLLER_DRIVE_STATUS_LENGTH;
     }
 
     void deserialize(CANMessage *message) {
-        DecodeBitprotoMotorControllerDriveStatus(this, message->data);
+        motor_controller_motor_controller_drive_status_unpack(
+            this, message->data,
+            MOTOR_CONTROLLER_MOTOR_CONTROLLER_DRIVE_STATUS_LENGTH);
     }
 
     uint32_t get_message_ID() {
@@ -91,12 +107,16 @@ typedef struct MotorControllerDriveStatus : CANStruct,
     }
 
     void log(int level) {
-        char buffer[2048] = {0};
-        const char *start = "MotorControllerDriveStatus: ";
-        strcat(buffer, start);
-        JsonBitprotoMotorControllerDriveStatus(this, buffer + strlen(start));
-
-        log_at_level(level, buffer);
+        log_at_level(
+            level,
+            "MotorControllerDriveStatus\n power_mode: %d\n control_mode: %d\n "
+            "accelerator_vr_position: %u\n regen_vr_position: %u\n "
+            "digital_sw_position: %u\n output_target_value: %u\n "
+            "drive_action_status: %u\n"
+            "regen_status: %d\n",
+            power_mode, control_mode, accelerator_vr_position,
+            regen_vr_position, digital_sw_position, output_target_value,
+            drive_action_status, regen_status);
     }
 } MotorControllerDriveStatus;
 
@@ -106,14 +126,20 @@ typedef struct MotorControllerDriveStatus : CANStruct,
  * CAN bus documentation. NOTE: This frame has not been tested, there may be
  * transcription or padding errors.
  */
-typedef struct MotorControllerError : CANStruct, BitprotoMotorControllerError {
+typedef struct MotorControllerError
+    : CANStruct,
+      motor_controller_motor_controller_error_t {
     void serialize(CANMessage *message) {
-        EncodeBitprotoMotorControllerError(this, message->data);
-        message->len = BYTES_LENGTH_BITPROTO_MOTOR_CONTROLLER_ERROR;
+        motor_controller_motor_controller_error_pack(
+            message->data, this,
+            MOTOR_CONTROLLER_MOTOR_CONTROLLER_ERROR_LENGTH);
+        message->len = MOTOR_CONTROLLER_MOTOR_CONTROLLER_ERROR_LENGTH;
     }
 
     void deserialize(CANMessage *message) {
-        DecodeBitprotoMotorControllerError(this, message->data);
+        motor_controller_motor_controller_error_unpack(
+            this, message->data,
+            MOTOR_CONTROLLER_MOTOR_CONTROLLER_ERROR_LENGTH);
     }
 
     uint32_t get_message_ID() {
@@ -123,12 +149,30 @@ typedef struct MotorControllerError : CANStruct, BitprotoMotorControllerError {
     }
 
     void log(int level) {
-        char buffer[2048] = {0};
-        const char *start = "MotorControllerError: ";
-        strcat(buffer, start);
-        JsonBitprotoMotorControllerError(this, buffer + strlen(start));
-
-        log_at_level(level, buffer);
+        log_at_level(
+            level,
+            "MotorControllerError\n analog_sensor_error: %d\n "
+            "motor_current_sensor_u_error: "
+            "%d\n motor_current_sensor_w_error: %d\n fet_thermistor_error: "
+            "%d\n battery_voltage_sensor_error: %d\n "
+            "battery_current_sensor_error: %d\n "
+            "battery_current_sensor_err: %d\n "
+            "battery_current_sensor_adj_err: %d\n "
+            "accelerator_position_error: %d\n accelerator_position_error: %d\n "
+            "controller_voltage_sensor_error: "
+            "%u\n power_system_error: %d\n overcurrent_error: "
+            "%d\n overcurrent_limit: %d\n overvoltage_error: "
+            "%d\n motor_sysem_error: d%\n motor_lock: d%\n "
+            "hall_sensor_short: d%\n hall_sensor_open: d%\n"
+            "overheat_level: u%\n",
+            analog_sensor_err, motor_current_sensor_u_err,
+            motor_current_sensor_w_err, fet_thermistor_err,
+            battery_voltage_sensor_err, battery_current_sensor_err,
+            battery_current_sensor_err, battery_current_sensor_adj_err,
+            accelerator_position_err, controller_voltage_sensor_err,
+            power_system_err, overcurrent_err, overvoltage_err,
+            overcurrent_limit, motor_system_err, motor_lock, hall_sensor_short,
+            hall_sensor_open, overheat_level);
     }
 } MotorControllerError;
 
