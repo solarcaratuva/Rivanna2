@@ -8,12 +8,12 @@ MotorControllerCANInterface::MotorControllerCANInterface(PinName rd, PinName td,
 
 void MotorControllerCANInterface::request_frames(bool power_status_frame,
                                                  bool drive_status_frame,
-                                                 bool errors_frame) {
+                                                 bool error_frame) {
     CANMessage message;
     MotorControllerFrameRequest request;
     request.power_status_frame = power_status_frame;
     request.drive_status_frame = drive_status_frame;
-    request.errors_frame = errors_frame;
+    request.error_frame = error_frame;
     request.serialize(&message);
     message.id = request.get_message_ID();
     message.format = CANFormat::CANExtended;
