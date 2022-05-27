@@ -6,12 +6,14 @@
 
 typedef struct SolarCurrent : CANStruct, rivanna2_solar_current_t {
     void serialize(CANMessage *message) {
-        rivanna2_solar_current_pack(message->data, this, RIVANNA2_SOLAR_CURRENT_LENGTH);
+        rivanna2_solar_current_pack(message->data, this,
+                                    RIVANNA2_SOLAR_CURRENT_LENGTH);
         message->len = RIVANNA2_SOLAR_CURRENT_LENGTH;
     }
 
     void deserialize(CANMessage *message) {
-        rivanna2_solar_current_unpack(this, message->data, RIVANNA2_SOLAR_CURRENT_LENGTH);
+        rivanna2_solar_current_unpack(this, message->data,
+                                      RIVANNA2_SOLAR_CURRENT_LENGTH);
     }
 
     uint32_t get_message_ID() { return SolarCurrent_MESSAGE_ID; }
@@ -23,12 +25,14 @@ typedef struct SolarCurrent : CANStruct, rivanna2_solar_current_t {
 
 typedef struct SolarVoltage : CANStruct, rivanna2_solar_voltage_t {
     void serialize(CANMessage *message) {
-        rivanna2_solar_voltage_pack(message->data, this, RIVANNA2_SOLAR_VOLTAGE_LENGTH);
+        rivanna2_solar_voltage_pack(message->data, this,
+                                    RIVANNA2_SOLAR_VOLTAGE_LENGTH);
         message->len = RIVANNA2_SOLAR_VOLTAGE_LENGTH;
     }
 
     void deserialize(CANMessage *message) {
-        rivanna2_solar_voltage_unpack(this, message->data, RIVANNA2_SOLAR_VOLTAGE_LENGTH);
+        rivanna2_solar_voltage_unpack(this, message->data,
+                                      RIVANNA2_SOLAR_VOLTAGE_LENGTH);
     }
 
     uint32_t get_message_ID() { return SolarVoltage_MESSAGE_ID; }
@@ -44,12 +48,14 @@ typedef struct SolarVoltage : CANStruct, rivanna2_solar_voltage_t {
 
 typedef struct SolarTemp : CANStruct, rivanna2_solar_temp_t {
     void serialize(CANMessage *message) {
-        rivanna2_solar_temp_pack(message->data, this, RIVANNA2_SOLAR_TEMP_LENGTH);
+        rivanna2_solar_temp_pack(message->data, this,
+                                 RIVANNA2_SOLAR_TEMP_LENGTH);
         message->len = RIVANNA2_SOLAR_TEMP_LENGTH;
     }
 
     void deserialize(CANMessage *message) {
-        rivanna2_solar_temp_unpack(this, message->data, RIVANNA2_SOLAR_TEMP_LENGTH);
+        rivanna2_solar_temp_unpack(this, message->data,
+                                   RIVANNA2_SOLAR_TEMP_LENGTH);
     }
 
     uint32_t get_message_ID() { return SolarTemp_MESSAGE_ID; }
@@ -65,12 +71,14 @@ typedef struct SolarTemp : CANStruct, rivanna2_solar_temp_t {
 
 typedef struct SolarPhoto : CANStruct, rivanna2_solar_photo_t {
     void serialize(CANMessage *message) {
-        rivanna2_solar_photo_pack(message->data, this, RIVANNA2_SOLAR_PHOTO_LENGTH);
+        rivanna2_solar_photo_pack(message->data, this,
+                                  RIVANNA2_SOLAR_PHOTO_LENGTH);
         message->len = RIVANNA2_SOLAR_PHOTO_LENGTH;
     }
 
     void deserialize(CANMessage *message) {
-        rivanna2_solar_photo_unpack(this, message->data, RIVANNA2_SOLAR_PHOTO_LENGTH);
+        rivanna2_solar_photo_unpack(this, message->data,
+                                    RIVANNA2_SOLAR_PHOTO_LENGTH);
     }
 
     uint32_t get_message_ID() { return SolarPhoto_MESSAGE_ID; }
