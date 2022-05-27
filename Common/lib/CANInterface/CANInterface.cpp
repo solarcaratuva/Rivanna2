@@ -7,3 +7,10 @@ CANInterface::CANInterface(PinName rd, PinName td, PinName standby_pin)
     }
     rx_thread.start(callback(this, &CANInterface::rx_handler));
 }
+
+void CANInterface::write_CAN_message_data_to_buffer(char *buffer, CANMessage *message) {
+    buffer[0] = '\0';
+    for (int i = 0; i < message->len; i += 1) {
+        sprintf(buffer + (i * 2), "%02X", message->data[i]);
+    }
+}
