@@ -34,9 +34,8 @@ typedef struct MotorControllerFrameRequest
 
     void log(int level) {
         log_at_level(level,
-                     "MotorControllerFrameRequest\n power_status_frame: %d\n "
-                     "drive_status_frame: "
-                     "%d\n error_frame: %d\n",
+                     "MotorControllerFrameRequest: power_status_frame %u, "
+                     "drive_status_frame %u, error_frame %u",
                      power_status_frame, drive_status_frame, error_frame);
     }
 } MotorControllerFrameRequest;
@@ -68,15 +67,13 @@ typedef struct MotorControllerPowerStatus
     }
 
     void log(int level) {
-        log_at_level(level,
-                     "MotorControllerPowerStatus\n battery_voltage: %u\n "
-                     "battery_current: %u\n "
-                     "battery_current_direction: %d\n motor_current: %u\n "
-                     "fet_temperature: %u\n motor_speed: %u\n pwm_duty: %u\n "
-                     "lead_angle: %u\n",
-                     battery_voltage, battery_current,
-                     battery_current_direction, motor_current, fet_temperature,
-                     motor_speed, pwm_duty, lead_angle);
+        log_at_level(
+            level,
+            "MotorControllerPowerStatus: battery_voltage %u, battery_current "
+            "%u, battery_current_direction %u, motor_current %u, "
+            "fet_temperature %u, motor_speed %u, pwm_duty %u, lead_angle %u",
+            battery_voltage, battery_current, battery_current_direction,
+            motor_current, fet_temperature, motor_speed, pwm_duty, lead_angle);
     }
 } MotorControllerPowerStatus;
 
@@ -107,16 +104,14 @@ typedef struct MotorControllerDriveStatus
     }
 
     void log(int level) {
-        log_at_level(
-            level,
-            "MotorControllerDriveStatus\n power_mode: %d\n control_mode: %d\n "
-            "accelerator_vr_position: %u\n regen_vr_position: %u\n "
-            "digital_sw_position: %u\n output_target_value: %u\n "
-            "drive_action_status: %u\n"
-            "regen_status: %d\n",
-            power_mode, control_mode, accelerator_vr_position,
-            regen_vr_position, digital_sw_position, output_target_value,
-            drive_action_status, regen_status);
+        log_at_level(level,
+                     "MotorControllerDriveStatus: power_mode %u, control_mode "
+                     "%u, accelerator_vr_position %u, regen_vr_position %u, "
+                     "digital_sw_position %u, output_target_value %u, "
+                     "drive_action_status %u, regen_status %u",
+                     power_mode, control_mode, accelerator_vr_position,
+                     regen_vr_position, digital_sw_position,
+                     output_target_value, drive_action_status, regen_status);
     }
 } MotorControllerDriveStatus;
 
@@ -151,24 +146,19 @@ typedef struct MotorControllerError
     void log(int level) {
         log_at_level(
             level,
-            "MotorControllerError\n analog_sensor_error: %d\n "
-            "motor_current_sensor_u_error: "
-            "%d\n motor_current_sensor_w_error: %d\n fet_thermistor_error: "
-            "%d\n battery_voltage_sensor_error: %d\n "
-            "battery_current_sensor_error: %d\n "
-            "battery_current_sensor_err: %d\n "
-            "battery_current_sensor_adj_err: %d\n "
-            "accelerator_position_error: %d\n accelerator_position_error: %d\n "
-            "controller_voltage_sensor_error: "
-            "%u\n power_system_error: %d\n overcurrent_error: "
-            "%d\n overcurrent_limit: %d\n overvoltage_error: "
-            "%d\n motor_sysem_error: d%\n motor_lock: d%\n "
-            "hall_sensor_short: d%\n hall_sensor_open: d%\n"
-            "overheat_level: u%\n",
+            "MotorControllerError: analog_sensor_err %u, "
+            "motor_current_sensor_u_err %u, motor_current_sensor_w_err %u, "
+            "fet_thermistor_err %u, battery_voltage_sensor_err %u, "
+            "battery_current_sensor_err %u, battery_current_sensor_adj_err %u, "
+            "motor_current_sensor_adj_err %u, accelerator_position_err %u, "
+            "controller_voltage_sensor_err %u, power_system_err %u, "
+            "overcurrent_err %u, overvoltage_err %u, overcurrent_limit %u, "
+            "motor_system_err %u, motor_lock %u, hall_sensor_short %u, "
+            "hall_sensor_open %u, overheat_level %u",
             analog_sensor_err, motor_current_sensor_u_err,
             motor_current_sensor_w_err, fet_thermistor_err,
             battery_voltage_sensor_err, battery_current_sensor_err,
-            battery_current_sensor_err, battery_current_sensor_adj_err,
+            battery_current_sensor_adj_err, motor_current_sensor_adj_err,
             accelerator_position_err, controller_voltage_sensor_err,
             power_system_err, overcurrent_err, overvoltage_err,
             overcurrent_limit, motor_system_err, motor_lock, hall_sensor_short,
