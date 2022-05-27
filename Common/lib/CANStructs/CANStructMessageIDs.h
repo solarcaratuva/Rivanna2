@@ -11,7 +11,7 @@
 #define SolarCurrent_MESSAGE_ID        RIVANNA2_SOLAR_CURRENT_FRAME_ID
 #define SolarVoltage_MESSAGE_ID        RIVANNA2_SOLAR_VOLTAGE_FRAME_ID
 #define SolarTemp_MESSAGE_ID           RIVANNA2_SOLAR_TEMP_FRAME_ID
-#define SolarPhoto_MESSAGE_ID          RIVANNA2_SOLAR_PHOTO_LENGTH
+#define SolarPhoto_MESSAGE_ID          RIVANNA2_SOLAR_PHOTO_FRAME_ID
 #define MotorControllerPowerStatus_MESSAGE_ID                                  \
     MOTOR_CONTROLLER_MOTOR_CONTROLLER_POWER_STATUS_FRAME_ID
 #define MotorControllerDriveStatus_MESSAGE_ID                                  \
