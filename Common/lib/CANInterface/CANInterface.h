@@ -24,7 +24,8 @@ class CANInterface {
      * @param buffer char buffer of size (len * 2) + 1, where len = message.len
      * @param message CAN message
      */
-    static void write_CAN_message_data_to_buffer(char *buffer, CANMessage *message);
+    static void write_CAN_message_data_to_buffer(char *buffer,
+                                                 CANMessage *message);
 };
 
 #endif

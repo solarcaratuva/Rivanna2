@@ -8,8 +8,8 @@ MotorControllerCANInterface::MotorControllerCANInterface(PinName rd, PinName td,
 }
 
 int MotorControllerCANInterface::request_frames(bool power_status_frame,
-                                                 bool drive_status_frame,
-                                                 bool error_frame) {
+                                                bool drive_status_frame,
+                                                bool error_frame) {
     CANMessage message;
     MotorControllerFrameRequest request;
     request.power_status_frame = power_status_frame;
@@ -23,10 +23,12 @@ int MotorControllerCANInterface::request_frames(bool power_status_frame,
     char message_data[17];
     CANInterface::write_CAN_message_data_to_buffer(message_data, &message);
     if (result == 1) {
-        log_debug("Sent MotorControllerFrameRequest CAN message with Data 0x%s", message_data);
-    }
-    else {
-        log_error("Failed to send MotorControllerFrameRequest CAN message with Data 0x%s", message_data);
+        log_debug("Sent MotorControllerFrameRequest CAN message with Data 0x%s",
+                  message_data);
+    } else {
+        log_error("Failed to send MotorControllerFrameRequest CAN message with "
+                  "Data 0x%s",
+                  message_data);
     }
 
     return result;
@@ -37,8 +39,11 @@ void MotorControllerCANInterface::rx_handler() {
         CANMessage message;
         while (can.read(message)) {
             char message_data[17];
-            CANInterface::write_CAN_message_data_to_buffer(message_data, &message);
-            log_debug("Received CAN message with ID 0x%08X Length %d Data 0x%s from MotorController", message.id, message.len, message_data);
+            CANInterface::write_CAN_message_data_to_buffer(message_data,
+                                                           &message);
+            log_debug("Received CAN message with ID 0x%08X Length %d Data 0x%s "
+                      "from MotorController",
+                      message.id, message.len, message_data);
 
             if (message.id == MotorControllerPowerStatus_AUX_BUS_MESSAGE_ID) {
                 MotorControllerPowerStatus can_struct;
