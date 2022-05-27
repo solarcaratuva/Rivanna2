@@ -1,4 +1,5 @@
 #include "BPSCANInterface.h"
+#include "log.h"
 
 BPSCANInterface::BPSCANInterface(PinName rd, PinName td, PinName standby_pin)
     : CANInterface(rd, td, standby_pin) {
@@ -9,6 +10,13 @@ void BPSCANInterface::rx_handler() {
     while (true) {
         CANMessage message;
         while (can.read(message)) {
+            char message_data[17];
+            CANInterface::write_CAN_message_data_to_buffer(message_data,
+                                                           &message);
+            log_debug("Received CAN message with ID 0x%03X Length %d Data 0x%s "
+                      "from BPS",
+                      message.id, message.len, message_data);
+
             if (message.id == BPSPackInformation_MESSAGE_ID) {
                 BPSPackInformation can_struct;
                 can_struct.deserialize(&message);

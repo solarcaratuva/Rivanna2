@@ -17,6 +17,15 @@ class CANInterface {
     DigitalOut standby;
     Thread rx_thread;
     virtual void rx_handler() = 0;
+    /**
+     * @brief Writes data of CAN message to buffer.
+     * A message of length 2 with byte 0 = 0x12 and byte 1 = 0x34 would result
+     * in a buffer of "1234".
+     * @param buffer char buffer of size (len * 2) + 1, where len = message.len
+     * @param message CAN message
+     */
+    static void write_CAN_message_data_to_buffer(char *buffer,
+                                                 CANMessage *message);
 };
 
 #endif
