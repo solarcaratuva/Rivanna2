@@ -21,7 +21,10 @@ typedef struct ECUMotorCommands : CANStruct, rivanna2_ecu_motor_commands_t {
     void log(int level) {
         log_at_level(
             level,
-            "ECUMotorCommands: throttle %u, regen %u, cruise_control_speed %u, cruise_control_en %u, forward_en %u, reverse_en %u, motor_on %u", throttle, regen, cruise_control_speed, cruise_control_en, forward_en, reverse_en, motor_on);
+            "ECUMotorCommands: throttle %u, regen %u, cruise_control_speed %u, "
+            "cruise_control_en %u, forward_en %u, reverse_en %u, motor_on %u",
+            throttle, regen, cruise_control_speed, cruise_control_en,
+            forward_en, reverse_en, motor_on);
     }
 } ECUMotorCommands;
 
@@ -41,9 +44,11 @@ typedef struct ECUPowerAuxCommands : CANStruct,
     uint32_t get_message_ID() { return ECUPowerAuxCommands_MESSAGE_ID; }
 
     void log(int level) {
-        log_at_level(
-            level,
-            "ECUPowerAuxCommands: hazards %u, brake_lights %u, headlights %u, left_turn_signal %u, right_turn_signal %u", hazards, brake_lights, headlights, left_turn_signal, right_turn_signal);
+        log_at_level(level,
+                     "ECUPowerAuxCommands: hazards %u, brake_lights %u, "
+                     "headlights %u, left_turn_signal %u, right_turn_signal %u",
+                     hazards, brake_lights, headlights, left_turn_signal,
+                     right_turn_signal);
     }
 } ECUPowerAuxCommands;
 
