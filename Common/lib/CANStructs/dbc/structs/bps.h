@@ -35,35 +35,37 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include <stdint.h>
 
 #ifndef EINVAL
-#define EINVAL 22
+#    define EINVAL 22
 #endif
 
 /* Frame ids. */
-#define BPS_BPS_PACK_INFORMATION_FRAME_ID    (0x406u)
-#define BPS_BPS_CELL_VOLTAGE_FRAME_ID        (0x416u)
-#define BPS_BPS_CELL_TEMPERATURE_FRAME_ID    (0x426u)
-#define BPS_BPS_ERROR_FRAME_ID               (0x106u)
+#define BPS_BPS_PACK_INFORMATION_FRAME_ID (0x406u)
+#define BPS_BPS_CELL_VOLTAGE_FRAME_ID (0x416u)
+#define BPS_BPS_CELL_TEMPERATURE_FRAME_ID (0x426u)
+#define BPS_BPS_ERROR_FRAME_ID (0x106u)
 
 /* Frame lengths in bytes. */
-#define BPS_BPS_PACK_INFORMATION_LENGTH      (6u)
-#define BPS_BPS_CELL_VOLTAGE_LENGTH          (6u)
-#define BPS_BPS_CELL_TEMPERATURE_LENGTH      (4u)
-#define BPS_BPS_ERROR_LENGTH                 (3u)
+#define BPS_BPS_PACK_INFORMATION_LENGTH (6u)
+#define BPS_BPS_CELL_VOLTAGE_LENGTH (6u)
+#define BPS_BPS_CELL_TEMPERATURE_LENGTH (4u)
+#define BPS_BPS_ERROR_LENGTH (3u)
 
 /* Extended or standard frame types. */
 #define BPS_BPS_PACK_INFORMATION_IS_EXTENDED (0)
-#define BPS_BPS_CELL_VOLTAGE_IS_EXTENDED     (0)
+#define BPS_BPS_CELL_VOLTAGE_IS_EXTENDED (0)
 #define BPS_BPS_CELL_TEMPERATURE_IS_EXTENDED (0)
-#define BPS_BPS_ERROR_IS_EXTENDED            (0)
+#define BPS_BPS_ERROR_IS_EXTENDED (0)
 
 /* Frame cycle times in milliseconds. */
 
+
 /* Signal choices. */
+
 
 /**
  * Signals in message BPSPackInformation.
@@ -341,7 +343,8 @@ struct bps_bps_error_t {
  * @return Size of packed data, or negative error code.
  */
 int bps_bps_pack_information_pack(
-    uint8_t *dst_p, const struct bps_bps_pack_information_t *src_p,
+    uint8_t *dst_p,
+    const struct bps_bps_pack_information_t *src_p,
     size_t size);
 
 /**
@@ -353,8 +356,10 @@ int bps_bps_pack_information_pack(
  *
  * @return zero(0) or negative error code.
  */
-int bps_bps_pack_information_unpack(struct bps_bps_pack_information_t *dst_p,
-                                    const uint8_t *src_p, size_t size);
+int bps_bps_pack_information_unpack(
+    struct bps_bps_pack_information_t *dst_p,
+    const uint8_t *src_p,
+    size_t size);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -500,9 +505,10 @@ bool bps_bps_pack_information_charge_relay_is_in_range(uint8_t value);
  *
  * @return Size of packed data, or negative error code.
  */
-int bps_bps_cell_voltage_pack(uint8_t *dst_p,
-                              const struct bps_bps_cell_voltage_t *src_p,
-                              size_t size);
+int bps_bps_cell_voltage_pack(
+    uint8_t *dst_p,
+    const struct bps_bps_cell_voltage_t *src_p,
+    size_t size);
 
 /**
  * Unpack message BPSCellVoltage.
@@ -513,8 +519,10 @@ int bps_bps_cell_voltage_pack(uint8_t *dst_p,
  *
  * @return zero(0) or negative error code.
  */
-int bps_bps_cell_voltage_unpack(struct bps_bps_cell_voltage_t *dst_p,
-                                const uint8_t *src_p, size_t size);
+int bps_bps_cell_voltage_unpack(
+    struct bps_bps_cell_voltage_t *dst_p,
+    const uint8_t *src_p,
+    size_t size);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -634,7 +642,8 @@ bool bps_bps_cell_voltage_high_cell_voltage_id_is_in_range(uint8_t value);
  * @return Size of packed data, or negative error code.
  */
 int bps_bps_cell_temperature_pack(
-    uint8_t *dst_p, const struct bps_bps_cell_temperature_t *src_p,
+    uint8_t *dst_p,
+    const struct bps_bps_cell_temperature_t *src_p,
     size_t size);
 
 /**
@@ -646,8 +655,10 @@ int bps_bps_cell_temperature_pack(
  *
  * @return zero(0) or negative error code.
  */
-int bps_bps_cell_temperature_unpack(struct bps_bps_cell_temperature_t *dst_p,
-                                    const uint8_t *src_p, size_t size);
+int bps_bps_cell_temperature_unpack(
+    struct bps_bps_cell_temperature_t *dst_p,
+    const uint8_t *src_p,
+    size_t size);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -766,8 +777,10 @@ bool bps_bps_cell_temperature_high_thermistor_id_is_in_range(uint8_t value);
  *
  * @return Size of packed data, or negative error code.
  */
-int bps_bps_error_pack(uint8_t *dst_p, const struct bps_bps_error_t *src_p,
-                       size_t size);
+int bps_bps_error_pack(
+    uint8_t *dst_p,
+    const struct bps_bps_error_t *src_p,
+    size_t size);
 
 /**
  * Unpack message BPSError.
@@ -778,8 +791,10 @@ int bps_bps_error_pack(uint8_t *dst_p, const struct bps_bps_error_t *src_p,
  *
  * @return zero(0) or negative error code.
  */
-int bps_bps_error_unpack(struct bps_bps_error_t *dst_p, const uint8_t *src_p,
-                         size_t size);
+int bps_bps_error_unpack(
+    struct bps_bps_error_t *dst_p,
+    const uint8_t *src_p,
+    size_t size);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1347,6 +1362,7 @@ double bps_bps_error_internal_logic_fault_decode(uint8_t value);
  * @return true if in range, false otherwise.
  */
 bool bps_bps_error_internal_logic_fault_is_in_range(uint8_t value);
+
 
 #ifdef __cplusplus
 }

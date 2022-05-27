@@ -35,35 +35,37 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include <stdint.h>
 
 #ifndef EINVAL
-#define EINVAL 22
+#    define EINVAL 22
 #endif
 
 /* Frame ids. */
-#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_FRAME_REQUEST_FRAME_ID    (0x332u)
-#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_POWER_STATUS_FRAME_ID     (0x325u)
-#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_DRIVE_STATUS_FRAME_ID     (0x315u)
-#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_ERROR_FRAME_ID            (0x115u)
+#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_FRAME_REQUEST_FRAME_ID (0x332u)
+#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_POWER_STATUS_FRAME_ID (0x325u)
+#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_DRIVE_STATUS_FRAME_ID (0x315u)
+#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_ERROR_FRAME_ID (0x115u)
 
 /* Frame lengths in bytes. */
-#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_FRAME_REQUEST_LENGTH      (1u)
-#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_POWER_STATUS_LENGTH       (8u)
-#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_DRIVE_STATUS_LENGTH       (5u)
-#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_ERROR_LENGTH              (5u)
+#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_FRAME_REQUEST_LENGTH (1u)
+#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_POWER_STATUS_LENGTH (8u)
+#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_DRIVE_STATUS_LENGTH (5u)
+#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_ERROR_LENGTH (5u)
 
 /* Extended or standard frame types. */
 #define MOTOR_CONTROLLER_MOTOR_CONTROLLER_FRAME_REQUEST_IS_EXTENDED (0)
-#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_POWER_STATUS_IS_EXTENDED  (0)
-#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_DRIVE_STATUS_IS_EXTENDED  (0)
-#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_ERROR_IS_EXTENDED         (0)
+#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_POWER_STATUS_IS_EXTENDED (0)
+#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_DRIVE_STATUS_IS_EXTENDED (0)
+#define MOTOR_CONTROLLER_MOTOR_CONTROLLER_ERROR_IS_EXTENDED (0)
 
 /* Frame cycle times in milliseconds. */
 
+
 /* Signal choices. */
+
 
 /**
  * Signals in message MotorControllerFrameRequest.
@@ -384,7 +386,8 @@ int motor_controller_motor_controller_frame_request_pack(
  */
 int motor_controller_motor_controller_frame_request_unpack(
     struct motor_controller_motor_controller_frame_request_t *dst_p,
-    const uint8_t *src_p, size_t size);
+    const uint8_t *src_p,
+    size_t size);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -393,9 +396,7 @@ int motor_controller_motor_controller_frame_request_unpack(
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_frame_request_power_status_frame_encode(
-    double value);
+uint8_t motor_controller_motor_controller_frame_request_power_status_frame_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -404,9 +405,7 @@ motor_controller_motor_controller_frame_request_power_status_frame_encode(
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_frame_request_power_status_frame_decode(
-    uint8_t value);
+double motor_controller_motor_controller_frame_request_power_status_frame_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -415,8 +414,7 @@ motor_controller_motor_controller_frame_request_power_status_frame_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_frame_request_power_status_frame_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_frame_request_power_status_frame_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -425,9 +423,7 @@ bool motor_controller_motor_controller_frame_request_power_status_frame_is_in_ra
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_frame_request_drive_status_frame_encode(
-    double value);
+uint8_t motor_controller_motor_controller_frame_request_drive_status_frame_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -436,9 +432,7 @@ motor_controller_motor_controller_frame_request_drive_status_frame_encode(
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_frame_request_drive_status_frame_decode(
-    uint8_t value);
+double motor_controller_motor_controller_frame_request_drive_status_frame_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -447,8 +441,7 @@ motor_controller_motor_controller_frame_request_drive_status_frame_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_frame_request_drive_status_frame_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_frame_request_drive_status_frame_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -457,8 +450,7 @@ bool motor_controller_motor_controller_frame_request_drive_status_frame_is_in_ra
  *
  * @return Encoded signal.
  */
-uint8_t motor_controller_motor_controller_frame_request_error_frame_encode(
-    double value);
+uint8_t motor_controller_motor_controller_frame_request_error_frame_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -467,8 +459,7 @@ uint8_t motor_controller_motor_controller_frame_request_error_frame_encode(
  *
  * @return Decoded signal.
  */
-double motor_controller_motor_controller_frame_request_error_frame_decode(
-    uint8_t value);
+double motor_controller_motor_controller_frame_request_error_frame_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -477,8 +468,7 @@ double motor_controller_motor_controller_frame_request_error_frame_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_frame_request_error_frame_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_frame_request_error_frame_is_in_range(uint8_t value);
 
 /**
  * Pack message MotorControllerPowerStatus.
@@ -505,7 +495,8 @@ int motor_controller_motor_controller_power_status_pack(
  */
 int motor_controller_motor_controller_power_status_unpack(
     struct motor_controller_motor_controller_power_status_t *dst_p,
-    const uint8_t *src_p, size_t size);
+    const uint8_t *src_p,
+    size_t size);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -514,8 +505,7 @@ int motor_controller_motor_controller_power_status_unpack(
  *
  * @return Encoded signal.
  */
-uint16_t motor_controller_motor_controller_power_status_battery_voltage_encode(
-    double value);
+uint16_t motor_controller_motor_controller_power_status_battery_voltage_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -524,8 +514,7 @@ uint16_t motor_controller_motor_controller_power_status_battery_voltage_encode(
  *
  * @return Decoded signal.
  */
-double motor_controller_motor_controller_power_status_battery_voltage_decode(
-    uint16_t value);
+double motor_controller_motor_controller_power_status_battery_voltage_decode(uint16_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -534,8 +523,7 @@ double motor_controller_motor_controller_power_status_battery_voltage_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_power_status_battery_voltage_is_in_range(
-    uint16_t value);
+bool motor_controller_motor_controller_power_status_battery_voltage_is_in_range(uint16_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -544,8 +532,7 @@ bool motor_controller_motor_controller_power_status_battery_voltage_is_in_range(
  *
  * @return Encoded signal.
  */
-uint16_t motor_controller_motor_controller_power_status_battery_current_encode(
-    double value);
+uint16_t motor_controller_motor_controller_power_status_battery_current_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -554,8 +541,7 @@ uint16_t motor_controller_motor_controller_power_status_battery_current_encode(
  *
  * @return Decoded signal.
  */
-double motor_controller_motor_controller_power_status_battery_current_decode(
-    uint16_t value);
+double motor_controller_motor_controller_power_status_battery_current_decode(uint16_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -564,8 +550,7 @@ double motor_controller_motor_controller_power_status_battery_current_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_power_status_battery_current_is_in_range(
-    uint16_t value);
+bool motor_controller_motor_controller_power_status_battery_current_is_in_range(uint16_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -574,9 +559,7 @@ bool motor_controller_motor_controller_power_status_battery_current_is_in_range(
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_power_status_battery_current_direction_encode(
-    double value);
+uint8_t motor_controller_motor_controller_power_status_battery_current_direction_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -585,9 +568,7 @@ motor_controller_motor_controller_power_status_battery_current_direction_encode(
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_power_status_battery_current_direction_decode(
-    uint8_t value);
+double motor_controller_motor_controller_power_status_battery_current_direction_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -596,8 +577,7 @@ motor_controller_motor_controller_power_status_battery_current_direction_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_power_status_battery_current_direction_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_power_status_battery_current_direction_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -606,8 +586,7 @@ bool motor_controller_motor_controller_power_status_battery_current_direction_is
  *
  * @return Encoded signal.
  */
-uint16_t motor_controller_motor_controller_power_status_motor_current_encode(
-    double value);
+uint16_t motor_controller_motor_controller_power_status_motor_current_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -616,8 +595,7 @@ uint16_t motor_controller_motor_controller_power_status_motor_current_encode(
  *
  * @return Decoded signal.
  */
-double motor_controller_motor_controller_power_status_motor_current_decode(
-    uint16_t value);
+double motor_controller_motor_controller_power_status_motor_current_decode(uint16_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -626,8 +604,7 @@ double motor_controller_motor_controller_power_status_motor_current_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_power_status_motor_current_is_in_range(
-    uint16_t value);
+bool motor_controller_motor_controller_power_status_motor_current_is_in_range(uint16_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -636,8 +613,7 @@ bool motor_controller_motor_controller_power_status_motor_current_is_in_range(
  *
  * @return Encoded signal.
  */
-uint8_t motor_controller_motor_controller_power_status_fet_temperature_encode(
-    double value);
+uint8_t motor_controller_motor_controller_power_status_fet_temperature_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -646,8 +622,7 @@ uint8_t motor_controller_motor_controller_power_status_fet_temperature_encode(
  *
  * @return Decoded signal.
  */
-double motor_controller_motor_controller_power_status_fet_temperature_decode(
-    uint8_t value);
+double motor_controller_motor_controller_power_status_fet_temperature_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -656,8 +631,7 @@ double motor_controller_motor_controller_power_status_fet_temperature_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_power_status_fet_temperature_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_power_status_fet_temperature_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -666,8 +640,7 @@ bool motor_controller_motor_controller_power_status_fet_temperature_is_in_range(
  *
  * @return Encoded signal.
  */
-uint16_t
-motor_controller_motor_controller_power_status_motor_speed_encode(double value);
+uint16_t motor_controller_motor_controller_power_status_motor_speed_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -676,8 +649,7 @@ motor_controller_motor_controller_power_status_motor_speed_encode(double value);
  *
  * @return Decoded signal.
  */
-double motor_controller_motor_controller_power_status_motor_speed_decode(
-    uint16_t value);
+double motor_controller_motor_controller_power_status_motor_speed_decode(uint16_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -686,8 +658,7 @@ double motor_controller_motor_controller_power_status_motor_speed_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_power_status_motor_speed_is_in_range(
-    uint16_t value);
+bool motor_controller_motor_controller_power_status_motor_speed_is_in_range(uint16_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -696,8 +667,7 @@ bool motor_controller_motor_controller_power_status_motor_speed_is_in_range(
  *
  * @return Encoded signal.
  */
-uint16_t
-motor_controller_motor_controller_power_status_pwm_duty_encode(double value);
+uint16_t motor_controller_motor_controller_power_status_pwm_duty_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -706,8 +676,7 @@ motor_controller_motor_controller_power_status_pwm_duty_encode(double value);
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_power_status_pwm_duty_decode(uint16_t value);
+double motor_controller_motor_controller_power_status_pwm_duty_decode(uint16_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -716,8 +685,7 @@ motor_controller_motor_controller_power_status_pwm_duty_decode(uint16_t value);
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_power_status_pwm_duty_is_in_range(
-    uint16_t value);
+bool motor_controller_motor_controller_power_status_pwm_duty_is_in_range(uint16_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -726,8 +694,7 @@ bool motor_controller_motor_controller_power_status_pwm_duty_is_in_range(
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_power_status_lead_angle_encode(double value);
+uint8_t motor_controller_motor_controller_power_status_lead_angle_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -736,8 +703,7 @@ motor_controller_motor_controller_power_status_lead_angle_encode(double value);
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_power_status_lead_angle_decode(uint8_t value);
+double motor_controller_motor_controller_power_status_lead_angle_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -746,8 +712,7 @@ motor_controller_motor_controller_power_status_lead_angle_decode(uint8_t value);
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_power_status_lead_angle_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_power_status_lead_angle_is_in_range(uint8_t value);
 
 /**
  * Pack message MotorControllerDriveStatus.
@@ -774,7 +739,8 @@ int motor_controller_motor_controller_drive_status_pack(
  */
 int motor_controller_motor_controller_drive_status_unpack(
     struct motor_controller_motor_controller_drive_status_t *dst_p,
-    const uint8_t *src_p, size_t size);
+    const uint8_t *src_p,
+    size_t size);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -783,8 +749,7 @@ int motor_controller_motor_controller_drive_status_unpack(
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_drive_status_power_mode_encode(double value);
+uint8_t motor_controller_motor_controller_drive_status_power_mode_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -793,8 +758,7 @@ motor_controller_motor_controller_drive_status_power_mode_encode(double value);
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_drive_status_power_mode_decode(uint8_t value);
+double motor_controller_motor_controller_drive_status_power_mode_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -803,8 +767,7 @@ motor_controller_motor_controller_drive_status_power_mode_decode(uint8_t value);
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_drive_status_power_mode_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_drive_status_power_mode_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -813,8 +776,7 @@ bool motor_controller_motor_controller_drive_status_power_mode_is_in_range(
  *
  * @return Encoded signal.
  */
-uint8_t motor_controller_motor_controller_drive_status_control_mode_encode(
-    double value);
+uint8_t motor_controller_motor_controller_drive_status_control_mode_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -823,8 +785,7 @@ uint8_t motor_controller_motor_controller_drive_status_control_mode_encode(
  *
  * @return Decoded signal.
  */
-double motor_controller_motor_controller_drive_status_control_mode_decode(
-    uint8_t value);
+double motor_controller_motor_controller_drive_status_control_mode_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -833,8 +794,7 @@ double motor_controller_motor_controller_drive_status_control_mode_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_drive_status_control_mode_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_drive_status_control_mode_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -843,9 +803,7 @@ bool motor_controller_motor_controller_drive_status_control_mode_is_in_range(
  *
  * @return Encoded signal.
  */
-uint16_t
-motor_controller_motor_controller_drive_status_accelerator_vr_position_encode(
-    double value);
+uint16_t motor_controller_motor_controller_drive_status_accelerator_vr_position_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -854,9 +812,7 @@ motor_controller_motor_controller_drive_status_accelerator_vr_position_encode(
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_drive_status_accelerator_vr_position_decode(
-    uint16_t value);
+double motor_controller_motor_controller_drive_status_accelerator_vr_position_decode(uint16_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -865,8 +821,7 @@ motor_controller_motor_controller_drive_status_accelerator_vr_position_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_drive_status_accelerator_vr_position_is_in_range(
-    uint16_t value);
+bool motor_controller_motor_controller_drive_status_accelerator_vr_position_is_in_range(uint16_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -875,9 +830,7 @@ bool motor_controller_motor_controller_drive_status_accelerator_vr_position_is_i
  *
  * @return Encoded signal.
  */
-uint16_t
-motor_controller_motor_controller_drive_status_regen_vr_position_encode(
-    double value);
+uint16_t motor_controller_motor_controller_drive_status_regen_vr_position_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -886,8 +839,7 @@ motor_controller_motor_controller_drive_status_regen_vr_position_encode(
  *
  * @return Decoded signal.
  */
-double motor_controller_motor_controller_drive_status_regen_vr_position_decode(
-    uint16_t value);
+double motor_controller_motor_controller_drive_status_regen_vr_position_decode(uint16_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -896,8 +848,7 @@ double motor_controller_motor_controller_drive_status_regen_vr_position_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_drive_status_regen_vr_position_is_in_range(
-    uint16_t value);
+bool motor_controller_motor_controller_drive_status_regen_vr_position_is_in_range(uint16_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -906,9 +857,7 @@ bool motor_controller_motor_controller_drive_status_regen_vr_position_is_in_rang
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_drive_status_digital_sw_position_encode(
-    double value);
+uint8_t motor_controller_motor_controller_drive_status_digital_sw_position_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -917,9 +866,7 @@ motor_controller_motor_controller_drive_status_digital_sw_position_encode(
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_drive_status_digital_sw_position_decode(
-    uint8_t value);
+double motor_controller_motor_controller_drive_status_digital_sw_position_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -928,8 +875,7 @@ motor_controller_motor_controller_drive_status_digital_sw_position_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_drive_status_digital_sw_position_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_drive_status_digital_sw_position_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -938,9 +884,7 @@ bool motor_controller_motor_controller_drive_status_digital_sw_position_is_in_ra
  *
  * @return Encoded signal.
  */
-uint16_t
-motor_controller_motor_controller_drive_status_output_target_value_encode(
-    double value);
+uint16_t motor_controller_motor_controller_drive_status_output_target_value_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -949,9 +893,7 @@ motor_controller_motor_controller_drive_status_output_target_value_encode(
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_drive_status_output_target_value_decode(
-    uint16_t value);
+double motor_controller_motor_controller_drive_status_output_target_value_decode(uint16_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -960,8 +902,7 @@ motor_controller_motor_controller_drive_status_output_target_value_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_drive_status_output_target_value_is_in_range(
-    uint16_t value);
+bool motor_controller_motor_controller_drive_status_output_target_value_is_in_range(uint16_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -970,9 +911,7 @@ bool motor_controller_motor_controller_drive_status_output_target_value_is_in_ra
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_drive_status_drive_action_status_encode(
-    double value);
+uint8_t motor_controller_motor_controller_drive_status_drive_action_status_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -981,9 +920,7 @@ motor_controller_motor_controller_drive_status_drive_action_status_encode(
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_drive_status_drive_action_status_decode(
-    uint8_t value);
+double motor_controller_motor_controller_drive_status_drive_action_status_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -992,8 +929,7 @@ motor_controller_motor_controller_drive_status_drive_action_status_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_drive_status_drive_action_status_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_drive_status_drive_action_status_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1002,8 +938,7 @@ bool motor_controller_motor_controller_drive_status_drive_action_status_is_in_ra
  *
  * @return Encoded signal.
  */
-uint8_t motor_controller_motor_controller_drive_status_regen_status_encode(
-    double value);
+uint8_t motor_controller_motor_controller_drive_status_regen_status_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1012,8 +947,7 @@ uint8_t motor_controller_motor_controller_drive_status_regen_status_encode(
  *
  * @return Decoded signal.
  */
-double motor_controller_motor_controller_drive_status_regen_status_decode(
-    uint8_t value);
+double motor_controller_motor_controller_drive_status_regen_status_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1022,8 +956,7 @@ double motor_controller_motor_controller_drive_status_regen_status_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_drive_status_regen_status_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_drive_status_regen_status_is_in_range(uint8_t value);
 
 /**
  * Pack message MotorControllerError.
@@ -1036,7 +969,8 @@ bool motor_controller_motor_controller_drive_status_regen_status_is_in_range(
  */
 int motor_controller_motor_controller_error_pack(
     uint8_t *dst_p,
-    const struct motor_controller_motor_controller_error_t *src_p, size_t size);
+    const struct motor_controller_motor_controller_error_t *src_p,
+    size_t size);
 
 /**
  * Unpack message MotorControllerError.
@@ -1049,7 +983,8 @@ int motor_controller_motor_controller_error_pack(
  */
 int motor_controller_motor_controller_error_unpack(
     struct motor_controller_motor_controller_error_t *dst_p,
-    const uint8_t *src_p, size_t size);
+    const uint8_t *src_p,
+    size_t size);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1058,8 +993,7 @@ int motor_controller_motor_controller_error_unpack(
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_error_analog_sensor_err_encode(double value);
+uint8_t motor_controller_motor_controller_error_analog_sensor_err_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1068,8 +1002,7 @@ motor_controller_motor_controller_error_analog_sensor_err_encode(double value);
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_error_analog_sensor_err_decode(uint8_t value);
+double motor_controller_motor_controller_error_analog_sensor_err_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1078,8 +1011,7 @@ motor_controller_motor_controller_error_analog_sensor_err_decode(uint8_t value);
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_analog_sensor_err_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_analog_sensor_err_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1088,9 +1020,7 @@ bool motor_controller_motor_controller_error_analog_sensor_err_is_in_range(
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_error_motor_current_sensor_u_err_encode(
-    double value);
+uint8_t motor_controller_motor_controller_error_motor_current_sensor_u_err_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1099,9 +1029,7 @@ motor_controller_motor_controller_error_motor_current_sensor_u_err_encode(
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_error_motor_current_sensor_u_err_decode(
-    uint8_t value);
+double motor_controller_motor_controller_error_motor_current_sensor_u_err_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1110,8 +1038,7 @@ motor_controller_motor_controller_error_motor_current_sensor_u_err_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_motor_current_sensor_u_err_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_motor_current_sensor_u_err_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1120,9 +1047,7 @@ bool motor_controller_motor_controller_error_motor_current_sensor_u_err_is_in_ra
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_error_motor_current_sensor_w_err_encode(
-    double value);
+uint8_t motor_controller_motor_controller_error_motor_current_sensor_w_err_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1131,9 +1056,7 @@ motor_controller_motor_controller_error_motor_current_sensor_w_err_encode(
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_error_motor_current_sensor_w_err_decode(
-    uint8_t value);
+double motor_controller_motor_controller_error_motor_current_sensor_w_err_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1142,8 +1065,7 @@ motor_controller_motor_controller_error_motor_current_sensor_w_err_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_motor_current_sensor_w_err_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_motor_current_sensor_w_err_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1152,8 +1074,7 @@ bool motor_controller_motor_controller_error_motor_current_sensor_w_err_is_in_ra
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_error_fet_thermistor_err_encode(double value);
+uint8_t motor_controller_motor_controller_error_fet_thermistor_err_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1162,8 +1083,7 @@ motor_controller_motor_controller_error_fet_thermistor_err_encode(double value);
  *
  * @return Decoded signal.
  */
-double motor_controller_motor_controller_error_fet_thermistor_err_decode(
-    uint8_t value);
+double motor_controller_motor_controller_error_fet_thermistor_err_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1172,8 +1092,7 @@ double motor_controller_motor_controller_error_fet_thermistor_err_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_fet_thermistor_err_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_fet_thermistor_err_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1182,9 +1101,7 @@ bool motor_controller_motor_controller_error_fet_thermistor_err_is_in_range(
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_error_battery_voltage_sensor_err_encode(
-    double value);
+uint8_t motor_controller_motor_controller_error_battery_voltage_sensor_err_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1193,9 +1110,7 @@ motor_controller_motor_controller_error_battery_voltage_sensor_err_encode(
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_error_battery_voltage_sensor_err_decode(
-    uint8_t value);
+double motor_controller_motor_controller_error_battery_voltage_sensor_err_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1204,8 +1119,7 @@ motor_controller_motor_controller_error_battery_voltage_sensor_err_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_battery_voltage_sensor_err_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_battery_voltage_sensor_err_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1214,9 +1128,7 @@ bool motor_controller_motor_controller_error_battery_voltage_sensor_err_is_in_ra
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_error_battery_current_sensor_err_encode(
-    double value);
+uint8_t motor_controller_motor_controller_error_battery_current_sensor_err_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1225,9 +1137,7 @@ motor_controller_motor_controller_error_battery_current_sensor_err_encode(
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_error_battery_current_sensor_err_decode(
-    uint8_t value);
+double motor_controller_motor_controller_error_battery_current_sensor_err_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1236,8 +1146,7 @@ motor_controller_motor_controller_error_battery_current_sensor_err_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_battery_current_sensor_err_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_battery_current_sensor_err_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1246,9 +1155,7 @@ bool motor_controller_motor_controller_error_battery_current_sensor_err_is_in_ra
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_error_battery_current_sensor_adj_err_encode(
-    double value);
+uint8_t motor_controller_motor_controller_error_battery_current_sensor_adj_err_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1257,9 +1164,7 @@ motor_controller_motor_controller_error_battery_current_sensor_adj_err_encode(
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_error_battery_current_sensor_adj_err_decode(
-    uint8_t value);
+double motor_controller_motor_controller_error_battery_current_sensor_adj_err_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1268,8 +1173,7 @@ motor_controller_motor_controller_error_battery_current_sensor_adj_err_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_battery_current_sensor_adj_err_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_battery_current_sensor_adj_err_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1278,9 +1182,7 @@ bool motor_controller_motor_controller_error_battery_current_sensor_adj_err_is_i
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_error_motor_current_sensor_adj_err_encode(
-    double value);
+uint8_t motor_controller_motor_controller_error_motor_current_sensor_adj_err_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1289,9 +1191,7 @@ motor_controller_motor_controller_error_motor_current_sensor_adj_err_encode(
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_error_motor_current_sensor_adj_err_decode(
-    uint8_t value);
+double motor_controller_motor_controller_error_motor_current_sensor_adj_err_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1300,8 +1200,7 @@ motor_controller_motor_controller_error_motor_current_sensor_adj_err_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_motor_current_sensor_adj_err_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_motor_current_sensor_adj_err_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1310,8 +1209,7 @@ bool motor_controller_motor_controller_error_motor_current_sensor_adj_err_is_in_
  *
  * @return Encoded signal.
  */
-uint8_t motor_controller_motor_controller_error_accelerator_position_err_encode(
-    double value);
+uint8_t motor_controller_motor_controller_error_accelerator_position_err_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1320,8 +1218,7 @@ uint8_t motor_controller_motor_controller_error_accelerator_position_err_encode(
  *
  * @return Decoded signal.
  */
-double motor_controller_motor_controller_error_accelerator_position_err_decode(
-    uint8_t value);
+double motor_controller_motor_controller_error_accelerator_position_err_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1330,8 +1227,7 @@ double motor_controller_motor_controller_error_accelerator_position_err_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_accelerator_position_err_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_accelerator_position_err_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1340,9 +1236,7 @@ bool motor_controller_motor_controller_error_accelerator_position_err_is_in_rang
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_error_controller_voltage_sensor_err_encode(
-    double value);
+uint8_t motor_controller_motor_controller_error_controller_voltage_sensor_err_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1351,9 +1245,7 @@ motor_controller_motor_controller_error_controller_voltage_sensor_err_encode(
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_error_controller_voltage_sensor_err_decode(
-    uint8_t value);
+double motor_controller_motor_controller_error_controller_voltage_sensor_err_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1362,8 +1254,7 @@ motor_controller_motor_controller_error_controller_voltage_sensor_err_decode(
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_controller_voltage_sensor_err_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_controller_voltage_sensor_err_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1372,8 +1263,7 @@ bool motor_controller_motor_controller_error_controller_voltage_sensor_err_is_in
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_error_power_system_err_encode(double value);
+uint8_t motor_controller_motor_controller_error_power_system_err_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1382,8 +1272,7 @@ motor_controller_motor_controller_error_power_system_err_encode(double value);
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_error_power_system_err_decode(uint8_t value);
+double motor_controller_motor_controller_error_power_system_err_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1392,8 +1281,7 @@ motor_controller_motor_controller_error_power_system_err_decode(uint8_t value);
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_power_system_err_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_power_system_err_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1402,8 +1290,7 @@ bool motor_controller_motor_controller_error_power_system_err_is_in_range(
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_error_overcurrent_err_encode(double value);
+uint8_t motor_controller_motor_controller_error_overcurrent_err_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1412,8 +1299,7 @@ motor_controller_motor_controller_error_overcurrent_err_encode(double value);
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_error_overcurrent_err_decode(uint8_t value);
+double motor_controller_motor_controller_error_overcurrent_err_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1422,8 +1308,7 @@ motor_controller_motor_controller_error_overcurrent_err_decode(uint8_t value);
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_overcurrent_err_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_overcurrent_err_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1432,8 +1317,7 @@ bool motor_controller_motor_controller_error_overcurrent_err_is_in_range(
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_error_overvoltage_err_encode(double value);
+uint8_t motor_controller_motor_controller_error_overvoltage_err_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1442,8 +1326,7 @@ motor_controller_motor_controller_error_overvoltage_err_encode(double value);
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_error_overvoltage_err_decode(uint8_t value);
+double motor_controller_motor_controller_error_overvoltage_err_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1452,8 +1335,7 @@ motor_controller_motor_controller_error_overvoltage_err_decode(uint8_t value);
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_overvoltage_err_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_overvoltage_err_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1462,8 +1344,7 @@ bool motor_controller_motor_controller_error_overvoltage_err_is_in_range(
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_error_overcurrent_limit_encode(double value);
+uint8_t motor_controller_motor_controller_error_overcurrent_limit_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1472,8 +1353,7 @@ motor_controller_motor_controller_error_overcurrent_limit_encode(double value);
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_error_overcurrent_limit_decode(uint8_t value);
+double motor_controller_motor_controller_error_overcurrent_limit_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1482,8 +1362,7 @@ motor_controller_motor_controller_error_overcurrent_limit_decode(uint8_t value);
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_overcurrent_limit_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_overcurrent_limit_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1492,8 +1371,7 @@ bool motor_controller_motor_controller_error_overcurrent_limit_is_in_range(
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_error_motor_system_err_encode(double value);
+uint8_t motor_controller_motor_controller_error_motor_system_err_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1502,8 +1380,7 @@ motor_controller_motor_controller_error_motor_system_err_encode(double value);
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_error_motor_system_err_decode(uint8_t value);
+double motor_controller_motor_controller_error_motor_system_err_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1512,8 +1389,7 @@ motor_controller_motor_controller_error_motor_system_err_decode(uint8_t value);
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_motor_system_err_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_motor_system_err_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1540,8 +1416,7 @@ double motor_controller_motor_controller_error_motor_lock_decode(uint8_t value);
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_motor_lock_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_motor_lock_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1550,8 +1425,7 @@ bool motor_controller_motor_controller_error_motor_lock_is_in_range(
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_error_hall_sensor_short_encode(double value);
+uint8_t motor_controller_motor_controller_error_hall_sensor_short_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1560,8 +1434,7 @@ motor_controller_motor_controller_error_hall_sensor_short_encode(double value);
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_error_hall_sensor_short_decode(uint8_t value);
+double motor_controller_motor_controller_error_hall_sensor_short_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1570,8 +1443,7 @@ motor_controller_motor_controller_error_hall_sensor_short_decode(uint8_t value);
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_hall_sensor_short_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_hall_sensor_short_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1580,8 +1452,7 @@ bool motor_controller_motor_controller_error_hall_sensor_short_is_in_range(
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_error_hall_sensor_open_encode(double value);
+uint8_t motor_controller_motor_controller_error_hall_sensor_open_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1590,8 +1461,7 @@ motor_controller_motor_controller_error_hall_sensor_open_encode(double value);
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_error_hall_sensor_open_decode(uint8_t value);
+double motor_controller_motor_controller_error_hall_sensor_open_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1600,8 +1470,7 @@ motor_controller_motor_controller_error_hall_sensor_open_decode(uint8_t value);
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_hall_sensor_open_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_hall_sensor_open_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1610,8 +1479,7 @@ bool motor_controller_motor_controller_error_hall_sensor_open_is_in_range(
  *
  * @return Encoded signal.
  */
-uint8_t
-motor_controller_motor_controller_error_overheat_level_encode(double value);
+uint8_t motor_controller_motor_controller_error_overheat_level_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -1620,8 +1488,7 @@ motor_controller_motor_controller_error_overheat_level_encode(double value);
  *
  * @return Decoded signal.
  */
-double
-motor_controller_motor_controller_error_overheat_level_decode(uint8_t value);
+double motor_controller_motor_controller_error_overheat_level_decode(uint8_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -1630,8 +1497,8 @@ motor_controller_motor_controller_error_overheat_level_decode(uint8_t value);
  *
  * @return true if in range, false otherwise.
  */
-bool motor_controller_motor_controller_error_overheat_level_is_in_range(
-    uint8_t value);
+bool motor_controller_motor_controller_error_overheat_level_is_in_range(uint8_t value);
+
 
 #ifdef __cplusplus
 }

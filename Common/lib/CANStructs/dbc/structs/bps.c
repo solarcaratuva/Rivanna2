@@ -32,39 +32,59 @@
 
 #include "bps.h"
 
-static inline uint8_t pack_left_shift_u8(uint8_t value, uint8_t shift,
-                                         uint8_t mask) {
+static inline uint8_t pack_left_shift_u8(
+    uint8_t value,
+    uint8_t shift,
+    uint8_t mask)
+{
     return (uint8_t)((uint8_t)(value << shift) & mask);
 }
 
-static inline uint8_t pack_left_shift_u16(uint16_t value, uint8_t shift,
-                                          uint8_t mask) {
+static inline uint8_t pack_left_shift_u16(
+    uint16_t value,
+    uint8_t shift,
+    uint8_t mask)
+{
     return (uint8_t)((uint8_t)(value << shift) & mask);
 }
 
-static inline uint8_t pack_right_shift_u16(uint16_t value, uint8_t shift,
-                                           uint8_t mask) {
+static inline uint8_t pack_right_shift_u16(
+    uint16_t value,
+    uint8_t shift,
+    uint8_t mask)
+{
     return (uint8_t)((uint8_t)(value >> shift) & mask);
 }
 
-static inline uint16_t unpack_left_shift_u16(uint8_t value, uint8_t shift,
-                                             uint8_t mask) {
+static inline uint16_t unpack_left_shift_u16(
+    uint8_t value,
+    uint8_t shift,
+    uint8_t mask)
+{
     return (uint16_t)((uint16_t)(value & mask) << shift);
 }
 
-static inline uint8_t unpack_right_shift_u8(uint8_t value, uint8_t shift,
-                                            uint8_t mask) {
+static inline uint8_t unpack_right_shift_u8(
+    uint8_t value,
+    uint8_t shift,
+    uint8_t mask)
+{
     return (uint8_t)((uint8_t)(value & mask) >> shift);
 }
 
-static inline uint16_t unpack_right_shift_u16(uint8_t value, uint8_t shift,
-                                              uint8_t mask) {
+static inline uint16_t unpack_right_shift_u16(
+    uint8_t value,
+    uint8_t shift,
+    uint8_t mask)
+{
     return (uint16_t)((uint16_t)(value & mask) >> shift);
 }
 
 int bps_bps_pack_information_pack(
-    uint8_t *dst_p, const struct bps_bps_pack_information_t *src_p,
-    size_t size) {
+    uint8_t *dst_p,
+    const struct bps_bps_pack_information_t *src_p,
+    size_t size)
+{
     if (size < 6u) {
         return (-EINVAL);
     }
@@ -82,8 +102,11 @@ int bps_bps_pack_information_pack(
     return (6);
 }
 
-int bps_bps_pack_information_unpack(struct bps_bps_pack_information_t *dst_p,
-                                    const uint8_t *src_p, size_t size) {
+int bps_bps_pack_information_unpack(
+    struct bps_bps_pack_information_t *dst_p,
+    const uint8_t *src_p,
+    size_t size)
+{
     if (size < 6u) {
         return (-EINVAL);
     }
@@ -99,75 +122,92 @@ int bps_bps_pack_information_unpack(struct bps_bps_pack_information_t *dst_p,
     return (0);
 }
 
-uint16_t bps_bps_pack_information_pack_voltage_encode(double value) {
+uint16_t bps_bps_pack_information_pack_voltage_encode(double value)
+{
     return (uint16_t)(value);
 }
 
-double bps_bps_pack_information_pack_voltage_decode(uint16_t value) {
+double bps_bps_pack_information_pack_voltage_decode(uint16_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_pack_information_pack_voltage_is_in_range(uint16_t value) {
+bool bps_bps_pack_information_pack_voltage_is_in_range(uint16_t value)
+{
     (void)value;
 
     return (true);
 }
 
-uint16_t bps_bps_pack_information_pack_current_encode(double value) {
+uint16_t bps_bps_pack_information_pack_current_encode(double value)
+{
     return (uint16_t)(value);
 }
 
-double bps_bps_pack_information_pack_current_decode(uint16_t value) {
+double bps_bps_pack_information_pack_current_decode(uint16_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_pack_information_pack_current_is_in_range(uint16_t value) {
+bool bps_bps_pack_information_pack_current_is_in_range(uint16_t value)
+{
     (void)value;
 
     return (true);
 }
 
-uint8_t bps_bps_pack_information_pack_soc_encode(double value) {
+uint8_t bps_bps_pack_information_pack_soc_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_pack_information_pack_soc_decode(uint8_t value) {
+double bps_bps_pack_information_pack_soc_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_pack_information_pack_soc_is_in_range(uint8_t value) {
+bool bps_bps_pack_information_pack_soc_is_in_range(uint8_t value)
+{
     (void)value;
 
     return (true);
 }
 
-uint8_t bps_bps_pack_information_discharge_relay_encode(double value) {
+uint8_t bps_bps_pack_information_discharge_relay_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_pack_information_discharge_relay_decode(uint8_t value) {
+double bps_bps_pack_information_discharge_relay_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_pack_information_discharge_relay_is_in_range(uint8_t value) {
+bool bps_bps_pack_information_discharge_relay_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_pack_information_charge_relay_encode(double value) {
+uint8_t bps_bps_pack_information_charge_relay_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_pack_information_charge_relay_decode(uint8_t value) {
+double bps_bps_pack_information_charge_relay_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_pack_information_charge_relay_is_in_range(uint8_t value) {
+bool bps_bps_pack_information_charge_relay_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-int bps_bps_cell_voltage_pack(uint8_t *dst_p,
-                              const struct bps_bps_cell_voltage_t *src_p,
-                              size_t size) {
+int bps_bps_cell_voltage_pack(
+    uint8_t *dst_p,
+    const struct bps_bps_cell_voltage_t *src_p,
+    size_t size)
+{
     if (size < 6u) {
         return (-EINVAL);
     }
@@ -184,8 +224,11 @@ int bps_bps_cell_voltage_pack(uint8_t *dst_p,
     return (6);
 }
 
-int bps_bps_cell_voltage_unpack(struct bps_bps_cell_voltage_t *dst_p,
-                                const uint8_t *src_p, size_t size) {
+int bps_bps_cell_voltage_unpack(
+    struct bps_bps_cell_voltage_t *dst_p,
+    const uint8_t *src_p,
+    size_t size)
+{
     if (size < 6u) {
         return (-EINVAL);
     }
@@ -200,65 +243,79 @@ int bps_bps_cell_voltage_unpack(struct bps_bps_cell_voltage_t *dst_p,
     return (0);
 }
 
-uint16_t bps_bps_cell_voltage_low_cell_voltage_encode(double value) {
+uint16_t bps_bps_cell_voltage_low_cell_voltage_encode(double value)
+{
     return (uint16_t)(value);
 }
 
-double bps_bps_cell_voltage_low_cell_voltage_decode(uint16_t value) {
+double bps_bps_cell_voltage_low_cell_voltage_decode(uint16_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_cell_voltage_low_cell_voltage_is_in_range(uint16_t value) {
+bool bps_bps_cell_voltage_low_cell_voltage_is_in_range(uint16_t value)
+{
     (void)value;
 
     return (true);
 }
 
-uint8_t bps_bps_cell_voltage_low_cell_voltage_id_encode(double value) {
+uint8_t bps_bps_cell_voltage_low_cell_voltage_id_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_cell_voltage_low_cell_voltage_id_decode(uint8_t value) {
+double bps_bps_cell_voltage_low_cell_voltage_id_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_cell_voltage_low_cell_voltage_id_is_in_range(uint8_t value) {
+bool bps_bps_cell_voltage_low_cell_voltage_id_is_in_range(uint8_t value)
+{
     (void)value;
 
     return (true);
 }
 
-uint16_t bps_bps_cell_voltage_high_cell_voltage_encode(double value) {
+uint16_t bps_bps_cell_voltage_high_cell_voltage_encode(double value)
+{
     return (uint16_t)(value);
 }
 
-double bps_bps_cell_voltage_high_cell_voltage_decode(uint16_t value) {
+double bps_bps_cell_voltage_high_cell_voltage_decode(uint16_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_cell_voltage_high_cell_voltage_is_in_range(uint16_t value) {
+bool bps_bps_cell_voltage_high_cell_voltage_is_in_range(uint16_t value)
+{
     (void)value;
 
     return (true);
 }
 
-uint8_t bps_bps_cell_voltage_high_cell_voltage_id_encode(double value) {
+uint8_t bps_bps_cell_voltage_high_cell_voltage_id_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_cell_voltage_high_cell_voltage_id_decode(uint8_t value) {
+double bps_bps_cell_voltage_high_cell_voltage_id_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_cell_voltage_high_cell_voltage_id_is_in_range(uint8_t value) {
+bool bps_bps_cell_voltage_high_cell_voltage_id_is_in_range(uint8_t value)
+{
     (void)value;
 
     return (true);
 }
 
 int bps_bps_cell_temperature_pack(
-    uint8_t *dst_p, const struct bps_bps_cell_temperature_t *src_p,
-    size_t size) {
+    uint8_t *dst_p,
+    const struct bps_bps_cell_temperature_t *src_p,
+    size_t size)
+{
     if (size < 4u) {
         return (-EINVAL);
     }
@@ -273,8 +330,11 @@ int bps_bps_cell_temperature_pack(
     return (4);
 }
 
-int bps_bps_cell_temperature_unpack(struct bps_bps_cell_temperature_t *dst_p,
-                                    const uint8_t *src_p, size_t size) {
+int bps_bps_cell_temperature_unpack(
+    struct bps_bps_cell_temperature_t *dst_p,
+    const uint8_t *src_p,
+    size_t size)
+{
     if (size < 4u) {
         return (-EINVAL);
     }
@@ -287,72 +347,86 @@ int bps_bps_cell_temperature_unpack(struct bps_bps_cell_temperature_t *dst_p,
     return (0);
 }
 
-uint8_t bps_bps_cell_temperature_low_temperature_encode(double value) {
+uint8_t bps_bps_cell_temperature_low_temperature_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_cell_temperature_low_temperature_decode(uint8_t value) {
+double bps_bps_cell_temperature_low_temperature_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_cell_temperature_low_temperature_is_in_range(uint8_t value) {
+bool bps_bps_cell_temperature_low_temperature_is_in_range(uint8_t value)
+{
     (void)value;
 
     return (true);
 }
 
-uint8_t bps_bps_cell_temperature_low_thermistor_id_encode(double value) {
+uint8_t bps_bps_cell_temperature_low_thermistor_id_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_cell_temperature_low_thermistor_id_decode(uint8_t value) {
+double bps_bps_cell_temperature_low_thermistor_id_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_cell_temperature_low_thermistor_id_is_in_range(uint8_t value) {
+bool bps_bps_cell_temperature_low_thermistor_id_is_in_range(uint8_t value)
+{
     (void)value;
 
     return (true);
 }
 
-uint8_t bps_bps_cell_temperature_high_temperature_encode(double value) {
+uint8_t bps_bps_cell_temperature_high_temperature_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_cell_temperature_high_temperature_decode(uint8_t value) {
+double bps_bps_cell_temperature_high_temperature_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_cell_temperature_high_temperature_is_in_range(uint8_t value) {
+bool bps_bps_cell_temperature_high_temperature_is_in_range(uint8_t value)
+{
     (void)value;
 
     return (true);
 }
 
-uint8_t bps_bps_cell_temperature_high_thermistor_id_encode(double value) {
+uint8_t bps_bps_cell_temperature_high_thermistor_id_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_cell_temperature_high_thermistor_id_decode(uint8_t value) {
+double bps_bps_cell_temperature_high_thermistor_id_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_cell_temperature_high_thermistor_id_is_in_range(uint8_t value) {
+bool bps_bps_cell_temperature_high_thermistor_id_is_in_range(uint8_t value)
+{
     (void)value;
 
     return (true);
 }
 
-int bps_bps_error_pack(uint8_t *dst_p, const struct bps_bps_error_t *src_p,
-                       size_t size) {
+int bps_bps_error_pack(
+    uint8_t *dst_p,
+    const struct bps_bps_error_t *src_p,
+    size_t size)
+{
     if (size < 3u) {
         return (-EINVAL);
     }
 
     memset(&dst_p[0], 0, 3);
 
-    dst_p[0] |=
-        pack_left_shift_u8(src_p->internal_communications_fault, 0u, 0x01u);
+    dst_p[0] |= pack_left_shift_u8(src_p->internal_communications_fault, 0u, 0x01u);
     dst_p[0] |= pack_left_shift_u8(src_p->internal_conversion_fault, 1u, 0x02u);
     dst_p[0] |= pack_left_shift_u8(src_p->weak_cell_fault, 2u, 0x04u);
     dst_p[0] |= pack_left_shift_u8(src_p->low_cell_voltage_fault, 3u, 0x08u);
@@ -363,18 +437,13 @@ int bps_bps_error_pack(uint8_t *dst_p, const struct bps_bps_error_t *src_p,
     dst_p[1] |= pack_left_shift_u8(src_p->voltage_redundancy_fault, 0u, 0x01u);
     dst_p[1] |= pack_left_shift_u8(src_p->fan_monitor_fault, 1u, 0x02u);
     dst_p[1] |= pack_left_shift_u8(src_p->thermistor_fault, 2u, 0x04u);
-    dst_p[1] |=
-        pack_left_shift_u8(src_p->canbus_communications_fault, 3u, 0x08u);
+    dst_p[1] |= pack_left_shift_u8(src_p->canbus_communications_fault, 3u, 0x08u);
     dst_p[1] |= pack_left_shift_u8(src_p->always_on_supply_fault, 4u, 0x10u);
-    dst_p[1] |=
-        pack_left_shift_u8(src_p->high_voltage_isolation_fault, 5u, 0x20u);
+    dst_p[1] |= pack_left_shift_u8(src_p->high_voltage_isolation_fault, 5u, 0x20u);
     dst_p[1] |= pack_left_shift_u8(src_p->power_supply_12v_fault, 6u, 0x40u);
-    dst_p[1] |=
-        pack_left_shift_u8(src_p->charge_limit_enforcement_fault, 7u, 0x80u);
-    dst_p[2] |=
-        pack_left_shift_u8(src_p->discharge_limit_enforcement_fault, 0u, 0x01u);
-    dst_p[2] |=
-        pack_left_shift_u8(src_p->charger_safety_relay_fault, 1u, 0x02u);
+    dst_p[1] |= pack_left_shift_u8(src_p->charge_limit_enforcement_fault, 7u, 0x80u);
+    dst_p[2] |= pack_left_shift_u8(src_p->discharge_limit_enforcement_fault, 0u, 0x01u);
+    dst_p[2] |= pack_left_shift_u8(src_p->charger_safety_relay_fault, 1u, 0x02u);
     dst_p[2] |= pack_left_shift_u8(src_p->internal_memory_fault, 2u, 0x04u);
     dst_p[2] |= pack_left_shift_u8(src_p->internal_thermistor_fault, 3u, 0x08u);
     dst_p[2] |= pack_left_shift_u8(src_p->internal_logic_fault, 4u, 0x10u);
@@ -382,296 +451,351 @@ int bps_bps_error_pack(uint8_t *dst_p, const struct bps_bps_error_t *src_p,
     return (3);
 }
 
-int bps_bps_error_unpack(struct bps_bps_error_t *dst_p, const uint8_t *src_p,
-                         size_t size) {
+int bps_bps_error_unpack(
+    struct bps_bps_error_t *dst_p,
+    const uint8_t *src_p,
+    size_t size)
+{
     if (size < 3u) {
         return (-EINVAL);
     }
 
-    dst_p->internal_communications_fault =
-        unpack_right_shift_u8(src_p[0], 0u, 0x01u);
-    dst_p->internal_conversion_fault =
-        unpack_right_shift_u8(src_p[0], 1u, 0x02u);
+    dst_p->internal_communications_fault = unpack_right_shift_u8(src_p[0], 0u, 0x01u);
+    dst_p->internal_conversion_fault = unpack_right_shift_u8(src_p[0], 1u, 0x02u);
     dst_p->weak_cell_fault = unpack_right_shift_u8(src_p[0], 2u, 0x04u);
     dst_p->low_cell_voltage_fault = unpack_right_shift_u8(src_p[0], 3u, 0x08u);
     dst_p->open_wiring_fault = unpack_right_shift_u8(src_p[0], 4u, 0x10u);
     dst_p->current_sensor_fault = unpack_right_shift_u8(src_p[0], 5u, 0x20u);
-    dst_p->pack_voltage_sensor_fault =
-        unpack_right_shift_u8(src_p[0], 6u, 0x40u);
+    dst_p->pack_voltage_sensor_fault = unpack_right_shift_u8(src_p[0], 6u, 0x40u);
     dst_p->weak_pack_fault = unpack_right_shift_u8(src_p[0], 7u, 0x80u);
-    dst_p->voltage_redundancy_fault =
-        unpack_right_shift_u8(src_p[1], 0u, 0x01u);
+    dst_p->voltage_redundancy_fault = unpack_right_shift_u8(src_p[1], 0u, 0x01u);
     dst_p->fan_monitor_fault = unpack_right_shift_u8(src_p[1], 1u, 0x02u);
     dst_p->thermistor_fault = unpack_right_shift_u8(src_p[1], 2u, 0x04u);
-    dst_p->canbus_communications_fault =
-        unpack_right_shift_u8(src_p[1], 3u, 0x08u);
+    dst_p->canbus_communications_fault = unpack_right_shift_u8(src_p[1], 3u, 0x08u);
     dst_p->always_on_supply_fault = unpack_right_shift_u8(src_p[1], 4u, 0x10u);
-    dst_p->high_voltage_isolation_fault =
-        unpack_right_shift_u8(src_p[1], 5u, 0x20u);
+    dst_p->high_voltage_isolation_fault = unpack_right_shift_u8(src_p[1], 5u, 0x20u);
     dst_p->power_supply_12v_fault = unpack_right_shift_u8(src_p[1], 6u, 0x40u);
-    dst_p->charge_limit_enforcement_fault =
-        unpack_right_shift_u8(src_p[1], 7u, 0x80u);
-    dst_p->discharge_limit_enforcement_fault =
-        unpack_right_shift_u8(src_p[2], 0u, 0x01u);
-    dst_p->charger_safety_relay_fault =
-        unpack_right_shift_u8(src_p[2], 1u, 0x02u);
+    dst_p->charge_limit_enforcement_fault = unpack_right_shift_u8(src_p[1], 7u, 0x80u);
+    dst_p->discharge_limit_enforcement_fault = unpack_right_shift_u8(src_p[2], 0u, 0x01u);
+    dst_p->charger_safety_relay_fault = unpack_right_shift_u8(src_p[2], 1u, 0x02u);
     dst_p->internal_memory_fault = unpack_right_shift_u8(src_p[2], 2u, 0x04u);
-    dst_p->internal_thermistor_fault =
-        unpack_right_shift_u8(src_p[2], 3u, 0x08u);
+    dst_p->internal_thermistor_fault = unpack_right_shift_u8(src_p[2], 3u, 0x08u);
     dst_p->internal_logic_fault = unpack_right_shift_u8(src_p[2], 4u, 0x10u);
 
     return (0);
 }
 
-uint8_t bps_bps_error_internal_communications_fault_encode(double value) {
+uint8_t bps_bps_error_internal_communications_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_internal_communications_fault_decode(uint8_t value) {
+double bps_bps_error_internal_communications_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_internal_communications_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_internal_communications_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_internal_conversion_fault_encode(double value) {
+uint8_t bps_bps_error_internal_conversion_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_internal_conversion_fault_decode(uint8_t value) {
+double bps_bps_error_internal_conversion_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_internal_conversion_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_internal_conversion_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_weak_cell_fault_encode(double value) {
+uint8_t bps_bps_error_weak_cell_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_weak_cell_fault_decode(uint8_t value) {
+double bps_bps_error_weak_cell_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_weak_cell_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_weak_cell_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_low_cell_voltage_fault_encode(double value) {
+uint8_t bps_bps_error_low_cell_voltage_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_low_cell_voltage_fault_decode(uint8_t value) {
+double bps_bps_error_low_cell_voltage_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_low_cell_voltage_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_low_cell_voltage_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_open_wiring_fault_encode(double value) {
+uint8_t bps_bps_error_open_wiring_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_open_wiring_fault_decode(uint8_t value) {
+double bps_bps_error_open_wiring_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_open_wiring_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_open_wiring_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_current_sensor_fault_encode(double value) {
+uint8_t bps_bps_error_current_sensor_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_current_sensor_fault_decode(uint8_t value) {
+double bps_bps_error_current_sensor_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_current_sensor_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_current_sensor_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_pack_voltage_sensor_fault_encode(double value) {
+uint8_t bps_bps_error_pack_voltage_sensor_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_pack_voltage_sensor_fault_decode(uint8_t value) {
+double bps_bps_error_pack_voltage_sensor_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_pack_voltage_sensor_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_pack_voltage_sensor_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_weak_pack_fault_encode(double value) {
+uint8_t bps_bps_error_weak_pack_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_weak_pack_fault_decode(uint8_t value) {
+double bps_bps_error_weak_pack_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_weak_pack_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_weak_pack_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_voltage_redundancy_fault_encode(double value) {
+uint8_t bps_bps_error_voltage_redundancy_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_voltage_redundancy_fault_decode(uint8_t value) {
+double bps_bps_error_voltage_redundancy_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_voltage_redundancy_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_voltage_redundancy_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_fan_monitor_fault_encode(double value) {
+uint8_t bps_bps_error_fan_monitor_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_fan_monitor_fault_decode(uint8_t value) {
+double bps_bps_error_fan_monitor_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_fan_monitor_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_fan_monitor_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_thermistor_fault_encode(double value) {
+uint8_t bps_bps_error_thermistor_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_thermistor_fault_decode(uint8_t value) {
+double bps_bps_error_thermistor_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_thermistor_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_thermistor_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_canbus_communications_fault_encode(double value) {
+uint8_t bps_bps_error_canbus_communications_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_canbus_communications_fault_decode(uint8_t value) {
+double bps_bps_error_canbus_communications_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_canbus_communications_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_canbus_communications_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_always_on_supply_fault_encode(double value) {
+uint8_t bps_bps_error_always_on_supply_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_always_on_supply_fault_decode(uint8_t value) {
+double bps_bps_error_always_on_supply_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_always_on_supply_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_always_on_supply_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_high_voltage_isolation_fault_encode(double value) {
+uint8_t bps_bps_error_high_voltage_isolation_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_high_voltage_isolation_fault_decode(uint8_t value) {
+double bps_bps_error_high_voltage_isolation_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_high_voltage_isolation_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_high_voltage_isolation_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_power_supply_12v_fault_encode(double value) {
+uint8_t bps_bps_error_power_supply_12v_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_power_supply_12v_fault_decode(uint8_t value) {
+double bps_bps_error_power_supply_12v_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_power_supply_12v_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_power_supply_12v_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_charge_limit_enforcement_fault_encode(double value) {
+uint8_t bps_bps_error_charge_limit_enforcement_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_charge_limit_enforcement_fault_decode(uint8_t value) {
+double bps_bps_error_charge_limit_enforcement_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_charge_limit_enforcement_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_charge_limit_enforcement_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_discharge_limit_enforcement_fault_encode(double value) {
+uint8_t bps_bps_error_discharge_limit_enforcement_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_discharge_limit_enforcement_fault_decode(uint8_t value) {
+double bps_bps_error_discharge_limit_enforcement_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_discharge_limit_enforcement_fault_is_in_range(
-    uint8_t value) {
+bool bps_bps_error_discharge_limit_enforcement_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_charger_safety_relay_fault_encode(double value) {
+uint8_t bps_bps_error_charger_safety_relay_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_charger_safety_relay_fault_decode(uint8_t value) {
+double bps_bps_error_charger_safety_relay_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_charger_safety_relay_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_charger_safety_relay_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_internal_memory_fault_encode(double value) {
+uint8_t bps_bps_error_internal_memory_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_internal_memory_fault_decode(uint8_t value) {
+double bps_bps_error_internal_memory_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_internal_memory_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_internal_memory_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_internal_thermistor_fault_encode(double value) {
+uint8_t bps_bps_error_internal_thermistor_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_internal_thermistor_fault_decode(uint8_t value) {
+double bps_bps_error_internal_thermistor_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_internal_thermistor_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_internal_thermistor_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }
 
-uint8_t bps_bps_error_internal_logic_fault_encode(double value) {
+uint8_t bps_bps_error_internal_logic_fault_encode(double value)
+{
     return (uint8_t)(value);
 }
 
-double bps_bps_error_internal_logic_fault_decode(uint8_t value) {
+double bps_bps_error_internal_logic_fault_decode(uint8_t value)
+{
     return ((double)value);
 }
 
-bool bps_bps_error_internal_logic_fault_is_in_range(uint8_t value) {
+bool bps_bps_error_internal_logic_fault_is_in_range(uint8_t value)
+{
     return (value <= 1u);
 }

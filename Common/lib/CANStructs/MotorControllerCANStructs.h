@@ -14,16 +14,12 @@ typedef struct MotorControllerFrameRequest
     : CANStruct,
       motor_controller_motor_controller_frame_request_t {
     void serialize(CANMessage *message) {
-        motor_controller_motor_controller_frame_request_pack(
-            message->data, this,
-            MOTOR_CONTROLLER_MOTOR_CONTROLLER_FRAME_REQUEST_LENGTH);
+        motor_controller_motor_controller_frame_request_pack(message->data, this, MOTOR_CONTROLLER_MOTOR_CONTROLLER_FRAME_REQUEST_LENGTH);
         message->len = MOTOR_CONTROLLER_MOTOR_CONTROLLER_FRAME_REQUEST_LENGTH;
     }
 
     void deserialize(CANMessage *message) {
-        motor_controller_motor_controller_frame_request_unpack(
-            this, message->data,
-            MOTOR_CONTROLLER_MOTOR_CONTROLLER_FRAME_REQUEST_LENGTH);
+        motor_controller_motor_controller_frame_request_unpack(this, message->data, MOTOR_CONTROLLER_MOTOR_CONTROLLER_FRAME_REQUEST_LENGTH);
     }
 
     uint32_t get_message_ID() {
@@ -45,20 +41,15 @@ typedef struct MotorControllerFrameRequest
  * Diagnostic information from the motor controller.
  * Defined on page 5 of the Motor CAN bus documentation.
  */
-typedef struct MotorControllerPowerStatus
-    : CANStruct,
-      motor_controller_motor_controller_power_status_t {
+typedef struct MotorControllerPowerStatus : CANStruct,
+                                            motor_controller_motor_controller_power_status_t {
     void serialize(CANMessage *message) {
-        motor_controller_motor_controller_power_status_pack(
-            message->data, this,
-            MOTOR_CONTROLLER_MOTOR_CONTROLLER_POWER_STATUS_LENGTH);
+        motor_controller_motor_controller_power_status_pack(message->data, this, MOTOR_CONTROLLER_MOTOR_CONTROLLER_POWER_STATUS_LENGTH);
         message->len = MOTOR_CONTROLLER_MOTOR_CONTROLLER_POWER_STATUS_LENGTH;
     }
 
     void deserialize(CANMessage *message) {
-        motor_controller_motor_controller_power_status_unpack(
-            this, message->data,
-            MOTOR_CONTROLLER_MOTOR_CONTROLLER_POWER_STATUS_LENGTH);
+        motor_controller_motor_controller_power_status_unpack(this, message->data, MOTOR_CONTROLLER_MOTOR_CONTROLLER_POWER_STATUS_LENGTH);
     }
 
     uint32_t get_message_ID() {
@@ -68,15 +59,16 @@ typedef struct MotorControllerPowerStatus
     }
 
     void log(int level) {
-        log_at_level(level,
-                     "MotorControllerPowerStatus\n battery_voltage: %u\n "
-                     "battery_current: %u\n "
-                     "battery_current_direction: %d\n motor_current: %u\n "
-                     "fet_temperature: %u\n motor_speed: %u\n pwm_duty: %u\n "
-                     "lead_angle: %u\n",
-                     battery_voltage, battery_current,
-                     battery_current_direction, motor_current, fet_temperature,
-                     motor_speed, pwm_duty, lead_angle);
+        log_at_level(
+            level,
+            "MotorControllerPowerStatus\n battery_voltage: %u\n "
+            "battery_current: %u\n "
+            "battery_current_direction: %d\n motor_current: %u\n "
+            "fet_temperature: %u\n motor_speed: %u\n pwm_duty: %u\n "
+            "lead_angle: %u\n",
+            battery_voltage, battery_current, battery_current_direction,
+            motor_current, fet_temperature, motor_speed, pwm_duty,
+            lead_angle);
     }
 } MotorControllerPowerStatus;
 
@@ -84,20 +76,15 @@ typedef struct MotorControllerPowerStatus
  * Input information from the motor controller.
  * Defined on page 5 of the Motor CAN bus documentation.
  */
-typedef struct MotorControllerDriveStatus
-    : CANStruct,
-      motor_controller_motor_controller_drive_status_t {
+typedef struct MotorControllerDriveStatus : CANStruct,
+                                            motor_controller_motor_controller_drive_status_t {
     void serialize(CANMessage *message) {
-        motor_controller_motor_controller_drive_status_pack(
-            message->data, this,
-            MOTOR_CONTROLLER_MOTOR_CONTROLLER_DRIVE_STATUS_LENGTH);
+        motor_controller_motor_controller_drive_status_pack(message->data, this, MOTOR_CONTROLLER_MOTOR_CONTROLLER_DRIVE_STATUS_LENGTH);
         message->len = MOTOR_CONTROLLER_MOTOR_CONTROLLER_DRIVE_STATUS_LENGTH;
     }
 
     void deserialize(CANMessage *message) {
-        motor_controller_motor_controller_drive_status_unpack(
-            this, message->data,
-            MOTOR_CONTROLLER_MOTOR_CONTROLLER_DRIVE_STATUS_LENGTH);
+        motor_controller_motor_controller_drive_status_unpack(this, message->data, MOTOR_CONTROLLER_MOTOR_CONTROLLER_DRIVE_STATUS_LENGTH);
     }
 
     uint32_t get_message_ID() {
@@ -111,8 +98,7 @@ typedef struct MotorControllerDriveStatus
             level,
             "MotorControllerDriveStatus\n power_mode: %d\n control_mode: %d\n "
             "accelerator_vr_position: %u\n regen_vr_position: %u\n "
-            "digital_sw_position: %u\n output_target_value: %u\n "
-            "drive_action_status: %u\n"
+            "digital_sw_position: %u\n output_target_value: %u\n drive_action_status: %u\n"
             "regen_status: %d\n",
             power_mode, control_mode, accelerator_vr_position,
             regen_vr_position, digital_sw_position, output_target_value,
@@ -126,20 +112,14 @@ typedef struct MotorControllerDriveStatus
  * CAN bus documentation. NOTE: This frame has not been tested, there may be
  * transcription or padding errors.
  */
-typedef struct MotorControllerError
-    : CANStruct,
-      motor_controller_motor_controller_error_t {
+typedef struct MotorControllerError : CANStruct, motor_controller_motor_controller_error_t {
     void serialize(CANMessage *message) {
-        motor_controller_motor_controller_error_pack(
-            message->data, this,
-            MOTOR_CONTROLLER_MOTOR_CONTROLLER_ERROR_LENGTH);
+        motor_controller_motor_controller_error_pack(message->data, this, MOTOR_CONTROLLER_MOTOR_CONTROLLER_ERROR_LENGTH);
         message->len = MOTOR_CONTROLLER_MOTOR_CONTROLLER_ERROR_LENGTH;
     }
 
     void deserialize(CANMessage *message) {
-        motor_controller_motor_controller_error_unpack(
-            this, message->data,
-            MOTOR_CONTROLLER_MOTOR_CONTROLLER_ERROR_LENGTH);
+        motor_controller_motor_controller_error_unpack(this, message->data, MOTOR_CONTROLLER_MOTOR_CONTROLLER_ERROR_LENGTH);
     }
 
     uint32_t get_message_ID() {
@@ -168,11 +148,13 @@ typedef struct MotorControllerError
             analog_sensor_err, motor_current_sensor_u_err,
             motor_current_sensor_w_err, fet_thermistor_err,
             battery_voltage_sensor_err, battery_current_sensor_err,
-            battery_current_sensor_err, battery_current_sensor_adj_err,
-            accelerator_position_err, controller_voltage_sensor_err,
+            battery_current_sensor_err,
+            battery_current_sensor_adj_err, accelerator_position_err,
+            controller_voltage_sensor_err,
             power_system_err, overcurrent_err, overvoltage_err,
-            overcurrent_limit, motor_system_err, motor_lock, hall_sensor_short,
-            hall_sensor_open, overheat_level);
+            overcurrent_limit, motor_system_err,
+            motor_lock, hall_sensor_short, hall_sensor_open,
+            overheat_level);
     }
 } MotorControllerError;
 

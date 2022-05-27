@@ -35,44 +35,46 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include <stdint.h>
 
 #ifndef EINVAL
-#define EINVAL 22
+#    define EINVAL 22
 #endif
 
 /* Frame ids. */
-#define RIVANNA2_POWER_AUX_ERROR_FRAME_ID           (0x123u)
-#define RIVANNA2_ECU_MOTOR_COMMANDS_FRAME_ID        (0x201u)
-#define RIVANNA2_ECU_POWER_AUX_COMMANDS_FRAME_ID    (0x301u)
-#define RIVANNA2_SOLAR_CURRENT_FRAME_ID             (0x434u)
-#define RIVANNA2_SOLAR_VOLTAGE_FRAME_ID             (0x444u)
-#define RIVANNA2_SOLAR_TEMP_FRAME_ID                (0x454u)
-#define RIVANNA2_SOLAR_PHOTO_FRAME_ID               (0x464u)
+#define RIVANNA2_POWER_AUX_ERROR_FRAME_ID (0x123u)
+#define RIVANNA2_ECU_MOTOR_COMMANDS_FRAME_ID (0x201u)
+#define RIVANNA2_ECU_POWER_AUX_COMMANDS_FRAME_ID (0x301u)
+#define RIVANNA2_SOLAR_CURRENT_FRAME_ID (0x434u)
+#define RIVANNA2_SOLAR_VOLTAGE_FRAME_ID (0x444u)
+#define RIVANNA2_SOLAR_TEMP_FRAME_ID (0x454u)
+#define RIVANNA2_SOLAR_PHOTO_FRAME_ID (0x464u)
 
 /* Frame lengths in bytes. */
-#define RIVANNA2_POWER_AUX_ERROR_LENGTH             (8u)
-#define RIVANNA2_ECU_MOTOR_COMMANDS_LENGTH          (4u)
-#define RIVANNA2_ECU_POWER_AUX_COMMANDS_LENGTH      (1u)
-#define RIVANNA2_SOLAR_CURRENT_LENGTH               (2u)
-#define RIVANNA2_SOLAR_VOLTAGE_LENGTH               (8u)
-#define RIVANNA2_SOLAR_TEMP_LENGTH                  (8u)
-#define RIVANNA2_SOLAR_PHOTO_LENGTH                 (8u)
+#define RIVANNA2_POWER_AUX_ERROR_LENGTH (8u)
+#define RIVANNA2_ECU_MOTOR_COMMANDS_LENGTH (4u)
+#define RIVANNA2_ECU_POWER_AUX_COMMANDS_LENGTH (1u)
+#define RIVANNA2_SOLAR_CURRENT_LENGTH (2u)
+#define RIVANNA2_SOLAR_VOLTAGE_LENGTH (8u)
+#define RIVANNA2_SOLAR_TEMP_LENGTH (8u)
+#define RIVANNA2_SOLAR_PHOTO_LENGTH (8u)
 
 /* Extended or standard frame types. */
-#define RIVANNA2_POWER_AUX_ERROR_IS_EXTENDED        (0)
-#define RIVANNA2_ECU_MOTOR_COMMANDS_IS_EXTENDED     (0)
+#define RIVANNA2_POWER_AUX_ERROR_IS_EXTENDED (0)
+#define RIVANNA2_ECU_MOTOR_COMMANDS_IS_EXTENDED (0)
 #define RIVANNA2_ECU_POWER_AUX_COMMANDS_IS_EXTENDED (0)
-#define RIVANNA2_SOLAR_CURRENT_IS_EXTENDED          (0)
-#define RIVANNA2_SOLAR_VOLTAGE_IS_EXTENDED          (0)
-#define RIVANNA2_SOLAR_TEMP_IS_EXTENDED             (0)
-#define RIVANNA2_SOLAR_PHOTO_IS_EXTENDED            (0)
+#define RIVANNA2_SOLAR_CURRENT_IS_EXTENDED (0)
+#define RIVANNA2_SOLAR_VOLTAGE_IS_EXTENDED (0)
+#define RIVANNA2_SOLAR_TEMP_IS_EXTENDED (0)
+#define RIVANNA2_SOLAR_PHOTO_IS_EXTENDED (0)
 
 /* Frame cycle times in milliseconds. */
 
+
 /* Signal choices. */
+
 
 /**
  * Signals in message PowerAuxError.
@@ -350,7 +352,8 @@ struct rivanna2_solar_photo_t {
  * @return Size of packed data, or negative error code.
  */
 int rivanna2_power_aux_error_pack(
-    uint8_t *dst_p, const struct rivanna2_power_aux_error_t *src_p,
+    uint8_t *dst_p,
+    const struct rivanna2_power_aux_error_t *src_p,
     size_t size);
 
 /**
@@ -362,8 +365,10 @@ int rivanna2_power_aux_error_pack(
  *
  * @return zero(0) or negative error code.
  */
-int rivanna2_power_aux_error_unpack(struct rivanna2_power_aux_error_t *dst_p,
-                                    const uint8_t *src_p, size_t size);
+int rivanna2_power_aux_error_unpack(
+    struct rivanna2_power_aux_error_t *dst_p,
+    const uint8_t *src_p,
+    size_t size);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -537,7 +542,8 @@ bool rivanna2_power_aux_error_right_turn_error_is_in_range(uint8_t value);
  * @return Size of packed data, or negative error code.
  */
 int rivanna2_ecu_motor_commands_pack(
-    uint8_t *dst_p, const struct rivanna2_ecu_motor_commands_t *src_p,
+    uint8_t *dst_p,
+    const struct rivanna2_ecu_motor_commands_t *src_p,
     size_t size);
 
 /**
@@ -550,7 +556,8 @@ int rivanna2_ecu_motor_commands_pack(
  * @return zero(0) or negative error code.
  */
 int rivanna2_ecu_motor_commands_unpack(
-    struct rivanna2_ecu_motor_commands_t *dst_p, const uint8_t *src_p,
+    struct rivanna2_ecu_motor_commands_t *dst_p,
+    const uint8_t *src_p,
     size_t size);
 
 /**
@@ -632,8 +639,7 @@ double rivanna2_ecu_motor_commands_cruise_control_speed_decode(uint8_t value);
  *
  * @return true if in range, false otherwise.
  */
-bool rivanna2_ecu_motor_commands_cruise_control_speed_is_in_range(
-    uint8_t value);
+bool rivanna2_ecu_motor_commands_cruise_control_speed_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -753,7 +759,8 @@ bool rivanna2_ecu_motor_commands_motor_on_is_in_range(uint8_t value);
  * @return Size of packed data, or negative error code.
  */
 int rivanna2_ecu_power_aux_commands_pack(
-    uint8_t *dst_p, const struct rivanna2_ecu_power_aux_commands_t *src_p,
+    uint8_t *dst_p,
+    const struct rivanna2_ecu_power_aux_commands_t *src_p,
     size_t size);
 
 /**
@@ -766,7 +773,8 @@ int rivanna2_ecu_power_aux_commands_pack(
  * @return zero(0) or negative error code.
  */
 int rivanna2_ecu_power_aux_commands_unpack(
-    struct rivanna2_ecu_power_aux_commands_t *dst_p, const uint8_t *src_p,
+    struct rivanna2_ecu_power_aux_commands_t *dst_p,
+    const uint8_t *src_p,
     size_t size);
 
 /**
@@ -875,8 +883,7 @@ double rivanna2_ecu_power_aux_commands_left_turn_signal_decode(uint8_t value);
  *
  * @return true if in range, false otherwise.
  */
-bool rivanna2_ecu_power_aux_commands_left_turn_signal_is_in_range(
-    uint8_t value);
+bool rivanna2_ecu_power_aux_commands_left_turn_signal_is_in_range(uint8_t value);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -903,8 +910,7 @@ double rivanna2_ecu_power_aux_commands_right_turn_signal_decode(uint8_t value);
  *
  * @return true if in range, false otherwise.
  */
-bool rivanna2_ecu_power_aux_commands_right_turn_signal_is_in_range(
-    uint8_t value);
+bool rivanna2_ecu_power_aux_commands_right_turn_signal_is_in_range(uint8_t value);
 
 /**
  * Pack message SolarCurrent.
@@ -915,9 +921,10 @@ bool rivanna2_ecu_power_aux_commands_right_turn_signal_is_in_range(
  *
  * @return Size of packed data, or negative error code.
  */
-int rivanna2_solar_current_pack(uint8_t *dst_p,
-                                const struct rivanna2_solar_current_t *src_p,
-                                size_t size);
+int rivanna2_solar_current_pack(
+    uint8_t *dst_p,
+    const struct rivanna2_solar_current_t *src_p,
+    size_t size);
 
 /**
  * Unpack message SolarCurrent.
@@ -928,8 +935,10 @@ int rivanna2_solar_current_pack(uint8_t *dst_p,
  *
  * @return zero(0) or negative error code.
  */
-int rivanna2_solar_current_unpack(struct rivanna2_solar_current_t *dst_p,
-                                  const uint8_t *src_p, size_t size);
+int rivanna2_solar_current_unpack(
+    struct rivanna2_solar_current_t *dst_p,
+    const uint8_t *src_p,
+    size_t size);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -967,9 +976,10 @@ bool rivanna2_solar_current_total_current_is_in_range(uint16_t value);
  *
  * @return Size of packed data, or negative error code.
  */
-int rivanna2_solar_voltage_pack(uint8_t *dst_p,
-                                const struct rivanna2_solar_voltage_t *src_p,
-                                size_t size);
+int rivanna2_solar_voltage_pack(
+    uint8_t *dst_p,
+    const struct rivanna2_solar_voltage_t *src_p,
+    size_t size);
 
 /**
  * Unpack message SolarVoltage.
@@ -980,8 +990,10 @@ int rivanna2_solar_voltage_pack(uint8_t *dst_p,
  *
  * @return zero(0) or negative error code.
  */
-int rivanna2_solar_voltage_unpack(struct rivanna2_solar_voltage_t *dst_p,
-                                  const uint8_t *src_p, size_t size);
+int rivanna2_solar_voltage_unpack(
+    struct rivanna2_solar_voltage_t *dst_p,
+    const uint8_t *src_p,
+    size_t size);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1100,9 +1112,10 @@ bool rivanna2_solar_voltage_panel4_voltage_is_in_range(uint16_t value);
  *
  * @return Size of packed data, or negative error code.
  */
-int rivanna2_solar_temp_pack(uint8_t *dst_p,
-                             const struct rivanna2_solar_temp_t *src_p,
-                             size_t size);
+int rivanna2_solar_temp_pack(
+    uint8_t *dst_p,
+    const struct rivanna2_solar_temp_t *src_p,
+    size_t size);
 
 /**
  * Unpack message SolarTemp.
@@ -1113,8 +1126,10 @@ int rivanna2_solar_temp_pack(uint8_t *dst_p,
  *
  * @return zero(0) or negative error code.
  */
-int rivanna2_solar_temp_unpack(struct rivanna2_solar_temp_t *dst_p,
-                               const uint8_t *src_p, size_t size);
+int rivanna2_solar_temp_unpack(
+    struct rivanna2_solar_temp_t *dst_p,
+    const uint8_t *src_p,
+    size_t size);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1233,9 +1248,10 @@ bool rivanna2_solar_temp_panel4_temp_is_in_range(uint16_t value);
  *
  * @return Size of packed data, or negative error code.
  */
-int rivanna2_solar_photo_pack(uint8_t *dst_p,
-                              const struct rivanna2_solar_photo_t *src_p,
-                              size_t size);
+int rivanna2_solar_photo_pack(
+    uint8_t *dst_p,
+    const struct rivanna2_solar_photo_t *src_p,
+    size_t size);
 
 /**
  * Unpack message SolarPhoto.
@@ -1246,8 +1262,10 @@ int rivanna2_solar_photo_pack(uint8_t *dst_p,
  *
  * @return zero(0) or negative error code.
  */
-int rivanna2_solar_photo_unpack(struct rivanna2_solar_photo_t *dst_p,
-                                const uint8_t *src_p, size_t size);
+int rivanna2_solar_photo_unpack(
+    struct rivanna2_solar_photo_t *dst_p,
+    const uint8_t *src_p,
+    size_t size);
 
 /**
  * Encode given signal by applying scaling and offset.
@@ -1356,6 +1374,7 @@ double rivanna2_solar_photo_panel4_photo_decode(uint16_t value);
  * @return true if in range, false otherwise.
  */
 bool rivanna2_solar_photo_panel4_photo_is_in_range(uint16_t value);
+
 
 #ifdef __cplusplus
 }
