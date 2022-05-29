@@ -9,7 +9,7 @@
 #include <mbed.h>
 #include <rtos.h>
 
-#define LOG_LEVEL        LOG_ERROR
+#define LOG_LEVEL        LOG_DEBUG
 #define MAIN_LOOP_PERIOD 1s
 
 BufferedSerial device(USBTX, USBRX);
@@ -37,6 +37,8 @@ int main() {
     while (true) {
         check_motor_board();
         log_debug("Main thread loop");
+        // request frames from the motor controller
+        motor_controller_can_interface.request_frames(true, true, true);
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }
