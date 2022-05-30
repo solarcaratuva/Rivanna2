@@ -73,7 +73,6 @@ bool ECUInputReader::readBatteryContact() { return battery_contact; }
 
 bool ECUInputReader::readIgnition() { return ignition; }
 
-
 /**
  * THROTTLE_LOW_VOLTAGE +               THROTTLE_HIGH_VOLTAGE -
  * THROTTLE_LOW_VOLTAGE_BUFFER          THROTTLE_HIGH_VOLTAGE_BUFFER
@@ -81,30 +80,34 @@ bool ECUInputReader::readIgnition() { return ignition; }
  * -----------------------------------------------------------------
  * ▲                                                               ▲
  * THROTTLE_LOW_VOLTAGE                        THROTTLE_HIGH_VOLTAGE
- * 
+ *
  * The input from the throttle pedal ranges from around THROTTLE_LOW_VOLTAGE to
  * THROTTLE_HIGH_VOLTAGE. Note that this includes the effect of the input
- * protection circuitry, which affects the voltage from the pedal. 
- * 
+ * protection circuitry, which affects the voltage from the pedal.
+ *
  * We have buffer space around each extreme to account for slight variations
  * in the output of the throttle pedal.
  */
-#define THROTTLE_LOW_VOLTAGE 0.66
-#define THROTTLE_LOW_VOLTAGE_BUFFER 0.20
-#define THROTTLE_HIGH_VOLTAGE 3.08
+#define THROTTLE_LOW_VOLTAGE         0.66
+#define THROTTLE_LOW_VOLTAGE_BUFFER  0.20
+#define THROTTLE_HIGH_VOLTAGE        3.08
 #define THROTTLE_HIGH_VOLTAGE_BUFFER 0.10
 
 uint16_t ECUInputReader::readThrottle() {
-    float adjusted_throttle_input = ((throttle.read_voltage() - THROTTLE_LOW_VOLTAGE - THROTTLE_LOW_VOLTAGE_BUFFER) / (THROTTLE_HIGH_VOLTAGE - THROTTLE_HIGH_VOLTAGE_BUFFER - THROTTLE_LOW_VOLTAGE - THROTTLE_LOW_VOLTAGE_BUFFER));
+    float adjusted_throttle_input =
+        ((throttle.read_voltage() - THROTTLE_LOW_VOLTAGE -
+          THROTTLE_LOW_VOLTAGE_BUFFER) /
+         (THROTTLE_HIGH_VOLTAGE - THROTTLE_HIGH_VOLTAGE_BUFFER -
+          THROTTLE_LOW_VOLTAGE - THROTTLE_LOW_VOLTAGE_BUFFER));
     if (adjusted_throttle_input <= 0.0f) {
         return 0;
-    }
-    else if (adjusted_throttle_input >= 1.0f) {
+    } else if (adjusted_throttle_input >= 1.0f) {
         return 256;
-    }
-    else {
+    } else {
         return (uint16_t)(adjusted_throttle_input * 256.0);
     }
 }
 
-uint16_t ECUInputReader::readRegen() { return (uint16_t)(regen.read() * 200.0); }
+uint16_t ECUInputReader::readRegen() {
+    return (uint16_t)(regen.read() * 200.0);
+}
