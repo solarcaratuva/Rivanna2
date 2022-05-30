@@ -1,10 +1,9 @@
 {
   "target_overrides": {
     "*": {
-      "target.c_lib": "small",
-      "target.printf_lib": "minimal-printf",
       "platform.stdio-baud-rate": 921600,
-      "platform.stdio-buffered-serial": 1
+      "platform.stdio-buffered-serial": 1,
+      "platform.callback-nontrivial": true
     }
   }
 }

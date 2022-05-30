@@ -7,7 +7,7 @@
 #include <mbed.h>
 #include <rtos.h>
 
-#define LOG_LEVEL          LOG_ERROR
+#define LOG_LEVEL          LOG_FATAL
 #define MAIN_LOOP_PERIOD   1s
 #define ERROR_CHECK_PERIOD 1s
 #define FLASH_PERIOD       500ms
