@@ -17,7 +17,7 @@ DigitalIn forward_en(FORWARD_EN);
 DigitalIn reverse_en(REVERSE_EN);
 DigitalIn battery_contact(BATTERY_CONTACT);
 DigitalIn ignition(IGNITION);
-AnalogIn throttle(THROTTLE);
+AnalogIn throttle(THROTTLE, 5.0f);
 AnalogIn regen(REGEN);
 
 bool cruise_up_release_flag;
@@ -73,8 +73,41 @@ bool ECUInputReader::readBatteryContact() { return battery_contact; }
 
 bool ECUInputReader::readIgnition() { return ignition; }
 
-uint8_t ECUInputReader::readThrottle() {
-    return (uint8_t)((throttle.read() - 0.13) / 0.49 * 100);
+/**
+ * THROTTLE_LOW_VOLTAGE +               THROTTLE_HIGH_VOLTAGE -
+ * THROTTLE_LOW_VOLTAGE_BUFFER          THROTTLE_HIGH_VOLTAGE_BUFFER
+ *          ▼                                                  ▼
+ * -----------------------------------------------------------------
+ * ▲                                                               ▲
+ * THROTTLE_LOW_VOLTAGE                        THROTTLE_HIGH_VOLTAGE
+ *
+ * The input from the throttle pedal ranges from around THROTTLE_LOW_VOLTAGE to
+ * THROTTLE_HIGH_VOLTAGE. Note that this includes the effect of the input
+ * protection circuitry, which affects the voltage from the pedal.
+ *
+ * We have buffer space around each extreme to account for slight variations
+ * in the output of the throttle pedal.
+ */
+#define THROTTLE_LOW_VOLTAGE         0.66
+#define THROTTLE_LOW_VOLTAGE_BUFFER  0.20
+#define THROTTLE_HIGH_VOLTAGE        3.08
+#define THROTTLE_HIGH_VOLTAGE_BUFFER 0.10
+
+uint16_t ECUInputReader::readThrottle() {
+    float adjusted_throttle_input =
+        ((throttle.read_voltage() - THROTTLE_LOW_VOLTAGE -
+          THROTTLE_LOW_VOLTAGE_BUFFER) /
+         (THROTTLE_HIGH_VOLTAGE - THROTTLE_HIGH_VOLTAGE_BUFFER -
+          THROTTLE_LOW_VOLTAGE - THROTTLE_LOW_VOLTAGE_BUFFER));
+    if (adjusted_throttle_input <= 0.0f) {
+        return 0;
+    } else if (adjusted_throttle_input >= 1.0f) {
+        return 256;
+    } else {
+        return (uint16_t)(adjusted_throttle_input * 256.0);
+    }
 }
 
-uint8_t ECUInputReader::readRegen() { return (uint8_t)(regen.read() * 200.0); }
+uint16_t ECUInputReader::readRegen() {
+    return (uint16_t)(regen.read() * 200.0);
+}

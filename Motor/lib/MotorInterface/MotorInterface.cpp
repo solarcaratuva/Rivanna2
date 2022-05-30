@@ -12,12 +12,11 @@ MotorInterface::MotorInterface(I2C &throttle, I2C &regen, DigitalOut &gear,
       mainSwitch(ignition) {}
 
 /**
- * Converts a throttle percentage into a throttle value for the motor and sends
- * it
- * @param throttle Throttle value (decimal percentage between 0 and 100)
+ * Sends throttle value to digital POT
+ * @param throttle Throttle value [0, 255]
  */
-int MotorInterface::sendThrottle(uint8_t throttle) {
-    uint16_t updated_throttle = 0x0100 - (0x0100 * throttle / 100);
+int MotorInterface::sendThrottle(uint16_t throttle) {
+    uint16_t updated_throttle = 0x100 - throttle;
     char cmd[2];
     cmd[0] = (updated_throttle & 0x100) >> 8;
     cmd[1] = updated_throttle & 0xFF;
@@ -26,11 +25,11 @@ int MotorInterface::sendThrottle(uint8_t throttle) {
 }
 
 /**
- * Converts a regen percentage into a regen value for the motor and sends it
- * @param regen Regen value (decimal percentage between 0 and 100)
+ * Sends regen value to digital POT
+ * @param regen Regen value [0, 255]
  */
-int MotorInterface::sendRegen(uint8_t regen) {
-    uint16_t updated_regen = 0x0100 - (0x0100 * regen / 100);
+int MotorInterface::sendRegen(uint16_t regen) {
+    uint16_t updated_regen = 0x100 - regen;
     char cmd[2];
     cmd[0] = (updated_regen & 0x100) >> 8;
     cmd[1] = updated_regen & 0xFF;
