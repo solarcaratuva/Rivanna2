@@ -37,9 +37,7 @@ Timeout ECUMotorCommands_timeout;
 
 // If we have not received an ECUMotorCommands struct in 100ms, we assume that
 // the CAN bus is down and set the throttle to 0.
-void handle_ECUMotorCommands_timeout() {
-    motor_interface.sendThrottle(0x000);
-}
+void handle_ECUMotorCommands_timeout() { motor_interface.sendThrottle(0x000); }
 
 int main() {
     log_set_level(LOG_LEVEL);
@@ -47,7 +45,8 @@ int main() {
 
     event_thread.start(callback(&event_queue, &EventQueue::dispatch_forever));
 
-    ECUMotorCommands_timeout.attach(event_queue.event(handle_ECUMotorCommands_timeout), 100ms);
+    ECUMotorCommands_timeout.attach(
+        event_queue.event(handle_ECUMotorCommands_timeout), 100ms);
 
     while (true) {
         check_motor_board();
@@ -63,7 +62,8 @@ void MotorCANInterface::handle(ECUMotorCommands *can_struct) {
     // Reset current timeout
     ECUMotorCommands_timeout.detach();
     // Set new timeout for 100ms from now
-    ECUMotorCommands_timeout.attach(event_queue.event(handle_ECUMotorCommands_timeout), 100ms);
+    ECUMotorCommands_timeout.attach(
+        event_queue.event(handle_ECUMotorCommands_timeout), 100ms);
 
     can_struct->log(LOG_INFO);
 
