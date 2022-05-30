@@ -33,11 +33,21 @@ MotorInterface motor_interface(throttle, regen, gear, ignition);
 // Motor State Tracker
 MotorStateTracker motor_state_tracker;
 
+Timeout ECUMotorCommands_timeout;
+
+// If we have not received an ECUMotorCommands struct in 100ms, we assume that
+// the CAN bus is down and set the throttle to 0.
+void handle_ECUMotorCommands_timeout() {
+    motor_interface.sendThrottle(0x000);
+}
+
 int main() {
     log_set_level(LOG_LEVEL);
     log_debug("Start main()");
 
     event_thread.start(callback(&event_queue, &EventQueue::dispatch_forever));
+
+    ECUMotorCommands_timeout.attach(event_queue.event(handle_ECUMotorCommands_timeout), 100ms);
 
     while (true) {
         check_motor_board();
@@ -47,14 +57,6 @@ int main() {
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }
-}
-
-Timeout ECUMotorCommands_timeout;
-
-// If we have not received an ECUMotorCommands struct in 100ms, we assume that
-// the CAN bus is down and set the throttle to 0.
-void handle_ECUMotorCommands_timeout() {
-    motor_interface.sendThrottle(0x000);
 }
 
 void MotorCANInterface::handle(ECUMotorCommands *can_struct) {
