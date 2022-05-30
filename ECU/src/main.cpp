@@ -8,7 +8,7 @@
 #include <mbed.h>
 #include <rtos.h>
 
-#define LOG_LEVEL              LOG_ERROR
+#define LOG_LEVEL              LOG_FATAL
 #define MAIN_LOOP_PERIOD       1s
 #define MOTOR_THREAD_PERIOD    10ms
 #define POWERAUX_THREAD_PERIOD 10ms

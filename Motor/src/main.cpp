@@ -9,7 +9,7 @@
 #include <mbed.h>
 #include <rtos.h>
 
-#define LOG_LEVEL        LOG_ERROR
+#define LOG_LEVEL        LOG_FATAL
 #define MAIN_LOOP_PERIOD 100ms
 
 BufferedSerial device(USBTX, USBRX);
