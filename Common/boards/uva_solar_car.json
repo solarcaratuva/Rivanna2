@@ -32,7 +32,7 @@
   "name": "STM32 G473CET6",
   "upload": {
     "maximum_ram_size": 131072,
-    "maximum_size": 524288,
+    "maximum_size": 131072,
     "protocol": "stlink",
     "protocols": [
       "jlink",
