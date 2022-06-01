@@ -14,7 +14,7 @@ class MotorControllerCANInterface : public CANInterface {
     void handle(MotorControllerError *can_struct);
 
   private:
-    void rx_handler() override;
+    void message_handler() override;
 };
 
 #endif

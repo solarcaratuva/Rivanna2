@@ -5,8 +5,11 @@ CANInterface::CANInterface(PinName rd, PinName td, PinName standby_pin)
     if (standby_pin != NC) {
         standby = 0;
     }
-    rx_thread.start(callback(this, &CANInterface::rx_handler));
+    can_thread.start(callback(this, &CANInterface::message_handler));
+    can.attach(callback(this, &CANInterface::can_isr), CAN::RxIrq);
 }
+
+void CANInterface::can_isr() { can_thread.flags_set(0x1); }
 
 void CANInterface::write_CAN_message_data_to_buffer(char *buffer,
                                                     CANMessage *message) {

@@ -6,8 +6,9 @@ BPSCANInterface::BPSCANInterface(PinName rd, PinName td, PinName standby_pin)
     can.frequency(250000);
 }
 
-void BPSCANInterface::rx_handler() {
+void BPSCANInterface::message_handler() {
     while (true) {
+        ThisThread::flags_wait_all(0x1);
         CANMessage message;
         while (can.read(message)) {
             char message_data[17];
