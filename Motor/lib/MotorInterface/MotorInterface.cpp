@@ -26,7 +26,7 @@ int MotorInterface::sendThrottle(uint16_t throttle) {
 
 /**
  * Sends regen value to digital POT
- * @param regen Regen value [0, 255]
+ * @param regen Regen value [0, 256]
  */
 int MotorInterface::sendRegen(uint16_t regen) {
     uint16_t updated_regen = 0x100 - regen;
