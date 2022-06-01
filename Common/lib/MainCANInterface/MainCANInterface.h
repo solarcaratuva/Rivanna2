@@ -40,7 +40,7 @@ class MainCANInterface : public CANInterface {
     virtual void handle(BPSCellTemperature *can_struct) {}
 
   private:
-    void rx_handler() override;
+    void message_handler() override;
 };
 
 #endif

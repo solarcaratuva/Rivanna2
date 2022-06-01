@@ -26,8 +26,9 @@ int MainCANInterface::send(CANStruct *can_struct) {
     return result;
 }
 
-void MainCANInterface::rx_handler() {
+void MainCANInterface::message_handler() {
     while (true) {
+        ThisThread::flags_wait_all(0x1);
         CANMessage message;
         while (can.read(message)) {
             char message_data[17];
