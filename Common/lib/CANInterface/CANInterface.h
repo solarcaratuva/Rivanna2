@@ -23,7 +23,9 @@ class CANInterface {
      */
     void can_isr();
     /**
-     * Method to handle CAN messages. Should wait for 0x1 flag of can_thread before reading from CAN, then deserialize and call the appropriate handle method. Must be implemented by subclasses.
+     * Method to handle CAN messages. Should wait for 0x1 flag of can_thread
+     * before reading from CAN, then deserialize and call the appropriate handle
+     * method. Must be implemented by subclasses.
      */
     virtual void message_handler() = 0;
     /**
