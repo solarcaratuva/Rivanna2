@@ -73,7 +73,7 @@ void MotorCANInterface::handle(ECUMotorCommands *can_struct) {
     motor_interface.sendDirection(
         can_struct->forward_en); // TODO: verify motor controller will not allow
                                  // gear change when velocity is non-zero
-    if (can_struct->throttle < 0) {
+    if (can_struct->throttle == 0) {
         motor_interface.sendThrottle(0);
         motor_interface.sendRegen(REGEN_VALUE);
     } else {
