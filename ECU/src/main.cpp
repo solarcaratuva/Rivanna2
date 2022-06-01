@@ -12,6 +12,8 @@
 #define MAIN_LOOP_PERIOD       1s
 #define MOTOR_THREAD_PERIOD    10ms
 #define POWERAUX_THREAD_PERIOD 10ms
+#define WHEEL_CIRCUMFERENCE    4.9087 // feet
+#define Kp                     1
 
 // Can Interface
 ECUCANInterface vehicle_can_interface(CAN_RX, CAN_TX, CAN_STBY);
@@ -25,6 +27,7 @@ ECUPowerAuxCommands to_poweraux;
 
 // Cruise Control Logic
 uint8_t current_speed;
+uint8_t target_speed = 0;
 
 // Message Sending Threads
 Thread motor_thread;
@@ -33,14 +36,34 @@ Thread poweraux_thread;
 void motor_message_handler() {
     while (true) {
         // Read motor commands
+
+        // Cruise Control Enabled
+        if (input_reader.readCruiseThrottleEn()) {
+            if (input_reader.readCruiseSpeedUp()) {
+                if (target_speed == 0) {
+                    target_speed = current_speed;
+                } else {
+                    target_speed++;
+                }
+            } else if (input_reader.readCruiseSpeedDown()) {
+                if (target_speed == 0) {
+                    target_speed = current_speed;
+                } else {
+                    target_speed--;
+                }
+            }
+            PRINT("Cruise Control Target: %d mph\n", target_speed);
+        } else {
+            target_speed = 0;
+        }
         to_motor.throttle = input_reader.readThrottle();
         to_motor.regen = input_reader.readRegen();
         to_motor.forward_en = input_reader.readForwardEn();
         to_motor.reverse_en = input_reader.readReverseEn();
-        to_motor.cruise_control_en = input_reader.readCruiseThrottleEn();
-        to_motor.cruise_control_speed = current_speed +
-                                        input_reader.readCruiseSpeedUp() -
-                                        input_reader.readCruiseSpeedDown();
+        // to_motor.cruise_control_en = input_reader.readCruiseThrottleEn();
+        // to_motor.cruise_control_speed = current_speed +
+        //                                 input_reader.readCruiseSpeedUp() -
+        //                                 input_reader.readCruiseSpeedDown();
         to_motor.motor_on = input_reader.readMotorOn();
 
         // Send message
@@ -81,4 +104,10 @@ int main() {
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
     }
+}
+
+void ECUCANInterface::handle(MotorControllerPowerStatus *can_struct) {
+    can_struct->log(LOG_INFO);
+    current_speed = can_struct->motor_speed * WHEEL_CIRCUMFERENCE * 60 / 5280;
+    PRINT("Current Speed: %d mph\n", current_speed);
 }
