@@ -12,8 +12,9 @@
 #define LOG_LEVEL        LOG_FATAL
 #define MAIN_LOOP_PERIOD 100ms
 
-#define REGEN_THRESHOLD  10  // If throttle is below this value, set throttle to 0 and apply regen
-#define REGEN_VALUE      25  // Regen value to apply if throttle is below threshold
+#define REGEN_THRESHOLD                                                        \
+    10 // If throttle is below this value, set throttle to 0 and apply regen
+#define REGEN_VALUE 25 // Regen value to apply if throttle is below threshold
 
 BufferedSerial device(USBTX, USBRX);
 
