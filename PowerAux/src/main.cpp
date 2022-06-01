@@ -30,10 +30,10 @@ void signalFlashHandler() {
             if (flashHazards) {
                 leftTurnSignal = !leftTurnSignal;
                 rightTurnSignal = !rightTurnSignal;
-            } else if (flashLSignal & !flashHazards) {
+            } else if (flashLSignal && !flashHazards) {
                 leftTurnSignal = !leftTurnSignal;
                 rightTurnSignal = false;
-            } else if (flashRSignal & !flashHazards) {
+            } else if (flashRSignal && !flashHazards) {
                 rightTurnSignal = !rightTurnSignal;
                 leftTurnSignal = false;
             } else {
@@ -46,6 +46,7 @@ void signalFlashHandler() {
             leftTurnSignal = false;
             rightTurnSignal = false;
         }
+        ThisThread::flags_wait_all(0x1);
     }
 }
 
@@ -88,9 +89,6 @@ void peripheral_error_handler() {
             (left_turn_current.read_u16() < 1000 && leftTurnSignal.read());
         msg.right_turn_error =
             (right_turn_current.read_u16() < 1000 && rightTurnSignal.read());
-#ifdef DEBUG
-        msg.print();
-#endif
         if (msg.has_error()) {
             vehicle_can_interface.send(&msg);
         }
@@ -123,6 +121,8 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
     flashLSignal = can_struct->left_turn_signal;
     flashRSignal = can_struct->right_turn_signal;
     flashHazards = can_struct->hazards;
+
+    signalFlashThread.flags_set(0x1);
 }
 
 void BPSCANInterface::handle(BPSPackInformation *can_struct) {
