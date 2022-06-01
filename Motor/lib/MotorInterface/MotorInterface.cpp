@@ -13,7 +13,7 @@ MotorInterface::MotorInterface(I2C &throttle, I2C &regen, DigitalOut &gear,
 
 /**
  * Sends throttle value to digital POT
- * @param throttle Throttle value [0, 255]
+ * @param throttle Throttle value [0, 256]
  */
 int MotorInterface::sendThrottle(uint16_t throttle) {
     uint16_t updated_throttle = 0x100 - throttle;

@@ -12,8 +12,6 @@
 #define LOG_LEVEL        LOG_FATAL
 #define MAIN_LOOP_PERIOD 100ms
 
-#define REGEN_THRESHOLD                                                        \
-    10 // If throttle is below this value, set throttle to 0 and apply regen
 #define REGEN_VALUE 25 // Regen value to apply if throttle is below threshold
 
 BufferedSerial device(USBTX, USBRX);
@@ -75,7 +73,7 @@ void MotorCANInterface::handle(ECUMotorCommands *can_struct) {
     motor_interface.sendDirection(
         can_struct->forward_en); // TODO: verify motor controller will not allow
                                  // gear change when velocity is non-zero
-    if (can_struct->throttle < REGEN_THRESHOLD) {
+    if (can_struct->throttle < 0) {
         motor_interface.sendThrottle(0);
         motor_interface.sendRegen(REGEN_VALUE);
     } else {
