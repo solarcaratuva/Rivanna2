@@ -34,8 +34,9 @@ int MotorControllerCANInterface::request_frames(bool power_status_frame,
     return result;
 }
 
-void MotorControllerCANInterface::rx_handler() {
+void MotorControllerCANInterface::message_handler() {
     while (true) {
+        ThisThread::flags_wait_all(0x1);
         CANMessage message;
         while (can.read(message)) {
             char message_data[17];
