@@ -17,8 +17,8 @@ DigitalIn forward_en(FORWARD_EN);
 DigitalIn reverse_en(REVERSE_EN);
 DigitalIn battery_contact(BATTERY_CONTACT);
 DigitalIn ignition(IGNITION);
+DigitalIn regen_en(REGEN_EN);
 AnalogIn throttle(THROTTLE, 5.0f);
-AnalogIn regen(REGEN);
 
 bool cruise_up_release_flag;
 bool cruise_down_release_flag;
@@ -73,6 +73,8 @@ bool ECUInputReader::readBatteryContact() { return battery_contact; }
 
 bool ECUInputReader::readIgnition() { return ignition; }
 
+bool ECUInputReader::readRegenEn() { return regen_en; }
+
 /**
  * THROTTLE_LOW_VOLTAGE +               THROTTLE_HIGH_VOLTAGE -
  * THROTTLE_LOW_VOLTAGE_BUFFER          THROTTLE_HIGH_VOLTAGE_BUFFER
@@ -106,8 +108,4 @@ uint16_t ECUInputReader::readThrottle() {
     } else {
         return (uint16_t)(adjusted_throttle_input * 256.0);
     }
-}
-
-uint16_t ECUInputReader::readRegen() {
-    return (uint16_t)(regen.read() * 200.0);
 }

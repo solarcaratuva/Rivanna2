@@ -19,8 +19,8 @@ class ECUInputReader {
     bool readReverseEn();
     bool readBatteryContact();
     bool readIgnition();
+    bool readRegenEn();
     uint16_t readThrottle();
-    uint16_t readRegen();
 };
 
 #endif
