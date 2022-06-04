@@ -12,7 +12,7 @@
 /* pin definitions for Analog Inputs */
 /*************************************/
 #define THROTTLE           PB_13
-#define REGEN_EN              PB_14
+#define REGEN_EN           PB_14
 
 /***************************************/
 /* pin definitions for Digital Inputs */
