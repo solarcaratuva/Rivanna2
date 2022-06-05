@@ -1,9 +1,10 @@
 {
-  "target_overrides": {
-    "*": {
-      "platform.stdio-baud-rate": 921600,
-      "platform.stdio-buffered-serial": 1,
-      "platform.callback-nontrivial": true
+    "target_overrides": {
+      "*": {
+        "platform.stdio-baud-rate": 921600,
+        "platform.stdio-buffered-serial": 1,
+        "platform.callback-nontrivial": true
+      }
     }
   }
-}
+  
