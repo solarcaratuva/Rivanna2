@@ -1,5 +1,5 @@
 {
-    "clangd.checkUpdates": true,
+	"clangd.checkUpdates": true,
 	"clangd.arguments": [
 		"--query-driver=/opt/mbed-os-toolchain/gcc-arm-none-eabi-10.3-2021.07/bin/arm-none-eabi*",
 		"--log=verbose",
