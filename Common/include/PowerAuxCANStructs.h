@@ -3,6 +3,7 @@
 
 #include "CANStruct.h"
 #include "dbc/structs/rivanna2.h"
+#include "log.h"
 
 typedef struct PowerAuxError : CANStruct, rivanna2_power_aux_error_t {
     void serialize(CANMessage *message) {
