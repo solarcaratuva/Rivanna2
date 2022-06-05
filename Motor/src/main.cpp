@@ -12,8 +12,6 @@
 #define LOG_LEVEL        LOG_FATAL
 #define MAIN_LOOP_PERIOD 100ms
 
-BufferedSerial device(USBTX, USBRX);
-
 EventQueue event_queue(32 * EVENTS_EVENT_SIZE);
 Thread event_thread;
 
