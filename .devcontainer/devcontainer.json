@@ -2,6 +2,6 @@
     "image": "ghcr.io/armmbed/mbed-os-env:mbed-os-6.15.1-latest",
 	"workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind,Z",
 	"extensions": [
-		"ms-vscode.cpptools-extension-pack"
+        "llvm-vs-code-extensions.vscode-clangd"
 	]
 }
