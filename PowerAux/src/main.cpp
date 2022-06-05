@@ -88,9 +88,6 @@ void peripheral_error_handler() {
             (left_turn_current.read_u16() < 1000 && leftTurnSignal.read());
         msg.right_turn_error =
             (right_turn_current.read_u16() < 1000 && rightTurnSignal.read());
-#ifdef DEBUG
-        msg.print();
-#endif
         if (msg.has_error()) {
             vehicle_can_interface.send(&msg);
         }
@@ -101,6 +98,8 @@ void peripheral_error_handler() {
 int main() {
     log_set_level(LOG_LEVEL);
     log_debug("Start main()");
+
+    headlights = true;
 
     signalFlashThread.start(signalFlashHandler);
     signalBPSThread.start(signalBPSStrobe);
@@ -118,7 +117,6 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
     can_struct->log(LOG_INFO);
 
     brake_lights = can_struct->brake_lights;
-    headlights = can_struct->headlights;
 
     flashLSignal = can_struct->left_turn_signal;
     flashRSignal = can_struct->right_turn_signal;
