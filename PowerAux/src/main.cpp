@@ -1,7 +1,6 @@
 #include "BPSCANInterface.h"
 #include "PowerAuxCANInterface.h"
 #include "Printing.h"
-#include "STMUniqueID.h"
 #include "log.h"
 #include "pindef.h"
 #include <mbed.h>
@@ -106,7 +105,6 @@ int main() {
     peripheral_error_thread.start(peripheral_error_handler);
 
     while (true) {
-        check_power_aux_board();
         log_debug("Main thread loop");
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);

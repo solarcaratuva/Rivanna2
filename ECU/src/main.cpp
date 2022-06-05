@@ -2,7 +2,6 @@
 #include "ECUCANStructs.h"
 #include "ECUInputReader.h"
 #include "Printing.h"
-#include "STMUniqueID.h"
 #include "log.h"
 #include "pindef.h"
 #include <mbed.h>
@@ -76,7 +75,6 @@ int main() {
     poweraux_thread.start(poweraux_message_handler);
 
     while (true) {
-        check_ecu_board();
         log_debug("Main thread loop");
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);

@@ -3,7 +3,6 @@
 #include "MotorInterface.h"
 #include "MotorStateTracker.h"
 #include "Printing.h"
-#include "STMUniqueID.h"
 #include "log.h"
 #include "pindef.h"
 #include <mbed.h>
@@ -47,7 +46,6 @@ int main() {
         event_queue.event(handle_ECUMotorCommands_timeout), 100ms);
 
     while (true) {
-        check_motor_board();
         log_debug("Main thread loop");
         // request frames from the motor controller
         motor_controller_can_interface.request_frames(true, true, true);
