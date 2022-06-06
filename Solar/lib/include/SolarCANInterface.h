@@ -7,7 +7,6 @@ class SolarCANInterface : public MainCANInterface {
   public:
     SolarCANInterface(PinName rd, PinName td, PinName standby_pin)
         : MainCANInterface(rd, td, standby_pin) {}
-
 };
 
 #endif
