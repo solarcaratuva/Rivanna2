@@ -1,0 +1,9 @@
+{
+	"clangd.checkUpdates": true,
+	"clangd.path": "/usr/lib/llvm-12/bin/clangd",
+	"clangd.arguments": [
+		"--query-driver=/opt/mbed-os-toolchain/gcc-arm-none-eabi-10.3-2021.07/bin/arm-none-eabi*",
+		"--log=verbose",
+		"--completion-style=detailed"
+	]
+}

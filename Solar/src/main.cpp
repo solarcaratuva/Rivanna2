@@ -1,5 +1,4 @@
 #include "Printing.h"
-#include "STMUniqueID.h"
 #include "SolarCANInterface.h"
 #include "SolarInputReader.h"
 #include "log.h"
@@ -26,7 +25,6 @@ int main() {
     log_debug("Start main()");
 
     while (true) {
-        check_solar_board();
         log_debug("Main thread loop");
 
         SolarCurrent current;
