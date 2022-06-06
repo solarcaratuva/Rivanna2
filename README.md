@@ -1,21 +1,37 @@
-# Template Code
-[![CircleCI](https://img.shields.io/circleci/build/gh/solarcaratuva/Rivanna2.svg?logo=circleci)](https://circleci.com/gh/solarcaratuva/Rivanna2)
-[![Coveralls](https://img.shields.io/coveralls/github/solarcaratuva/TemplateCode.svg?logo=coveralls)](https://coveralls.io/github/solarcaratuva/TemplateCode)
+# Rivanna2
 
-Embedded system code for Rivanna 2. 
+Embedded system code for Rivanna 2
+
+## Development
+The recommended approach for development is to use the [rivanna2-env](https://github.com/orgs/solarcaratuva/packages/container/package/rivanna2-env) container. It contains all of the necessary tools to build the firmware for each board. 
+
+### Prerequisites
+- OCI-compliant container runtime (e.g. [`docker`](https://docs.docker.com/engine/install/), [`podman`](https://podman.io/getting-started/installation))
+- ST-LINK driver ([official](https://www.st.com/en/development-tools/stsw-link009.html) or [open-source](https://github.com/stlink-org/stlink))
+- [PlatformIO](https://platformio.org/install/cli) or any other software that can connect to a serial console
+
+### Using the container image
+`podman run -it -v .:/root/Rivanna2:Z ghcr.io/solarcaratuva/rivanna2-env` opens an interactive session in the container, from which you can run commands.
+
+Alternatively, you can connect to the container in VSCode, which will allow you to open new shells inside of the container to easily run commands. This will also provide features like code autocomplete and IDE compilation errors. 
+
+1. Install the [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension.
+2. Open the Rivanna2 repository.
+3. Type `Ctrl+Shift+P` and run the `Remote-Containers: Open Folder in Container` command. This will open the current folder (Rivanna2) inside of the container.
+4. From there, opening a new terminal will open a shell inside of the container.
+
+### Compiling
+`./compile.sh` - This script will run `mbed-tools compile` with the correct environment and toolchain arguments. This will compile the firmware for all boards. Before running this the first time, run `mbed-tools deploy`, which will download the version of Mbed OS specified in `mbed-os.lib`.
+
+### Uploading
+`./upload_{ecu, motor, power_aux, solar}.sh` - This script will check that the correct board is connected and upload the corresponding firmware to the board. (Since the container does not have access to the ST-LINK USB device, this command will have to be run outside of the container.)
+
+### Monitoring
+`./monitor.sh` - This script will run `pio device monitor` with the correct baud rate. (Since the container does not have access to the ST-LINK USB device, this command will have to be run outside of the container.)
 
 ## Hardware
 * The PCB layouts and associated schematics for all boards can be found on the [associated repositories on CADLAB.io](https://cadlab.io/solar-car-uva).
-* All boards use the [STM32G473CE MCU](https://www.mouser.com/datasheet/2/389/stm32f042c4-1851049.pdf).
+* All boards use the [STM32G473CCT3 MCU](https://www.st.com/resource/en/datasheet/stm32g473ce.pdf).
 
-
-## Software
-* All boards run Mbed OS v6.
-* Macros built into the code allow for the enabling and disabling of features (such as `printf`) as needed.
-
-
-## Software Environment
-* The instructions on the [UVA Solar Car Team Website](https://solarcaratuva.github.io/stm32-mbed-info) were used to help set up this project.
-* The [PlatformIO Core](https://docs.platformio.org/en/latest/core/installation.html), which includes the PlatformIO CLI, must first be installed.
-* The [PlatformIO IDE](https://docs.platformio.org/en/latest/integration/ide/pioide.html) can be optionally installed as either a Visual Studio Code or Atom extension.
-* On Windows, the driver for the ST-Link debugger will be needed to upload programs. This driver can be found [here](https://os.mbed.com/teams/ST/wiki/ST-Link-Driver).
+## Software environment
+* The instructions on the [UVA Solar Car Team Website](https://solarcaratuva.github.io/software/stm32-mbed-info.html) were used to help set up this project.

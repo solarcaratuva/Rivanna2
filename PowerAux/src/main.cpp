@@ -1,7 +1,6 @@
 #include "BPSCANInterface.h"
 #include "PowerAuxCANInterface.h"
 #include "Printing.h"
-#include "STMUniqueID.h"
 #include "log.h"
 #include "pindef.h"
 #include <mbed.h>
@@ -100,12 +99,13 @@ int main() {
     log_set_level(LOG_LEVEL);
     log_debug("Start main()");
 
+    headlights = true;
+
     signalFlashThread.start(signalFlashHandler);
     signalBPSThread.start(signalBPSStrobe);
     peripheral_error_thread.start(peripheral_error_handler);
 
     while (true) {
-        check_power_aux_board();
         log_debug("Main thread loop");
 
         ThisThread::sleep_for(MAIN_LOOP_PERIOD);
@@ -116,7 +116,6 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
     can_struct->log(LOG_INFO);
 
     brake_lights = can_struct->brake_lights;
-    headlights = can_struct->headlights;
 
     flashLSignal = can_struct->left_turn_signal;
     flashRSignal = can_struct->right_turn_signal;
