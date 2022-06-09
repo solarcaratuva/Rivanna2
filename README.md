@@ -7,7 +7,7 @@ The recommended approach for development is to use the [rivanna2-env](https://gi
 
 ### Prerequisites
 - OCI-compliant container runtime (e.g. [`docker`](https://docs.docker.com/engine/install/), [`podman`](https://podman.io/getting-started/installation))
-- ST-LINK driver ([official](https://www.st.com/en/development-tools/stsw-link009.html) or [open-source](https://github.com/stlink-org/stlink))
+- ST-LINK driver ([open-source](https://github.com/stlink-org/stlink) (recommended) or [official](https://www.st.com/en/development-tools/stsw-link009.html))
 - [PlatformIO](https://platformio.org/install/cli) or any other software that can connect to a serial console
 
 ### Using the container image
