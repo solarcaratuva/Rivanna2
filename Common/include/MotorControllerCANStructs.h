@@ -3,7 +3,7 @@
 
 #include "CANStruct.h"
 #include "dbc/structs/motor_controller.h"
-#include "log.h"
+#include "Logging.h"
 
 /**
  * Struct for requesting information from the motor controller.

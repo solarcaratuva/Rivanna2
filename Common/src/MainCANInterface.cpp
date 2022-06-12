@@ -1,5 +1,5 @@
 #include "MainCANInterface.h"
-#include "log.h"
+#include "Logging.h"
 
 MainCANInterface::MainCANInterface(PinName rd, PinName td, PinName standby_pin)
     : CANInterface("MainCANInterface", rd, td, standby_pin) {

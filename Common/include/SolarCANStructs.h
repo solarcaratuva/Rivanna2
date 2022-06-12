@@ -3,7 +3,7 @@
 
 #include "CANStruct.h"
 #include "dbc/structs/rivanna2.h"
-#include "log.h"
+#include "Logging.h"
 
 typedef struct SolarCurrent : CANStruct, rivanna2_solar_current_t {
     void serialize(CANMessage *message) {

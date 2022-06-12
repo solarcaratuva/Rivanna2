@@ -1,5 +1,5 @@
 #include "BPSCANInterface.h"
-#include "log.h"
+#include "Logging.h"
 
 BPSCANInterface::BPSCANInterface(PinName rd, PinName td, PinName standby_pin)
     : CANInterface("BPSCANInterface", rd, td, standby_pin) {

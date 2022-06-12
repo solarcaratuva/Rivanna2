@@ -1,5 +1,5 @@
 #include "MotorControllerCANInterface.h"
-#include "log.h"
+#include "Logging.h"
 
 MotorControllerCANInterface::MotorControllerCANInterface(PinName rd, PinName td,
                                                          PinName standby_pin)

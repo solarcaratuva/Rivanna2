@@ -3,7 +3,7 @@
 
 #include "CANStruct.h"
 #include "dbc/structs/bps.h"
-#include "log.h"
+#include "Logging.h"
 
 /**
  * General BPS information.

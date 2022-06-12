@@ -1,7 +1,7 @@
 #include "BPSCANInterface.h"
 #include "PowerAuxCANInterface.h"
 #include "Printing.h"
-#include "log.h"
+#include "Logging.h"
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>

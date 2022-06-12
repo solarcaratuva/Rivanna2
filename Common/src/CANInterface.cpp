@@ -1,5 +1,5 @@
 #include "CANInterface.h"
-#include "log.h"
+#include "Logging.h"
 
 CANInterface::CANInterface(const char *name, PinName rd, PinName td, PinName standby_pin)
     : name(name), can(rd, td), standby(standby_pin) {
