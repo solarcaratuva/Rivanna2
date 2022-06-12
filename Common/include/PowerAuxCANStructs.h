@@ -2,8 +2,8 @@
 #define POWER_AUX_CAN_STRUCTS_H
 
 #include "CANStruct.h"
-#include "dbc/structs/rivanna2.h"
 #include "Logging.h"
+#include "dbc/structs/rivanna2.h"
 
 typedef struct PowerAuxError : CANStruct, rivanna2_power_aux_error_t {
     void serialize(CANMessage *message) {

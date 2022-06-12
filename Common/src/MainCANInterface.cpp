@@ -15,12 +15,12 @@ int MainCANInterface::send(CANStruct *can_struct) {
     char message_data[17];
     CANInterface::write_CAN_message_data_to_buffer(message_data, &message);
     if (result == 1) {
-        log_debug("%s sent CAN message with ID 0x%03X Length %d Data 0x%s", name,
-                  message.id, message.len, message_data);
+        log_debug("%s sent CAN message with ID 0x%03X Length %d Data 0x%s",
+                  name, message.id, message.len, message_data);
     } else {
         log_error(
-            "%s failed to send CAN message with ID 0x%03X Length %d Data 0x%s", name,
-            message.id, message.len, message_data);
+            "%s failed to send CAN message with ID 0x%03X Length %d Data 0x%s",
+            name, message.id, message.len, message_data);
     }
 
     return result;
@@ -34,8 +34,9 @@ void MainCANInterface::message_handler() {
             char message_data[17];
             CANInterface::write_CAN_message_data_to_buffer(message_data,
                                                            &message);
-            log_debug("%s received CAN message with ID 0x%03X Length %d Data 0x%s", name, 
-                      message.id, message.len, message_data);
+            log_debug(
+                "%s received CAN message with ID 0x%03X Length %d Data 0x%s",
+                name, message.id, message.len, message_data);
 
             if (message.id == ECUMotorCommands_MESSAGE_ID) {
                 ECUMotorCommands can_struct;

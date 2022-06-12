@@ -2,8 +2,8 @@
 #define SOLAR_CAN_STRUCTS_H
 
 #include "CANStruct.h"
-#include "dbc/structs/rivanna2.h"
 #include "Logging.h"
+#include "dbc/structs/rivanna2.h"
 
 typedef struct SolarCurrent : CANStruct, rivanna2_solar_current_t {
     void serialize(CANMessage *message) {

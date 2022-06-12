@@ -2,8 +2,8 @@
 #define BPS_CAN_STRUCTS_H
 
 #include "CANStruct.h"
-#include "dbc/structs/bps.h"
 #include "Logging.h"
+#include "dbc/structs/bps.h"
 
 /**
  * General BPS information.

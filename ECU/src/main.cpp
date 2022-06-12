@@ -1,8 +1,8 @@
 #include "ECUCANInterface.h"
 #include "ECUCANStructs.h"
 #include "ECUInputReader.h"
-#include "Printing.h"
 #include "Logging.h"
+#include "Printing.h"
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>

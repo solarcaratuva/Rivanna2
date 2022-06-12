@@ -1,7 +1,7 @@
+#include "Logging.h"
 #include "Printing.h"
 #include "SolarCANInterface.h"
 #include "SolarInputReader.h"
-#include "Logging.h"
 #include "mcp3008.h"
 #include "pindef.h"
 #include <mbed.h>

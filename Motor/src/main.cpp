@@ -1,9 +1,9 @@
+#include "Logging.h"
 #include "MotorCANInterface.h"
 #include "MotorControllerCANInterface.h"
 #include "MotorInterface.h"
 #include "MotorStateTracker.h"
 #include "Printing.h"
-#include "Logging.h"
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>

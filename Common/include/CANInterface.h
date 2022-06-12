@@ -9,7 +9,8 @@
  */
 class CANInterface {
   public:
-    CANInterface(const char *name, PinName rd, PinName td, PinName standby_pin = NC);
+    CANInterface(const char *name, PinName rd, PinName td,
+                 PinName standby_pin = NC);
 
   protected:
     /**
