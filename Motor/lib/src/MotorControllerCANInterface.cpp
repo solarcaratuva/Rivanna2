@@ -3,7 +3,7 @@
 
 MotorControllerCANInterface::MotorControllerCANInterface(PinName rd, PinName td,
                                                          PinName standby_pin)
-    : CANInterface(rd, td, standby_pin) {
+    : CANInterface("MotorControllerCANInterface", rd, td, standby_pin) {
     can.frequency(125000);
 }
 

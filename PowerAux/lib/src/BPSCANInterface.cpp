@@ -2,7 +2,7 @@
 #include "log.h"
 
 BPSCANInterface::BPSCANInterface(PinName rd, PinName td, PinName standby_pin)
-    : CANInterface(rd, td, standby_pin) {
+    : CANInterface("BPSCANInterface", rd, td, standby_pin) {
     can.frequency(250000);
 }
 
