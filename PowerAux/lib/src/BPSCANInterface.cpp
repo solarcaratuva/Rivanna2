@@ -14,8 +14,7 @@ void BPSCANInterface::message_handler() {
             char message_data[17];
             CANInterface::write_CAN_message_data_to_buffer(message_data,
                                                            &message);
-            log_debug("Received CAN message with ID 0x%03X Length %d Data 0x%s "
-                      "from BPS",
+            log_debug("%s received CAN message with ID 0x%03X Length %d Data 0x%s", name, 
                       message.id, message.len, message_data);
 
             if (message.id == BPSPackInformation_MESSAGE_ID) {
