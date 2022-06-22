@@ -1,9 +1,11 @@
 #include "BPSCANInterface.h"
 #include "Logging.h"
 
+#define BPS_CAN_BUS_FREQ 250000
+
 BPSCANInterface::BPSCANInterface(PinName rd, PinName td, PinName standby_pin)
     : CANInterface("BPSCANInterface", rd, td, standby_pin) {
-    can.frequency(250000);
+    can.frequency(BPS_CAN_BUS_FREQ);
 }
 
 void BPSCANInterface::message_handler() {

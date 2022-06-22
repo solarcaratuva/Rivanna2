@@ -1,9 +1,11 @@
 #include "MainCANInterface.h"
 #include "Logging.h"
 
+#define MAIN_CAN_BUS_FREQ 250000
+
 MainCANInterface::MainCANInterface(PinName rd, PinName td, PinName standby_pin)
     : CANInterface("MainCANInterface", rd, td, standby_pin) {
-    can.frequency(250000);
+    can.frequency(MAIN_CAN_BUS_FREQ);
 }
 
 int MainCANInterface::send(CANStruct *can_struct) {

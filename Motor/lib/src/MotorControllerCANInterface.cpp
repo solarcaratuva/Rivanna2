@@ -1,10 +1,12 @@
 #include "MotorControllerCANInterface.h"
 #include "Logging.h"
 
+#define MOTOR_CONTROLLER_CAN_BUS_FREQ 125000
+
 MotorControllerCANInterface::MotorControllerCANInterface(PinName rd, PinName td,
                                                          PinName standby_pin)
     : CANInterface("MotorControllerCANInterface", rd, td, standby_pin) {
-    can.frequency(125000);
+    can.frequency(MOTOR_CONTROLLER_CAN_BUS_FREQ);
 }
 
 int MotorControllerCANInterface::request_frames(bool power_status_frame,
