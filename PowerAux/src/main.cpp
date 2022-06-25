@@ -94,11 +94,15 @@ void peripheral_error_handler() {
     }
 }
 
+DigitalOut charge_discharge_en(CHARGE_DISCHARGE_EN);
+
 int main() {
     log_set_level(LOG_LEVEL);
     log_debug("Start main()");
 
     headlights = true;
+
+    charge_discharge_en = true;
 
     signalFlashThread.start(signalFlashHandler);
     signalBPSThread.start(signalBPSStrobe);
@@ -123,6 +127,11 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
 
 void BPSCANInterface::handle(BPSPackInformation *can_struct) {
     can_struct->log(LOG_INFO);
+
+    if (!can_struct->charge_relay_status || !can_struct->discharge_relay_status) {
+        charge_discharge_en = false;
+    }
+
     vehicle_can_interface.send(can_struct);
 }
 
