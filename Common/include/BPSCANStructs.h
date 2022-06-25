@@ -25,8 +25,17 @@ typedef struct BPSPackInformation : CANStruct, bps_bps_pack_information_t {
     uint32_t get_message_ID() { return BPSPackInformation_MESSAGE_ID; }
 
     void log(int level) {
-        log_at_level(level,
-                     "BPSPackInformation: pack_voltage %u, pack_current %u, pack_soc %u, discharge_relay_status %u, charge_relay_status %u, charger_safety_status %u, dtc_status %u, multipurpose_input_signal_status %u, always_on_signal_status %u, is_ready_signal_status %u, is_charging_signal_status %u", pack_voltage, pack_current, pack_soc, discharge_relay_status, charge_relay_status, charger_safety_status, dtc_status, multipurpose_input_signal_status, always_on_signal_status, is_ready_signal_status, is_charging_signal_status);
+        log_at_level(
+            level,
+            "BPSPackInformation: pack_voltage %u, pack_current %u, pack_soc "
+            "%u, discharge_relay_status %u, charge_relay_status %u, "
+            "charger_safety_status %u, dtc_status %u, "
+            "multipurpose_input_signal_status %u, always_on_signal_status %u, "
+            "is_ready_signal_status %u, is_charging_signal_status %u",
+            pack_voltage, pack_current, pack_soc, discharge_relay_status,
+            charge_relay_status, charger_safety_status, dtc_status,
+            multipurpose_input_signal_status, always_on_signal_status,
+            is_ready_signal_status, is_charging_signal_status);
     }
 } BPSPackInformation;
 
@@ -64,7 +73,27 @@ typedef struct BPSError : CANStruct, bps_bps_error_t {
     void log(int level) {
         log_at_level(
             level,
-            "BPSError: internal_communications_fault %u, internal_conversion_fault %u, weak_cell_fault %u, low_cell_voltage_fault %u, open_wiring_fault %u, current_sensor_fault %u, pack_voltage_sensor_fault %u, weak_pack_fault %u, voltage_redundancy_fault %u, fan_monitor_fault %u, thermistor_fault %u, CANBUS_communications_fault %u, always_on_supply_fault %u, high_voltage_isolation_fault %u, power_supply_12v_fault %u, charge_limit_enforcement_fault %u, discharge_limit_enforcement_fault %u, charger_safety_relay_fault %u, internal_memory_fault %u, internal_thermistor_fault %u, internal_logic_fault %u", internal_communications_fault, internal_conversion_fault, weak_cell_fault, low_cell_voltage_fault, open_wiring_fault, current_sensor_fault, pack_voltage_sensor_fault, weak_pack_fault, voltage_redundancy_fault, fan_monitor_fault, thermistor_fault, canbus_communications_fault, always_on_supply_fault, high_voltage_isolation_fault, power_supply_12v_fault, charge_limit_enforcement_fault, discharge_limit_enforcement_fault, charger_safety_relay_fault, internal_memory_fault, internal_thermistor_fault, internal_logic_fault);
+            "BPSError: internal_communications_fault %u, "
+            "internal_conversion_fault %u, weak_cell_fault %u, "
+            "low_cell_voltage_fault %u, open_wiring_fault %u, "
+            "current_sensor_fault %u, pack_voltage_sensor_fault %u, "
+            "weak_pack_fault %u, voltage_redundancy_fault %u, "
+            "fan_monitor_fault %u, thermistor_fault %u, "
+            "CANBUS_communications_fault %u, always_on_supply_fault %u, "
+            "high_voltage_isolation_fault %u, power_supply_12v_fault %u, "
+            "charge_limit_enforcement_fault %u, "
+            "discharge_limit_enforcement_fault %u, charger_safety_relay_fault "
+            "%u, internal_memory_fault %u, internal_thermistor_fault %u, "
+            "internal_logic_fault %u",
+            internal_communications_fault, internal_conversion_fault,
+            weak_cell_fault, low_cell_voltage_fault, open_wiring_fault,
+            current_sensor_fault, pack_voltage_sensor_fault, weak_pack_fault,
+            voltage_redundancy_fault, fan_monitor_fault, thermistor_fault,
+            canbus_communications_fault, always_on_supply_fault,
+            high_voltage_isolation_fault, power_supply_12v_fault,
+            charge_limit_enforcement_fault, discharge_limit_enforcement_fault,
+            charger_safety_relay_fault, internal_memory_fault,
+            internal_thermistor_fault, internal_logic_fault);
     }
 } BPSError;
 

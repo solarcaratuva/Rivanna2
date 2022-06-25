@@ -128,7 +128,8 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
 void BPSCANInterface::handle(BPSPackInformation *can_struct) {
     can_struct->log(LOG_INFO);
 
-    if (!can_struct->charge_relay_status || !can_struct->discharge_relay_status) {
+    if (!can_struct->charge_relay_status ||
+        !can_struct->discharge_relay_status) {
         charge_discharge_en = false;
     }
 
