@@ -1,12 +1,15 @@
 #include "BPSCANInterface.h"
+#include "DigitalOut.h"
 #include "PowerAuxCANInterface.h"
 #include "Printing.h"
+#include "ThisThread.h"
 #include "log.h"
 #include "pindef.h"
+#include "BPSRelayController.h"
 #include <mbed.h>
 #include <rtos.h>
 
-#define LOG_LEVEL          LOG_FATAL
+#define LOG_LEVEL          LOG_DEBUG
 #define MAIN_LOOP_PERIOD   1s
 #define ERROR_CHECK_PERIOD 1s
 #define FLASH_PERIOD       500ms
@@ -19,7 +22,6 @@ bool flashHazards, flashLSignal, flashRSignal = false;
 Thread signalFlashThread;
 
 DigitalOut brake_lights(BRAKE_LIGHT_EN);
-DigitalOut headlights(DRL_EN);
 DigitalOut leftTurnSignal(LEFT_TURN_EN);
 DigitalOut rightTurnSignal(RIGHT_TURN_EN);
 
@@ -81,8 +83,6 @@ void peripheral_error_handler() {
         msg.brake_light_error =
             (brake_light_current.read_u16() < 1000 && brake_lights.read());
         msg.fan_error = (fan_tach.read_u16() < 1000);
-        msg.headlight_error =
-            (headlight_current.read_u16() < 1000 && headlights.read());
         msg.left_turn_error =
             (left_turn_current.read_u16() < 1000 && leftTurnSignal.read());
         msg.right_turn_error =
@@ -94,15 +94,11 @@ void peripheral_error_handler() {
     }
 }
 
-DigitalOut charge_discharge_en(CHARGE_DISCHARGE_EN);
+BPSRelayController bps_relay_controller(HORN_EN, DRL_EN, AUX_PLUS);
 
 int main() {
     log_set_level(LOG_LEVEL);
     log_debug("Start main()");
-
-    headlights = true;
-
-    charge_discharge_en = true;
 
     signalFlashThread.start(signalFlashHandler);
     signalBPSThread.start(signalBPSStrobe);
@@ -128,26 +124,27 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
 void BPSCANInterface::handle(BPSPackInformation *can_struct) {
     can_struct->log(LOG_INFO);
 
-    if (!can_struct->charge_relay_status ||
-        !can_struct->discharge_relay_status) {
-        charge_discharge_en = false;
-    }
+    bps_relay_controller.update_state(can_struct);
 
     vehicle_can_interface.send(can_struct);
 }
 
 void BPSCANInterface::handle(BPSError *can_struct) {
     can_struct->log(LOG_INFO);
-    vehicle_can_interface.send(can_struct);
+
     bpsFaultIndicator = can_struct->has_error();
+
+    vehicle_can_interface.send(can_struct);
 }
 
 void BPSCANInterface::handle(BPSCellVoltage *can_struct) {
     can_struct->log(LOG_INFO);
+
     vehicle_can_interface.send(can_struct);
 }
 
 void BPSCANInterface::handle(BPSCellTemperature *can_struct) {
     can_struct->log(LOG_INFO);
+
     vehicle_can_interface.send(can_struct);
 }
