@@ -18,12 +18,15 @@
 #define FLASH_PERIOD           500ms
 
 BPSRelayController::BPSRelayController(PinName discharge_en, PinName charge_en,
-                                       PinName pack_contactor_closed, PinName bps_fault_indicator)
+                                       PinName pack_contactor_closed,
+                                       PinName bps_fault_indicator)
     : discharge_en(discharge_en), charge_en(charge_en),
-      pack_contactor_closed(pack_contactor_closed), bps_fault_indicator(bps_fault_indicator) {
+      pack_contactor_closed(pack_contactor_closed),
+      bps_fault_indicator(bps_fault_indicator) {
     relay_controller_thread.start(
         callback(this, &BPSRelayController::relay_controller));
-    bps_fault_indicator_thread.start(callback(this, &BPSRelayController::update_bps_fault_indicator));
+    bps_fault_indicator_thread.start(
+        callback(this, &BPSRelayController::update_bps_fault_indicator));
 }
 
 void BPSRelayController::update_state(BPSPackInformation *can_struct) {

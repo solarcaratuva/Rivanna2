@@ -7,7 +7,8 @@
 class BPSRelayController {
   public:
     BPSRelayController(PinName discharge_en, PinName charge_en,
-                       PinName pack_contactor_closed, PinName bps_fault_indicator);
+                       PinName pack_contactor_closed,
+                       PinName bps_fault_indicator);
     void update_state(BPSPackInformation *can_struct);
     void update_state(BPSError *can_struct);
     bool bps_fault_indicator_on();

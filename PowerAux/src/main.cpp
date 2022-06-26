@@ -58,13 +58,14 @@ AnalogIn left_turn_current(LEFT_TURN_CURRENT);
 AnalogIn right_turn_current(RIGHT_TURN_CURRENT);
 Thread peripheral_error_thread;
 
-BPSRelayController bps_relay_controller(HORN_EN, DRL_EN, AUX_PLUS, BMS_STROBE_EN);
+BPSRelayController bps_relay_controller(HORN_EN, DRL_EN, AUX_PLUS,
+                                        BMS_STROBE_EN);
 
 void peripheral_error_handler() {
     PowerAuxError msg;
     while (true) {
-        msg.bps_strobe_error =
-            (bms_strobe_current.read_u16() < 1000 && bps_relay_controller.bps_fault_indicator_on());
+        msg.bps_strobe_error = (bms_strobe_current.read_u16() < 1000 &&
+                                bps_relay_controller.bps_fault_indicator_on());
         msg.brake_light_error =
             (brake_light_current.read_u16() < 1000 && brake_lights.read());
         msg.fan_error = (fan_tach.read_u16() < 1000);
@@ -73,7 +74,7 @@ void peripheral_error_handler() {
         msg.right_turn_error =
             (right_turn_current.read_u16() < 1000 && rightTurnSignal.read());
         msg.bps_error = bps_relay_controller.bps_fault_indicator_on();
-        
+
         vehicle_can_interface.send(&msg);
         ThisThread::sleep_for(ERROR_CHECK_PERIOD);
     }
