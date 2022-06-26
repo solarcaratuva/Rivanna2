@@ -13,9 +13,9 @@
 #define BPS_CHARGE_DISABLED    (1 << 5)
 
 BPSRelayController::BPSRelayController(PinName discharge_en, PinName charge_en,
-                                       PinName pack_contactor_status)
+                                       PinName pack_contactor_closed)
     : discharge_en(discharge_en), charge_en(charge_en),
-      pack_contactor_status(pack_contactor_status) {
+      pack_contactor_closed(pack_contactor_closed) {
     relay_controller_thread.start(
         callback(this, &BPSRelayController::relay_controller));
 }
@@ -57,9 +57,9 @@ void BPSRelayController::fall_handler() {
 void BPSRelayController::relay_controller() {
     Thread enable_discharge_charge_thread;
 
-    pack_contactor_status.rise(
+    pack_contactor_closed.rise(
         callback(this, &BPSRelayController::rise_handler));
-    pack_contactor_status.fall(
+    pack_contactor_closed.fall(
         callback(this, &BPSRelayController::fall_handler));
 
     while (true) {
@@ -135,7 +135,7 @@ void BPSRelayController::enable_discharge_charge() {
     if (charge) {
         // Wait for pack contactor to close
         log_debug("Waiting for pack contactor to close");
-        if (pack_contactor_status) {
+        if (pack_contactor_closed) {
             event_flags.set(PACK_CONTACTOR_CLOSED);
         }
         event_flags.wait_all(PACK_CONTACTOR_CLOSED);
