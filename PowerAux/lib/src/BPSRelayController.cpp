@@ -12,6 +12,9 @@
 #define BPS_DISCHARGE_DISABLED (1 << 4)
 #define BPS_CHARGE_DISABLED    (1 << 5)
 
+#define DISCHARGE_RELAY_DELAY  100ms
+#define CHARGE_RELAY_DELAY     5s
+
 BPSRelayController::BPSRelayController(PinName discharge_en, PinName charge_en,
                                        PinName pack_contactor_closed)
     : discharge_en(discharge_en), charge_en(charge_en),
@@ -124,7 +127,7 @@ void BPSRelayController::enable_discharge_charge() {
     bool discharge = ThisThread::flags_get() & BPS_DISCHARGE_ENABLED;
     bool charge = ThisThread::flags_get() & BPS_CHARGE_ENABLED;
 
-    ThisThread::sleep_for(100ms);
+    ThisThread::sleep_for(DISCHARGE_RELAY_DELAY);
 
     // If discharge is supposed to be enabled, enable discharge
     if (discharge) {
@@ -142,7 +145,7 @@ void BPSRelayController::enable_discharge_charge() {
         log_debug("Pack contactor closed");
 
         // Wait for 5s or until the pack contactor opens
-        event_flags.wait_all_for(PACK_CONTACTOR_OPENED, 5s, false);
+        event_flags.wait_all_for(PACK_CONTACTOR_OPENED, CHARGE_RELAY_DELAY, false);
 
         // If pack contactor has not opened, enable charge
         if (!(event_flags.get() & PACK_CONTACTOR_OPENED)) {
