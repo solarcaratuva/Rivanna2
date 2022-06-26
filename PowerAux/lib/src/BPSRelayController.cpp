@@ -145,7 +145,8 @@ void BPSRelayController::enable_discharge_charge() {
         log_debug("Pack contactor closed");
 
         // Wait for 5s or until the pack contactor opens
-        event_flags.wait_all_for(PACK_CONTACTOR_OPENED, CHARGE_RELAY_DELAY, false);
+        event_flags.wait_all_for(PACK_CONTACTOR_OPENED, CHARGE_RELAY_DELAY,
+                                 false);
 
         // If pack contactor has not opened, enable charge
         if (!(event_flags.get() & PACK_CONTACTOR_OPENED)) {
