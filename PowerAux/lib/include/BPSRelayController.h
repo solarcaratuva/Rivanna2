@@ -6,8 +6,10 @@
 
 class BPSRelayController {
   public:
-    BPSRelayController(PinName discharge_en, PinName charge_en, PinName pack_contactor_status);
+    BPSRelayController(PinName discharge_en, PinName charge_en,
+                       PinName pack_contactor_status);
     void update_state(BPSPackInformation *can_struct);
+
   protected:
     DigitalOut discharge_en;
     DigitalOut charge_en;

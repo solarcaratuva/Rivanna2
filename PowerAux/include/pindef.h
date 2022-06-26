@@ -33,7 +33,7 @@
 #define LEFT_TURN_CURRENT   PB_15
 #define DRL_EN              PB_14
 #define DRL_CURRENT         PB_11
-#define HORN_EN PA_5
+#define HORN_EN             PA_5
 #define BMS_STROBE_CURRENT  PA_6
 #define BMS_STROBE_EN       PA_7
 #define BRAKE_LIGHT_CURRENT PB_0
@@ -74,7 +74,7 @@
 #define LEFT_TURN_CURRENT   NC
 #define DRL_EN              NC
 #define DRL_CURRENT         NC
-#define HORN_EN NC
+#define HORN_EN             NC
 #define BMS_STROBE_CURRENT  NC
 #define BMS_STROBE_EN       NC
 #define BRAKE_LIGHT_CURRENT NC
