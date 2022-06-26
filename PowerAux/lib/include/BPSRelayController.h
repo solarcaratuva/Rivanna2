@@ -7,8 +7,10 @@
 class BPSRelayController {
   public:
     BPSRelayController(PinName discharge_en, PinName charge_en,
-                       PinName pack_contactor_closed);
+                       PinName pack_contactor_closed, PinName bps_fault_indicator);
     void update_state(BPSPackInformation *can_struct);
+    void update_state(BPSError *can_struct);
+    bool bps_fault_indicator_on();
 
   protected:
     DigitalOut discharge_en;
@@ -22,6 +24,11 @@ class BPSRelayController {
     void enable_discharge_charge();
     bool bps_discharge_state = false;
     bool bps_charge_state = false;
+
+    DigitalOut bps_fault_indicator;
+    Thread bps_fault_indicator_thread;
+    void update_bps_fault_indicator();
+    bool bps_fault = false;
 };
 
 #endif

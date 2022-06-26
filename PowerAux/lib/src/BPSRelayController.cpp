@@ -15,12 +15,15 @@
 #define DISCHARGE_RELAY_DELAY  100ms
 #define CHARGE_RELAY_DELAY     5s
 
+#define FLASH_PERIOD           500ms
+
 BPSRelayController::BPSRelayController(PinName discharge_en, PinName charge_en,
-                                       PinName pack_contactor_closed)
+                                       PinName pack_contactor_closed, PinName bps_fault_indicator)
     : discharge_en(discharge_en), charge_en(charge_en),
-      pack_contactor_closed(pack_contactor_closed) {
+      pack_contactor_closed(pack_contactor_closed), bps_fault_indicator(bps_fault_indicator) {
     relay_controller_thread.start(
         callback(this, &BPSRelayController::relay_controller));
+    bps_fault_indicator_thread.start(callback(this, &BPSRelayController::update_bps_fault_indicator));
 }
 
 void BPSRelayController::update_state(BPSPackInformation *can_struct) {
@@ -29,10 +32,14 @@ void BPSRelayController::update_state(BPSPackInformation *can_struct) {
     if (bps_discharge_state && !can_struct->discharge_relay_status) {
         flags_to_set |= BPS_DISCHARGE_DISABLED;
         log_debug("Set BPS_DISCHARGE_DISABLED flag");
+
+        bps_fault = true;
     }
     if (bps_charge_state && !can_struct->charge_relay_status) {
         flags_to_set |= BPS_CHARGE_DISABLED;
         log_debug("Set BPS_CHARGE_DISABLED flag");
+
+        bps_fault = true;
     }
     if (!bps_discharge_state && can_struct->discharge_relay_status) {
         flags_to_set |= BPS_DISCHARGE_ENABLED;
@@ -49,12 +56,24 @@ void BPSRelayController::update_state(BPSPackInformation *can_struct) {
     bps_charge_state = can_struct->charge_relay_status;
 }
 
+void BPSRelayController::update_state(BPSError *can_struct) {
+    if (can_struct->has_error()) {
+        bps_fault = true;
+    }
+}
+
+bool BPSRelayController::bps_fault_indicator_on() {
+    return bps_fault_indicator;
+}
+
 void BPSRelayController::rise_handler() {
     event_flags.set(PACK_CONTACTOR_CLOSED);
 }
 
 void BPSRelayController::fall_handler() {
     event_flags.set(PACK_CONTACTOR_OPENED);
+
+    bps_fault = true;
 }
 
 void BPSRelayController::relay_controller() {
@@ -153,5 +172,17 @@ void BPSRelayController::enable_discharge_charge() {
             charge_en = true;
             log_debug("Enabled charge relay");
         }
+    }
+}
+
+void BPSRelayController::update_bps_fault_indicator() {
+    while (true) {
+        if (bps_fault) {
+            bps_fault_indicator = !bps_fault_indicator;
+        } else {
+            bps_fault_indicator = false;
+        }
+
+        ThisThread::sleep_for(FLASH_PERIOD);
     }
 }
