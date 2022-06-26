@@ -10,15 +10,15 @@ The recommended approach for development is to use the [rivanna2-env](https://gi
 - ST-LINK driver ([open-source](https://github.com/stlink-org/stlink) (recommended) or [official](https://www.st.com/en/development-tools/stsw-link009.html))
 - [PlatformIO](https://platformio.org/install/cli) or any other software that can connect to a serial console
 
-### Using the container image
-`podman run -it -v .:/root/Rivanna2:Z ghcr.io/solarcaratuva/rivanna2-env` opens an interactive session in the container, from which you can run commands.
-
-Alternatively, you can connect to the container in VSCode, which will allow you to open new shells inside of the container to easily run commands. This will also provide features like code autocomplete and IDE compilation errors. 
-
-1. Install the [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension.
-2. Open the Rivanna2 repository.
-3. Type `Ctrl+Shift+P` and run the `Remote-Containers: Open Folder in Container` command. This will open the current folder (Rivanna2) inside of the container.
-4. From there, opening a new terminal will open a shell inside of the container.
+### Running the development container
+- To open an interactive session:
+  - With Docker: `docker run -it -v .:/root/Rivanna2:Z ghcr.io/solarcaratuva/rivanna2-env`
+  - With Podman: `podman run -it -v .:/root/Rivanna2:Z ghcr.io/solarcaratuva/rivanna2-env` 
+- Alternatively, you can connect to the container in VSCode, which will allow you to open new shells inside of the container to easily run commands. This will also provide features like code autocomplete and IDE compilation errors. 
+  1. Install the [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension.
+  2. Open the Rivanna2 repository.
+  3. Type `Ctrl+Shift+P` and run the `Remote-Containers: Open Folder in Container` command. This will open the current folder (Rivanna2) inside of the container.
+  4. From there, opening a new terminal will open a shell inside of the container.
 
 ### Compiling
 `./compile.sh` - This script will run `mbed-tools compile` with the correct environment and toolchain arguments. This will compile the firmware for all boards. Before running this the first time, run `mbed-tools deploy`, which will download the version of Mbed OS specified in `mbed-os.lib`.
