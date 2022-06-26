@@ -25,11 +25,17 @@ typedef struct BPSPackInformation : CANStruct, bps_bps_pack_information_t {
     uint32_t get_message_ID() { return BPSPackInformation_MESSAGE_ID; }
 
     void log(int level) {
-        log_at_level(level,
-                     "BPSPackInformation: pack_voltage %u, pack_current %u, "
-                     "pack_soc %u, discharge_relay %u, charge_relay %u",
-                     pack_voltage, pack_current, pack_soc, discharge_relay,
-                     charge_relay);
+        log_at_level(
+            level,
+            "BPSPackInformation: pack_voltage %u, pack_current %u, pack_soc "
+            "%u, discharge_relay_status %u, charge_relay_status %u, "
+            "charger_safety_status %u, dtc_status %u, "
+            "multipurpose_input_signal_status %u, always_on_signal_status %u, "
+            "is_ready_signal_status %u, is_charging_signal_status %u",
+            pack_voltage, pack_current, pack_soc, discharge_relay_status,
+            charge_relay_status, charger_safety_status, dtc_status,
+            multipurpose_input_signal_status, always_on_signal_status,
+            is_ready_signal_status, is_charging_signal_status);
     }
 } BPSPackInformation;
 

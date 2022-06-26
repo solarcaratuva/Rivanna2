@@ -1,5 +1,6 @@
 add_library(PowerAux-lib
     src/BPSCANInterface.cpp
+    src/BPSRelayController.cpp
 )
 
 target_include_directories(PowerAux-lib PUBLIC include)
