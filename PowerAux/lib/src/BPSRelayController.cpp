@@ -20,7 +20,7 @@ BPSRelayController::BPSRelayController(PinName discharge_en, PinName charge_en,
         callback(this, &BPSRelayController::rise_handler));
     this->pack_contactor_closed.fall(
         callback(this, &BPSRelayController::fall_handler));
-    
+
     error_handler_thread.start(
         callback(this, &BPSRelayController::error_handler));
     relay_controller_thread.start(
@@ -67,9 +67,10 @@ void BPSRelayController::error_handler() {
 
     while (true) {
         log_debug("error_handler_thread waiting for event");
-        uint32_t flags = event_flags.wait_any(PACK_CONTACTOR_OPENED | BPS_DISCHARGE_DISABLED | BPS_CHARGE_DISABLED);
-        log_debug("Iteration of error_handler with event flags 0x%X",
-                  flags);
+        uint32_t flags =
+            event_flags.wait_any(PACK_CONTACTOR_OPENED |
+                                 BPS_DISCHARGE_DISABLED | BPS_CHARGE_DISABLED);
+        log_debug("Iteration of error_handler with event flags 0x%X", flags);
 
         relay_controller_thread.terminate();
 
@@ -77,19 +78,16 @@ void BPSRelayController::error_handler() {
         charge_en = false;
 
         if (flags & PACK_CONTACTOR_OPENED) {
-            log_error(
-                "Terminated error_handler_thread and opened discharge "
-                "and charge relays because pack contactor opened");
+            log_error("Terminated error_handler_thread and opened discharge "
+                      "and charge relays because pack contactor opened");
         }
         if (flags & BPS_DISCHARGE_DISABLED) {
-            log_error(
-                "Terminated error_handler_thread and opened discharge "
-                "and charge relays because BPS disabled discharge");
+            log_error("Terminated error_handler_thread and opened discharge "
+                      "and charge relays because BPS disabled discharge");
         }
         if (flags & BPS_CHARGE_DISABLED) {
-            log_error(
-                "Terminated error_handler_thread and opened discharge "
-                "and charge relays because BPS disabled charge");
+            log_error("Terminated error_handler_thread and opened discharge "
+                      "and charge relays because BPS disabled charge");
         }
 
         // Terminate thread
@@ -103,7 +101,8 @@ void BPSRelayController::relay_controller() {
 
     while (true) {
         log_debug("relay_controller_thread waiting for event");
-        uint32_t flags = event_flags.wait_any(BPS_DISCHARGE_ENABLED | BPS_CHARGE_ENABLED);
+        uint32_t flags =
+            event_flags.wait_any(BPS_DISCHARGE_ENABLED | BPS_CHARGE_ENABLED);
         log_debug("Iteration of relay_controller with flags 0x%X", flags);
 
         bool discharge = flags & BPS_DISCHARGE_ENABLED;
