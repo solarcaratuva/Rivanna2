@@ -71,9 +71,9 @@ typedef struct MotorControllerPowerStatus
             level,
             "MotorControllerPowerStatus: battery_voltage %u, battery_current "
             "%u, battery_current_direction %u, motor_current %u, "
-            "fet_temperature %u, motor_speed %u, pwm_duty %u, lead_angle %u",
+            "fet_temp %u, motor_rpm %u, pwm_duty %u, lead_angle %u",
             battery_voltage, battery_current, battery_current_direction,
-            motor_current, fet_temperature, motor_speed, pwm_duty, lead_angle);
+            motor_current, fet_temp, motor_rpm, pwm_duty, lead_angle);
     }
 } MotorControllerPowerStatus;
 
@@ -108,10 +108,10 @@ typedef struct MotorControllerDriveStatus
                      "MotorControllerDriveStatus: power_mode %u, control_mode "
                      "%u, accelerator_vr_position %u, regen_vr_position %u, "
                      "digital_sw_position %u, output_target_value %u, "
-                     "drive_action_status %u, regen_status %u",
+                     "motor_status %u, regen_status %u",
                      power_mode, control_mode, accelerator_vr_position,
                      regen_vr_position, digital_sw_position,
-                     output_target_value, drive_action_status, regen_status);
+                     output_target_value, motor_status, regen_status);
     }
 } MotorControllerDriveStatus;
 

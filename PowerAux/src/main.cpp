@@ -1,6 +1,9 @@
 #include "BPSCANInterface.h"
+#include "BPSRelayController.h"
+#include "DigitalOut.h"
 #include "PowerAuxCANInterface.h"
 #include "Printing.h"
+#include "ThisThread.h"
 #include "log.h"
 #include "pindef.h"
 #include <mbed.h>
@@ -19,7 +22,6 @@ bool flashHazards, flashLSignal, flashRSignal = false;
 Thread signalFlashThread;
 
 DigitalOut brake_lights(BRAKE_LIGHT_EN);
-DigitalOut headlights(DRL_EN);
 DigitalOut leftTurnSignal(LEFT_TURN_EN);
 DigitalOut rightTurnSignal(RIGHT_TURN_EN);
 
@@ -81,8 +83,6 @@ void peripheral_error_handler() {
         msg.brake_light_error =
             (brake_light_current.read_u16() < 1000 && brake_lights.read());
         msg.fan_error = (fan_tach.read_u16() < 1000);
-        msg.headlight_error =
-            (headlight_current.read_u16() < 1000 && headlights.read());
         msg.left_turn_error =
             (left_turn_current.read_u16() < 1000 && leftTurnSignal.read());
         msg.right_turn_error =
@@ -94,11 +94,11 @@ void peripheral_error_handler() {
     }
 }
 
+BPSRelayController bps_relay_controller(HORN_EN, DRL_EN, AUX_PLUS);
+
 int main() {
     log_set_level(LOG_LEVEL);
     log_debug("Start main()");
-
-    headlights = true;
 
     signalFlashThread.start(signalFlashHandler);
     signalBPSThread.start(signalBPSStrobe);
@@ -123,21 +123,28 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
 
 void BPSCANInterface::handle(BPSPackInformation *can_struct) {
     can_struct->log(LOG_INFO);
+
+    bps_relay_controller.update_state(can_struct);
+
     vehicle_can_interface.send(can_struct);
 }
 
 void BPSCANInterface::handle(BPSError *can_struct) {
     can_struct->log(LOG_INFO);
-    vehicle_can_interface.send(can_struct);
+
     bpsFaultIndicator = can_struct->has_error();
+
+    vehicle_can_interface.send(can_struct);
 }
 
 void BPSCANInterface::handle(BPSCellVoltage *can_struct) {
     can_struct->log(LOG_INFO);
+
     vehicle_can_interface.send(can_struct);
 }
 
 void BPSCANInterface::handle(BPSCellTemperature *can_struct) {
     can_struct->log(LOG_INFO);
+
     vehicle_can_interface.send(can_struct);
 }
