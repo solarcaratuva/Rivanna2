@@ -11,6 +11,7 @@ class BPSRelayController {
                        PinName bps_fault_indicator);
     void update_state(BPSPackInformation *can_struct);
     void update_state(BPSError *can_struct);
+    bool bps_has_fault();
     bool bps_fault_indicator_on();
 
   protected:

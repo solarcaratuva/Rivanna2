@@ -65,6 +65,10 @@ void BPSRelayController::update_state(BPSError *can_struct) {
     }
 }
 
+bool BPSRelayController::bps_has_fault() {
+    return bps_fault;
+}
+
 bool BPSRelayController::bps_fault_indicator_on() {
     return bps_fault_indicator;
 }
@@ -105,6 +109,8 @@ void BPSRelayController::relay_controller() {
 
             discharge_en = false;
             charge_en = false;
+
+            bps_fault = true;
 
             if (event_flags.get() & PACK_CONTACTOR_OPENED) {
                 log_error(
