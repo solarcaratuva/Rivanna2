@@ -65,9 +65,7 @@ void BPSRelayController::update_state(BPSError *can_struct) {
     }
 }
 
-bool BPSRelayController::bps_has_fault() {
-    return bps_fault;
-}
+bool BPSRelayController::bps_has_fault() { return bps_fault; }
 
 bool BPSRelayController::bps_fault_indicator_on() {
     return bps_fault_indicator;

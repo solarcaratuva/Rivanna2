@@ -74,7 +74,7 @@ void peripheral_error_handler() {
         msg.right_turn_error =
             (right_turn_current.read_u16() < 1000 && rightTurnSignal.read());
         msg.bps_error = bps_relay_controller.bps_has_fault();
-        
+
         vehicle_can_interface.send(&msg);
         ThisThread::sleep_for(ERROR_CHECK_PERIOD);
     }
