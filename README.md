@@ -11,7 +11,7 @@ The recommended approach for development is to use the [rivanna2-env](https://gi
 - [PlatformIO](https://platformio.org/install/cli) or any other software that can connect to a serial console
 
 ### Using the container image
-`podman run -it -v .:/root/Rivanna2:Z ghcr.io/solarcaratuva/rivanna2-env` opens an interactive session in the container, from which you can run commands.
+`podman run -it -v $(pwd)/:/root/Rivanna2:Z ghcr.io/solarcaratuva/rivanna2-env` opens an interactive session in the container, from which you can run commands.
 
 Alternatively, you can connect to the container in VSCode, which will allow you to open new shells inside of the container to easily run commands. This will also provide features like code autocomplete and IDE compilation errors. 
 
