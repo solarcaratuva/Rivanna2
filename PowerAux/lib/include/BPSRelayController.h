@@ -14,12 +14,13 @@ class BPSRelayController {
     DigitalOut discharge_en;
     DigitalOut charge_en;
     InterruptIn pack_contactor_closed;
+    Thread error_handler_thread;
     Thread relay_controller_thread;
     EventFlags event_flags;
     void rise_handler();
     void fall_handler();
+    void error_handler();
     void relay_controller();
-    void enable_discharge_charge();
     bool bps_discharge_state = false;
     bool bps_charge_state = false;
 };
