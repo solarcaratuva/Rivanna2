@@ -18,7 +18,8 @@ BPSRelayController::BPSRelayController(PinName discharge_en, PinName charge_en,
                                        PinName pack_contactor_closed,
                                        PinName bps_fault_indicator)
     : discharge_en(discharge_en), charge_en(charge_en),
-      pack_contactor_closed(pack_contactor_closed), bps_fault_indicator(bps_fault_indicator) {
+      pack_contactor_closed(pack_contactor_closed),
+      bps_fault_indicator(bps_fault_indicator) {
     this->pack_contactor_closed.rise(
         callback(this, &BPSRelayController::rise_handler));
     this->pack_contactor_closed.fall(
@@ -51,18 +52,19 @@ void BPSRelayController::update_state(BPSPackInformation *can_struct) {
     }
     if (!bps_discharge_state && can_struct->discharge_relay_status) {
         if (bps_pack_information_message_count >= 5) {
-            log_debug("BPS set discharge to 1 but bps_pack_information_message_count >= 5");
-        }
-        else {
+            log_debug("BPS set discharge to 1 but "
+                      "bps_pack_information_message_count >= 5");
+        } else {
             flags |= BPS_DISCHARGE_ENABLED;
             log_debug("Set BPS_DISCHARGE_ENABLED flag");
         }
     }
-    if (!bps_charge_state && can_struct->charge_relay_status && bps_pack_information_message_count < 5) {
+    if (!bps_charge_state && can_struct->charge_relay_status &&
+        bps_pack_information_message_count < 5) {
         if (bps_pack_information_message_count >= 5) {
-            log_debug("BPS set charge to 1 but bps_pack_information_message_count >= 5");
-        }
-        else {
+            log_debug("BPS set charge to 1 but "
+                      "bps_pack_information_message_count >= 5");
+        } else {
             flags |= BPS_CHARGE_ENABLED;
             log_debug("Set BPS_CHARGE_ENABLED flag");
         }
