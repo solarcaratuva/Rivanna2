@@ -1,7 +1,4 @@
 #include "BPSRelayController.h"
-#include "Callback.h"
-#include "ConditionVariable.h"
-#include "EventFlags.h"
 #include "ThisThread.h"
 #include "log.h"
 
@@ -21,8 +18,14 @@ BPSRelayController::BPSRelayController(PinName discharge_en, PinName charge_en,
                                        PinName pack_contactor_closed,
                                        PinName bps_fault_indicator)
     : discharge_en(discharge_en), charge_en(charge_en),
-      pack_contactor_closed(pack_contactor_closed),
-      bps_fault_indicator(bps_fault_indicator) {
+      pack_contactor_closed(pack_contactor_closed), bps_fault_indicator(bps_fault_indicator) {
+    this->pack_contactor_closed.rise(
+        callback(this, &BPSRelayController::rise_handler));
+    this->pack_contactor_closed.fall(
+        callback(this, &BPSRelayController::fall_handler));
+
+    error_handler_thread.start(
+        callback(this, &BPSRelayController::error_handler));
     relay_controller_thread.start(
         callback(this, &BPSRelayController::relay_controller));
     bps_fault_indicator_thread.start(
@@ -30,33 +33,49 @@ BPSRelayController::BPSRelayController(PinName discharge_en, PinName charge_en,
 }
 
 void BPSRelayController::update_state(BPSPackInformation *can_struct) {
-    uint32_t flags_to_set = 0;
+    static int bps_pack_information_message_count = 0;
+
+    uint32_t flags = 0;
 
     if (bps_discharge_state && !can_struct->discharge_relay_status) {
-        flags_to_set |= BPS_DISCHARGE_DISABLED;
+        flags |= BPS_DISCHARGE_DISABLED;
         log_debug("Set BPS_DISCHARGE_DISABLED flag");
 
         bps_fault = true;
     }
     if (bps_charge_state && !can_struct->charge_relay_status) {
-        flags_to_set |= BPS_CHARGE_DISABLED;
+        flags |= BPS_CHARGE_DISABLED;
         log_debug("Set BPS_CHARGE_DISABLED flag");
 
         bps_fault = true;
     }
     if (!bps_discharge_state && can_struct->discharge_relay_status) {
-        flags_to_set |= BPS_DISCHARGE_ENABLED;
-        log_debug("Set BPS_DISCHARGE_ENABLED flag");
+        if (bps_pack_information_message_count >= 5) {
+            log_debug("BPS set discharge to 1 but bps_pack_information_message_count >= 5");
+        }
+        else {
+            flags |= BPS_DISCHARGE_ENABLED;
+            log_debug("Set BPS_DISCHARGE_ENABLED flag");
+        }
     }
-    if (!bps_charge_state && can_struct->charge_relay_status) {
-        flags_to_set |= BPS_CHARGE_ENABLED;
-        log_debug("Set BPS_CHARGE_ENABLED flag");
+    if (!bps_charge_state && can_struct->charge_relay_status && bps_pack_information_message_count < 5) {
+        if (bps_pack_information_message_count >= 5) {
+            log_debug("BPS set charge to 1 but bps_pack_information_message_count >= 5");
+        }
+        else {
+            flags |= BPS_CHARGE_ENABLED;
+            log_debug("Set BPS_CHARGE_ENABLED flag");
+        }
     }
 
-    event_flags.set(flags_to_set);
+    event_flags.set(flags);
 
     bps_discharge_state = can_struct->discharge_relay_status;
     bps_charge_state = can_struct->charge_relay_status;
+
+    if (bps_pack_information_message_count < 5) {
+        bps_pack_information_message_count += 1;
+    }
 }
 
 void BPSRelayController::update_state(BPSError *can_struct) {
@@ -81,101 +100,74 @@ void BPSRelayController::fall_handler() {
     bps_fault = true;
 }
 
-void BPSRelayController::relay_controller() {
-    Thread enable_discharge_charge_thread;
-
-    pack_contactor_closed.rise(
-        callback(this, &BPSRelayController::rise_handler));
-    pack_contactor_closed.fall(
-        callback(this, &BPSRelayController::fall_handler));
+void BPSRelayController::error_handler() {
+    error_handler_thread.set_priority(osPriorityHigh);
+    log_debug("Started error_handler_thread");
 
     while (true) {
-        log_debug("Waiting for event");
-        event_flags.wait_any(BPS_DISCHARGE_ENABLED | BPS_CHARGE_ENABLED |
-                                 PACK_CONTACTOR_OPENED |
-                                 BPS_DISCHARGE_DISABLED | BPS_CHARGE_DISABLED,
-                             osWaitForever, false);
-        log_debug("Iteration of relay_controller with event flags 0x%X",
-                  event_flags.get());
+        log_debug("error_handler_thread waiting for event");
+        uint32_t flags =
+            event_flags.wait_any(PACK_CONTACTOR_OPENED |
+                                 BPS_DISCHARGE_DISABLED | BPS_CHARGE_DISABLED);
+        log_debug("Iteration of error_handler with event flags 0x%X", flags);
 
-        // Disable discharge and charge if BPS disables either or pack contactor
-        // opens
-        if (event_flags.get() &
-            (PACK_CONTACTOR_OPENED | BPS_DISCHARGE_DISABLED |
-             BPS_CHARGE_DISABLED)) {
-            enable_discharge_charge_thread.terminate();
+        relay_controller_thread.terminate();
 
-            discharge_en = false;
-            charge_en = false;
+        discharge_en = false;
+        charge_en = false;
 
-            bps_fault = true;
+        bps_fault = true;
 
-            if (event_flags.get() & PACK_CONTACTOR_OPENED) {
-                log_error(
-                    "Terminated relay_controller_thread and opened discharge "
-                    "and charge relays because pack contactor opened");
-            }
-            if (event_flags.get() & BPS_DISCHARGE_DISABLED) {
-                log_error(
-                    "Terminated relay_controller_thread and opened discharge "
-                    "and charge relays because BPS disabled discharge");
-            }
-            if (event_flags.get() & BPS_CHARGE_DISABLED) {
-                log_error(
-                    "Terminated relay_controller_thread and opened discharge "
-                    "and charge relays because BPS disabled charge");
-            }
-
-            // Terminate thread
-            break;
+        if (flags & PACK_CONTACTOR_OPENED) {
+            log_error("Terminated error_handler_thread and opened discharge "
+                      "and charge relays because pack contactor opened");
+        }
+        if (flags & BPS_DISCHARGE_DISABLED) {
+            log_error("Terminated error_handler_thread and opened discharge "
+                      "and charge relays because BPS disabled discharge");
+        }
+        if (flags & BPS_CHARGE_DISABLED) {
+            log_error("Terminated error_handler_thread and opened discharge "
+                      "and charge relays because BPS disabled charge");
         }
 
-        // Handle BPS discharge/charge enable
-        if (event_flags.get() & (BPS_DISCHARGE_ENABLED | BPS_CHARGE_ENABLED)) {
-            uint32_t flags = event_flags.get() &
-                             (BPS_DISCHARGE_ENABLED | BPS_CHARGE_ENABLED);
-
-            // Copy flags to secondary thread
-            enable_discharge_charge_thread.flags_set(flags);
-
-            // Create secondary thread to enable discharge and/or charge relays
-            enable_discharge_charge_thread.start(
-                callback(this, &BPSRelayController::enable_discharge_charge));
-            log_debug("Started enable_discharge_charge_thread with flags 0x%X",
-                      flags);
-
-            event_flags.clear(flags);
-        }
+        // Terminate thread
+        return;
     }
 }
 
-void BPSRelayController::enable_discharge_charge() {
-    bool discharge = ThisThread::flags_get() & BPS_DISCHARGE_ENABLED;
-    bool charge = ThisThread::flags_get() & BPS_CHARGE_ENABLED;
+void BPSRelayController::relay_controller() {
+    error_handler_thread.set_priority(osPriorityHigh);
+    log_debug("Started relay_controller_thread");
 
-    ThisThread::sleep_for(DISCHARGE_RELAY_DELAY);
+    while (true) {
+        log_debug("relay_controller_thread waiting for event");
+        uint32_t flags =
+            event_flags.wait_any(BPS_DISCHARGE_ENABLED | BPS_CHARGE_ENABLED);
+        log_debug("Iteration of relay_controller with flags 0x%X", flags);
 
-    // If discharge is supposed to be enabled, enable discharge
-    if (discharge) {
-        discharge_en = true;
-        log_debug("Enabled discharge relay");
-    }
+        bool discharge = flags & BPS_DISCHARGE_ENABLED;
+        bool charge = flags & BPS_CHARGE_ENABLED;
 
-    if (charge) {
-        // Wait for pack contactor to close
-        log_debug("Waiting for pack contactor to close");
-        if (pack_contactor_closed) {
-            event_flags.set(PACK_CONTACTOR_CLOSED);
+        // If discharge is supposed to be enabled, enable discharge
+        if (discharge && !discharge_en) {
+            ThisThread::sleep_for(DISCHARGE_RELAY_DELAY);
+
+            discharge_en = true;
+            log_debug("Enabled discharge relay");
         }
-        event_flags.wait_all(PACK_CONTACTOR_CLOSED);
-        log_debug("Pack contactor closed");
 
-        // Wait for 5s or until the pack contactor opens
-        event_flags.wait_all_for(PACK_CONTACTOR_OPENED, CHARGE_RELAY_DELAY,
-                                 false);
+        if (charge && !charge_en) {
+            // Wait for pack contactor to close
+            log_debug("Waiting for pack contactor to close");
+            if (pack_contactor_closed) {
+                event_flags.set(PACK_CONTACTOR_CLOSED);
+            }
+            event_flags.wait_all(PACK_CONTACTOR_CLOSED);
+            log_debug("Pack contactor closed");
 
-        // If pack contactor has not opened, enable charge
-        if (!(event_flags.get() & PACK_CONTACTOR_OPENED)) {
+            ThisThread::sleep_for(CHARGE_RELAY_DELAY);
+
             charge_en = true;
             log_debug("Enabled charge relay");
         }

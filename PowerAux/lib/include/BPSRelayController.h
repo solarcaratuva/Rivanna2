@@ -18,18 +18,18 @@ class BPSRelayController {
     DigitalOut discharge_en;
     DigitalOut charge_en;
     InterruptIn pack_contactor_closed;
+    DigitalOut bps_fault_indicator;
+    Thread error_handler_thread;
     Thread relay_controller_thread;
+    Thread bps_fault_indicator_thread;
     EventFlags event_flags;
     void rise_handler();
     void fall_handler();
+    void error_handler();
     void relay_controller();
-    void enable_discharge_charge();
+    void update_bps_fault_indicator();
     bool bps_discharge_state = false;
     bool bps_charge_state = false;
-
-    DigitalOut bps_fault_indicator;
-    Thread bps_fault_indicator_thread;
-    void update_bps_fault_indicator();
     bool bps_fault = false;
 };
 
