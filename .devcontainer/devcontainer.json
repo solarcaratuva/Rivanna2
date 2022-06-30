@@ -1,0 +1,8 @@
+{
+	"image": "ghcr.io/solarcaratuva/rivanna2-env:latest",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind,Z",
+	"extensions": [
+		"llvm-vs-code-extensions.vscode-clangd",
+		"twxs.cmake"
+	]
+}
