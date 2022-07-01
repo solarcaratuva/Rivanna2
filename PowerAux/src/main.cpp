@@ -29,12 +29,13 @@ void signalFlashHandler() {
     while (true) {
         if (flashHazards || flashLSignal || flashRSignal) {
             if (flashHazards) {
-                leftTurnSignal = !leftTurnSignal;
-                rightTurnSignal = !rightTurnSignal;
-            } else if (flashLSignal && !flashHazards) {
+                bool leftTurnSignalState = leftTurnSignal;
+                leftTurnSignal = !leftTurnSignalState;
+                rightTurnSignal = !leftTurnSignalState;
+            } else if (flashLSignal) {
                 leftTurnSignal = !leftTurnSignal;
                 rightTurnSignal = false;
-            } else if (flashRSignal && !flashHazards) {
+            } else if (flashRSignal) {
                 rightTurnSignal = !rightTurnSignal;
                 leftTurnSignal = false;
             } else {
