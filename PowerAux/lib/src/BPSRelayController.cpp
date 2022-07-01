@@ -34,16 +34,18 @@ BPSRelayController::BPSRelayController(PinName discharge_en, PinName charge_en,
 }
 
 /**
-* Update the state of the pack discharge contactor, pack charge contactor, and BPS fault indicator.
-* Since opening the pack discharge contactor causes the boards to reset, we will only close contactors if the BPS sets them to 1 within the first 5 CAN messages.
-* This is to ensure that the following flow occurs:
-*   0. Initial state - All contactors are closed
-*   1. BPS sets discharge and/or charge relay to 0
-*   2. update_state() opens both contactors
-*   3. PowerAux board resets
-*   4. The first five CAN messages all show that both contactors should be open
-* This is needed because the regulations require that a fault results in a latching open state for both contactors.
-*/
+ * Update the state of the pack discharge contactor, pack charge contactor, and
+ * BPS fault indicator. Since opening the pack discharge contactor causes the
+ * boards to reset, we will only close contactors if the BPS sets them to 1
+ * within the first 5 CAN messages. This is to ensure that the following flow
+ * occurs: 0. Initial state - All contactors are closed
+ *   1. BPS sets discharge and/or charge relay to 0
+ *   2. update_state() opens both contactors
+ *   3. PowerAux board resets
+ *   4. The first five CAN messages all show that both contactors should be open
+ * This is needed because the regulations require that a fault results in a
+ * latching open state for both contactors.
+ */
 void BPSRelayController::update_state(BPSPackInformation *can_struct) {
     static int bps_pack_information_message_count = 0;
 
@@ -86,7 +88,8 @@ void BPSRelayController::update_state(BPSPackInformation *can_struct) {
     bps_discharge_state = can_struct->discharge_relay_status;
     bps_charge_state = can_struct->charge_relay_status;
 
-    if (bps_pack_information_message_count == 5 && (!bps_discharge_state || !bps_charge_state)) {
+    if (bps_pack_information_message_count == 5 &&
+        (!bps_discharge_state || !bps_charge_state)) {
         bps_fault = true;
     }
 
