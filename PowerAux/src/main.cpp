@@ -11,7 +11,7 @@
 
 #define LOG_LEVEL          LOG_FATAL
 #define MAIN_LOOP_PERIOD   1s
-#define ERROR_CHECK_PERIOD 1s
+#define ERROR_CHECK_PERIOD 100ms
 #define FLASH_PERIOD       500ms
 
 PowerAuxCANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX,
