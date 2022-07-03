@@ -9,9 +9,6 @@
 #define BPS_DISCHARGE_DISABLED (1 << 4)
 #define BPS_CHARGE_DISABLED    (1 << 5)
 
-#define DISCHARGE_RELAY_DELAY  100ms
-#define CHARGE_RELAY_DELAY     5s
-
 #define FLASH_PERIOD           500ms
 
 BPSRelayController::BPSRelayController(PinName discharge_en, PinName charge_en,
@@ -169,25 +166,23 @@ void BPSRelayController::relay_controller() {
         bool discharge = flags & BPS_DISCHARGE_ENABLED;
         bool charge = flags & BPS_CHARGE_ENABLED;
 
-        // If discharge is supposed to be enabled, enable discharge
-        if (discharge && !discharge_en) {
-            ThisThread::sleep_for(DISCHARGE_RELAY_DELAY);
+        log_debug("Waiting for pack contactor to close");
+        if (pack_contactor_closed) {
+            event_flags.set(PACK_CONTACTOR_CLOSED);
+        }
+        event_flags.wait_all(PACK_CONTACTOR_CLOSED);
+        log_debug("Pack contactor closed");
 
+        ThisThread::sleep_for(9s);
+
+        if (discharge) {
             discharge_en = true;
             log_debug("Enabled discharge relay");
         }
 
-        if (charge && !charge_en) {
-            // Wait for pack contactor to close
-            log_debug("Waiting for pack contactor to close");
-            if (pack_contactor_closed) {
-                event_flags.set(PACK_CONTACTOR_CLOSED);
-            }
-            event_flags.wait_all(PACK_CONTACTOR_CLOSED);
-            log_debug("Pack contactor closed");
+        ThisThread::sleep_for(1s);
 
-            ThisThread::sleep_for(CHARGE_RELAY_DELAY);
-
+        if (charge) {
             charge_en = true;
             log_debug("Enabled charge relay");
         }
