@@ -2,8 +2,8 @@
 #define ECU_CAN_STRUCTS_H
 
 #include "CANStruct.h"
+#include "Logging.h"
 #include "dbc/structs/rivanna2.h"
-#include "log.h"
 
 typedef struct ECUMotorCommands : CANStruct, rivanna2_ecu_motor_commands_t {
     void serialize(CANMessage *message) {

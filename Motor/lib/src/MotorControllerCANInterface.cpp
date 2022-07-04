@@ -1,10 +1,12 @@
 #include "MotorControllerCANInterface.h"
-#include "log.h"
+#include "Logging.h"
+
+#define MOTOR_CONTROLLER_CAN_BUS_FREQ 125000
 
 MotorControllerCANInterface::MotorControllerCANInterface(PinName rd, PinName td,
                                                          PinName standby_pin)
-    : CANInterface(rd, td, standby_pin) {
-    can.frequency(125000);
+    : CANInterface("MotorControllerCANInterface", rd, td, standby_pin) {
+    can.frequency(MOTOR_CONTROLLER_CAN_BUS_FREQ);
 }
 
 int MotorControllerCANInterface::request_frames(bool power_status_frame,
@@ -23,12 +25,14 @@ int MotorControllerCANInterface::request_frames(bool power_status_frame,
     char message_data[17];
     CANInterface::write_CAN_message_data_to_buffer(message_data, &message);
     if (result == 1) {
-        log_debug("Sent MotorControllerFrameRequest CAN message with Data 0x%s",
-                  message_data);
+        log_debug(
+            "%s sent MotorControllerFrameRequest CAN message with Data 0x%s",
+            name, message_data);
     } else {
-        log_error("Failed to send MotorControllerFrameRequest CAN message with "
-                  "Data 0x%s",
-                  message_data);
+        log_error(
+            "%s failed to send MotorControllerFrameRequest CAN message with "
+            "Data 0x%s",
+            name, message_data);
     }
 
     return result;
@@ -42,9 +46,10 @@ void MotorControllerCANInterface::message_handler() {
             char message_data[17];
             CANInterface::write_CAN_message_data_to_buffer(message_data,
                                                            &message);
-            log_debug("Received CAN message with ID 0x%08X Length %d Data 0x%s "
-                      "from MotorController",
-                      message.id, message.len, message_data);
+            log_debug(
+                "%s Received CAN message with ID 0x%08X Length %d Data 0x%s "
+                "from MotorController",
+                name, message.id, message.len, message_data);
 
             if (message.id == MotorControllerPowerStatus_AUX_BUS_MESSAGE_ID) {
                 MotorControllerPowerStatus can_struct;
