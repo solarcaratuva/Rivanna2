@@ -2,8 +2,8 @@
 #define MOTOR_CONTROLLER_CAN_STRUCTS_H
 
 #include "CANStruct.h"
-#include "Logging.h"
 #include "dbc/structs/motor_controller.h"
+#include "log.h"
 
 /**
  * Struct for requesting information from the motor controller.

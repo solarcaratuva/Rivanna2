@@ -1,11 +1,9 @@
 #include "MainCANInterface.h"
-#include "Logging.h"
-
-#define MAIN_CAN_BUS_FREQ 250000
+#include "log.h"
 
 MainCANInterface::MainCANInterface(PinName rd, PinName td, PinName standby_pin)
-    : CANInterface("MainCANInterface", rd, td, standby_pin) {
-    can.frequency(MAIN_CAN_BUS_FREQ);
+    : CANInterface(rd, td, standby_pin) {
+    can.frequency(250000);
 }
 
 int MainCANInterface::send(CANStruct *can_struct) {
@@ -17,12 +15,12 @@ int MainCANInterface::send(CANStruct *can_struct) {
     char message_data[17];
     CANInterface::write_CAN_message_data_to_buffer(message_data, &message);
     if (result == 1) {
-        log_debug("%s sent CAN message with ID 0x%03X Length %d Data 0x%s",
-                  name, message.id, message.len, message_data);
+        log_debug("Sent CAN message with ID 0x%03X Length %d Data 0x%s",
+                  message.id, message.len, message_data);
     } else {
         log_error(
-            "%s failed to send CAN message with ID 0x%03X Length %d Data 0x%s",
-            name, message.id, message.len, message_data);
+            "Failed to send CAN message with ID 0x%03X Length %d Data 0x%s",
+            message.id, message.len, message_data);
     }
 
     return result;
@@ -36,9 +34,8 @@ void MainCANInterface::message_handler() {
             char message_data[17];
             CANInterface::write_CAN_message_data_to_buffer(message_data,
                                                            &message);
-            log_debug(
-                "%s received CAN message with ID 0x%03X Length %d Data 0x%s",
-                name, message.id, message.len, message_data);
+            log_debug("Received CAN message with ID 0x%03X Length %d Data 0x%s",
+                      message.id, message.len, message_data);
 
             if (message.id == ECUMotorCommands_MESSAGE_ID) {
                 ECUMotorCommands can_struct;
