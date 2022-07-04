@@ -1,6 +1,6 @@
 #include "BPSRelayController.h"
-#include "ThisThread.h"
 #include "Logging.h"
+#include "ThisThread.h"
 
 #define PACK_CONTACTOR_CLOSED  (1 << 0)
 #define PACK_CONTACTOR_OPENED  (1 << 1)
