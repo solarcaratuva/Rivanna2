@@ -13,7 +13,7 @@ project(${APP_TARGET})
 add_subdirectory(TARGET_UVA_SOLAR_CAR)
 add_subdirectory(${MBED_PATH})
 
-mbed_create_distro(mbed-os-lib mbed-os mbed-events)
+mbed_create_distro(mbed-os-lib mbed-os mbed-events mbed-rtos)
 
 add_subdirectory(Common)
 
