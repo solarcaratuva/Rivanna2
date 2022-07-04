@@ -3,7 +3,7 @@ add_library(Common-lib
     src/dbc/structs/motor_controller.c
     src/dbc/structs/rivanna2.c
     src/CANInterface.cpp
-    src/Logging.cpp
+    src/log.cpp
     src/MainCANInterface.cpp
     src/Printing.cpp
 )
