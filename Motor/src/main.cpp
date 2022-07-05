@@ -8,7 +8,7 @@
 #include <mbed.h>
 #include <rtos.h>
 
-#define LOG_LEVEL        LOG_FATAL
+#define LOG_LEVEL        LOG_DEBUG
 #define MAIN_LOOP_PERIOD 100ms
 
 EventQueue event_queue(32 * EVENTS_EVENT_SIZE);

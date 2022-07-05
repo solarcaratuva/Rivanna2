@@ -7,7 +7,7 @@
 #include <mbed.h>
 #include <rtos.h>
 
-#define LOG_LEVEL        LOG_FATAL
+#define LOG_LEVEL        LOG_DEBUG
 #define MAIN_LOOP_PERIOD 1s
 
 SolarCANInterface vehicle_can_interface(CAN_RX, CAN_TX, CAN_STBY);
