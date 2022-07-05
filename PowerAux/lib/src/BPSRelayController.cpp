@@ -32,16 +32,9 @@ BPSRelayController::BPSRelayController(PinName discharge_en, PinName charge_en,
 
 /**
  * Update the state of the pack discharge contactor, pack charge contactor, and
- * BPS fault indicator. Since opening the pack discharge contactor causes the
- * boards to reset, we will only close contactors if the BPS sets them to 1
- * within the first 5 CAN messages. This is to ensure that the following flow
- * occurs: 0. Initial state - All contactors are closed
- *   1. BPS sets discharge and/or charge relay to 0
- *   2. update_state() opens both contactors
- *   3. PowerAux board resets
- *   4. The first five CAN messages all show that both contactors should be open
- * This is needed because the regulations require that a fault results in a
- * latching open state for both contactors.
+ * BPS fault indicator. If the BPS disables discharge, we open both contactors and enable the BPS fault indicator.
+ * If the BPS disables charge, we close the charge contactor. 
+ * We want the state of contactors to be latching, so if the BPS disables discharge or charge, a full restart of the car is required to re-enable discharge or charge.
  */
 void BPSRelayController::update_state(BPSPackInformation *can_struct) {
     static int bps_pack_information_message_count = 0;
@@ -51,14 +44,10 @@ void BPSRelayController::update_state(BPSPackInformation *can_struct) {
     if (bps_discharge_state && !can_struct->discharge_relay_status) {
         flags |= BPS_DISCHARGE_DISABLED;
         log_debug("Set BPS_DISCHARGE_DISABLED flag");
-
-        bps_fault = true;
     }
     if (bps_charge_state && !can_struct->charge_relay_status) {
         flags |= BPS_CHARGE_DISABLED;
         log_debug("Set BPS_CHARGE_DISABLED flag");
-
-        bps_fault = true;
     }
     if (!bps_discharge_state && can_struct->discharge_relay_status) {
         if (bps_pack_information_message_count >= 5) {
@@ -113,8 +102,6 @@ void BPSRelayController::rise_handler() {
 
 void BPSRelayController::fall_handler() {
     event_flags.set(PACK_CONTACTOR_OPENED);
-
-    bps_fault = true;
 }
 
 void BPSRelayController::error_handler() {
@@ -124,32 +111,33 @@ void BPSRelayController::error_handler() {
     while (true) {
         log_debug("error_handler_thread waiting for event");
         uint32_t flags =
-            event_flags.wait_any(PACK_CONTACTOR_OPENED |
-                                 BPS_DISCHARGE_DISABLED | BPS_CHARGE_DISABLED);
+            event_flags.wait_any(PACK_CONTACTOR_OPENED | BPS_DISCHARGE_DISABLED | BPS_CHARGE_DISABLED);
         log_debug("Iteration of error_handler with event flags 0x%X", flags);
 
-        relay_controller_thread.terminate();
+        if (flags & (PACK_CONTACTOR_OPENED | BPS_DISCHARGE_DISABLED)) {
+            relay_controller_thread.terminate();
 
-        discharge_en = false;
-        charge_en = false;
+            discharge_en = false;
+            charge_en = false;
 
-        bps_fault = true;
+            bps_fault = true;
 
-        if (flags & PACK_CONTACTOR_OPENED) {
-            log_error("Terminated error_handler_thread and opened discharge "
-                      "and charge relays because pack contactor opened");
+            if (flags & PACK_CONTACTOR_OPENED) {
+                log_error("Terminated error_handler_thread and opened discharge "
+                        "and charge relays because pack contactor opened");
+            }
+            if (flags & BPS_DISCHARGE_DISABLED) {
+                log_error("Terminated error_handler_thread and opened discharge "
+                        "and charge relays because BPS disabled discharge");
+            }
+
+            // Terminate thread
+            return;
         }
-        if (flags & BPS_DISCHARGE_DISABLED) {
-            log_error("Terminated error_handler_thread and opened discharge "
-                      "and charge relays because BPS disabled discharge");
+        else if (flags & BPS_CHARGE_DISABLED) {
+            charge_en = false;
+            log_warn("Opened charge relay because BPS disabled charge");
         }
-        if (flags & BPS_CHARGE_DISABLED) {
-            log_error("Terminated error_handler_thread and opened discharge "
-                      "and charge relays because BPS disabled charge");
-        }
-
-        // Terminate thread
-        return;
     }
 }
 
