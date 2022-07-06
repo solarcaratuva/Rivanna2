@@ -1,10 +1,12 @@
 #include "MotorControllerCANInterface.h"
+#include "ThisThread.h"
 #include "log.h"
 
 MotorControllerCANInterface::MotorControllerCANInterface(PinName rd, PinName td,
                                                          PinName standby_pin)
     : CANInterface(rd, td, standby_pin) {
     can.frequency(125000);
+    bus_status_thread.start(callback(this, &MotorControllerCANInterface::check_bus_status));
 }
 
 int MotorControllerCANInterface::request_frames(bool power_status_frame,
@@ -61,5 +63,22 @@ void MotorControllerCANInterface::message_handler() {
                 handle(&can_struct);
             }
         }
+    }
+}
+
+void MotorControllerCANInterface::check_bus_status() {
+    while (true) {
+        int rderror = can.rderror();
+        int tderror = can.tderror();
+        
+        if (rderror >= 128 || tderror >= 128) {
+            can.reset();
+            log_warn("MotorControllerCANInterface reset due to RX error %d TX error %d", rderror, tderror);
+        }
+        else {
+            log_debug("MotorControllerCANInterface RX error %d TX error %d", rderror, tderror);
+        }
+
+        ThisThread::sleep_for(5s);
     }
 }

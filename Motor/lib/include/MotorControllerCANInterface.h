@@ -1,6 +1,7 @@
 #ifndef MOTOR_CONTROLLER_CAN_INTERFACE_H
 #define MOTOR_CONTROLLER_CAN_INTERFACE_H
 
+#include <mbed.h>
 #include "CANInterface.h"
 #include "MotorControllerCANStructs.h"
 
@@ -15,6 +16,8 @@ class MotorControllerCANInterface : public CANInterface {
 
   private:
     void message_handler() override;
+    Thread bus_status_thread;
+    void check_bus_status();
 };
 
 #endif
