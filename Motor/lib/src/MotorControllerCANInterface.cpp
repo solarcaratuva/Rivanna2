@@ -79,6 +79,6 @@ void MotorControllerCANInterface::check_bus_status() {
             log_debug("MotorControllerCANInterface RX error %d TX error %d", rderror, tderror);
         }
 
-        ThisThread::sleep_for(5s);
+        ThisThread::sleep_for(1s);
     }
 }
