@@ -20,7 +20,7 @@
  * IN THE SOFTWARE.
  */
 
-#include "log.h"
+#include "Logging.h"
 #include <mbed.h>
 
 static struct {

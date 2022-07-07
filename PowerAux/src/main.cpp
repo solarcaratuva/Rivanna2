@@ -1,10 +1,10 @@
 #include "BPSCANInterface.h"
 #include "BPSRelayController.h"
 #include "DigitalOut.h"
+#include "Logging.h"
 #include "PowerAuxCANInterface.h"
 #include "Printing.h"
 #include "ThisThread.h"
-#include "log.h"
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>
