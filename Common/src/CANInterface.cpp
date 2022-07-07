@@ -29,7 +29,7 @@ void CANInterface::check_bus_status() {
             log_debug("%s RX error %d TX error %d", name, rderror, tderror);
         }
 
-        ThisThread::sleep_for(10s);
+        ThisThread::sleep_for(1s);
     }
 }
 
