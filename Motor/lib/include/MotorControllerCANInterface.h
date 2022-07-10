@@ -3,6 +3,7 @@
 
 #include "CANInterface.h"
 #include "MotorControllerCANStructs.h"
+#include <mbed.h>
 
 class MotorControllerCANInterface : public CANInterface {
   public:
@@ -15,6 +16,8 @@ class MotorControllerCANInterface : public CANInterface {
 
   private:
     void message_handler() override;
+    Thread bus_status_thread;
+    void check_bus_status();
 };
 
 #endif
