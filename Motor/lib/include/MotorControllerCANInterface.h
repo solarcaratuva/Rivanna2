@@ -1,9 +1,9 @@
 #ifndef MOTOR_CONTROLLER_CAN_INTERFACE_H
 #define MOTOR_CONTROLLER_CAN_INTERFACE_H
 
-#include <mbed.h>
 #include "CANInterface.h"
 #include "MotorControllerCANStructs.h"
+#include <mbed.h>
 
 class MotorControllerCANInterface : public CANInterface {
   public:
