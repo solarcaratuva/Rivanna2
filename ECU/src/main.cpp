@@ -33,7 +33,10 @@ void motor_message_handler() {
     while (true) {
         // Read motor commands
         to_motor.throttle = input_reader.readThrottle();
-        to_motor.regen = input_reader.readRegen();
+        // TODO: We are using ECUMotorCommands::regen as a boolean for testing.
+        // If we go with this approach, we should change ECUMotorCommands::regen
+        // to a boolean.
+        to_motor.regen = input_reader.readRegenEn();
         to_motor.forward_en = input_reader.readForwardEn();
         to_motor.reverse_en = input_reader.readReverseEn();
         to_motor.cruise_control_en = input_reader.readCruiseThrottleEn();
