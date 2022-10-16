@@ -35,3 +35,15 @@ The recommended approach for development is to use the [rivanna2-env](https://gi
 
 ## Software environment
 * The instructions on the [UVA Solar Car Team Website](https://solarcaratuva.github.io/software/stm32-mbed-info.html) were used to help set up this project.
+
+## For Apple Silicon -> Building the docker container locally
+Using the exisiting docker container rivanna2-env can result in slow compilation times since the container was made for x86 not arm. 
+
+First, we want to built a docker image from the existing docker file. The following command makes a docker image with name "arm-rivanna2":
+`docker build -t arm-rivanna2 .`
+
+Next, we want to create and run a container with the image we created above. Run the following command: `docker run -it --name rivanna2arm -v $(pwd)/:/root/Rivanna2:Z arm-rivanna2`.
+
+The prior command will create a docker container with name `rivanna2arm`. Use this container going forward. 
+
+Refer to [the notion page](https://peppered-song-568.notion.site/Docker-Help-Desk-711ef6f7045e4865a3dd7e7e5ba39755) for more docker help and commands! :)
