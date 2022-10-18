@@ -6,6 +6,7 @@
 #include "pindef.h"
 #include <mbed.h>
 #include <rtos.h>
+#include <math.h>
 
 #define LOG_LEVEL              LOG_DEBUG
 #define MAIN_LOOP_PERIOD       1s
@@ -30,10 +31,71 @@ Thread motor_thread;
 Thread poweraux_thread;
 
 void motor_message_handler() {
+    uint16_t regenRamp = 0;
     while (true) {
         // Read motor commands
+        double result = pow(1, 0.4);
+
+        // Tesla mode
+        uint16_t pedalValue = input_reader.readThrottle();
+        uint16_t regenValue;    
+        uint16_t throttleValue;
+
+        if (pedalValue <= 50) {
+            throttleValue = 0;
+            regenValue = 79.159 * pow(50-pedalValue, 0.3);
+        } else if (pedalValue < 100) {
+            throttleValue = 0;
+            regenValue = 0;
+        } else {
+            throttleValue = -56.27610464*pow(156-(i-100),0.3) + 256;
+            regenValue = 0;
+        }
+        to_motor.throttle = throttleValue;
+        to_motor.regen = regenValue;
+        log_error("R: %d T: %d", regenValue, throttleValue);
+        
+        // Tesla mode with exponential curve
+        /*
+        uint16_t pedalValue = input_reader.readThrottle();
+        uint16_t regenValue;
+        uint16_t throttleValue;
+
+        if (pedalValue < 100) {
+            throttleValue = 0;
+            regenValue = (-0.0256 * pedalValue * pedalValue) + 256;
+            
+        } else if (pedalValue < 156) {
+            throttleValue = 0;
+            regenValue = 0;
+        } else {
+            throttleValue = (40 * (6.3 - pow((100 - (pedalValue - 156)), 0.4) )) + 4;
+            regenValue = 0;
+        }
+        to_motor.throttle = throttleValue;
+        to_motor.regen = regenValue;
+        */        
+
+        // Brake when let go
+        /*
+        to_motor.throttle = input_reader.readThrottle();
+        if (to_motor.throttle == 0) {
+            regenRamp += 10;
+            if (regenRamp > 256) {
+                regenRamp = 256;
+            }
+        } else {
+            regenRamp = 0;
+        }
+        to_motor.regen = regenRamp;
+        */
+
+        // Normal
+        /*
         to_motor.throttle = input_reader.readThrottle();
         to_motor.regen = input_reader.readRegen();
+        */
+
         to_motor.forward_en = input_reader.readForwardEn();
         to_motor.reverse_en = input_reader.readReverseEn();
         to_motor.cruise_control_en = input_reader.readCruiseThrottleEn();
