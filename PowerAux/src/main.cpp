@@ -9,7 +9,7 @@
 #include <mbed.h>
 #include <rtos.h>
 
-#define LOG_LEVEL          LOG_DEBUG
+#define LOG_LEVEL          LOG_INFO
 #define MAIN_LOOP_PERIOD   1s
 #define ERROR_CHECK_PERIOD 100ms
 #define FLASH_PERIOD       500ms
@@ -24,6 +24,12 @@ Thread signalFlashThread;
 DigitalOut brake_lights(BRAKE_LIGHT_EN);
 DigitalOut leftTurnSignal(LEFT_TURN_EN);
 DigitalOut rightTurnSignal(RIGHT_TURN_EN);
+
+const bool LOG_ECU_POWERAUX_COMMANDS = false;
+const bool LOG_BPS_PACK_INFORMATION = true;
+const bool LOG_BPS_ERROR = false;
+const bool LOG_BPS_CELL_VOLTAGE = false;
+const bool LOG_BPS_CELL_TEMPERATURE = false;
 
 void signalFlashHandler() {
     while (true) {
@@ -97,7 +103,7 @@ int main() {
 }
 
 void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
-    can_struct->log(LOG_INFO);
+    if (LOG_ECU_POWERAUX_COMMANDS) can_struct->log(LOG_INFO);
 
     brake_lights = can_struct->brake_lights;
 
@@ -109,7 +115,7 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
 }
 
 void BPSCANInterface::handle(BPSPackInformation *can_struct) {
-    can_struct->log(LOG_INFO);
+    if (LOG_BPS_PACK_INFORMATION) can_struct->log(LOG_INFO);
 
     bps_relay_controller.update_state(can_struct);
 
@@ -117,7 +123,7 @@ void BPSCANInterface::handle(BPSPackInformation *can_struct) {
 }
 
 void BPSCANInterface::handle(BPSError *can_struct) {
-    can_struct->log(LOG_INFO);
+    if (LOG_BPS_ERROR) can_struct->log(LOG_INFO);
 
     bps_relay_controller.update_state(can_struct);
 
@@ -125,13 +131,13 @@ void BPSCANInterface::handle(BPSError *can_struct) {
 }
 
 void BPSCANInterface::handle(BPSCellVoltage *can_struct) {
-    can_struct->log(LOG_INFO);
+    if (LOG_BPS_CELL_VOLTAGE) can_struct->log(LOG_INFO);
 
     vehicle_can_interface.send(can_struct);
 }
 
 void BPSCANInterface::handle(BPSCellTemperature *can_struct) {
-    can_struct->log(LOG_INFO);
+    if (LOG_BPS_CELL_TEMPERATURE) can_struct->log(LOG_INFO);
 
     vehicle_can_interface.send(can_struct);
 }

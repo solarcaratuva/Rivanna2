@@ -48,7 +48,7 @@ void motor_message_handler() {
             throttleValue = 0;
             regenValue = 0;
         } else {
-            throttleValue = -56.27610464*pow(156-(i-100),0.3) + 256;
+            throttleValue = -56.27610464*pow(156-(pedalValue-100),0.3) + 256;
             regenValue = 0;
         }
         to_motor.throttle = throttleValue;
