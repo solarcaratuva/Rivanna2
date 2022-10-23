@@ -5,5 +5,14 @@
 		"--query-driver=/opt/mbed-os-toolchain/gcc-arm-none-eabi-10.3-2021.07/bin/arm-none-eabi*",
 		"--log=verbose",
 		"--completion-style=detailed"
-	]
+	],
+	"files.associations": {
+		"array": "cpp",
+		"iterator": "cpp",
+		"string": "cpp",
+		"string_view": "cpp",
+		"vector": "cpp",
+		"mstd_atomic": "cpp",
+		"mstd_iterator": "cpp"
+	}
 }
