@@ -54,7 +54,7 @@ class Dashboard:
                 is_charging_signal_status 0
                 '''
                 # self.update_plot()
-                print(f'[{len(self.bps_pack_ts)}] pack current:', d['pack_current'], d['charge_relay_status'], flush=True)
+                print(f'[{len(self.bps_pack_ts)}] pack current:', d['pack_current'], 'pack voltage:', d['pack_voltage'], flush=True)
 
     def update_plot(self):
         cutoff = 256
