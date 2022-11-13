@@ -38,12 +38,12 @@ def create_plots(data, output_file):
     # RPM plot
     ax_rpm.plot(motor_timestamps, motor_rpms)
     ax_rpm.set_ylabel('RPM')
-    ax_rpm.set_xlabel('Time (s)')
     # Throttle and regen plot
     ax_throttle.plot(mc_timestamps, throttle, label='Throttle')
     ax_throttle.plot(mc_timestamps, regen, label='Regen')
     ax_throttle.set_ylabel('Throttle, Regen')
     ax_throttle.legend()
+    ax_throttle.set_xlabel('Time (s)')
     plt.savefig(output_file + "_power.png")
     
     recovered_by_regen = np.max(energy) - energy[-1]
