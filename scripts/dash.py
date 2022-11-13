@@ -1,6 +1,7 @@
 # Usage: sh monitor.sh | python dash.py
 
 import time
+import datetime
 
 class Dashboard:
     def __init__(self):
@@ -8,7 +9,7 @@ class Dashboard:
         self.bps_pack_ts = []
         self.motor_controller_power_times = []
         self.motor_controller_power_ts = []
-        self.start_time = None
+        self.start_time: float = None
         # self.fig = plt.figure()
         # self.current_plot = self.fig.add_subplot(211)
         # self.voltage_plot = self.fig.add_subplot(212)
@@ -23,7 +24,7 @@ class Dashboard:
 
     def next_line(self, line):
         if self.start_time is None:
-            self.start_time = time.time(0)
+            self.start_time = time.time()
 
         def _after(prefix):
             if prefix in line:
@@ -106,8 +107,16 @@ dashboard = Dashboard()
 try:
     while True:
         dashboard.next_line(input())
-except KeyboardInterrupt:
-    import json
+except Exception as e:
+    print(e)
 
-    with open('./log.txt', 'w') as f:
+    import json
+    import os
+
+    if not os.path.isdir('output'):
+        os.mkdir('output')
+
+    time_ = datetime.datetime.fromtimestamp(dashboard.start_time).strftime("%Y%m%d-%H%M%S")
+
+    with open(f'./output/log_{time_}.json', 'w') as f:
         json.dump({"bps": dashboard.bps_pack_ts, "motor": dashboard.motor_controller_power_ts}, f)
