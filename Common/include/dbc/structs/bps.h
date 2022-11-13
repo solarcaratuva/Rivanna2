@@ -87,7 +87,7 @@ struct bps_bps_pack_information_t {
      * Scale: 0.1
      * Offset: 0
      */
-    uint16_t pack_current;
+    int16_t pack_current;
 
     /**
      * Range: -
@@ -439,7 +439,7 @@ bool bps_bps_pack_information_pack_voltage_is_in_range(uint16_t value);
  *
  * @return Encoded signal.
  */
-uint16_t bps_bps_pack_information_pack_current_encode(double value);
+int16_t bps_bps_pack_information_pack_current_encode(double value);
 
 /**
  * Decode given signal by applying scaling and offset.
@@ -448,7 +448,7 @@ uint16_t bps_bps_pack_information_pack_current_encode(double value);
  *
  * @return Decoded signal.
  */
-double bps_bps_pack_information_pack_current_decode(uint16_t value);
+double bps_bps_pack_information_pack_current_decode(int16_t value);
 
 /**
  * Check that given signal is in allowed range.
@@ -457,7 +457,7 @@ double bps_bps_pack_information_pack_current_decode(uint16_t value);
  *
  * @return true if in range, false otherwise.
  */
-bool bps_bps_pack_information_pack_current_is_in_range(uint16_t value);
+bool bps_bps_pack_information_pack_current_is_in_range(int16_t value);
 
 /**
  * Encode given signal by applying scaling and offset.

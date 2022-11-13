@@ -32,6 +32,7 @@ void MainCANInterface::message_handler() {
         CANMessage message;
         while (can.read(message)) {
             char message_data[17];
+            
             CANInterface::write_CAN_message_data_to_buffer(message_data,
                                                            &message);
             log_debug("Received CAN message with ID 0x%03X Length %d Data 0x%s",

@@ -85,6 +85,8 @@ int bps_bps_pack_information_pack(
     const struct bps_bps_pack_information_t *src_p,
     size_t size)
 {
+    uint16_t pack_current;
+
     if (size < 6u) {
         return (-EINVAL);
     }
@@ -93,8 +95,9 @@ int bps_bps_pack_information_pack(
 
     dst_p[0] |= pack_left_shift_u16(src_p->pack_voltage, 0u, 0xffu);
     dst_p[1] |= pack_right_shift_u16(src_p->pack_voltage, 8u, 0xffu);
-    dst_p[2] |= pack_left_shift_u16(src_p->pack_current, 0u, 0xffu);
-    dst_p[3] |= pack_right_shift_u16(src_p->pack_current, 8u, 0xffu);
+    pack_current = (uint16_t)src_p->pack_current;
+    dst_p[2] |= pack_left_shift_u16(pack_current, 0u, 0xffu);
+    dst_p[3] |= pack_right_shift_u16(pack_current, 8u, 0xffu);
     dst_p[4] |= pack_left_shift_u8(src_p->pack_soc, 0u, 0xffu);
     dst_p[5] |= pack_left_shift_u8(src_p->discharge_relay_status, 0u, 0x01u);
     dst_p[5] |= pack_left_shift_u8(src_p->charge_relay_status, 1u, 0x02u);
@@ -113,14 +116,17 @@ int bps_bps_pack_information_unpack(
     const uint8_t *src_p,
     size_t size)
 {
+    uint16_t pack_current;
+
     if (size < 6u) {
         return (-EINVAL);
     }
 
     dst_p->pack_voltage = unpack_right_shift_u16(src_p[0], 0u, 0xffu);
     dst_p->pack_voltage |= unpack_left_shift_u16(src_p[1], 8u, 0xffu);
-    dst_p->pack_current = unpack_right_shift_u16(src_p[2], 0u, 0xffu);
-    dst_p->pack_current |= unpack_left_shift_u16(src_p[3], 8u, 0xffu);
+    pack_current = unpack_right_shift_u16(src_p[2], 0u, 0xffu);
+    pack_current |= unpack_left_shift_u16(src_p[3], 8u, 0xffu);
+    dst_p->pack_current = (int16_t)pack_current;
     dst_p->pack_soc = unpack_right_shift_u8(src_p[4], 0u, 0xffu);
     dst_p->discharge_relay_status = unpack_right_shift_u8(src_p[5], 0u, 0x01u);
     dst_p->charge_relay_status = unpack_right_shift_u8(src_p[5], 1u, 0x02u);
@@ -151,17 +157,17 @@ bool bps_bps_pack_information_pack_voltage_is_in_range(uint16_t value)
     return (true);
 }
 
-uint16_t bps_bps_pack_information_pack_current_encode(double value)
+int16_t bps_bps_pack_information_pack_current_encode(double value)
 {
-    return (uint16_t)(value / 0.1);
+    return (int16_t)(value / 0.1);
 }
 
-double bps_bps_pack_information_pack_current_decode(uint16_t value)
+double bps_bps_pack_information_pack_current_decode(int16_t value)
 {
     return ((double)value * 0.1);
 }
 
-bool bps_bps_pack_information_pack_current_is_in_range(uint16_t value)
+bool bps_bps_pack_information_pack_current_is_in_range(int16_t value)
 {
     (void)value;
 

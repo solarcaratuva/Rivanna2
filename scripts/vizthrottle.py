@@ -25,14 +25,14 @@ while True:
     update_progress(regen, throttle)
 
 
-# for i in list(range(257)) + list(range(256,-1,-1)):
-#     if i <= 50:
-#         regen, throttle = (79.159 * ((50-i) ** 0.3)), 0
-#     elif i < 100:
-#         regen, throttle = 0, 0
-#     else:
-#         throttle, regen = -56.27610464*((156-(i-100))**0.3)+256, 0
-#     throttle = int(throttle / 256 * 100)
-#     regen = int(regen / 256 * 100)
-#     update_progress(regen, throttle, f"ADC Input: {i}")
-#     sleep(0.05)
+for i in list(range(257)) + list(range(256,-1,-1)):
+    if i <= 50:
+        regen, throttle = (79.159 * ((50-i) ** 0.3)), 0
+    elif i < 100:
+        regen, throttle = 0, 0
+    else:
+        throttle, regen = -56.27610464*((156-(i-100))**0.3)+256, 0
+    throttle = int(throttle / 256 * 100)
+    regen = int(regen / 256 * 100)
+    update_progress(regen, throttle, f"ADC Input: {i}")
+    sleep(0.05)
