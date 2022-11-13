@@ -12,9 +12,9 @@ def create_plots(data, output_file):
     motor = data['motor']
     
     # Create power plot
-    bps_timestamps = [x['timestamp'] for x in bps]
+    bps_timestamps = np.array([x['timestamp'] for x in bps])
     bps_currents = np.array([x['pack_current'] for x in bps]) # amps
-    bps_voltages = np.array([x['pack_voltage'] for x in bps]) / 100 # mv/10 = volts * 100
+    bps_voltages = np.array([x['pack_voltage'] for x in bps]) / 10000 # mv/10 = volts * 100
     power = bps_currents * bps_voltages
 
     motor_timestamps = [x['timestamp'] for x in motor]
@@ -26,8 +26,24 @@ def create_plots(data, output_file):
     ax[1].plot(motor_timestamps, motor_rpms)
     ax[1].set_ylabel('RPM')
     ax[1].set_xlabel('Time (s)')
-    plt.savefig(output_file)
-    # plt.show()
+    plt.savefig(output_file + "_power.png")
+    
+    # Create energy plot
+    # Energy = integral of power.
+    energy = np.cumsum(power[1:] * (bps_timestamps[1:] - bps_timestamps[:-1]))
+    timestamp = (bps_timestamps[1:] + bps_timestamps[:-1]) / 2
+
+    plt.clf()
+    fig, ax = plt.subplots(2, 1, sharex=True)
+    ax[0].plot(timestamp, energy)
+    ax[0].set_ylabel('Energy (J)')
+    ax[1].plot(motor_timestamps, motor_rpms)
+    ax[1].set_ylabel('RPM')
+    ax[1].set_xlabel('Time (s)')
+    plt.savefig(output_file + "_energy.png")
+
+    recovered_by_regen = np.max(energy) - energy[-1]
+    print(f"Recovered by regen: {recovered_by_regen:.2f} J (recovery = {recovered_by_regen / np.max(energy) * 100:.2f}%) (max used: {np.max(energy):.2f} J; total used: {energy[-1]:.2f} J)")
 
 
 if __name__ == "__main__":
@@ -38,4 +54,4 @@ if __name__ == "__main__":
     log_file = sys.argv[1]
     with open(log_file, 'r') as f:
         data = json.load(f)
-    create_plots(data, log_file.replace(".json", ".png"))
+    create_plots(data, log_file.replace(".json", ""))
