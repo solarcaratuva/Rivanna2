@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 class Dashboard:
     def __init__(self):
         self.bps_pack_ts = []
+        self.motor_controller_power_ts = []
         # self.fig = plt.figure()
         # self.current_plot = self.fig.add_subplot(211)
         # self.voltage_plot = self.fig.add_subplot(212)
@@ -53,8 +54,23 @@ class Dashboard:
                 is_ready_signal_status 1,
                 is_charging_signal_status 0
                 '''
-                # self.update_plot()
                 print(f'[{len(self.bps_pack_ts)}] pack current:', d['pack_current'], 'pack voltage:', d['pack_voltage'], flush=True)
+
+        elif 'MotorControllerPowerStatus: ' in line:
+            d = _dict(_after('MotorControllerPowerStatus: '))
+            self.motor_controller_power_ts.append(d)
+            if len(self.motor_controller_power_ts) % 10 == 0:
+                '''
+                battery_voltage %u
+                battery_current %u
+                battery_current_direction %u
+                motor_current %u
+                fet_temp %u
+                motor_rpm %u
+                pwm_duty %u
+                lead_angle %u
+                '''
+                print(f'[{len(self.motor_controller_power_ts)}] battery current:', d['battery_current'], 'motor rpm:', d['motor_rpm'], flush=True)
 
     def update_plot(self):
         cutoff = 256
@@ -85,4 +101,4 @@ except KeyboardInterrupt:
     import json
 
     with open('./log.txt', 'w') as f:
-        json.dump(dashboard.bps_pack_ts, f)
+        json.dump({"bps": dashboard.bps_pack_ts, "motor": dashboard.motor_controller_power_ts}, f)
