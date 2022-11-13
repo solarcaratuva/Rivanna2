@@ -1,7 +1,6 @@
 # Usage: sh monitor.sh | python dash.py
 
 import time
-import matplotlib.pyplot as plt
 
 class Dashboard:
     def __init__(self):
@@ -9,6 +8,7 @@ class Dashboard:
         self.bps_pack_ts = []
         self.motor_controller_power_times = []
         self.motor_controller_power_ts = []
+        self.start_time = None
         # self.fig = plt.figure()
         # self.current_plot = self.fig.add_subplot(211)
         # self.voltage_plot = self.fig.add_subplot(212)
@@ -16,9 +16,15 @@ class Dashboard:
         # self.current_plot.set_ylabel('Current')
         # self.voltage_line, = self.voltage_plot.plot([], [])
         # self.voltage_plot.set_ylabel('Voltage')
-        # plt.show()s
+        # plt.show()
+
+    def t(self):
+        return time.time() - self.start_time
 
     def next_line(self, line):
+        if self.start_time is None:
+            self.start_time = time.time(0)
+
         def _after(prefix):
             if prefix in line:
                 return line[line.index(prefix) + len(prefix):]
@@ -42,7 +48,7 @@ class Dashboard:
 
         if 'BPSPackInformation: ' in line:
             d = _dict(_after('BPSPackInformation: '))
-            self.bps_pack_ts.append({**d, 'timestamp': time.time()})
+            self.bps_pack_ts.append({**d, 'timestamp': self.t()})
             if len(self.bps_pack_ts) % 10 == 0:
                 '''
                 pack_voltage 10769,
@@ -61,7 +67,7 @@ class Dashboard:
 
         elif 'MotorControllerPowerStatus: ' in line:
             d = _dict(_after('MotorControllerPowerStatus: '))
-            self.motor_controller_power_ts.append({**d, 'timestamp': time.time()})
+            self.motor_controller_power_ts.append({**d, 'timestamp': self.t()})
             if len(self.motor_controller_power_ts) % 10 == 0:
                 '''
                 battery_voltage %u
