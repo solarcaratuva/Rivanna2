@@ -27,7 +27,7 @@ typedef struct BPSPackInformation : CANStruct, bps_bps_pack_information_t {
     void log(int level) {
         log_at_level(
             level,
-            "BPSPackInformation: pack_voltage %u, pack_current %u, pack_soc "
+            "BPSPackInformation: pack_voltage %u, pack_current %d, pack_soc "
             "%u, discharge_relay_status %u, charge_relay_status %u, "
             "charger_safety_status %u, dtc_status %u, "
             "multipurpose_input_signal_status %u, always_on_signal_status %u, "
