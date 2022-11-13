@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def create_plots(data):
+def create_plots(data, output_file):
     bps = data['bps']
     motor = data['motor']
     
@@ -26,7 +26,7 @@ def create_plots(data):
     ax[1].plot(motor_timestamps, motor_rpms)
     ax[1].set_ylabel('RPM')
     ax[1].set_xlabel('Time (s)')
-    plt.savefig('power_rpm.png')
+    plt.savefig(output_file)
     # plt.show()
 
 
@@ -38,4 +38,4 @@ if __name__ == "__main__":
     log_file = sys.argv[1]
     with open(log_file, 'r') as f:
         data = json.load(f)
-    create_plots(data)
+    create_plots(data, log_file.replace(".json", ".png"))
