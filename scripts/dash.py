@@ -5,19 +5,10 @@ import datetime
 
 class Dashboard:
     def __init__(self):
-        self.bps_pack_times = []
         self.bps_pack_ts = []
-        self.motor_controller_power_times = []
         self.motor_controller_power_ts = []
+        self.motor_commands_ts = []
         self.start_time: float = None
-        # self.fig = plt.figure()
-        # self.current_plot = self.fig.add_subplot(211)
-        # self.voltage_plot = self.fig.add_subplot(212)
-        # self.current_line, = self.current_plot.plot([], [])
-        # self.current_plot.set_ylabel('Current')
-        # self.voltage_line, = self.voltage_plot.plot([], [])
-        # self.voltage_plot.set_ylabel('Voltage')
-        # plt.show()
 
     def t(self):
         return time.time() - self.start_time
@@ -82,26 +73,20 @@ class Dashboard:
                 '''
                 print(f'[{len(self.motor_controller_power_ts)}] battery current:', d['battery_current'], 'motor rpm:', d['motor_rpm'], flush=True)
 
-    def update_plot(self):
-        cutoff = 256
-        current_data = [data['pack_current'] for data in self.bps_pack_ts][-cutoff:]
-        voltage_data = [data['pack_voltage'] for data in self.bps_pack_ts][-cutoff:]
-        x_data = list(range(len(self.bps_pack_ts) - len(current_data), len(self.bps_pack_ts)))
-
-        self.current_plot.set_xlim(min(x_data) - 1, max(x_data) + 1)
-        self.voltage_plot.set_xlim(min(x_data) - 1, max(x_data) + 1)
-
-        self.current_line.set_xdata(x_data)
-        self.current_line.set_ydata(current_data)
-        self.current_plot.set_ylim(min(current_data) - 1, max(current_data) + 1)
-
-        self.voltage_line.set_xdata(x_data)
-        self.voltage_line.set_ydata(voltage_data)
-        self.voltage_plot.set_ylim(min(voltage_data) - 1, max(voltage_data) + 1)
-
-        self.fig.canvas.draw()
-        self.fig.canvas.flush_events()
-        
+        elif 'ECUMotorCommands: ' in line:
+            d = _dict(_after('ECUMotorCommands: '))
+            self.motor_commands_ts.append({**d, 'timestamp': self.t()})
+            if len(self.motor_commands_ts) % 10 == 0:
+                '''
+                throttle %u
+                regen %u
+                cruise_control_speed %u
+                cruise_control_en %u
+                forward_en %u
+                reverse_en %u
+                motor_on %u
+                '''
+                print(f'[{len(self.motor_commands_ts)}] throttle:', d['throttle'], 'regen:', d['regen'], flush=True)
 
 dashboard = Dashboard()
 try:
@@ -119,4 +104,8 @@ except Exception as e:
     time_ = datetime.datetime.fromtimestamp(dashboard.start_time).strftime("%Y%m%d-%H%M%S")
 
     with open(f'./output/log_{time_}.json', 'w') as f:
-        json.dump({"bps": dashboard.bps_pack_ts, "motor": dashboard.motor_controller_power_ts}, f)
+        json.dump({
+            "bps": dashboard.bps_pack_ts,
+            "motor": dashboard.motor_controller_power_ts,
+            "motor_commands": dashboard.motor_commands_ts
+        }, f)

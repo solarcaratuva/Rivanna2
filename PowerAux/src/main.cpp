@@ -118,6 +118,10 @@ void PowerAuxCANInterface::handle(MotorControllerPowerStatus *can_struct) {
     can_struct->log(LOG_INFO);
 }
 
+void PowerAuxCANInterface::handle(ECUMotorCommands *can_struct) {
+    can_struct->log(LOG_INFO);
+}
+
 void BPSCANInterface::handle(BPSPackInformation *can_struct) {
     if (LOG_BPS_PACK_INFORMATION) can_struct->log(LOG_INFO);
 

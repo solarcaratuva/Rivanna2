@@ -10,38 +10,42 @@ import numpy as np
 def create_plots(data, output_file):
     bps = data['bps']
     motor = data['motor']
+    motor_commands = data['motor_commands']
     
     # Create power plot
     bps_timestamps = np.array([x['timestamp'] for x in bps])
     bps_currents = np.array([x['pack_current'] for x in bps]) # amps
     bps_voltages = np.array([x['pack_voltage'] for x in bps]) / 10000 # mv/10 = volts * 100
     power = bps_currents * bps_voltages
+    throttle = np.array([x['throttle'] for x in motor_commands]) / 100 # percent
+    regen = np.array([x['regen'] for x in motor_commands]) / 100 # percent
+    mc_timestamps = np.array([x['timestamp'] for x in motor_commands])
 
     motor_timestamps = [x['timestamp'] for x in motor]
     motor_rpms = np.array([x['motor_rpm'] for x in motor])
 
-    fig, ax = plt.subplots(2, 1, sharex=True)
-    ax[0].plot(bps_timestamps, power)
-    ax[0].set_ylabel('Power (W)')
-    ax[1].plot(motor_timestamps, motor_rpms)
-    ax[1].set_ylabel('RPM')
-    ax[1].set_xlabel('Time (s)')
-    plt.savefig(output_file + "_power.png")
-    
-    # Create energy plot
     # Energy = integral of power.
     energy = np.cumsum(power[1:] * (bps_timestamps[1:] - bps_timestamps[:-1]))
-    timestamp = (bps_timestamps[1:] + bps_timestamps[:-1]) / 2
+    energy_timestamps = (bps_timestamps[1:] + bps_timestamps[:-1]) / 2
 
-    plt.clf()
-    fig, ax = plt.subplots(2, 1, sharex=True)
-    ax[0].plot(timestamp, energy)
-    ax[0].set_ylabel('Energy (J)')
-    ax[1].plot(motor_timestamps, motor_rpms)
-    ax[1].set_ylabel('RPM')
-    ax[1].set_xlabel('Time (s)')
-    plt.savefig(output_file + "_energy.png")
-
+    fig, (ax_power, ax_energy, ax_rpm, ax_throttle) = plt.subplots(4, 1, sharex=True)
+    # Power plot
+    ax_power.plot(bps_timestamps, power)
+    ax_power.set_ylabel('Power (W)')
+    # Energy plot
+    ax_energy.plot(energy_timestamps, energy)
+    ax_energy.set_ylabel('Energy (J)')
+    # RPM plot
+    ax_rpm.plot(motor_timestamps, motor_rpms)
+    ax_rpm.set_ylabel('RPM')
+    ax_rpm.set_xlabel('Time (s)')
+    # Throttle and regen plot
+    ax_throttle.plot(mc_timestamps, throttle, label='Throttle')
+    ax_throttle.plot(mc_timestamps, regen, label='Regen')
+    ax_throttle.set_ylabel('Throttle, Regen')
+    ax_throttle.legend()
+    plt.savefig(output_file + "_power.png")
+    
     recovered_by_regen = np.max(energy) - energy[-1]
     print(f"Recovered by regen: {recovered_by_regen:.2f} J (recovery = {recovered_by_regen / np.max(energy) * 100:.2f}%) (max used: {np.max(energy):.2f} J; total used: {energy[-1]:.2f} J)")
 
