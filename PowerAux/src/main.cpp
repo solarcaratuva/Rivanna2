@@ -114,6 +114,10 @@ void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
     signalFlashThread.flags_set(0x1);
 }
 
+void PowerAuxCANInterface::handle(MotorControllerPowerStatus *can_struct) {
+    can_struct->log(LOG_INFO);
+}
+
 void BPSCANInterface::handle(BPSPackInformation *can_struct) {
     if (LOG_BPS_PACK_INFORMATION) can_struct->log(LOG_INFO);
 
