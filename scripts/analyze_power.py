@@ -1,4 +1,5 @@
-# Based on output in output/log_<time>.json, create plots of power and RPM over time
+# First, create output by running `sh monitor.sh | python scripts/dash.py` when connected to the PowerAux board.
+# Then, based on output in output/log_<time>.json, create plots of power and RPM over time
 
 import json
 import sys
