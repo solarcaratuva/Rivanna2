@@ -43,13 +43,22 @@ int pid(double p, double i, double d, double setpoint, double input, double& las
     double p_ = p * error;
     double i_ = integral;
     double d_ = d * (error - lasterror) / dt;
+    log_debug("p: %d, i: %d, d: %d, error: %d, last_error: %d, integral: %d, dt: %d",
+        (int) (p_),
+        (int) (i_),
+        (int) (d_),
+        (int) (error),
+        (int) (lasterror),
+        (int) (integral),
+        (int) (dt)
+    );
 	lasterror = error;
 	return p_ + i_ + d_;
 }
 
 void motor_message_handler() {
     uint16_t regenRamp = 0;
-    double $p = 5, $i = 3, $d = 3, $integral = 0, $lasterror = 0;
+    double $p = 0.05, $i = 0.05, $d = 0.05, $integral = 0, $lasterror = 0;
     double lastTime = millis();
     while (true) {
         // Read motor commands
@@ -68,10 +77,12 @@ void motor_message_handler() {
             regenValue = 0;
         } else {
             // pedal from 100 --> 256
-            double targetSpeed = ((pedalValue - 100.0) / 156.0 * 800.0);
-            throttleValue = pid($p, $i, $d, targetSpeed, currentSpeed, $lasterror, $integral, currentTime - lastTime);
-            // throttleValue = -56.27610464 * pow(156 - (pedalValue - 100), 0.3) + 256;
+            // double targetSpeed = ((pedalValue - 100.0) / 156.0 * 255.0);
+            // int pidValue = pid($p, $i, $d, targetSpeed, (double) currentSpeed, $lasterror, $integral, 1); // (currentTime - lastTime) / 1000.0);
+            // throttleValue = pidValue < 0 ? 0 : pidValue;
+            throttleValue = -56.27610464 * pow(156 - (pedalValue - 100), 0.3) + 256;
             regenValue = 0;
+            // log_debug("pidValue: %d, targetSpeed: %d, currentSpeed: %d", pidValue, (int) targetSpeed, (int) currentSpeed);
         }
         to_motor.throttle = throttleValue;
         to_motor.regen = regenValue;
