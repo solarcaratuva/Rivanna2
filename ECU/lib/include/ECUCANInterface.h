@@ -7,6 +7,9 @@ class ECUCANInterface : public MainCANInterface {
   public:
     ECUCANInterface(PinName rd, PinName td, PinName standby_pin)
         : MainCANInterface(rd, td, standby_pin) {}
+  
+  private:
+    void message_handler() override;
 };
 
 #endif

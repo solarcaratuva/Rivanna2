@@ -1,10 +1,24 @@
 #include "MainCANInterface.h"
 #include "log.h"
+#include <mbed.h>
+
 
 MainCANInterface::MainCANInterface(PinName rd, PinName td, PinName standby_pin)
     : CANInterface(rd, td, standby_pin) {
     can.frequency(250000);
 }
+
+
+// experimental -> Publishing via serial
+
+// View ECUCanInterface.h for messange_handler overriding
+// View ECUCanInterface.cpp for overriding implementation
+
+
+#define HUDPUBLISHER_THREAD_PREIOD  10ms    
+static UnbufferedSerial serial_port(USBTX, USBRX);
+
+
 
 int MainCANInterface::send(CANStruct *can_struct) {
     CANMessage message;
@@ -26,7 +40,13 @@ int MainCANInterface::send(CANStruct *can_struct) {
     return result;
 }
 
-void MainCANInterface::message_handler() {
+void MainCANInterface::message_handler(bool publish=false) {
+
+    //standard of (9600-8-N-1)
+    serial_port.baud(9600);
+    serial_port.format(8, SerialBase::None, 1);
+
+
     while (true) {
         ThisThread::flags_wait_all(0x1);
         CANMessage message;
@@ -36,6 +56,16 @@ void MainCANInterface::message_handler() {
                                                            &message);
             log_debug("Received CAN message with ID 0x%03X Length %d Data 0x%s",
                       message.id, message.len, message_data);
+
+
+            // Write to Serial Port in this function
+            if (publish) {
+                serial_port.write("hello world", 1);
+                // write message.id
+                // write \n
+                // write message.data
+                // write \n
+            }
 
             if (message.id == ECUMotorCommands_MESSAGE_ID) {
                 ECUMotorCommands can_struct;
