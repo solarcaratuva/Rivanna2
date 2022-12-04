@@ -43,13 +43,14 @@ int pid(double p, double i, double d, double setpoint, double input, double& las
     double p_ = p * error;
     double i_ = integral;
     double d_ = d * (error - lasterror) / dt;
-    log_debug("p: %d, i: %d, d: %d, error: %d, last_error: %d, integral: %d, dt: %d",
+    log_debug("p: %d, i: %d, d: %d, error: %d, last_error: %d, setpoint: %d, input: %d, dt: %d",
         (int) (p_),
         (int) (i_),
         (int) (d_),
         (int) (error),
         (int) (lasterror),
-        (int) (integral),
+        (int) (setpoint),
+        (int) (input),
         (int) (dt)
     );
 	lasterror = error;
@@ -77,10 +78,17 @@ void motor_message_handler() {
             regenValue = 0;
         } else {
             // pedal from 100 --> 256
-            // double targetSpeed = ((pedalValue - 100.0) / 156.0 * 255.0);
-            // int pidValue = pid($p, $i, $d, targetSpeed, (double) currentSpeed, $lasterror, $integral, 1); // (currentTime - lastTime) / 1000.0);
-            // throttleValue = pidValue < 0 ? 0 : pidValue;
-            throttleValue = -56.27610464 * pow(156 - (pedalValue - 100), 0.3) + 256;
+            double targetSpeed = ((pedalValue - 100.0) / 156.0 * 255.0);
+            int pidValue = pid($p, $i, $d, targetSpeed, (double) currentSpeed, $lasterror, $integral, 1); // (currentTime - lastTime) / 1000.0);
+            // Clamp integral to a reasonable value
+            if ($integral > 255) {
+                $integral = 255;
+            } else if ($integral < -255) {
+                $integral = -255;
+            }
+            // Clamp between 0 and 255
+            throttleValue = pidValue > 255 ? 255 : (pidValue < 0 ? 0 : pidValue);
+            // throttleValue = -56.27610464 * pow(156 - (pedalValue - 100), 0.3) + 256;
             regenValue = 0;
             // log_debug("pidValue: %d, targetSpeed: %d, currentSpeed: %d", pidValue, (int) targetSpeed, (int) currentSpeed);
         }
