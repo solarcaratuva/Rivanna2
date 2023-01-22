@@ -29,6 +29,9 @@ uint8_t current_speed;
 Thread motor_thread;
 Thread poweraux_thread;
 
+#define HUDPUBLISHER_THREAD_PREIOD  10ms    
+static UnbufferedSerial serial_port(USBTX, USBRX);
+
 void motor_message_handler() {
     while (true) {
         // Read motor commands
@@ -67,6 +70,34 @@ void poweraux_message_handler() {
     }
 }
 
+// Handle methods for all the decoded mesages
+
+/*
+Questions:
+1. After handling a given can_struct, should a timer or thread sleep/flags be utilized to wait before handling another message
+*/
+void ECUCANInterface::handle(ECUMotorCommands *can_struct) {
+    serial_port.printf("ECUMotorCommands motor_on: %d", can_struct->motor_on);
+    serial_port.printf("ECUMotorCommands forward_en: %d", can_struct->forward_en);
+    serial_port.printf("ECUMotorCommands throttle: %d", can_struct->throttle);
+    serial_port.printf("ECUMotorCommands regen: %d", can_struct->regen);
+}
+
+// incomplete
+void ECUCANInterface::handle(ECUPowerAuxCommands *can_struct) {}
+void ECUCANInterface::handle(PowerAuxError *can_struct) {}
+void ECUCANInterface::handle(SolarCurrent *can_struct) {}
+void ECUCANInterface::handle(SolarVoltage *can_struct) {}
+void ECUCANInterface::handle(SolarTemp *can_struct) {}
+void ECUCANInterface::handle(SolarPhoto *can_struct) {}
+void ECUCANInterface::handle(MotorControllerPowerStatus *can_struct) {}
+void ECUCANInterface::handle(MotorControllerDriveStatus *can_struct) {}
+void ECUCANInterface::handle(MotorControllerError *can_struct) {}
+void ECUCANInterface::handle(BPSPackInformation *can_struct) {}
+void ECUCANInterface::handle(BPSError *can_struct) {}
+void ECUCANInterface::handle(BPSCellVoltage *can_struct) {}
+void ECUCANInterface::handle(BPSCellTemperature *can_struct) {}
+
 int main() {
     log_set_level(LOG_LEVEL);
     log_debug("Start main()");
@@ -74,6 +105,9 @@ int main() {
     motor_thread.start(motor_message_handler);
     poweraux_thread.start(poweraux_message_handler);
 
+    // Set up Serial Port for Sending data
+    serial_port.baud(9600);    //standard of (9600-8-N-1)
+    serial_port.format(8, SerialBase::None, 1);
     while (true) {
         log_debug("Main thread loop");
 
