@@ -135,3 +135,11 @@ void BPSCANInterface::handle(BPSCellTemperature *can_struct) {
 
     vehicle_can_interface.send(can_struct);
 }
+
+void start_precharge() { //Enables switch to start precharging
+
+}
+
+void battery_precharge() { 
+
+}
