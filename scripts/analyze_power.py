@@ -11,6 +11,7 @@ import numpy as np
 def create_plots(data, output_file):
     bps = data['bps']
     motor = data['motor']
+    pedal = data.get('pedal', [])
     motor_commands = data['motor_commands']
     
     # Create power plot
@@ -39,10 +40,16 @@ def create_plots(data, output_file):
     # RPM plot
     ax_rpm.plot(motor_timestamps, motor_rpms)
     ax_rpm.set_ylabel('RPM')
+
+    pedal_timestamps = [x['timestamp'] for x in pedal]
+    pedal_values = [x['pedal'] for x in pedal]
+
     # Throttle and regen plot
     ax_throttle.plot(mc_timestamps, throttle, label='Throttle')
     ax_throttle.plot(mc_timestamps, regen, label='Regen')
-    ax_throttle.set_ylabel('Throttle, Regen')
+    ax_throttle.plot(pedal_timestamps, pedal_values, label='Pedal')
+    ax_throttle.plot()
+    ax_throttle.set_ylabel('Throttle, Regen, Pedal')
     ax_throttle.legend()
     ax_throttle.set_xlabel('Time (s)')
     plt.savefig(output_file + "_power.png")

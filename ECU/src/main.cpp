@@ -70,6 +70,8 @@ void motor_message_handler() {
         uint16_t regenValue;    
         uint16_t throttleValue;
 
+        log_error("RawPedalInput: pedal %d", pedalValue);
+
         if (pedalValue <= 50) {
             throttleValue = 0;
             regenValue = 79.159 * pow(50 - pedalValue, 0.3);
@@ -77,20 +79,23 @@ void motor_message_handler() {
             throttleValue = 0;
             regenValue = 0;
         } else {
-            // pedal from 100 --> 256
-            double targetSpeed = ((pedalValue - 100.0) / 156.0 * 255.0);
-            int pidValue = pid($p, $i, $d, targetSpeed, (double) currentSpeed, $lasterror, $integral, 1); // (currentTime - lastTime) / 1000.0);
-            // Clamp integral to a reasonable value
-            if ($integral > 255) {
-                $integral = 255;
-            } else if ($integral < -255) {
-                $integral = -255;
+            bool PID_ENABLED = false;
+            if (PID_ENABLED) {
+                // pedal from 100 --> 256
+                double targetSpeed = ((pedalValue - 100.0) / 156.0 * 255.0);
+                int pidValue = pid($p, $i, $d, targetSpeed, (double) currentSpeed, $lasterror, $integral, 1); // (currentTime - lastTime) / 1000.0);
+                // Clamp integral to a reasonable value
+                if ($integral > 255) {
+                    $integral = 255;
+                } else if ($integral < -255) {
+                    $integral = -255;
+                }
+                // Clamp between 0 and 255
+                throttleValue = pidValue > 255 ? 255 : (pidValue < 0 ? 0 : pidValue);
+            } else {
+                throttleValue = -56.27610464 * pow(156 - (pedalValue - 100), 0.3) + 256;
             }
-            // Clamp between 0 and 255
-            throttleValue = pidValue > 255 ? 255 : (pidValue < 0 ? 0 : pidValue);
-            // throttleValue = -56.27610464 * pow(156 - (pedalValue - 100), 0.3) + 256;
             regenValue = 0;
-            // log_debug("pidValue: %d, targetSpeed: %d, currentSpeed: %d", pidValue, (int) targetSpeed, (int) currentSpeed);
         }
         to_motor.throttle = throttleValue;
         to_motor.regen = regenValue;

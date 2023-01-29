@@ -8,6 +8,7 @@ class Dashboard:
         self.bps_pack_ts = []
         self.motor_controller_power_ts = []
         self.motor_commands_ts = []
+        self.pedal_ts = []
         self.start_time: float = None
 
     def t(self):
@@ -88,6 +89,16 @@ class Dashboard:
                 '''
                 print(f'[{len(self.motor_commands_ts)}] throttle:', d['throttle'], 'regen:', d['regen'], flush=True)
 
+        elif 'RawPedalInput: ' in line:
+            d = _dict(_after('RawPedalInput: '))
+            self.pedal_ts.append({**d, 'timestamp': self.t()})
+            if len(self.pedal_ts) % 10 == 0:
+                '''
+                pedal %u
+                '''
+                print(f'[{len(self.pedal_ts)}] pedal:', d['pedal'], flush=True)
+            
+
 dashboard = Dashboard()
 try:
     while True:
@@ -107,5 +118,6 @@ except Exception as e:
         json.dump({
             "bps": dashboard.bps_pack_ts,
             "motor": dashboard.motor_controller_power_ts,
-            "motor_commands": dashboard.motor_commands_ts
+            "motor_commands": dashboard.motor_commands_ts,
+            "pedal": dashboard.pedal_ts,
         }, f)
