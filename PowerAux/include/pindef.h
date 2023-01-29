@@ -83,6 +83,10 @@
 #define RIGHT_TURN_EN       NC
 #define JTDI                NC
 
+//Charge Relay
+#define CHARGE_RELAY        NC
+#define BUS_12V             NC
+
 #endif
 
 #endif // PINDEF_H
