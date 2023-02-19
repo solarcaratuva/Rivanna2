@@ -134,12 +134,32 @@ void BPSCANInterface::handle(BPSCellTemperature *can_struct) {
     can_struct->log(LOG_INFO);
 
     vehicle_can_interface.send(can_struct);
-}
+
+
+DigitalOut chargeRelay(CHARGE_RELAY);
+DigitalOut vbus(BUS_12V);
+bool allow_precharge = true;
+
 
 void start_precharge() { //Enables switch to start precharging
-
+    chargeRelay = true;
 }
 
-void battery_precharge() { 
 
+void battery_precharge() { 
+    while (true) {
+        relay_status = chargeRelay.read();
+        vbus_status = vbus.read();
+
+        if(relay_status && vbus_status && allow_precharge) {
+            allow_precharge = false;
+            start_precharge();
+            continue;
+        }
+        if(!relay_status || !vbus) {
+            allow_precharge = true;
+            continue;
+        }
+    }
+    
 }
