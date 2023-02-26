@@ -13,6 +13,7 @@
 #define MAIN_LOOP_PERIOD   1s
 #define ERROR_CHECK_PERIOD 100ms
 #define FLASH_PERIOD       500ms
+#define PRECHARGE_PAUSE    100ms
 
 PowerAuxCANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX,
                                            MAIN_CAN_STBY);
@@ -82,12 +83,54 @@ void peripheral_error_handler() {
     }
 }
 
+DigitalOut chargeRelay(CHARGE_RELAY);
+DigitalOut vbus(BUS_12V);
+Thread precharge_check;
+bool allow_precharge = true;
+
+
+void start_precharge() { //Enables switch to start precharging
+    chargeRelay = true;
+}
+
+
+void battery_precharge() { 
+    while (true) {
+        int relay_status = chargeRelay.read();
+        int vbus_status = vbus.read();
+
+        if(relay_status && vbus_status && allow_precharge) {
+            allow_precharge = false;
+            start_precharge();
+            continue;
+        }
+        if(!relay_status || !vbus) {
+            bool dont_allow_charge = false;
+            chrono::steady_clock::time_point start = chrono::steady_clock::now();
+            while(chrono::duration_cast<chrono::seconds>(chrono::steady_clock::now() - start).count() < 30) {
+                if(relay_status || vbus) {
+                    dont_allow_charge = true;
+                    break;
+                }
+                ThisThread::sleep_for(PRECHARGE_PAUSE);
+            }
+            if(!dont_allow_charge) {
+                allow_precharge = true;
+            }
+            continue;
+        }
+    }
+    
+}
+
+
 int main() {
     log_set_level(LOG_LEVEL);
     log_debug("Start main()");
 
     signalFlashThread.start(signalFlashHandler);
     peripheral_error_thread.start(peripheral_error_handler);
+    precharge_check.start(battery_precharge);
 
     while (true) {
         log_debug("Main thread loop");
@@ -135,31 +178,3 @@ void BPSCANInterface::handle(BPSCellTemperature *can_struct) {
 
     vehicle_can_interface.send(can_struct);
 
-
-DigitalOut chargeRelay(CHARGE_RELAY);
-DigitalOut vbus(BUS_12V);
-bool allow_precharge = true;
-
-
-void start_precharge() { //Enables switch to start precharging
-    chargeRelay = true;
-}
-
-
-void battery_precharge() { 
-    while (true) {
-        relay_status = chargeRelay.read();
-        vbus_status = vbus.read();
-
-        if(relay_status && vbus_status && allow_precharge) {
-            allow_precharge = false;
-            start_precharge();
-            continue;
-        }
-        if(!relay_status || !vbus) {
-            allow_precharge = true;
-            continue;
-        }
-    }
-    
-}
