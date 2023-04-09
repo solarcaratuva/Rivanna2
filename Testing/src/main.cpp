@@ -1,5 +1,3 @@
-#define DEVICE_SPI true
-
 #include "DigitalOut.h"
 #include "log.h"
 #include <mbed.h>
@@ -58,6 +56,7 @@ int initializeADC() {
 
 int readADC() {
 
+    return 0;
 }
 
 enum ButtonMasks {
