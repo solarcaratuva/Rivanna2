@@ -3,3 +3,7 @@ cmake_build/
 mbed-os
 .cache
 build/
+
+# To get this, run:
+# mbed import http://os.mbed.com/teams/AnalogDevices/code/EVAL-AD4696/
+EVAL-AD4696
