@@ -17,6 +17,51 @@ d/a i/o pin_number
 
 */
 
+const PinName SPI_CS = D0;
+const PinName SPI_MOSI = D0;
+const PinName SPI_MISO = D0;
+const PinName SPI_SCK = D0;
+const PinName SPI_RESET = D0;
+
+SPI spi(SPI_MOSI, SPI_MISO, SPI_SCK); // mosi, miso, sclk
+DigitalOut cs(SPI_CS);
+
+// Based on DriverBoard/DriverBoard.kicad_sch
+typedef enum {
+    MotorEn               = 1 << 0,
+    CruiseControlNeutral  = 1 << 1,
+    CruiseControlPositive = 1 << 2,
+    CruiseControlNegative = 1 << 3,
+    DriverKillSwitch      = 1 << 4,
+    RadioToggle           = 1 << 5,
+    BrakeLightCurrent     = 1 << 6,
+    BMSStrobeCurrent      = 1 << 7,
+    LeftTurnCurrent       = 1 << 8,
+    RightTurnCurrent      = 1 << 9,
+    DRLCurrent            = 1 << 10,
+} ButtonMasks;
+
+typedef struct {
+
+} Response;
+
+int initializeADC() {
+    // Sends SPI commands
+
+    return 0;
+}
+
+Response queryADC() {
+    // Queries for ADC values from IO board
+
+    return Response {};
+}
+
+int main() {
+
+}
+
+/* // Old pin testing code
 int main() {
     char pintype, direction;
     int pin, value;
@@ -43,3 +88,4 @@ int main() {
         scanf("%c", &direction);
     }
 }
+*/
