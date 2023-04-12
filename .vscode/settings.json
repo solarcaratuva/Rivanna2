@@ -13,6 +13,7 @@
 		"string_view": "cpp",
 		"vector": "cpp",
 		"mstd_atomic": "cpp",
-		"mstd_iterator": "cpp"
+		"mstd_iterator": "cpp",
+		"cmath": "cpp"
 	}
 }
