@@ -2,14 +2,13 @@
 #define PINDEF_H
 
 #ifdef TARGET_UVA_SOLAR_CAR
-enum DigitalInputPins {
-    LEFT_TURN = PB0,
-    RIGHT_TURN = PB15,
-    HAZARDS = PC13,
-    BRAKE = PA9,
-    REGEN = PC6,
-    FORWARD = PB1
-};
+
+#define LEFT_TURN PB0
+#define RIGHT_TURN PB15
+#define HAZARDS PC13
+#define BRAKE PA9
+#define REGEN PC6
+#define FORWARD PB1
 
 enum AnalogInputPins {
     THROTTLE = 27,
@@ -23,5 +22,7 @@ enum DigitalOutputPins {
     BMS_STROBE = 16
 };
 #else
+
+#endif
 
 #endif
