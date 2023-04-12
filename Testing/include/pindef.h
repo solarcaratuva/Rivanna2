@@ -1,3 +1,7 @@
+#ifndef PINDEF_H
+#define PINDEF_H
+
+#ifdef TARGET_UVA_SOLAR_CAR
 enum DigitalInputPins {
     LEFT_TURN = PB0,
     RIGHT_TURN = PB15,
@@ -18,3 +22,6 @@ enum DigitalOutputPins {
     DRO = 25,
     BMS_STROBE = 16
 };
+#else
+
+#endif
