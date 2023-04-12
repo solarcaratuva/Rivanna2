@@ -1,4 +1,3 @@
-#include "DigitalOut.h"
 #include "log.h"
 #include <mbed.h>
 #include <rtos.h>
@@ -16,6 +15,34 @@ digital/analog in/out pin_number
 d/a i/o pin_number
 
 */
+
+enum DigitalInputPins {
+    LEFT_TURN = 17,
+    RIGHT_TURN = 28,
+    HAZARDS = 2,
+    BRAKE = 31,
+    REGEN = 29,
+    FORWARD = 18
+};
+
+enum AnalogInputPins {
+    THROTTLE = 27,
+};
+
+enum DigitalOutputPins {
+    BRAKE_LIGHT = 26,
+    LEFT_TURN_LIGHT = 8,
+    RIGHT_TURN_LIGHT = 9,
+    DRO = 25,
+    BMS_STROBE = 16
+};
+
+bool flashHazards, flashLSignal, flashRSignal = false;
+Thread signalFlashThread;
+
+DigitalOut brake_lights(BRAKE_LIGHT_EN);
+DigitalOut leftTurnSignal(LEFT_TURN_EN);
+DigitalOut rightTurnSignal(RIGHT_TURN_EN);
 
 const PinName SPI_CS = D0;
 const PinName SPI_MOSI = D0;
