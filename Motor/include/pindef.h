@@ -4,7 +4,7 @@
 #ifdef TARGET_UVA_SOLAR_CAR
 
 /***************************/
-/* pin definitions for CAN */
+/*  pin definitions for CAN */
 /***************************/
 #define MAIN_CAN_RX       PB_12
 #define MAIN_CAN_TX       PB_13
@@ -22,26 +22,27 @@
 /***************************************/
 /* pin definitions for Trottle */
 /***************************************/
-#define SCL_ACCEL         PA_15
-#define SDA_ACCEL         PB_9
+#define SCL_ACCEL         PA_39
+#define SDA_ACCEL         PB_46
 #define DIR_ACCEL         PC_13
 
 /***************************************/
 /* pin definitions for Regen */
 /***************************************/
-#define SCL_REGEN         PA_9
-#define SDA_REGEN         PA_8
+#define SCL_REGEN         PA_31
+#define SDA_REGEN         PA_30
 #define DIR_REGEN         PB_15
 
 /***************************************/
 /* pin definitions for Switching Logic */
 /***************************************/
-#define MAIN_SWITCH       PA_2
-#define PWR_ECO_ON        PA_3
-#define FWD_REV_EN        PA_4
+#define MAIN_SWITCH       PA_10
+#define PWR_ECO_ON        PA_11
+#define FWD_REV_EN        PA_12
 
 /**********************************/
-/* pin definitions for Unused I/O */
+*
+*//* pin definitions for Unused I/O */
 /**********************************/
 #define PULLUP_2          PB_14
 #define PULLUP_3          PB_11

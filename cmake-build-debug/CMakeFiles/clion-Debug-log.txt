@@ -1,0 +1,19 @@
+"C:\Program Files\JetBrains\CLion 2022.3.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=C:/Program Files/JetBrains/CLion 2022.3.1/bin/ninja/win/ninja.exe" -G Ninja -S C:\Users\eeerm\Desktop\SolarCar\Rivanna2 -B C:\Users\eeerm\Desktop\SolarCar\Rivanna2\cmake-build-debug
+CMake Error at CMakeLists.txt:9 (include):
+  include could not find requested file:
+
+    C:/Users/eeerm/Desktop/SolarCar/Rivanna2/mbed-os/tools/cmake/app.cmake
+
+
+CMake Error at CMakeLists.txt:14 (add_subdirectory):
+  add_subdirectory given source
+  "C:/Users/eeerm/Desktop/SolarCar/Rivanna2/mbed-os" which is not an existing
+  directory.
+
+
+CMake Error at CMakeLists.txt:16 (mbed_create_distro):
+  Unknown CMake command "mbed_create_distro".
+
+
+-- Configuring incomplete, errors occurred!
+See also "C:/Users/eeerm/Desktop/SolarCar/Rivanna2/cmake-build-debug/CMakeFiles/CMakeOutput.log".

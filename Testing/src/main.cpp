@@ -124,7 +124,7 @@ int handle_button_state(int buttonState) {
     if (buttonState & BMS_STROBE) {
         // handle BMS strobe
     }
-    
+
     return 0;
 }
 
