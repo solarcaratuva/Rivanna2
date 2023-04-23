@@ -13,17 +13,23 @@
 #define MAIN_LOOP_PERIOD   1s
 #define ERROR_CHECK_PERIOD 100ms
 #define FLASH_PERIOD       500ms
+#define IDLE_PERIOD        100ms
 
-PowerAuxCANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX,
-                                           MAIN_CAN_STBY);
-BPSCANInterface bps_can_interface(BMS_CAN1_RX, BMS_CAN1_TX, BMS_CAN1_STBY);
+// PowerAuxCANInterface vehicle_can_interface(MAIN_CAN_RX, MAIN_CAN_TX,
+//                                            MAIN_CAN_STBY);
+// BPSCANInterface bps_can_interface(BMS_CAN1_RX, BMS_CAN1_TX, BMS_CAN1_STBY);
 
 bool flashHazards, flashLSignal, flashRSignal = false;
+bool brakeLightsEnabled = false;
 Thread signalFlashThread;
 
 DigitalOut brake_lights(BRAKE_LIGHT_EN);
 DigitalOut leftTurnSignal(LEFT_TURN_EN);
 DigitalOut rightTurnSignal(RIGHT_TURN_EN);
+
+DigitalIn brakeLightsSwitch(NULL);
+DigitalIn leftTurnSwitch(NULL);
+DigitalIn rightTurnSwitch(NULL);
 
 const bool LOG_ECU_POWERAUX_COMMANDS = false;
 const bool LOG_BPS_PACK_INFORMATION = true;
@@ -31,33 +37,41 @@ const bool LOG_BPS_ERROR = false;
 const bool LOG_BPS_CELL_VOLTAGE = false;
 const bool LOG_BPS_CELL_TEMPERATURE = false;
 
+// Input reading is done separately from flash loop
+void read_inputs() {
+    flashHazards = false;
+    if (brake_lights.read()) {
+        brakeLightsEnabled = true;
+    } else {
+        brakeLightsEnabled = false;
+    }
+    flashLSignal = leftTurnSwitch.read();
+    flashRSignal = rightTurnSwitch.read();
+}
+
 void signalFlashHandler() {
     while (true) {
-        if (flashHazards || flashLSignal || flashRSignal) {
-            if (flashHazards) {
-                bool leftTurnSignalState = leftTurnSignal;
-                leftTurnSignal = !leftTurnSignalState;
-                rightTurnSignal = !leftTurnSignalState;
-            } else if (flashLSignal) {
-                leftTurnSignal = !leftTurnSignal;
-                rightTurnSignal = false;
-            } else if (flashRSignal) {
-                rightTurnSignal = !rightTurnSignal;
-                leftTurnSignal = false;
-            } else {
-                leftTurnSignal = false;
-                rightTurnSignal = false;
-            }
-
-            ThisThread::sleep_for(FLASH_PERIOD);
+        read_inputs();
+        // Note: Casting from a `DigitalOut` to a `bool` gives the most recently written value
+        if (brakeLightsEnabled) {
+            rightTurnSignal = true;
+            leftTurnSignal = true;
+        } else if (flashHazards) {
+            bool leftTurnSignalState = leftTurnSignal;
+            leftTurnSignal = !leftTurnSignalState;
+            rightTurnSignal = !leftTurnSignalState;
+        } else if (flashLSignal) {
+            leftTurnSignal = !leftTurnSignal;
+            rightTurnSignal = false;
         } else {
             leftTurnSignal = false;
             rightTurnSignal = false;
         }
-        ThisThread::flags_wait_all(0x1);
+        ThisThread::sleep_for(FLASH_PERIOD);
     }
 }
 
+/*
 AnalogIn fan_tach(FanTach);
 AnalogIn brake_light_current(BRAKE_LIGHT_CURRENT);
 AnalogIn headlight_current(DRL_CURRENT);
@@ -68,7 +82,10 @@ Thread peripheral_error_thread;
 
 BPSRelayController bps_relay_controller(HORN_EN, DRL_EN, AUX_PLUS,
                                         BMS_STROBE_EN);
+*/
 
+// Comment this out for now.
+/*
 void peripheral_error_handler() {
     PowerAuxError msg;
     while (true) {
@@ -87,13 +104,14 @@ void peripheral_error_handler() {
         ThisThread::sleep_for(ERROR_CHECK_PERIOD);
     }
 }
+*/
 
 int main() {
     log_set_level(LOG_LEVEL);
     log_debug("Start main()");
 
     signalFlashThread.start(signalFlashHandler);
-    peripheral_error_thread.start(peripheral_error_handler);
+    // peripheral_error_thread.start(peripheral_error_handler);
 
     while (true) {
         log_debug("Main thread loop");
@@ -102,6 +120,8 @@ int main() {
     }
 }
 
+// Comment out CAN-related code for now.
+/*
 void PowerAuxCANInterface::handle(ECUPowerAuxCommands *can_struct) {
     if (LOG_ECU_POWERAUX_COMMANDS) can_struct->log(LOG_INFO);
 
@@ -149,3 +169,4 @@ void BPSCANInterface::handle(BPSCellTemperature *can_struct) {
 
     vehicle_can_interface.send(can_struct);
 }
+*/
